@@ -1,0 +1,49 @@
+---
+type ProjectItem = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  status: string;
+  accent: string;
+  tags: string[];
+  githubUrl?: string;
+};
+
+type Props = {
+  projects: ProjectItem[];
+};
+
+const { projects } = Astro.props;
+---
+
+<div class="home-projects__secondary">
+  {
+    projects.map((project) => (
+      <article class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span class="tag">{project.category}</span>
+          <span class="tag tag-accent">{project.status}</span>
+        </div>
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+        <div style="margin-top:auto; padding-top:16px; display:flex; gap:8px;">
+          <a class="button button-secondary" style="flex:1;" href={`/projects/${project.slug}/`}>
+            查看详情 →
+          </a>
+          {project.githubUrl && (
+            <a
+              class="button button-secondary"
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener"
+              aria-label="GitHub"
+            >
+              GH
+            </a>
+          )}
+        </div>
+      </article>
+    ))
+  }
+</div>

@@ -1,0 +1,62 @@
+---
+import FeaturedProject from './FeaturedProject.astro';
+import SideProjects from './SideProjects.astro';
+
+type ProjectHighlight = {
+  label: string;
+  value: string;
+};
+
+type ProjectItem = {
+  slug: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  category: string;
+  status: string;
+  accent: string;
+  tags: string[];
+  highlights: ProjectHighlight[];
+  websiteUrl?: string;
+  githubUrl?: string;
+  giteeUrl?: string;
+};
+
+type ProjectPreview = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  navigation: {
+    label: string;
+    count: string;
+    active?: boolean;
+  }[];
+  records: {
+    title: string;
+    type: string;
+    status: string;
+  }[];
+};
+
+type Props = {
+  mainProject?: ProjectItem;
+  sideProjects: ProjectItem[];
+  preview: ProjectPreview;
+};
+
+const { mainProject, sideProjects, preview } = Astro.props;
+---
+
+<section class="home-projects reveal" id="featured-work" aria-labelledby="home-projects-title">
+  <div class="home-projects__header">
+    <div>
+      <p>FEATURED WORK</p>
+      <h2 id="home-projects-title">正在生长的作品</h2>
+    </div>
+    <a href="/projects/">查看全部 →</a>
+  </div>
+
+  {mainProject && <FeaturedProject project={mainProject} previewRecords={preview.records} />}
+
+  {sideProjects.length > 0 && <SideProjects projects={sideProjects} />}
+</section>

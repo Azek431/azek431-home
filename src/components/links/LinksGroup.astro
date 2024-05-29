@@ -1,0 +1,47 @@
+---
+import LinkCard from './LinkCard.astro';
+
+type LinkItem = {
+  name: string;
+  description: string;
+  href: string;
+  tags: string[];
+  category: string;
+};
+
+type Group = {
+  category: string;
+  title: string;
+  desc: string;
+  items: LinkItem[];
+};
+
+type Props = {
+  groups: Group[];
+};
+
+const { groups } = Astro.props;
+---
+
+{
+  groups.map((group) => (
+    <div class="links-group" data-group={group.category} hidden>
+      <h2>{group.title}</h2>
+      <p>{group.desc}</p>
+      <div class="links-grid">
+        {group.items.map((link) => (
+          <LinkCard link={link} />
+        ))}
+      </div>
+    </div>
+  ))
+}
+
+<p
+  data-link-empty
+  hidden
+  aria-live="polite"
+  style="font-size: var(--text-sm); color: var(--color-text-muted); text-align: center; padding: var(--space-6);"
+>
+  这个分类下暂时没有链接。
+</p>

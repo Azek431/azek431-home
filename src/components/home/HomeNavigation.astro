@@ -1,0 +1,48 @@
+---
+type NavigationItem = {
+  label: string;
+  title: string;
+  href: string;
+  desc: string;
+  accent: string;
+  size: 'wide' | 'medium' | 'small';
+};
+
+type Props = {
+  items: readonly NavigationItem[];
+};
+
+const { items } = Astro.props as Props;
+---
+
+<section class="home-navigation reveal" aria-labelledby="home-navigation-title">
+  <div class="home-section-head">
+    <div>
+      <p>EXPLORE</p>
+      <h2 id="home-navigation-title">探索更多</h2>
+    </div>
+    <span>不同大小代表不同的访问优先级。</span>
+  </div>
+
+  <div class="home-navigation__grid">
+    {
+      items.map((item, index) => (
+        <a
+          class="home-navigation__item"
+          href={item.href}
+          data-size={item.size}
+          data-accent={item.accent}
+        >
+          <span class="home-navigation__item-index">0{index + 1}</span>
+          <div>
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </div>
+          <span class="home-navigation__item-arrow" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</section>

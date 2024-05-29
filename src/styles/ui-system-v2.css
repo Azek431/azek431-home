@@ -1,0 +1,12 @@
+/*
+  Azek431 UI System V2 — Minimal Edition
+
+  极简重构版。所有样式按组件/页面分层导入。
+  移除了所有历史遗留的毛玻璃叠加层、极光粒子、HUD 等装饰，
+  回归干净的结构化样式。
+*/
+
+@import './ui/10-shell-header-footer.css';
+@import './ui/20-home.css';
+@import './ui/30-pages.css';
+@import './ui/40-responsiveness.css';

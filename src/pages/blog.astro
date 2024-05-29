@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPlan from '../components/blog/BlogPlan.astro';
+import BlogDraft from '../components/blog/BlogDraft.astro';
+
+const plans = [
+  {
+    num: 1,
+    tag: '写作基础',
+    title: 'Markdown 工作流 + Git 版本管理',
+    desc: '用 Markdown 写正文，Git 管理多版本草稿，支持本地预览与一键发布。',
+    state: '进行中',
+  },
+  {
+    num: 2,
+    tag: '内容检索',
+    title: '标签体系 + 全站搜索',
+    desc: '统一标签分类，接入现有 search 索引，实现跨文章、跨项目检索。',
+    state: '规划中',
+  },
+  {
+    num: 3,
+    tag: '订阅分发',
+    title: 'RSS 输出 + OG 卡片',
+    desc: '为文章生成订阅源和分享预览，提高阅读和传播体验。',
+    state: '规划中',
+  },
+  {
+    num: 4,
+    tag: '阅读体验',
+    title: '代码高亮 + 阅读进度',
+    desc: '统一代码块主题，补充锚点导航、目录和阅读进度。',
+    state: '规划中',
+  },
+];
+
+const drafts = [
+  {
+    title: '建站记录',
+    desc: '记录从个人主页到数字中枢的重构过程。',
+    tag: '随笔',
+    est: '2026 Q3',
+  },
+  {
+    title: 'Azek431 设计系统',
+    desc: '整理颜色、字体、间距、卡片和动效规则。',
+    tag: '设计',
+    est: '2026 Q3',
+  },
+  {
+    title: 'Astro 主站 SEO 实战',
+    desc: '记录 sitemap、RSS、OG、结构化数据和部署细节。',
+    tag: '技术',
+    est: '2026 Q3',
+  },
+];
+---
+
+<BaseLayout title="Blog · Azek431" description="Azek431 的博客计划、写作方向和草稿列表。">
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Blog</p>
+      <h1>博客筹备中</h1>
+      <p>
+        我想认真写一些东西：技术随笔、设计笔记、项目复盘和长期思考。当前先把写作计划、草稿方向和订阅入口整理好。
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <strong>{plans.length}</strong>
+        <span>建设步骤</span>
+      </div>
+      <div class="projects-summary__item">
+        <strong>{drafts.length}</strong>
+        <span>草稿方向</span>
+      </div>
+      <div class="projects-summary__item">
+        <strong>RSS</strong>
+        <span>订阅支持</span>
+      </div>
+      <div class="projects-summary__item">
+        <strong>Q3</strong>
+        <span>预计上线</span>
+      </div>
+    </div>
+
+    <!-- Plans -->
+    <div class="section-heading">
+      <p class="eyebrow">Plan</p>
+      <h2>写作系统会分阶段搭起来</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        先保证好写、好维护，再慢慢补齐阅读体验和订阅分发。
+      </p>
+    </div>
+
+    <BlogPlan items={plans} />
+
+    <!-- Drafts -->
+    <div class="section-heading">
+      <p class="eyebrow">Drafts</p>
+      <h2>草稿方向</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        这些内容会先作为方向记录，后续再逐步写成正式文章。
+      </p>
+    </div>
+
+    <BlogDraft items={drafts} />
+
+    <!-- Footer note -->
+    <div class="about-narrative">
+      <p>博客上线前，RSS 会先同步现有项目、Now 和更新记录。</p>
+      <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+        <a class="button button-primary" href="/rss.xml">订阅 RSS</a>
+        <a class="button button-secondary" href="/changelog/">查看更新</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

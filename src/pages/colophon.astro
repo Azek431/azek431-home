@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteUpdatedDate } from '../data/time';
+
+const stack = [
+  {
+    group: '框架 / 部署',
+    items: [
+      {
+        name: 'Astro',
+        detail: '静态生成、组件化开发、默认极少运行时 JavaScript。',
+      },
+      {
+        name: 'Cloudflare Pages',
+        detail: '负责托管、CDN、自动部署和正式域名访问。',
+      },
+      {
+        name: 'GitHub',
+        detail: '代码管理、版本记录和后续 Actions 自动检查。',
+      },
+    ],
+  },
+  {
+    group: '设计系统',
+    items: [
+      {
+        name: 'UI System V2',
+        detail: '统一页面底座、卡片、按钮、背景、光晕和响应式规则。',
+      },
+      {
+        name: 'Glass / Dark',
+        detail: '深色玻璃质感，强调层级、聚焦和开发者主站氛围。',
+      },
+      {
+        name: 'Reduced Motion',
+        detail: '照顾低性能设备和减少动效偏好的用户。',
+      },
+    ],
+  },
+  {
+    group: '维护方式',
+    items: [
+      {
+        name: 'pnpm',
+        detail: '管理依赖和脚本，日常优先轻量检查。',
+      },
+      {
+        name: 'Prettier',
+        detail: '统一格式，减少无意义 diff。',
+      },
+      {
+        name: 'Astro Check',
+        detail: '在提交前检查页面和组件类型问题。',
+      },
+    ],
+  },
+];
+
+const principles = [
+  '先稳定，再好看',
+  '先统一，再扩展',
+  '少依赖，少运行时',
+  '让每一次修改都容易回滚',
+];
+---
+
+<BaseLayout
+  title="Colophon · Azek431"
+  description="Azek431 主站的技术栈、设计系统、部署方式和维护原则。"
+>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Colophon</p>
+      <h1>这个网站如何构建</h1>
+      <p>
+        这里记录主站背后的技术栈、设计系统、部署方式和维护原则。最近一次构建记录：{
+          siteUpdatedDate
+        }。
+      </p>
+    </div>
+
+    <!-- Principles -->
+    <div class="projects-summary">
+      {
+        principles.map((item, index) => (
+          <div class="projects-summary__item">
+            <strong style="font-size: var(--text-2xl); color: var(--color-accent);">
+              {String(index + 1).padStart(2, '0')}
+            </strong>
+            <span>{item}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Stack -->
+    {
+      stack.map((group) => (
+        <div style="margin-bottom: var(--space-10);">
+          <div class="section-heading">
+            <p class="eyebrow">{group.group}</p>
+            <h2>长期维护的一部分</h2>
+          </div>
+
+          <div class="card-grid">
+            {group.items.map((item) => (
+              <div class="card">
+                <strong style="font-size: var(--text-base);">{item.name}</strong>
+                <p>{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </section>
+</BaseLayout>

@@ -1,0 +1,83 @@
+---
+import { projectDetails } from '../../data/projects';
+
+type Signal = {
+  label: string;
+  value: string;
+};
+
+type Release = {
+  label: string;
+  status: string;
+  href: string;
+};
+
+type Props = {
+  todayDate: string;
+  pageCount: number;
+  signals: readonly Signal[];
+  release: Release;
+};
+
+const { todayDate, pageCount, signals } = Astro.props as Props;
+
+const homeProject = projectDetails.find((project) => project.slug === 'azek431-home');
+---
+
+<section class="home-hero" aria-labelledby="home-title">
+  <p class="home-hero__eyebrow">
+    <span>Azek431 · Digital Space</span>
+    <span class="home-hero__status" aria-label="站点运行中">●</span>
+  </p>
+
+  <h1 id="home-title">
+    把想法写进代码，<br />
+    让项目持续生长。
+  </h1>
+
+  <p class="home-hero__lead">
+    我是 Azek431。这里连接我正在维护的网站、资料库、AI 实验与长期学习记录。
+  </p>
+
+  <div class="home-hero__actions">
+    <a class="button button-primary" href="#featured-work">
+      <span>查看项目</span>
+      <span aria-hidden="true">↓</span>
+    </a>
+    <a class="button button-secondary" href="/about/">
+      <span>了解我</span>
+    </a>
+  </div>
+
+  <div class="home-hero__signals" aria-label="主要关注方向">
+    {
+      signals.map((signal, index) => (
+        <div class="home-hero__signal">
+          <span class="home-hero__signal-label">0{index + 1}</span>
+          <span class="home-hero__signal-value">{signal.label}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div
+    style="display:flex; gap:16px; margin-top:24px; flex-wrap:wrap; font-size:0.75rem; color:var(--color-text-faint); font-family:ui-monospace,monospace;"
+  >
+    <span>Updated {todayDate}</span>
+    <span>{pageCount} pages</span>
+    {
+      homeProject?.githubUrl && (
+        <a href={homeProject.githubUrl} target="_blank" rel="noopener">
+          GitHub ↗
+        </a>
+      )
+    }
+    {
+      homeProject?.giteeUrl && (
+        <a href={homeProject.giteeUrl} target="_blank" rel="noopener">
+          Gitee ↗
+        </a>
+      )
+    }
+  </div>
+</section>

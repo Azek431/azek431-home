@@ -1,0 +1,52 @@
+---
+import { relativeDate } from '../../data/time';
+
+type UpdateItem = {
+  title: string;
+  desc: string;
+  href: string;
+  date: string;
+};
+
+type Props = {
+  updates: readonly UpdateItem[];
+};
+
+const { updates } = Astro.props;
+
+const isExternal = (href: string) => href.startsWith('http');
+---
+
+<div class="home-activity__timeline">
+  <div class="home-section-head home-section-head--compact">
+    <div>
+      <p>LATEST</p>
+      <h2>最近发生的事情</h2>
+    </div>
+    <a href="/changelog/">完整记录 →</a>
+  </div>
+
+  <div class="home-activity__timeline">
+    {
+      updates.map((update) => (
+        <a
+          class="home-activity__timeline-item"
+          href={update.href}
+          target={isExternal(update.href) ? '_blank' : undefined}
+          rel={isExternal(update.href) ? 'noopener noreferrer' : undefined}
+          aria-label={`${update.title}，${update.date}`}
+        >
+          <span class="home-activity__timeline-marker" aria-hidden="true" />
+          <div>
+            <time class="home-activity__timeline-time" datetime={update.date}>
+              {update.date}
+              <small> · {relativeDate(update.date)}</small>
+            </time>
+            <div class="home-activity__timeline-title">{update.title}</div>
+            <p class="home-activity__timeline-desc">{update.desc}</p>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</div>

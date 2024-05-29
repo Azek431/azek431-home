@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProfileSummary from '../components/about/ProfileSummary.astro';
+import NowCards from '../components/about/NowCards.astro';
+import SkillBar from '../components/about/SkillBar.astro';
+import FocusAreas from '../components/about/FocusAreas.astro';
+import { todayDate, todayWeekday } from '../data/time';
+
+const profileItems = [
+  { label: '方向', value: 'Web · AI · Open Source' },
+  { label: '关注', value: '长期维护 / 简洁优先' },
+  { label: '语言', value: '中文 / English' },
+  { label: '状态', value: '线上 · GitHub' },
+];
+
+const nowItems = [
+  {
+    status: '进行中',
+    title: '打磨个人主站',
+    desc: '继续整理设计系统、页面结构、第一代玻璃氛围、可访问性和仓库工程卫生。',
+  },
+  {
+    status: '探索',
+    title: 'AI 工具与自动化',
+    desc: '研究提示词写法、小型 agent 工作流、不同模型能力边界，以及怎么把重复工作交给自动化。',
+  },
+  {
+    status: '规划中',
+    title: '独立博客',
+    desc: '后续准备单独维护博客仓库，用来沉淀技术文章、学习笔记、开发过程和长期思考。',
+  },
+  {
+    status: '维护中',
+    title: '项目官网与镜像',
+    desc: '持续完善项目官网、GitHub 仓库、Gitee 镜像和公开入口的一致性。',
+  },
+];
+
+const skills = [
+  { name: 'Astro / Static Site', level: '熟练', pct: 90 },
+  { name: 'CSS / 设计系统', level: '熟练', pct: 86 },
+  { name: 'TypeScript / JavaScript', level: '扎实', pct: 78 },
+  { name: 'Cloudflare 部署 / 运维', level: '成长中', pct: 64 },
+  { name: 'AI 工具 / 提示词工程', level: '探索中', pct: 58 },
+];
+
+const focusItems = [
+  {
+    num: '01',
+    title: 'AI 工具与自动化',
+    desc: '提示词写法、Agent 搭建、模型能力边界和日常自动化。',
+  },
+  {
+    num: '02',
+    title: '网站搭建与部署',
+    desc: 'Astro 静态站、Cloudflare Pages、域名、设计系统和性能优化。',
+  },
+  {
+    num: '03',
+    title: 'GitHub 项目维护',
+    desc: '开源记录、版本管理、镜像同步、README、Issue 和长期维护。',
+  },
+  {
+    num: '04',
+    title: '前端细节优化',
+    desc: '布局、配色、玻璃质感、微交互、可访问性和响应式体验。',
+  },
+];
+---
+
+<BaseLayout
+  title="关于我"
+  description="了解 Azek431 的个人方向、当前状态、技术栈、项目维护和未来计划。"
+>
+  <section class="section">
+    <!-- Intro -->
+    <div class="about-narrative">
+      <h1>关于我</h1>
+      <p>
+        你好，我是 Azek431。我喜欢研究 AI、网站搭建、GitHub
+        项目部署和软件开发，也在把这个主站打磨成一个长期维护的个人数字空间。
+      </p>
+    </div>
+
+    <ProfileSummary items={profileItems} />
+
+    <!-- Narrative -->
+    <div class="about-narrative">
+      <p>
+        这个主站是我整理项目、学习记录、AI
+        实验和公开入口的起点。它不会只是一个堆链接的导航页，而会逐步变成一个有结构、有审美、有维护记录的个人系统。
+      </p>
+      <p>
+        我更喜欢长期打磨：从一个小入口开始，慢慢整理组件、页面、设计系统、文档、部署流程和开源记录。每一次优化都应该留下清晰的痕迹，也让下一次维护更轻松。
+      </p>
+    </div>
+
+    <!-- Now -->
+    <div class="section-heading">
+      <p class="eyebrow">Now</p>
+      <h2>现在在做的事</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        当前阶段关注方向、正在探索的工具和接下来想继续打磨的事。
+      </p>
+    </div>
+
+    <NowCards items={nowItems} />
+
+    <!-- Today Status -->
+    <div class="section-heading">
+      <p class="eyebrow">Today</p>
+      <h2>今日状态</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        正在细节里反复打磨 · {todayDate} · {todayWeekday}
+      </p>
+    </div>
+
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <span>Energy</span>
+        <strong>72%</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>Focus</span>
+        <strong>86%</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>Mode</span>
+        <strong>Build</strong>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="section-heading">
+      <p class="eyebrow">Skills</p>
+      <h2>技术 / 熟练度</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        这些不是最终标签，只是当前阶段比较常用和正在成长的方向。
+      </p>
+    </div>
+
+    <div class="about-dashboard">
+      <SkillBar skills={skills} />
+      <FocusAreas items={focusItems} />
+    </div>
+
+    <!-- Next -->
+    <div class="section-heading">
+      <p class="eyebrow">Next</p>
+      <h2>后续计划</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        继续让主站更稳定、更漂亮、更有结构，然后逐步扩展博客、项目官网、AI 实验和更多公开内容。
+      </p>
+    </div>
+
+    <div style="display: flex; gap: var(--space-3);">
+      <a class="button button-primary" href="/now/">查看 Now 页面</a>
+    </div>
+  </section>
+</BaseLayout>

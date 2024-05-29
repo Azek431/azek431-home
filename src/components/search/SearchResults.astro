@@ -1,0 +1,49 @@
+---
+type SearchResultItem = {
+  category: string;
+  title: string;
+  desc: string;
+  href: string;
+  tags?: string[];
+};
+
+type Props = {
+  items: SearchResultItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="search-results" style="margin-top: var(--space-6);" aria-live="polite">
+  <p data-search-hint style="font-size: var(--text-sm); color: var(--color-text-muted);">
+    输入关键词开始搜索，也可以直接点击分类查看索引。
+  </p>
+
+  <ol data-search-results>
+    {
+      items.slice(0, 30).map((item) => (
+        <li data-search-static>
+          <a class="search-result" href={item.href}>
+            <span>{item.category}</span>
+            <strong>{item.title}</strong>
+            <small>{item.desc}</small>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div
+    data-search-empty
+    hidden
+    style="text-align: center; padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg-raised);"
+  >
+    <h2>没有匹配的结果</h2>
+    <p>试试换一个关键词，或直接查看项目、链接和更新日志。</p>
+    <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+      <a class="button button-secondary" href="/projects/">所有项目</a>
+      <a class="button button-secondary" href="/links/">链接集合</a>
+      <a class="button button-secondary" href="/changelog/">更新日志</a>
+    </div>
+  </div>
+</div>

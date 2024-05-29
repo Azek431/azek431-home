@@ -1,0 +1,11 @@
+/*
+  Home page — Modular Edition
+  首页样式已拆分为独立文件，按区块组织。
+*/
+
+@import './home-hero.css';
+@import './home-command.css';
+@import './home-projects.css';
+@import './home-now.css';
+@import './home-navigation.css';
+@import './home-activity.css';

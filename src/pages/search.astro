@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchInput from '../components/search/SearchInput.astro';
+import SearchFilter from '../components/search/SearchFilter.astro';
+import SearchResults from '../components/search/SearchResults.astro';
+import { searchItems } from '../data/search';
+
+const counts = {
+  total: searchItems.length,
+  Page: searchItems.filter((i) => i.category === 'Page').length,
+  Project: searchItems.filter((i) => i.category === 'Project').length,
+  Link: searchItems.filter((i) => i.category === 'Link').length,
+  Update: searchItems.filter((i) => i.category === 'Update').length,
+  Changelog: searchItems.filter((i) => i.category === 'Changelog').length,
+};
+
+const categories = ['全部', 'Page', 'Project', 'Link', 'Update', 'Changelog'];
+const serialized = JSON.stringify(searchItems);
+---
+
+<BaseLayout title="搜索 · Azek431" description="跨页面、项目、链接、更新日志的站内搜索。">
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Command Search</p>
+      <h1>站内搜索</h1>
+      <p>
+        跨 {counts.total} 条内容索引搜索页面、项目、链接和更新记录。输入关键词即可实时筛选，按回车可以打开第一条结果。
+      </p>
+    </div>
+
+    <SearchInput />
+    <SearchFilter categories={categories} counts={counts} />
+    <SearchResults items={searchItems} />
+  </section>
+
+  <script is:inline define:vars={{ serialized }}>
+    import { normalize, renderResults } from '../components/search/search-utils.ts';
+
+    (function () {
+      var items = JSON.parse(serialized);
+      var input = document.querySelector('[data-search-input]');
+      var results = document.querySelector('[data-search-results]');
+      var empty = document.querySelector('[data-search-empty]');
+      var hint = document.querySelector('[data-search-hint]');
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-search-category]'));
+
+      if (!input || !results) return;
+
+      var activeCategory = '全部';
+
+      var render = function () {
+        var query = normalize(input.value);
+        var {
+          results: html,
+          hintHidden,
+          emptyHidden,
+        } = renderResults(items, query, activeCategory);
+
+        results.innerHTML = html;
+        if (hint) hint.hidden = hintHidden;
+        if (empty) empty.hidden = emptyHidden;
+      };
+
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          activeCategory = button.getAttribute('data-search-category') || '全部';
+
+          buttons.forEach(function (btn) {
+            btn.setAttribute('aria-pressed', btn === button ? 'true' : 'false');
+          });
+
+          render();
+        });
+      });
+
+      input.addEventListener('input', render);
+
+      input.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter') return;
+        var first = results.querySelector('a');
+        if (first) {
+          event.preventDefault();
+          first.click();
+        }
+      });
+
+      render();
+    })();
+  </script>
+</BaseLayout>

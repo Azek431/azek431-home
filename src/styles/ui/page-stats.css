@@ -1,0 +1,56 @@
+/*
+  Page — Stats
+  统计页：卡片网格 + 大数字
+*/
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-5);
+}
+
+.stat-card {
+  padding: var(--space-7);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-raised);
+  text-align: center;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.stat-card:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-3px);
+}
+
+.stat-card strong {
+  display: block;
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card span {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-faint);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

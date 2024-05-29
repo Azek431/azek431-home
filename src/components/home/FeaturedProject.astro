@@ -1,0 +1,140 @@
+---
+type ProjectItem = {
+  slug: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  category: string;
+  status: string;
+  accent: string;
+  tags: string[];
+  highlights: { label: string; value: string }[];
+  websiteUrl?: string;
+  githubUrl?: string;
+  giteeUrl?: string;
+};
+
+type PreviewRecord = {
+  title: string;
+  type: string;
+  status: string;
+};
+
+type Props = {
+  project: ProjectItem;
+  previewRecords: PreviewRecord[];
+};
+
+const { project, previewRecords } = Astro.props;
+
+function externalProjectLinks(p: ProjectItem) {
+  return [
+    p.websiteUrl && { label: '访问', href: p.websiteUrl },
+    p.githubUrl && { label: 'GitHub', href: p.githubUrl },
+    p.giteeUrl && { label: 'Gitee', href: p.giteeUrl },
+  ].filter(Boolean) as { label: string; href: string }[];
+}
+---
+
+<article class="home-projects__featured">
+  <div class="home-projects__preview">
+    <div class="home-projects__preview-bar">
+      <>
+        <span></span>
+        <span></span>
+        <span></span>
+      </>
+      <small>{project.websiteUrl ?? project.slug}</small>
+    </div>
+    <div class="home-projects__preview-body">
+      <div class="preview-content">
+        <div class="preview-status">
+          <span class="tag">{project.status}</span>
+        </div>
+        <div class="preview-title">{project.title}</div>
+        <div class="preview-records">
+          {
+            previewRecords.slice(0, 4).map((r, i) => (
+              <div class="preview-record">
+                <span class="preview-record__num">0{i + 1}</span>
+                <span class="preview-record__title">{r.title}</span>
+                <span class="preview-record__status">{r.status}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-projects__content">
+    <div class="tags">
+      <span class="tag tag-accent">{project.category}</span>
+      <span class="tag">{project.status}</span>
+    </div>
+    <h3>{project.title}</h3>
+    <p>{project.longDescription || project.description}</p>
+    <div class="actions">
+      <a class="button button-primary" href={`/projects/${project.slug}/`}>
+        <span>项目详情</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      {
+        externalProjectLinks(project).map((link) => (
+          <a
+            class="button button-secondary"
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {link.label} ↗
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .preview-content {
+    text-align: left;
+    width: 100%;
+  }
+
+  .preview-status {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .preview-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .preview-records {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .preview-record {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .preview-record__num {
+    font-family: ui-monospace, monospace;
+    color: var(--color-text-faint);
+  }
+
+  .preview-record__status {
+    margin-left: auto;
+    color: var(--color-text-faint);
+  }
+</style>

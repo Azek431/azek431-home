@@ -1,0 +1,23 @@
+---
+type ReadingItem = {
+  title: string;
+  kind: string;
+};
+
+type Props = {
+  items: ReadingItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="card-grid">
+  {
+    items.map((item) => (
+      <a class="card" href="/search/" style="text-decoration: none;">
+        <h3>{item.title}</h3>
+        <span class="tag tag-accent">{item.kind}</span>
+      </a>
+    ))
+  }
+</div>

@@ -1,0 +1,23 @@
+---
+type ProfileItem = {
+  label: string;
+  value: string;
+};
+
+type Props = {
+  items: ProfileItem[];
+};
+
+const { items } = Astro.props as Props;
+---
+
+<div class="projects-summary">
+  {
+    items.map((item) => (
+      <div class="projects-summary__item">
+        <span>{item.label}</span>
+        <strong>{item.value}</strong>
+      </div>
+    ))
+  }
+</div>

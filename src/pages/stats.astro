@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatsSection from '../components/stats/StatsSection.astro';
+import StatsRuntime from '../components/stats/StatsRuntime.astro';
+import StatsLocal from '../components/stats/StatsLocal.astro';
+import { changelog } from '../data/changelog';
+import { projectDetails } from '../data/projects';
+import { links, recentUpdates, sitePages } from '../data/site';
+import {
+  getSiteAge,
+  siteStartedAtIso,
+  siteStartedDateTime,
+  siteStartedHash,
+  siteUpdatedDateTime,
+  siteUpdatedHash,
+} from '../data/time';
+
+type DashboardMetric = {
+  label: string;
+  value: string | number;
+  suffix?: string;
+};
+
+type DashboardSection = {
+  kicker: string;
+  title: string;
+  value: string | number;
+  suffix?: string;
+  desc: string;
+  metrics: DashboardMetric[];
+};
+
+const liveProjects = projectDetails.filter((project) => project.status === '已上线').length;
+const plannedProjects = projectDetails.length - liveProjects;
+const majorReleases = changelog.filter((entry) => entry.tone === 'major').length;
+const totalChanges = changelog.reduce((acc, entry) => acc + entry.changes.length, 0);
+const totalTags = projectDetails.reduce((acc, project) => acc + (project.tags?.length || 0), 0);
+const totalFeatures = projectDetails.reduce(
+  (acc, project) => acc + (project.features?.length || 0),
+  0,
+);
+const pageCount = sitePages.length + projectDetails.length + 1;
+const siteAge = getSiteAge();
+
+const publicLinks = links.filter((link) => link.href.startsWith('http')).length;
+const siteLinks = links.length - publicLinks;
+
+const dashboardSections: DashboardSection[] = [
+  {
+    kicker: 'Project',
+    title: '项目系统',
+    value: projectDetails.length,
+    suffix: '个',
+    desc: '主站目前整理的项目、官网、资料库和实验方向。',
+    metrics: [
+      { label: '已上线', value: liveProjects, suffix: '个' },
+      { label: '规划 / 实验', value: plannedProjects, suffix: '个' },
+      { label: '标签', value: totalTags, suffix: '个' },
+      { label: '特性条目', value: totalFeatures, suffix: '条' },
+    ],
+  },
+  {
+    kicker: 'Iteration',
+    title: '迭代记录',
+    value: changelog.length,
+    suffix: '次',
+    desc: '记录主站每一轮结构、视觉、内容和工程细节优化。',
+    metrics: [
+      { label: '大版本', value: majorReleases, suffix: '次' },
+      { label: '总改动', value: totalChanges, suffix: '条' },
+      { label: '最近更新', value: recentUpdates.length, suffix: '条' },
+      { label: '构建提交', value: siteUpdatedHash },
+    ],
+  },
+  {
+    kicker: 'Time',
+    title: '运行时间',
+    value: siteAge.days,
+    suffix: '天',
+    desc: '统一使用建站时间作为运行起点，Footer 和 Stats 保持同一口径。',
+    metrics: [
+      { label: '建站于', value: siteStartedDateTime },
+      { label: '完整周数', value: siteAge.weeks, suffix: '周' },
+      { label: '约合月份', value: siteAge.months, suffix: '个月' },
+      { label: '首个提交', value: siteStartedHash },
+    ],
+  },
+  {
+    kicker: 'Content',
+    title: '内容入口',
+    value: pageCount,
+    suffix: '页',
+    desc: '页面、链接、订阅源和站点地图共同构成公开访问入口。',
+    metrics: [
+      { label: '公开链接', value: publicLinks, suffix: '个' },
+      { label: '站内入口', value: siteLinks, suffix: '个' },
+      { label: 'RSS', value: 'Ready' },
+      { label: 'Sitemap', value: 'XML' },
+    ],
+  },
+];
+
+// Local stats initial values (server-side placeholder)
+const localSession = 0;
+const localTotal = 0;
+const localFirst = '';
+---
+
+<BaseLayout
+  title="主站数据"
+  description="查看 Azek431 主站的项目、迭代、运行时间、内容入口和本地访问统计。"
+>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Stats Dashboard</p>
+      <h1>主站数据</h1>
+      <p>把项目、迭代、运行时间和内容入口整理成一组更清晰的数据面板。</p>
+    </div>
+
+    <!-- Top-level stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <span>页面</span>
+        <strong>{pageCount}</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>项目</span>
+        <strong>{projectDetails.length}</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>更新</span>
+        <strong>{changelog.length}</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>公开链接</span>
+        <strong>{publicLinks}</strong>
+      </div>
+    </div>
+
+    <!-- Dashboard Sections -->
+    <div class="card-grid">
+      {
+        dashboardSections.map((section) => (
+          <StatsSection
+            kicker={section.kicker}
+            title={section.title}
+            value={section.value}
+            suffix={section.suffix}
+            desc={section.desc}
+            metrics={section.metrics}
+          />
+        ))
+      }
+    </div>
+
+    <!-- Runtime -->
+    <StatsRuntime
+      siteAge={siteAge}
+      siteStartedAtIso={siteStartedAtIso}
+      siteUpdatedDateTime={siteUpdatedDateTime}
+    />
+
+    <!-- Local Stats -->
+    <StatsLocal sessionCount={localSession} totalCount={localTotal} firstVisit={localFirst} />
+  </section>
+
+  <script is:inline>
+    (function () {
+      var session = Number(sessionStorage.getItem('azek-session-views') || '0') + 1;
+      var total = Number(localStorage.getItem('azek-total-views') || '0') + 1;
+      var first = localStorage.getItem('azek-first-visit');
+
+      if (!first) {
+        first = new Date().toLocaleDateString('zh-CN');
+        localStorage.setItem('azek-first-visit', first);
+      }
+
+      sessionStorage.setItem('azek-session-views', String(session));
+      localStorage.setItem('azek-total-views', String(total));
+
+      var sessionNode = document.querySelector('[data-local-stat="session"]');
+      var totalNode = document.querySelector('[data-local-stat="total"]');
+      var firstNode = document.querySelector('[data-local-stat="first"]');
+
+      if (sessionNode) sessionNode.textContent = session + ' 次';
+      if (totalNode) totalNode.textContent = total + ' 次';
+      if (firstNode) firstNode.textContent = first;
+    })();
+  </script>
+</BaseLayout>

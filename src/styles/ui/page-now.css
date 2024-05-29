@@ -1,0 +1,53 @@
+/*
+  Page — Now
+  Now 页面：项目列表
+*/
+
+.now-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-12);
+}
+
+.now-item {
+  padding: var(--space-7);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-raised);
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.now-item:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.now-item__tag {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.now-item h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+.now-item p {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .now-list {
+    grid-template-columns: 1fr;
+  }
+}

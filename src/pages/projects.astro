@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectGrid from '../components/projects/ProjectGrid.astro';
+---
+
+<BaseLayout
+  title="项目展示台"
+  description="整理 Azek431 的个人主站、项目官网、资料库、博客计划、AI 实验和更多技术实践。"
+>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Project Showcase</p>
+      <h1>项目展示台</h1>
+      <p>
+        这里集中整理我的个人主站、文档站、博客计划、AI
+        实验和后续技术实践。已上线项目会优先提供网站、GitHub 和 Gitee 镜像入口。
+      </p>
+    </div>
+
+    <ProjectGrid />
+  </section>
+</BaseLayout>
