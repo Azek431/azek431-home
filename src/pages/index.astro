@@ -1,11 +1,340 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const navCards = [
+  {
+    title: 'Blog',
+    description: '记录我的技术文章、学习笔记和长期思考。',
+    href: '#',
+    status: '即将上线',
+  },
+  {
+    title: 'Projects',
+    description: '展示我的项目、工具、网站和一些有趣的作品。',
+    href: '/projects/',
+    status: '项目导航',
+  },
+  {
+    title: 'GitHub',
+    description: '查看我的代码、开源记录和项目实践。',
+    href: 'https://github.com/Azek431',
+    status: '外部链接',
+  },
+  {
+    title: 'Links',
+    description: '整理我的常用链接、联系方式和个人入口。',
+    href: '/links/',
+    status: '链接集合',
+  },
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Azek431 的个人主站，用来整理博客、项目、学习记录和数字空间。" />
+    <title>Azek431 的个人主站</title>
+  </head>
+
+  <body>
+    <main class="page">
+      <header class="site-header">
+        <a class="logo" href="/">Azek431</a>
+
+        <nav class="nav">
+          <a href="/">首页</a>
+          <a href="/about/">关于</a>
+          <a href="/projects/">项目</a>
+          <a href="/links/">链接</a>
+          <a href="https://github.com/Azek431" target="_blank" rel="noreferrer">GitHub</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <p class="eyebrow">Personal Digital Space</p>
+
+        <h1>你好，我是 Azek431。</h1>
+
+        <p class="hero-text">
+          这里是我的个人数字空间。我会在这里整理博客、项目、学习记录和一些有趣的实验，
+          也会把未来的子域名、项目官网和个人博客统一导航到这里。
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="/projects/">查看项目</a>
+          <a class="button secondary" href="https://github.com/Azek431" target="_blank" rel="noreferrer">
+            访问 GitHub
+          </a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Navigation</p>
+          <h2>主站导航</h2>
+          <p>
+            这个主站会作为我的长期入口。博客、项目官网、文档站和实验室都会从这里进入。
+          </p>
+        </div>
+
+        <div class="cards">
+          {
+            navCards.map((item) => (
+              <a class="card" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined}>
+                <span>{item.status}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section about-preview">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>我正在构建自己的个人网站生态。</h2>
+        </div>
+
+        <p>
+          目前我关注 AI、网站搭建、GitHub 项目部署和软件开发。
+          这个站点会从一个简单的主站开始，后续逐步扩展博客、项目官网、文档和实验工具。
+        </p>
+      </section>
+
+      <footer class="footer">
+        <p>© 2026 Azek431. Built with Astro.</p>
+      </footer>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(body) {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Microsoft YaHei", sans-serif;
+    color: #e5e7eb;
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.28), transparent 32rem),
+      radial-gradient(circle at top right, rgba(168, 85, 247, 0.22), transparent 28rem),
+      #020617;
+  }
+
+  :global(a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .page {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 28px 0 40px;
+  }
+
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 0;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    color: #cbd5e1;
+    font-size: 14px;
+  }
+
+  .nav a {
+    transition: color 0.2s ease;
+  }
+
+  .nav a:hover {
+    color: #ffffff;
+  }
+
+  .hero {
+    padding: 96px 0 72px;
+  }
+
+  .eyebrow {
+    margin: 0 0 14px;
+    color: #93c5fd;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  h1 {
+    max-width: 760px;
+    margin-bottom: 22px;
+    font-size: clamp(48px, 8vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.08em;
+  }
+
+  h2 {
+    margin-bottom: 14px;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.06em;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+    font-size: 24px;
+    letter-spacing: -0.04em;
+  }
+
+  .hero-text {
+    max-width: 720px;
+    margin-bottom: 32px;
+    color: #cbd5e1;
+    font-size: 19px;
+    line-height: 1.85;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 999px;
+    padding: 0 20px;
+    font-weight: 700;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .primary {
+    background: #f8fafc;
+    color: #020617;
+  }
+
+  .secondary {
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    color: #e2e8f0;
+  }
+
+  .section {
+    padding: 54px 0;
+  }
+
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 26px;
+  }
+
+  .section-heading p,
+  .about-preview p {
+    color: #cbd5e1;
+    line-height: 1.8;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 220px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 28px;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.72);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(147, 197, 253, 0.55);
+    background: rgba(30, 41, 59, 0.86);
+  }
+
+  .card span {
+    display: inline-flex;
+    margin-bottom: 38px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 999px;
+    padding: 6px 10px;
+    color: #93c5fd;
+    font-size: 12px;
+  }
+
+  .card p {
+    color: #cbd5e1;
+    line-height: 1.7;
+  }
+
+  .about-preview {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 32px;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .footer {
+    padding-top: 32px;
+    color: #94a3b8;
+    font-size: 14px;
+  }
+
+  @media (max-width: 860px) {
+    .site-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .hero {
+      padding: 64px 0 48px;
+    }
+
+    .cards {
+      grid-template-columns: 1fr;
+    }
+
+    .about-preview {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
