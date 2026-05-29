@@ -1,0 +1,34 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projectDetails, type ProjectDetail } from '../../data/projects';
+
+const liveCount = projectDetails.filter((p) => p.status === '已上线').length;
+const wipCount = projectDetails.filter(
+  (p) => p.status === '维护中' || p.status === '计划中',
+).length;
+const ideaCount = projectDetails.filter((p) => p.status === '构想中').length;
+
+const stats = [
+  { label: '已上线', value: liveCount },
+  { label: '进行中', value: wipCount },
+  { label: '构想中', value: ideaCount },
+  { label: '总项目', value: projectDetails.length },
+];
+---
+
+<!-- Stats -->
+<div class="projects-summary">
+  {
+    stats.map((item) => (
+      <div class="projects-summary__item">
+        <strong>{item.value}</strong>
+        <span>{item.label}</span>
+      </div>
+    ))
+  }
+</div>
+
+<!-- Project Grid -->
+<div class="card-grid">
+  {projectDetails.map((project, index) => <ProjectCard project={project} index={index} />)}
+</div>

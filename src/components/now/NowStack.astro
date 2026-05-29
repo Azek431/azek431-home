@@ -1,0 +1,23 @@
+---
+type StackItem = {
+  name: string;
+  role: string;
+};
+
+type Props = {
+  items: StackItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="card-grid">
+  {
+    items.map((item) => (
+      <div class="card">
+        <strong style="font-size: var(--text-base);">{item.name}</strong>
+        <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{item.role}</span>
+      </div>
+    ))
+  }
+</div>

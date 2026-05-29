@@ -1,0 +1,41 @@
+---
+type Focus = {
+  num?: string;
+  step?: string;
+  title: string;
+  desc: string;
+  status?: string;
+  tone?: 'active' | 'complete' | 'planned';
+};
+
+type Props = {
+  focuses: readonly Focus[];
+};
+
+const { focuses } = Astro.props as Props;
+---
+
+<section class="home-now reveal" aria-labelledby="home-now-title">
+  <div class="home-section-head">
+    <div>
+      <p>FOCUS</p>
+      <h2 id="home-now-title">当前状态</h2>
+    </div>
+    <a href="/now/">查看全部 →</a>
+  </div>
+
+  <div class="home-now__grid">
+    {
+      focuses.map((focus, index) => (
+        <article class="home-now__card">
+          <span class="home-now__card-label">
+            {index === 0 ? 'NOW' : index === 1 ? 'LATEST' : 'NEXT'}
+          </span>
+          <h3>{focus.title}</h3>
+          <p>{focus.desc}</p>
+          <span class="home-now__card-line" />
+        </article>
+      ))
+    }
+  </div>
+</section>

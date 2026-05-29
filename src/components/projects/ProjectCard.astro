@@ -1,0 +1,151 @@
+---
+type ProjectDetail = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  status: string;
+  accent: string;
+  tags: string[];
+  lastUpdated: string;
+  websiteUrl?: string;
+  githubUrl?: string;
+  giteeUrl?: string;
+};
+
+type Props = {
+  project: ProjectDetail;
+  index: number;
+};
+
+const { project, index } = Astro.props;
+
+function projectHref(p: ProjectDetail) {
+  return `/projects/${p.slug}/`;
+}
+---
+
+<div class="card card-accent-top" style="--accent-color: {project.accent};" data-project-card>
+  <div class="project-card__meta">
+    <span class="tag">{project.category}</span>
+    <span class="tag tag-accent">{project.status}</span>
+  </div>
+
+  <p class="project-card__index">#{String(index + 1).padStart(2, '0')}</p>
+
+  <h2 class="project-card__title">{project.title}</h2>
+  <p class="project-card__desc">{project.description}</p>
+
+  <div class="project-card__tags">
+    {project.tags.slice(0, 6).map((tag) => <span class="tag">{tag}</span>)}
+  </div>
+
+  <div class="project-card__footer">
+    <span class="project-card__updated">更新于 {project.lastUpdated}</span>
+    <a
+      class="button button-primary button-sm"
+      href={projectHref(project)}
+      aria-label={`查看 ${project.title} 项目详情`}
+    >
+      查看详情
+    </a>
+  </div>
+
+  {
+    (() => {
+      const websiteUrl = project.websiteUrl;
+      const githubUrl = project.githubUrl;
+      const giteeUrl = project.giteeUrl;
+      const hasLinks = websiteUrl || githubUrl || giteeUrl;
+      if (!hasLinks) return null;
+      return (
+        <div class="project-card__links">
+          {websiteUrl && (
+            <a
+              class="button button-secondary button-sm"
+              href={websiteUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              访问网站
+            </a>
+          )}
+          {githubUrl && (
+            <a
+              class="button button-secondary button-sm"
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          )}
+          {giteeUrl && (
+            <a
+              class="button button-secondary button-sm"
+              href={giteeUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Gitee 镜像
+            </a>
+          )}
+        </div>
+      );
+    })()
+  }
+</div>
+
+<style>
+  .project-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .project-card__index {
+    font-size: var(--text-xs);
+    font-family: ui-monospace, monospace;
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-1);
+  }
+
+  .project-card__title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-1);
+  }
+
+  .project-card__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-3);
+  }
+
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .project-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-4);
+  }
+
+  .project-card__updated {
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  .project-card__links {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+  }
+</style>

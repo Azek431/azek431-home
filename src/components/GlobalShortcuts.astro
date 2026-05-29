@@ -1,0 +1,153 @@
+---
+import { routeShortcutMap } from '../data/navigation';
+import { projectDetails } from '../data/projects';
+
+const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/`);
+---
+
+<script is:inline define:vars={{ routeShortcutMap, projectPaths }}>
+  (function () {
+    if (typeof window === 'undefined') return;
+    if (window.__azekGlobalShortcutsReady) return;
+    window.__azekGlobalShortcutsReady = true;
+
+    var pendingPrefix = null;
+    var pendingTimer = null;
+
+    function isTypingTarget(target) {
+      if (!target) return false;
+      return (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.isContentEditable
+      );
+    }
+
+    function hasCommandModifier(event) {
+      return event.metaKey || event.ctrlKey || event.altKey;
+    }
+
+    function resetPrefix() {
+      pendingPrefix = null;
+      if (pendingTimer) {
+        window.clearTimeout(pendingTimer);
+        pendingTimer = null;
+      }
+    }
+
+    function announce(message, type) {
+      if (window.__toast) {
+        window.__toast(message, type || 'info');
+      }
+    }
+
+    function closeAllOverlays() {
+      document.dispatchEvent(new CustomEvent('site:overlay-close-all'));
+    }
+
+    function navigateTo(path) {
+      if (!path) return;
+      closeAllOverlays();
+      if (window.location.pathname === path) {
+        announce('已经在当前页面', 'info');
+        return;
+      }
+      window.location.href = path;
+    }
+
+    function openSearch() {
+      var input = document.getElementById('site-search');
+      closeAllOverlays();
+      if (input) {
+        input.focus();
+        if (typeof input.select === 'function') input.select();
+        return;
+      }
+      navigateTo('/search/');
+    }
+
+    function toggleTheme() {
+      var button = document.querySelector('[data-theme-toggle]');
+      if (button) button.click();
+    }
+
+    function toggleShortcutPanel() {
+      var trigger = document.querySelector('[data-shortcut-trigger]');
+      if (trigger) trigger.click();
+    }
+
+    function openRandomProject() {
+      var paths = JSON.parse(serializedProjectPaths);
+      if (!Array.isArray(paths) || paths.length === 0) {
+        announce('暂时没有可打开的项目', 'error');
+        return;
+      }
+      var candidates = paths.filter(function (p) {
+        return p !== window.location.pathname;
+      });
+      if (candidates.length === 0) candidates = paths.slice();
+      var target = candidates[Math.floor(Math.random() * candidates.length)];
+      navigateTo(target);
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.defaultPrevented) return;
+      if (isTypingTarget(event.target)) return;
+
+      var key = event.key.toLowerCase();
+
+      if (event.key === 'Escape') {
+        resetPrefix();
+        return;
+      }
+      if (hasCommandModifier(event)) {
+        resetPrefix();
+        return;
+      }
+
+      if (event.key === '?') {
+        event.preventDefault();
+        resetPrefix();
+        toggleShortcutPanel();
+        return;
+      }
+      if (key === '/') {
+        event.preventDefault();
+        resetPrefix();
+        openSearch();
+        return;
+      }
+      if (key === 't') {
+        event.preventDefault();
+        resetPrefix();
+        toggleTheme();
+        return;
+      }
+      if (key === 'r') {
+        event.preventDefault();
+        resetPrefix();
+        openRandomProject();
+        return;
+      }
+
+      if (pendingPrefix === 'g') {
+        event.preventDefault();
+        var map = JSON.parse(serializedRouteMap);
+        var targetPath = map[key];
+        resetPrefix();
+        if (targetPath) navigateTo(targetPath);
+        else announce('没有对应的导航快捷键', 'info');
+        return;
+      }
+
+      if (key === 'g') {
+        pendingPrefix = 'g';
+        if (pendingTimer) clearTimeout(pendingTimer);
+        pendingTimer = setTimeout(resetPrefix, 1500);
+      }
+    });
+
+    window.addEventListener('pagehide', resetPrefix);
+  })();
+</script>

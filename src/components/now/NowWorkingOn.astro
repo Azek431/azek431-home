@@ -1,0 +1,29 @@
+---
+type NowItem = {
+  title: string;
+  detail: string;
+  status: string;
+  tag: string;
+};
+
+type Props = {
+  items: NowItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="now-list">
+  {
+    items.map((item) => (
+      <div class="now-item">
+        <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+          <span class="tag">{item.tag}</span>
+          <span class="tag tag-accent">{item.status}</span>
+        </div>
+        <h3>{item.title}</h3>
+        <p>{item.detail}</p>
+      </div>
+    ))
+  }
+</div>

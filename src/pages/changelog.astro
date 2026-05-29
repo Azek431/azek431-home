@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { changelog } from '../data/changelog';
+
+const totalChanges = changelog.reduce((acc, item) => acc + item.changes.length, 0);
+
+const toneLabel: Record<string, string> = {
+  major: '大版本',
+  minor: '小版本',
+  patch: '补丁',
+};
+
+const counts = [
+  { label: '全部版本', value: changelog.length, tone: 'blue' },
+  { label: '总改动', value: totalChanges, tone: 'green' },
+  {
+    label: '大版本',
+    value: changelog.filter((item) => item.tone === 'major').length,
+    tone: 'violet',
+  },
+  {
+    label: '补丁',
+    value: changelog.filter((item) => item.tone === 'patch').length,
+    tone: 'amber',
+  },
+];
+---
+
+<BaseLayout
+  title="更新日志 · Azek431"
+  description="Azek431 个人主站的版本更新、功能变化和维护记录。"
+>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Changelog</p>
+      <h1>更新日志</h1>
+      <p>这里记录主站每一次重要调整：页面结构、视觉系统、SEO、数据、交互和工程化流程。</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="projects-summary">
+      {
+        counts.map((item) => (
+          <div class="projects-summary__item">
+            <strong>{item.value}</strong>
+            <span>{item.label}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Timeline -->
+    <div class="changelog-list">
+      {
+        changelog.map((entry) => (
+          <div class="changelog-item">
+            <div class="changelog-item__date">
+              {entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}
+            </div>
+            <h3>{entry.title}</h3>
+            <div class="changelog-item__changes">
+              {entry.changes.map((change) => (
+                <div class="changelog-item__change">{change}</div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

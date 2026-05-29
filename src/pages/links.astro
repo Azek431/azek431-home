@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../data/site';
+import { siteUpdatedDate } from '../data/time';
+import LinksFilter from '../components/links/LinksFilter.astro';
+import LinksGroup from '../components/links/LinksGroup.astro';
+
+const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)))];
+
+const categoryMeta: Record<
+  string,
+  { title: string; desc: string; tone: 'green' | 'blue' | 'violet' | 'amber' }
+> = {
+  Main: {
+    title: '主入口',
+    desc: '最常用的公开主页、代码平台和当前主站入口。',
+    tone: 'green',
+  },
+  Site: {
+    title: '站内核心',
+    desc: '关于、项目、博客和主站核心页面。',
+    tone: 'blue',
+  },
+  Extra: {
+    title: '扩展入口',
+    desc: 'Now、Uses、统计、订阅源和更新记录。',
+    tone: 'violet',
+  },
+};
+
+const groups = categories
+  .filter((category) => category !== '全部')
+  .map((category) => ({
+    category,
+    ...(categoryMeta[category] || {
+      title: category,
+      desc: '这一组链接用于补充个人主站的公开入口。',
+      tone: 'amber' as const,
+    }),
+    items: links.filter((link) => link.category === category),
+  }));
+
+const externalCount = links.filter((link) => link.href.startsWith('http')).length;
+const internalCount = links.length - externalCount;
+---
+
+<BaseLayout title="链接 · Azek431" description="Azek431 的公开入口、站内导航、项目链接和订阅资源。">
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p class="eyebrow">Resource Hub</p>
+      <h1>公开入口</h1>
+      <p>
+        这里把主站、代码平台、项目入口、订阅源和站内页面集中整理起来，方便快速找到不同内容，也方便后续扩展更多公开链接。
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <strong>{links.length}</strong>
+        <span>全部链接</span>
+      </div>
+      <div class="projects-summary__item">
+        <strong>{internalCount}</strong>
+        <span>站内入口</span>
+      </div>
+      <div class="projects-summary__item">
+        <strong>{externalCount}</strong>
+        <span>外部入口</span>
+      </div>
+      <div class="projects-summary__item">
+        <strong>{siteUpdatedDate}</strong>
+        <span>最近构建</span>
+      </div>
+    </div>
+
+    <LinksFilter categories={categories} />
+    <LinksGroup groups={groups} />
+  </section>
+
+  <script is:inline>
+    import { applyLinkFilter } from '../components/links/links-filter.ts';
+
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-link-filter]'));
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          applyLinkFilter(button.getAttribute('data-link-filter') || '全部');
+        });
+      });
+
+      applyLinkFilter('全部');
+    })();
+  </script>
+</BaseLayout>

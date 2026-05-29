@@ -1,0 +1,97 @@
+---
+import RuntimeCounter from './RuntimeCounter.astro';
+import { siteConfig } from '../data/site';
+import { getSiteAge, siteStartedAtIso, siteStartedDateTime } from '../data/time';
+
+const year = new Date().getFullYear();
+const siteAge = getSiteAge();
+
+const primaryLinks = [
+  { label: '首页', href: '/' },
+  { label: '项目', href: '/projects/' },
+  { label: '链接', href: '/links/' },
+  { label: '搜索', href: '/search/' },
+];
+
+const secondaryLinks = [
+  { label: 'About', href: '/about/' },
+  { label: 'Now', href: '/now/' },
+  { label: 'Uses', href: '/uses/' },
+  { label: 'Changelog', href: '/changelog/' },
+];
+
+const publicLinks = [
+  { label: 'GitHub', href: siteConfig.github },
+  { label: 'Gitee', href: siteConfig.gitee },
+  { label: 'RSS', href: '/rss.xml' },
+];
+
+const isExternal = (href: string) => href.startsWith('http');
+---
+
+<footer class="site-footer" aria-label="站点页脚">
+  <div class="footer-inner">
+    <div class="footer__brand">
+      <h3>{siteConfig.name}</h3>
+      <p>个人数字空间 — 连接项目、学习记录、AI 实验与公开入口。</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="页脚导航">
+      <div class="footer__column">
+        <h4>导航</h4>
+        <ul>
+          {
+            primaryLinks.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer__column">
+        <h4>记录</h4>
+        <ul>
+          {
+            secondaryLinks.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer__column">
+        <h4>公开</h4>
+        <ul>
+          {
+            publicLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target={isExternal(link.href) ? '_blank' : undefined}
+                  rel={isExternal(link.href) ? 'noreferrer' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="footer__bottom">
+    <span>© {year} {siteConfig.name}</span>
+    <span>
+      Started {siteStartedDateTime} · Running <RuntimeCounter
+        startedAt={siteStartedAtIso}
+        fallback={siteAge.preciseLabel}
+        className=""
+      />
+    </span>
+  </div>
+</footer>

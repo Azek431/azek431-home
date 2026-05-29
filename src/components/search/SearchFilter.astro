@@ -1,0 +1,26 @@
+---
+type Props = {
+  categories: string[];
+  counts: Record<string, number>;
+};
+
+const { categories, counts } = Astro.props;
+---
+
+<div class="links-filter" style="margin-top: var(--space-4);">
+  {
+    categories.map((category, index) => (
+      <button
+        type="button"
+        class="links-filter__chip"
+        data-search-category={category}
+        aria-pressed={index === 0 ? 'true' : 'false'}
+      >
+        <span>{category}</span>
+        <span style="margin-left: var(--space-1); opacity: 0.6;">
+          {category === '全部' ? counts.total : counts[category]}
+        </span>
+      </button>
+    ))
+  }
+</div>

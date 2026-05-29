@@ -1,0 +1,22 @@
+---
+type Props = {
+  categories: string[];
+};
+
+const { categories } = Astro.props;
+---
+
+<div class="links-filter">
+  {
+    categories.map((category, index) => (
+      <button
+        type="button"
+        class="links-filter__chip"
+        data-link-filter={category}
+        aria-pressed={index === 0 ? 'true' : 'false'}
+      >
+        {category}
+      </button>
+    ))
+  }
+</div>

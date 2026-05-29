@@ -1,0 +1,29 @@
+---
+import { getSiteAge, siteStartedAtIso, siteUpdatedDateTime } from '../../data/time';
+import RuntimeCounter from '../RuntimeCounter.astro';
+
+type Props = {
+  siteAge: ReturnType<typeof getSiteAge>;
+  siteStartedAtIso: string;
+  siteUpdatedDateTime: string;
+};
+
+const { siteAge, siteStartedAtIso, siteUpdatedDateTime } = Astro.props as Props;
+---
+
+<div class="section-heading">
+  <p class="eyebrow">Live Runtime</p>
+  <h2>实时运行中</h2>
+  <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+    这部分由浏览器实时计算，和 Footer 使用同一个建站时间。
+  </p>
+</div>
+
+<div class="card" style="text-align: center;">
+  <strong>
+    <RuntimeCounter startedAt={siteStartedAtIso} fallback={siteAge.preciseLabel} />
+  </strong>
+  <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2);">
+    最近构建时间：{siteUpdatedDateTime}
+  </p>
+</div>

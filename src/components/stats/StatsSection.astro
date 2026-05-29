@@ -1,0 +1,47 @@
+---
+type Metric = {
+  label: string;
+  value: string | number;
+  suffix?: string;
+};
+
+type Props = {
+  kicker: string;
+  title: string;
+  value: string | number;
+  suffix?: string;
+  desc: string;
+  metrics: Metric[];
+};
+
+const { kicker, title, value, suffix, desc, metrics } = Astro.props as Props;
+---
+
+<div class="card">
+  <div>
+    <p class="eyebrow">{kicker}</p>
+    <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-1);">{title}</h2>
+    <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{desc}</span>
+  </div>
+
+  <strong
+    style="font-size: var(--text-3xl); color: var(--color-accent); display: block; margin: var(--space-4) 0;"
+  >
+    {value}
+    {suffix && <small style="font-size: var(--text-sm); font-weight: 400;">{suffix}</small>}
+  </strong>
+
+  <dl>
+    {
+      metrics.map((metric) => (
+        <div>
+          <dt>{metric.label}</dt>
+          <dd>
+            {metric.value}
+            {metric.suffix && <small>{metric.suffix}</small>}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  startedAt: string;
+  fallback: string;
+  className?: string;
+}
+
+const { startedAt, fallback, className = '' } = Astro.props as Props;
+---
+
+<span class={className} data-runtime-counter data-started-at={startedAt}>{fallback}</span>
+
+<script is:inline>
+  (function () {
+    if (window.__azekRuntimeCounterMounted) return;
+    window.__azekRuntimeCounterMounted = true;
+
+    function formatDuration(startedAt) {
+      var start = new Date(startedAt).getTime();
+      var now = Date.now();
+      var diff = Math.max(0, now - start);
+
+      var days = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff % 86400000) / 3600000);
+      var minutes = Math.floor((diff % 3600000) / 60000);
+      var seconds = Math.floor((diff % 60000) / 1000);
+
+      return days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+    }
+
+    function tick() {
+      var counters = document.querySelectorAll('[data-runtime-counter][data-started-at]');
+
+      counters.forEach(function (counter) {
+        var startedAt = counter.getAttribute('data-started-at');
+        if (!startedAt) return;
+        counter.textContent = formatDuration(startedAt);
+      });
+    }
+
+    tick();
+    window.setInterval(tick, 1000);
+  })();
+</script>

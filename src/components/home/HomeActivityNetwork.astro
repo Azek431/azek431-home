@@ -1,0 +1,30 @@
+---
+import HomeTimeline from './HomeTimeline.astro';
+import HomeIdentity from './HomeIdentity.astro';
+
+type UpdateItem = {
+  title: string;
+  desc: string;
+  href: string;
+  date: string;
+};
+
+type NetworkLink = {
+  name: string;
+  category: string;
+  href: string;
+  description?: string;
+};
+
+type Props = {
+  updates: readonly UpdateItem[];
+  networkLinks: readonly NetworkLink[];
+};
+
+const { updates, networkLinks } = Astro.props;
+---
+
+<section class="home-activity reveal" aria-label="最近动态与公开身份">
+  <HomeTimeline updates={updates} />
+  <HomeIdentity networkLinks={networkLinks} />
+</section>

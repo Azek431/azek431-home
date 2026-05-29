@@ -1,0 +1,12 @@
+node_modules
+dist
+.astro
+.cache
+.vite
+.vitepress/cache
+.vitepress/dist
+.tmp-ui-backup
+.vercel
+.wrangler
+coverage
+pnpm-lock.yaml

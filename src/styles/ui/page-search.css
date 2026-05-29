@@ -1,0 +1,105 @@
+/*
+  Page — Search
+  搜索页：输入框、结果列表
+*/
+
+.search-console {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-raised);
+  margin-bottom: var(--space-8);
+  box-shadow: var(--shadow-md);
+}
+
+.search-console input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-text);
+  font-family: inherit;
+  padding: var(--space-4) 0;
+}
+
+.search-console input:focus {
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.search-console input::placeholder {
+  color: var(--color-text-faint);
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.search-result {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-raised);
+  text-decoration: none;
+  color: var(--color-text);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.search-result::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gradient-accent);
+  transform: scaleY(0);
+  transition: transform var(--duration-fast) var(--ease-out);
+  border-radius: 0 2px 2px 0;
+}
+
+.search-result:hover::before {
+  transform: scaleY(1);
+}
+
+.search-result:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-bg-subtle);
+  transform: translateX(3px);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text);
+}
+
+.search-result h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+}
+
+.search-result p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.search-result__meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+/* 搜索结果 tags 高亮 */
+.search-result em {
+  font-style: normal;
+  color: var(--color-accent);
+  font-weight: 600;
+}

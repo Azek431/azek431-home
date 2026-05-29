@@ -1,0 +1,32 @@
+---
+type Skill = {
+  name: string;
+  level: string;
+  pct: number;
+};
+
+type Props = {
+  skills: Skill[];
+};
+
+const { skills } = Astro.props as Props;
+---
+
+<div class="about-dashboard__card">
+  <h3>Skill Levels</h3>
+  <div class="skill-list">
+    {
+      skills.map((skill) => (
+        <div class="skill-list__item">
+          <div class="skill-list__meta">
+            <span class="skill-list__name">{skill.name}</span>
+            <span class="skill-list__level">{skill.level}</span>
+          </div>
+          <div class="skill-bar">
+            <span class="skill-bar__fill" style={`width: ${skill.pct}%`} />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

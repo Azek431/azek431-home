@@ -1,0 +1,30 @@
+---
+type PlanItem = {
+  num: number;
+  tag: string;
+  title: string;
+  desc: string;
+  state: string;
+};
+
+type Props = {
+  items: PlanItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="card-grid">
+  {
+    items.map((plan) => (
+      <div class="card">
+        <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+          <span class="tag">{plan.tag}</span>
+          <span class="tag tag-accent">{plan.state}</span>
+        </div>
+        <h3>{plan.title}</h3>
+        <p>{plan.desc}</p>
+      </div>
+    ))
+  }
+</div>
