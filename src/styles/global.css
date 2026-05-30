@@ -287,3 +287,83 @@ h3 {
     min-height: auto;
   }
 }
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 999;
+  transform: translateY(-160%);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  color: #020617;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.not-found {
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px 0;
+}
+
+.not-found h1 {
+  max-width: 820px;
+  margin-bottom: 22px;
+  font-size: clamp(48px, 10vw, 110px);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+.not-found p {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.85;
+}
+
+::selection {
+  background: rgba(147, 197, 253, 0.35);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.nav a.active {
+  color: #ffffff;
+}
+
+.nav a.active::after {
+  width: 100%;
+}
+
+.nav a {
+  position: relative;
+}
+
+.nav a::after {
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--primary);
+  content: "";
+  transition: width 0.2s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+

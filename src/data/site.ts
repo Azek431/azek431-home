@@ -3,7 +3,21 @@ export const siteConfig = {
   title: 'Azek431 的个人主站',
   description:
     'Azek431 的个人主站与导航入口，用于整理个人介绍、项目入口、学习记录和公开链接。',
+  author: 'Azek431',
+  locale: 'zh-CN',
   github: 'https://github.com/Azek431',
+  keywords: [
+    'Azek431',
+    '个人主页',
+    '个人网站',
+    '项目导航',
+    'Astro',
+    'GitHub',
+    'Cloudflare Pages',
+    'AI',
+    '网站搭建',
+    '软件开发',
+  ],
 };
 
 export const navItems = [

@@ -1,5 +1,7 @@
 ---
 import { navItems, siteConfig } from '../data/site';
+
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
@@ -9,9 +11,18 @@ import { navItems, siteConfig } from '../data/site';
 
   <nav class="nav" aria-label="主导航">
     {
-      navItems.map((item) => (
-        <a href={item.href}>{item.label}</a>
-      ))
+      navItems.map((item) => {
+        const isActive =
+          item.href === '/'
+            ? currentPath === '/'
+            : currentPath.startsWith(item.href);
+
+        return (
+          <a class:list={{ active: isActive }} href={item.href}>
+            {item.label}
+          </a>
+        );
+      })
     }
 
     <a href={siteConfig.github} target="_blank" rel="noreferrer">
