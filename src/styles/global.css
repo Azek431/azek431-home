@@ -198,14 +198,69 @@ h3 {
   background: rgba(30, 41, 59, 0.86);
 }
 
-.card span {
+.card-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 34px;
+  margin-bottom: 30px;
+}
+
+.card-status,
+.card-category {
   display: inline-flex;
-  margin-bottom: 38px;
+  align-items: center;
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 6px 10px;
-  color: var(--primary);
   font-size: 12px;
+  line-height: 1;
+}
+
+.card-status {
+  color: var(--primary);
+}
+
+.card-category {
+  color: #c4b5fd;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.card-tags span {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: var(--subtle);
+  font-size: 12px;
+}
+
+.card-action {
+  margin-top: 26px;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.card-disabled {
+  cursor: default;
+}
+
+.card-disabled:hover {
+  transform: none;
+  border-color: var(--border);
+  background: var(--bg-card);
+}
+
+.card-disabled .card-action {
+  color: var(--subtle);
 }
 
 .card h3 {
@@ -233,7 +288,7 @@ h3 {
 
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   padding: 24px 0 64px;
 }

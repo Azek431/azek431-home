@@ -4,19 +4,55 @@ interface Props {
   description: string;
   href?: string;
   status?: string;
+  category?: string;
+  tags?: string[];
 }
 
-const { title, description, href = '#', status } = Astro.props;
+const {
+  title,
+  description,
+  href = '#',
+  status,
+  category,
+  tags = [],
+} = Astro.props;
+
 const isExternal = href.startsWith('http');
+const isDisabled = href === '#';
 ---
 
 <a
-  class="card"
+  class:list={['card', { 'card-disabled': isDisabled }]}
   href={href}
   target={isExternal ? '_blank' : undefined}
   rel={isExternal ? 'noreferrer' : undefined}
+  aria-disabled={isDisabled ? 'true' : undefined}
 >
-  {status && <span>{status}</span>}
+  <div class="card-top">
+    {status && <span class="card-status">{status}</span>}
+    {category && <span class="card-category">{category}</span>}
+  </div>
+
   <h3>{title}</h3>
   <p>{description}</p>
+
+  {
+    tags.length > 0 && (
+      <div class="card-tags" aria-label="标签">
+        {tags.map((tag) => (
+          <span>{tag}</span>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="card-action">
+    {
+      isDisabled
+        ? '即将开放'
+        : isExternal
+          ? '打开外部链接 ↗'
+          : '查看详情 →'
+    }
+  </div>
 </a>

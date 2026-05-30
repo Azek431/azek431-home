@@ -7,24 +7,36 @@ import { links } from '../data/site';
 
 <BaseLayout
   title="链接 - Azek431"
-  description="Azek431 的公开链接集合。"
+  description="Azek431 的公开链接集合，用于整理 GitHub、项目入口和其他公开资源。"
 >
   <PageHero
     eyebrow="Links"
     title="链接集合"
-    description="这里会整理我的 GitHub、项目入口、博客入口和其他公开链接。"
+    description="这里会整理我的 GitHub、项目入口、个人页面和其他公开链接，让所有内容入口更加清晰。"
   />
 
-  <section class="content-grid">
-    {
-      links.map((link) => (
-        <NavCard
-          title={link.name}
-          description={link.description}
-          href={link.href}
-          status="公开链接"
-        />
-      ))
-    }
+  <section class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Resources</p>
+      <h2>公开入口</h2>
+      <p>
+        这些链接会作为个人主站的长期导航入口，方便快速访问不同内容。
+      </p>
+    </div>
+
+    <div class="content-grid">
+      {
+        links.map((link) => (
+          <NavCard
+            title={link.name}
+            description={link.description}
+            href={link.href}
+            status="公开链接"
+            category={link.category}
+            tags={link.tags}
+          />
+        ))
+      }
+    </div>
   </section>
 </BaseLayout>

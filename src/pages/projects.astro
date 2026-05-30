@@ -7,24 +7,36 @@ import { projects } from '../data/site';
 
 <BaseLayout
   title="项目 - Azek431"
-  description="Azek431 的项目导航页，用于展示当前和后续项目入口。"
+  description="Azek431 的项目导航页，用于展示网站、工具、实验项目和后续公开作品。"
 >
   <PageHero
     eyebrow="Projects"
     title="项目导航"
-    description="这里会整理我的网站、工具、实验项目和后续更多公开作品。"
+    description="这里会整理我的网站、工具、实验项目和后续更多公开作品。每个项目都会尽量保持独立、清晰和可维护。"
   />
 
-  <section class="content-grid">
-    {
-      projects.map((project) => (
-        <NavCard
-          title={project.name}
-          description={project.description}
-          status={project.status}
-          href="#"
-        />
-      ))
-    }
+  <section class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Showcase</p>
+      <h2>当前项目</h2>
+      <p>
+        这里会逐步整理我的主站、博客、项目官网、AI 实验和其他技术实践。
+      </p>
+    </div>
+
+    <div class="content-grid">
+      {
+        projects.map((project) => (
+          <NavCard
+            title={project.name}
+            description={project.description}
+            href={project.href}
+            status={project.status}
+            category={project.category}
+            tags={project.tags}
+          />
+        ))
+      }
+    </div>
   </section>
 </BaseLayout>
