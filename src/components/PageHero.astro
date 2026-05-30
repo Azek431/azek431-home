@@ -12,11 +12,5 @@ const { eyebrow, title, description } = Astro.props;
   <p class="eyebrow">{eyebrow}</p>
   <h1>{title}</h1>
 
-  {
-    description && (
-      <p class="page-hero-text">
-        {description}
-      </p>
-    )
-  }
+  {description && <p class="page-hero-text">{description}</p>}
 </section>

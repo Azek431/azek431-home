@@ -33,12 +33,12 @@ GitHub 展示入口
 
 当前项目包含以下页面：
 
-| 页面路径 | 页面说明 |
-|---|---|
-| `/` | 首页，展示个人介绍、主站定位和主要入口 |
-| `/about/` | 关于页，介绍个人方向和网站内容定位 |
-| `/projects/` | 项目页，用于展示当前和后续项目入口 |
-| `/links/` | 链接页，用于整理 GitHub、项目和公开链接 |
+| 页面路径     | 页面说明                                |
+| ------------ | --------------------------------------- |
+| `/`          | 首页，展示个人介绍、主站定位和主要入口  |
+| `/about/`    | 关于页，介绍个人方向和网站内容定位      |
+| `/projects/` | 项目页，用于展示当前和后续项目入口      |
+| `/links/`    | 链接页，用于整理 GitHub、项目和公开链接 |
 
 页面路由对应关系：
 
@@ -53,15 +53,15 @@ src/pages/links.astro     → /links/
 
 本项目主要使用以下技术：
 
-| 技术 | 说明 |
-|---|---|
-| Astro | 静态网站框架，用于构建高性能内容型网站 |
-| pnpm | 包管理工具，用于安装和管理项目依赖 |
-| TypeScript | 提供更好的代码提示和类型支持 |
-| HTML / CSS | 页面结构与样式 |
-| Git | 本地版本管理 |
-| GitHub | 远程代码托管 |
-| Cloudflare Pages | 静态网站部署平台 |
+| 技术             | 说明                                   |
+| ---------------- | -------------------------------------- |
+| Astro            | 静态网站框架，用于构建高性能内容型网站 |
+| pnpm             | 包管理工具，用于安装和管理项目依赖     |
+| TypeScript       | 提供更好的代码提示和类型支持           |
+| HTML / CSS       | 页面结构与样式                         |
+| Git              | 本地版本管理                           |
+| GitHub           | 远程代码托管                           |
+| Cloudflare Pages | 静态网站部署平台                       |
 
 选择 Astro 的原因：
 
@@ -259,13 +259,13 @@ pnpm preview
 
 ## 常用命令
 
-| 命令 | 作用 |
-|---|---|
-| `pnpm install` | 安装项目依赖 |
-| `pnpm dev` | 启动本地开发服务器 |
-| `pnpm build` | 构建生产环境静态文件 |
-| `pnpm preview` | 本地预览构建结果 |
-| `pnpm astro` | 执行 Astro CLI 命令 |
+| 命令           | 作用                 |
+| -------------- | -------------------- |
+| `pnpm install` | 安装项目依赖         |
+| `pnpm dev`     | 启动本地开发服务器   |
+| `pnpm build`   | 构建生产环境静态文件 |
+| `pnpm preview` | 本地预览构建结果     |
+| `pnpm astro`   | 执行 Astro CLI 命令  |
 
 ## Git 管理说明
 
@@ -464,13 +464,13 @@ pnpm install
 
 Cloudflare Pages 推荐配置：
 
-| 配置项 | 推荐值 |
-|---|---|
-| Framework preset | Astro |
-| Build command | `pnpm build` |
-| Build output directory | `dist` |
-| Root directory | `/` |
-| Production branch | `main` |
+| 配置项                 | 推荐值       |
+| ---------------------- | ------------ |
+| Framework preset       | Astro        |
+| Build command          | `pnpm build` |
+| Build output directory | `dist`       |
+| Root directory         | `/`          |
+| Production branch      | `main`       |
 
 部署流程通常是：
 

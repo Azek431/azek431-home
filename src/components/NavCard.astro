@@ -8,14 +8,7 @@ interface Props {
   tags?: string[];
 }
 
-const {
-  title,
-  description,
-  href = '#',
-  status,
-  category,
-  tags = [],
-} = Astro.props;
+const { title, description, href = '#', status, category, tags = [] } = Astro.props;
 
 const isExternal = href.startsWith('http');
 const isDisabled = href === '#';
@@ -47,12 +40,6 @@ const isDisabled = href === '#';
   }
 
   <div class="card-action">
-    {
-      isDisabled
-        ? '即将开放'
-        : isExternal
-          ? '打开外部链接 ↗'
-          : '查看详情 →'
-    }
+    {isDisabled ? '即将开放' : isExternal ? '打开外部链接 ↗' : '查看详情 →'}
   </div>
 </a>

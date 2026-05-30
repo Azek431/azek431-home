@@ -1,8 +1,7 @@
 export const siteConfig = {
   name: 'Azek431',
   title: 'Azek431 的个人主站',
-  description:
-    'Azek431 的个人主站与导航入口，用于整理个人介绍、项目入口、学习记录和公开链接。',
+  description: 'Azek431 的个人主站与导航入口，用于整理个人介绍、项目入口、学习记录和公开链接。',
   author: 'Azek431',
   locale: 'zh-CN',
   github: 'https://github.com/Azek431',
@@ -69,8 +68,7 @@ export const homeCards = [
 export const projects = [
   {
     name: 'Azek431 Home',
-    description:
-      '我的个人主站与导航入口，用来整理个人介绍、项目入口、公开链接和后续内容导航。',
+    description: '我的个人主站与导航入口，用来整理个人介绍、项目入口、公开链接和后续内容导航。',
     status: '构建中',
     category: 'Website',
     href: '/',
