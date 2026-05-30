@@ -1,67 +1,27 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>关于我 - Azek431</title>
-  </head>
+<BaseLayout
+  title="关于我 - Azek431"
+  description="关于 Azek431 的个人介绍、兴趣方向和网站内容定位。"
+>
+  <PageHero
+    eyebrow="About"
+    title="关于我"
+    description="你好，我是 Azek431。我喜欢研究 AI、网站搭建、GitHub 项目部署和软件开发。这个网站会记录我的学习过程、项目实践和一些有趣的想法。"
+  />
 
-  <body>
-    <main class="page">
-      <a class="back" href="/">← 返回首页</a>
+  <section class="content-block">
+    <p>
+      这个主站是我整理个人内容和项目入口的起点。它会先保持轻量、简洁和稳定，
+      后续再逐步扩展更多页面和内容。
+    </p>
 
-      <section>
-        <p class="eyebrow">About</p>
-        <h1>关于我</h1>
-        <p>
-          你好，我是 Azek431。我喜欢研究 AI、网站搭建、GitHub 项目部署和软件开发。
-          这个网站会记录我的学习过程、项目实践和一些有趣的想法。
-        </p>
-      </section>
-    </main>
-  </body>
-</html>
-
-<style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: system-ui, "Microsoft YaHei", sans-serif;
-    color: #e5e7eb;
-    background: #020617;
-  }
-
-  .page {
-    width: min(900px, calc(100% - 32px));
-    margin: 0 auto;
-    padding: 64px 0;
-  }
-
-  .back {
-    display: inline-block;
-    margin-bottom: 64px;
-    color: #93c5fd;
-    text-decoration: none;
-  }
-
-  .eyebrow {
-    color: #93c5fd;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-size: clamp(44px, 8vw, 88px);
-    letter-spacing: -0.08em;
-  }
-
-  p {
-    color: #cbd5e1;
-    font-size: 19px;
-    line-height: 1.8;
-  }
-</style>
+    <p>
+      我希望这个网站不只是一个静态页面，而是一个长期维护的个人数字空间。
+      它会连接我的项目、学习记录、技术实践和公开链接。
+    </p>
+  </section>
+</BaseLayout>

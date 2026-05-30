@@ -1,114 +1,30 @@
 ---
-const projects = [
-  {
-    name: 'Azek431 Home',
-    description: '我的个人主站和导航入口。',
-    status: '构建中',
-  },
-  {
-    name: 'Azek431 Blog',
-    description: '未来的个人博客，用来记录技术文章和学习笔记。',
-    status: '计划中',
-  },
-  {
-    name: 'Project Sites',
-    description: '未来会为不同项目创建独立官网和子域名。',
-    status: '计划中',
-  },
-];
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import NavCard from '../components/NavCard.astro';
+import { projects } from '../data/site';
 ---
 
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>项目 - Azek431</title>
-  </head>
+<BaseLayout
+  title="项目 - Azek431"
+  description="Azek431 的项目导航页，用于展示当前和后续项目入口。"
+>
+  <PageHero
+    eyebrow="Projects"
+    title="项目导航"
+    description="这里会整理我的网站、工具、实验项目和后续更多公开作品。"
+  />
 
-  <body>
-    <main class="page">
-      <a class="back" href="/">← 返回首页</a>
-
-      <section>
-        <p class="eyebrow">Projects</p>
-        <h1>项目导航</h1>
-        <div class="cards">
-          {
-            projects.map((project) => (
-              <article class="card">
-                <span>{project.status}</span>
-                <h2>{project.name}</h2>
-                <p>{project.description}</p>
-              </article>
-            ))
-          }
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
-
-<style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: system-ui, "Microsoft YaHei", sans-serif;
-    color: #e5e7eb;
-    background: #020617;
-  }
-
-  .page {
-    width: min(1000px, calc(100% - 32px));
-    margin: 0 auto;
-    padding: 64px 0;
-  }
-
-  .back {
-    display: inline-block;
-    margin-bottom: 64px;
-    color: #93c5fd;
-    text-decoration: none;
-  }
-
-  .eyebrow {
-    color: #93c5fd;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-size: clamp(44px, 8vw, 88px);
-    letter-spacing: -0.08em;
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .card {
-    border: 1px solid rgba(148, 163, 184, 0.22);
-    border-radius: 28px;
-    padding: 24px;
-    background: rgba(15, 23, 42, 0.72);
-  }
-
-  .card span {
-    color: #93c5fd;
-    font-size: 13px;
-  }
-
-  .card p {
-    color: #cbd5e1;
-    line-height: 1.7;
-  }
-
-  @media (max-width: 800px) {
-    .cards {
-      grid-template-columns: 1fr;
+  <section class="content-grid">
+    {
+      projects.map((project) => (
+        <NavCard
+          title={project.name}
+          description={project.description}
+          status={project.status}
+          href="#"
+        />
+      ))
     }
-  }
-</style>
+  </section>
+</BaseLayout>

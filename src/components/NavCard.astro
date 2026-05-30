@@ -1,0 +1,22 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href?: string;
+  status?: string;
+}
+
+const { title, description, href = '#', status } = Astro.props;
+const isExternal = href.startsWith('http');
+---
+
+<a
+  class="card"
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noreferrer' : undefined}
+>
+  {status && <span>{status}</span>}
+  <h3>{title}</h3>
+  <p>{description}</p>
+</a>

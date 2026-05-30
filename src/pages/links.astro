@@ -1,104 +1,30 @@
 ---
-const links = [
-  {
-    name: 'GitHub',
-    href: 'https://github.com/Azek431',
-    description: '我的 GitHub 主页和项目记录。',
-  },
-  {
-    name: 'Blog',
-    href: '#',
-    description: '个人博客入口，后续上线。',
-  },
-  {
-    name: 'Projects',
-    href: '/projects/',
-    description: '查看我的项目导航。',
-  },
-];
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import NavCard from '../components/NavCard.astro';
+import { links } from '../data/site';
 ---
 
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>链接 - Azek431</title>
-  </head>
+<BaseLayout
+  title="链接 - Azek431"
+  description="Azek431 的公开链接集合。"
+>
+  <PageHero
+    eyebrow="Links"
+    title="链接集合"
+    description="这里会整理我的 GitHub、项目入口、博客入口和其他公开链接。"
+  />
 
-  <body>
-    <main class="page">
-      <a class="back" href="/">← 返回首页</a>
-
-      <section>
-        <p class="eyebrow">Links</p>
-        <h1>链接集合</h1>
-
-        <div class="links">
-          {
-            links.map((link) => (
-              <a class="link-card" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
-                <h2>{link.name}</h2>
-                <p>{link.description}</p>
-              </a>
-            ))
-          }
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
-
-<style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: system-ui, "Microsoft YaHei", sans-serif;
-    color: #e5e7eb;
-    background: #020617;
-  }
-
-  .page {
-    width: min(900px, calc(100% - 32px));
-    margin: 0 auto;
-    padding: 64px 0;
-  }
-
-  .back {
-    display: inline-block;
-    margin-bottom: 64px;
-    color: #93c5fd;
-    text-decoration: none;
-  }
-
-  .eyebrow {
-    color: #93c5fd;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-size: clamp(44px, 8vw, 88px);
-    letter-spacing: -0.08em;
-  }
-
-  .links {
-    display: grid;
-    gap: 16px;
-  }
-
-  .link-card {
-    display: block;
-    border: 1px solid rgba(148, 163, 184, 0.22);
-    border-radius: 24px;
-    padding: 22px;
-    color: inherit;
-    text-decoration: none;
-    background: rgba(15, 23, 42, 0.72);
-  }
-
-  .link-card p {
-    color: #cbd5e1;
-  }
-</style>
+  <section class="content-grid">
+    {
+      links.map((link) => (
+        <NavCard
+          title={link.name}
+          description={link.description}
+          href={link.href}
+          status="公开链接"
+        />
+      ))
+    }
+  </section>
+</BaseLayout>
