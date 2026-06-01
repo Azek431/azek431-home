@@ -8,37 +8,37 @@ interface Props {
   tags?: string[];
 }
 
-const { title, description, href = '#', status = '查看详情', category, tags = [] } = Astro.props;
+const { title, description, href = '#', status, category, tags = [] } = Astro.props;
 
 const isPlaceholder = !href || href === '#';
 const isExternal = href.startsWith('http://') || href.startsWith('https://');
-const cardClass = isPlaceholder ? 'nav-card nav-card--disabled' : 'nav-card';
-const linkLabel = isPlaceholder ? '即将开放' : status;
+const actionText = isPlaceholder ? '即将开放' : isExternal ? '打开外部链接 ↗' : '查看详情 →';
 ---
 
 <a
-  class={cardClass}
+  class:list={['card', { 'card-disabled': isPlaceholder }]}
   href={isPlaceholder ? undefined : href}
   target={isExternal ? '_blank' : undefined}
   rel={isExternal ? 'noopener noreferrer' : undefined}
   aria-disabled={isPlaceholder ? 'true' : undefined}
 >
-  <div class="nav-card__content">
-    {category && <span class="nav-card__category">{category}</span>}
-
-    <h3>{title}</h3>
-    <p>{description}</p>
-
-    {
-      tags.length > 0 && (
-        <div class="nav-card__tags" aria-label="相关标签">
-          {tags.map((tag) => (
-            <span>{tag}</span>
-          ))}
-        </div>
-      )
-    }
+  <div class="card-top">
+    {status && <span class="card-status">{status}</span>}
+    {category && <span class="card-category">{category}</span>}
   </div>
 
-  <span class="nav-card__status">{linkLabel}</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+
+  {
+    tags.length > 0 && (
+      <div class="card-tags" aria-label="标签">
+        {tags.map((tag) => (
+          <span>{tag}</span>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="card-action">{actionText}</div>
 </a>
