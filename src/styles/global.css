@@ -426,3 +426,16 @@ h3 {
 .nav a:hover::after {
   width: 100%;
 }
+
+.nav-card--disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.nav-card--disabled:hover {
+  transform: none;
+}
+
+.nav-card--disabled .nav-card__status {
+  opacity: 0.8;
+}
