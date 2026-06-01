@@ -53,6 +53,33 @@ export const projectDetails: ProjectDetail[] = [
       giteeRawReadme: 'https://gitee.com/Azek431/azek431-home/raw/main/README.md',
     },
   },
+  {
+    slug: 'azek431-blog',
+    title: 'Azek431 Blog',
+    description:
+      '计划用于记录技术文章、学习笔记、开发过程和长期思考的个人博客项目，后续会作为独立仓库维护。',
+    status: '计划中',
+    category: 'Blog',
+    tags: ['Writing', 'Notes', 'Tech'],
+  },
+  {
+    slug: 'project-sites',
+    title: 'Project Sites',
+    description:
+      '用于承载不同项目的独立介绍页面，让每个项目都有更清晰的官网入口、说明文档和展示页面。',
+    status: '规划中',
+    category: 'Showcase',
+    tags: ['Portfolio', 'Docs', 'Projects'],
+  },
+  {
+    slug: 'ai-experiments',
+    title: 'AI Experiments',
+    description:
+      '用于整理 AI 工具、提示词、自动化流程和相关技术实验内容，记录从想法到实践的探索过程。',
+    status: '构想中',
+    category: 'Lab',
+    tags: ['AI', 'Workflow', 'Experiment'],
+  },
 ];
 
 export const projectCards = projectDetails.map((project) => ({

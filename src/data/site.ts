@@ -54,8 +54,8 @@ export const homeCards = [
   {
     title: 'GitHub',
     description: '查看我的代码、开源记录和项目实践。',
-    href: 'https://github.com/Azek431',
-    status: '外部链接',
+    href: '/projects/azek431-home-repo/',
+    status: '仓库详情',
   },
   {
     title: 'Links',

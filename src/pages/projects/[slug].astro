@@ -1,0 +1,336 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { projectDetails } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projectDetails.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const repoConfig = project.repo ?? null;
+---
+
+<BaseLayout title={project.title} description={project.description}>
+  <PageHero eyebrow={project.category} title={project.title} text={project.description} />
+
+  <section class="section project-detail">
+    <div class="detail-actions" aria-label="项目相关链接">
+      {
+        project.websiteUrl && (
+          <a
+            class="button primary"
+            href={project.websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            访问网站 ↗
+          </a>
+        )
+      }
+      {
+        project.githubUrl && (
+          <a class="button" href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+            GitHub 仓库 ↗
+          </a>
+        )
+      }
+      {
+        project.giteeUrl && (
+          <a class="button" href={project.giteeUrl} target="_blank" rel="noopener noreferrer">
+            Gitee 镜像 ↗
+          </a>
+        )
+      }
+      <a class="button" href="/projects/">返回项目列表</a>
+    </div>
+
+    <div class="project-summary">
+      <div>
+        <p class="eyebrow">Status</p>
+        <h2>{project.status}</h2>
+      </div>
+
+      <div>
+        <p class="eyebrow">Tags</p>
+        <div class="detail-tags">
+          {project.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+      </div>
+    </div>
+
+    {
+      repoConfig ? (
+        <div class="repo-live-panel" data-repo-detail data-repo-config={JSON.stringify(repoConfig)}>
+          <div class="section-heading">
+            <p class="eyebrow">Live Repository Data</p>
+            <h2>仓库动态信息</h2>
+            <p id="repo-status">
+              正在读取 GitHub 仓库数据，如果 GitHub 读取失败，会尝试使用 Gitee 镜像 README
+              作为兜底。
+            </p>
+          </div>
+
+          <div class="repo-meta-grid" id="repo-meta">
+            <div class="repo-meta-card">
+              <span>Stars</span>
+              <strong data-field="stars">--</strong>
+            </div>
+            <div class="repo-meta-card">
+              <span>Forks</span>
+              <strong data-field="forks">--</strong>
+            </div>
+            <div class="repo-meta-card">
+              <span>Issues</span>
+              <strong data-field="issues">--</strong>
+            </div>
+            <div class="repo-meta-card">
+              <span>Language</span>
+              <strong data-field="language">--</strong>
+            </div>
+            <div class="repo-meta-card">
+              <span>Branch</span>
+              <strong data-field="branch">--</strong>
+            </div>
+            <div class="repo-meta-card">
+              <span>Updated</span>
+              <strong data-field="updated">--</strong>
+            </div>
+          </div>
+
+          <div class="repo-content-grid">
+            <article class="repo-box">
+              <div class="repo-box-heading">
+                <div>
+                  <p class="eyebrow">README</p>
+                  <h3>阅读文件</h3>
+                </div>
+                <a
+                  id="readme-source-link"
+                  href={repoConfig.githubRawReadme}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  查看原始文件 ↗
+                </a>
+              </div>
+              <pre id="readme-content">正在读取 README...</pre>
+            </article>
+
+            <article class="repo-box">
+              <div class="repo-box-heading">
+                <div>
+                  <p class="eyebrow">Releases</p>
+                  <h3>发行版</h3>
+                </div>
+              </div>
+              <div id="release-list" class="release-list">
+                正在读取 Releases...
+              </div>
+            </article>
+          </div>
+        </div>
+      ) : (
+        <div class="repo-live-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Project Detail</p>
+            <h2>项目说明</h2>
+            <p>
+              这个页面用于展示项目介绍、当前状态、相关标签和跳转入口。后续如果这个项目对应独立仓库，也可以在数据配置里加入仓库信息，自动展示
+              README 和发行版。
+            </p>
+          </div>
+        </div>
+      )
+    }
+  </section>
+
+  <script is:inline>
+    const repoPanel = document.querySelector('[data-repo-detail][data-repo-config]');
+
+    if (repoPanel) {
+      const statusEl = document.querySelector('#repo-status');
+      const readmeEl = document.querySelector('#readme-content');
+      const releaseEl = document.querySelector('#release-list');
+      const readmeSourceLink = document.querySelector('#readme-source-link');
+
+      let repoConfig = null;
+
+      try {
+        repoConfig = JSON.parse(repoPanel.getAttribute('data-repo-config') || '{}');
+      } catch {
+        repoConfig = null;
+      }
+
+      if (repoConfig) {
+        const cacheKey = 'azek431-repo-cache-' + repoConfig.owner + '-' + repoConfig.name;
+        const cacheMaxAge = 1000 * 60 * 10;
+
+        function setStatus(message) {
+          if (statusEl) {
+            statusEl.textContent = message;
+          }
+        }
+
+        function setField(name, value) {
+          const target = document.querySelector('[data-field="' + name + '"]');
+
+          if (target) {
+            target.textContent = value || '--';
+          }
+        }
+
+        function formatDate(value) {
+          if (!value) return '--';
+
+          try {
+            return new Intl.DateTimeFormat('zh-CN', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            }).format(new Date(value));
+          } catch {
+            return value;
+          }
+        }
+
+        async function fetchJson(url) {
+          const response = await fetch(url, {
+            headers: {
+              Accept: 'application/vnd.github+json',
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Request failed: ' + response.status);
+          }
+
+          return response.json();
+        }
+
+        async function fetchText(url) {
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error('Request failed: ' + response.status);
+          }
+
+          return response.text();
+        }
+
+        function renderRepo(repo) {
+          setField('stars', String(repo.stargazers_count || 0));
+          setField('forks', String(repo.forks_count || 0));
+          setField('issues', String(repo.open_issues_count || 0));
+          setField('language', repo.language || 'Unknown');
+          setField('branch', repo.default_branch || repoConfig.branch);
+          setField('updated', formatDate(repo.updated_at));
+        }
+
+        function createReleaseItem(release) {
+          const link = document.createElement('a');
+          link.className = 'release-item';
+          link.href = release.html_url || '#';
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+
+          const title = document.createElement('strong');
+          title.textContent = release.name || release.tag_name || 'Untitled release';
+
+          const date = document.createElement('span');
+          date.textContent = formatDate(release.published_at || release.created_at);
+
+          link.append(title, date);
+          return link;
+        }
+
+        function renderReleases(releases) {
+          if (!releaseEl) return;
+
+          releaseEl.textContent = '';
+
+          if (!Array.isArray(releases) || releases.length === 0) {
+            const empty = document.createElement('p');
+            empty.textContent = '暂无公开发行版。';
+            releaseEl.append(empty);
+            return;
+          }
+
+          releases.slice(0, 5).forEach((release) => {
+            releaseEl.append(createReleaseItem(release));
+          });
+        }
+
+        async function loadReadme() {
+          if (!readmeEl) return;
+
+          const sources = [repoConfig.githubRawReadme, repoConfig.giteeRawReadme].filter(Boolean);
+
+          for (const source of sources) {
+            try {
+              const text = await fetchText(source);
+              readmeEl.textContent = text;
+
+              if (readmeSourceLink) {
+                readmeSourceLink.href = source;
+              }
+
+              return;
+            } catch {
+              // Try next mirror.
+            }
+          }
+
+          readmeEl.textContent = 'README 读取失败，可以点击上方 GitHub 或 Gitee 链接查看仓库。';
+        }
+
+        async function loadRepoData() {
+          const cached = localStorage.getItem(cacheKey);
+
+          if (cached) {
+            try {
+              const parsed = JSON.parse(cached);
+
+              if (Date.now() - parsed.time < cacheMaxAge) {
+                renderRepo(parsed.repo);
+                renderReleases(parsed.releases);
+                setStatus('已从本地缓存读取仓库数据，稍后会自动刷新。');
+              }
+            } catch {
+              localStorage.removeItem(cacheKey);
+            }
+          }
+
+          try {
+            const repo = await fetchJson(repoConfig.githubApiBase);
+            const releases = await fetchJson(repoConfig.githubApiBase + '/releases?per_page=5');
+
+            renderRepo(repo);
+            renderReleases(releases);
+
+            localStorage.setItem(
+              cacheKey,
+              JSON.stringify({
+                time: Date.now(),
+                repo,
+                releases,
+              }),
+            );
+
+            setStatus('已成功读取 GitHub 仓库数据。');
+          } catch {
+            setStatus(
+              'GitHub 动态数据读取失败，可能是网络、CORS 或速率限制原因。README 会尝试从镜像读取。',
+            );
+          }
+        }
+
+        loadRepoData();
+        loadReadme();
+      }
+    }
+  </script>
+</BaseLayout>
