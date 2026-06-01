@@ -41,9 +41,15 @@ const keywords = siteConfig.keywords.join(', ');
     <meta name="color-scheme" content="dark" />
     <!-- Dark background fallback start -->
     <style is:inline>
-      html,
+      html {
+        min-height: 100%;
+        background: #020617;
+        color-scheme: dark;
+      }
+
       body {
-        background-color: #020617;
+        min-height: 100%;
+        background-color: #020617 !important;
       }
     </style>
     <!-- Dark background fallback end -->

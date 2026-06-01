@@ -693,3 +693,70 @@ body {
   }
 }
 /* Compatibility polish end */
+/* Stable background fallback start */
+/*
+  这一段专门用于提高老浏览器、旧 WebView 和部分手机内核的背景稳定性。
+
+  为什么要放在文件最后：
+  - 前面 body 使用了 background 简写、多层 radial-gradient 和 CSS 变量。
+  - 部分老内核在页面切换或解析 var() 时可能导致背景短暂或持续变白。
+  - 这里使用不依赖 CSS 变量的硬编码颜色与 background-image 长属性兜底。
+*/
+html {
+  min-height: 100%;
+  background-color: #020617;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #020617;
+  background-image:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.28), transparent 32rem),
+    radial-gradient(circle at top right, rgba(168, 85, 247, 0.22), transparent 28rem);
+  background-repeat: no-repeat;
+  background-position:
+    top left,
+    top right;
+  background-size:
+    32rem 32rem,
+    28rem 28rem;
+}
+
+.site-shell {
+  min-height: calc(100vh - 68px);
+}
+
+@media (max-width: 720px) {
+  html {
+    background-color: #020617;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: #020617;
+    background-image:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 22rem),
+      radial-gradient(circle at top right, rgba(168, 85, 247, 0.14), transparent 20rem);
+    background-repeat: no-repeat;
+    background-position:
+      top left,
+      top right;
+    background-size:
+      22rem 22rem,
+      20rem 20rem;
+  }
+
+  .site-shell {
+    min-height: calc(100vh - 48px);
+  }
+}
+
+@media (max-width: 420px) {
+  body {
+    background-color: #020617;
+    background-size:
+      20rem 20rem,
+      18rem 18rem;
+  }
+}
+/* Stable background fallback end */
