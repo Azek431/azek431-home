@@ -2,14 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import NavCard from '../components/NavCard.astro';
-import { projectCards } from '../data/projects';
+import { projects } from '../data/site';
 ---
 
-<BaseLayout title="Projects" description="Azek431 的项目展示与项目详情入口。">
+<BaseLayout title="Projects" description="Azek431 的项目展示与项目导航入口。">
   <PageHero
     eyebrow="Showcase"
     title="当前项目"
-    text="这里会逐步整理我的主站、源码仓库、镜像仓库、博客计划、AI 实验和其他技术实践。"
+    text="这里会手动整理我的网站、仓库、博客计划、AI 实验和其他技术实践。"
   />
 
   <section class="section">
@@ -17,13 +17,13 @@ import { projectCards } from '../data/projects';
       <p class="eyebrow">Project Index</p>
       <h2>项目入口</h2>
       <p>
-        点击卡片会先进入项目详情页，不会直接跳转到外部网站。你可以在详情页查看说明、仓库信息、README、发行版以及相关跳转入口。
+        这里的项目由我手动维护。已上线的项目会提供访问入口，计划中的项目会先作为后续方向记录下来。
       </p>
     </div>
 
     <div class="cards">
       {
-        projectCards.map((project) => (
+        projects.map((project) => (
           <NavCard
             title={project.name}
             description={project.description}

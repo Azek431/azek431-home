@@ -54,8 +54,8 @@ export const homeCards = [
   {
     title: 'GitHub',
     description: '查看我的代码、开源记录和项目实践。',
-    href: '/projects/azek431-home-repo/',
-    status: '仓库详情',
+    href: 'https://github.com/Azek431',
+    status: '外部链接',
   },
   {
     title: 'Links',
@@ -68,35 +68,47 @@ export const homeCards = [
 export const projects = [
   {
     name: 'Azek431 Home',
-    description: '我的个人主站与导航入口，用来整理个人介绍、项目入口、公开链接和后续内容导航。',
-    status: '构建中',
+    description: '我的个人主站与导航入口，用来集中展示个人介绍、项目作品、公开链接和后续内容导航。',
+    status: '已上线',
     category: 'Website',
-    href: '/',
-    tags: ['Astro', 'Homepage', 'Navigation'],
+    href: 'https://azek431.pages.dev',
+    tags: ['Astro', 'Cloudflare Pages', 'Homepage'],
+  },
+  {
+    name: 'azek431-home',
+    description:
+      'Azek431 Home 的源码仓库，记录这个个人主站从初始化、组件拆分、移动端优化到 Cloudflare 部署的完整建设过程。',
+    status: '维护中',
+    category: 'Repository',
+    href: 'https://github.com/Azek431/azek431-home',
+    tags: ['GitHub', 'pnpm', 'Static Site'],
+  },
+  {
+    name: 'azek431-home 镜像',
+    description:
+      'azek431-home 的 Gitee 国内镜像仓库，用于提升国内访问稳定性，也方便国内用户查看源码和更新记录。',
+    status: '镜像同步',
+    category: 'Mirror',
+    href: 'https://gitee.com/Azek431/azek431-home',
+    tags: ['Gitee', 'Mirror', 'China Access'],
   },
   {
     name: 'Azek431 Blog',
-    description: '计划用于记录技术文章、学习笔记、开发过程和长期思考的个人博客项目。',
+    description:
+      '计划用于记录技术文章、学习笔记、开发过程和长期思考的个人博客项目，后续会作为独立仓库维护。',
     status: '计划中',
     category: 'Blog',
     href: '#',
     tags: ['Writing', 'Notes', 'Tech'],
   },
   {
-    name: 'Project Sites',
-    description: '用于承载不同项目的独立介绍页面，让每个项目都有更清晰的展示入口。',
-    status: '规划中',
-    category: 'Projects',
-    href: '#',
-    tags: ['Showcase', 'Portfolio', 'Docs'],
-  },
-  {
     name: 'AI Experiments',
-    description: '用于整理 AI 工具、提示词、自动化流程和相关技术实验内容。',
+    description:
+      '用于整理 AI 工具、提示词、自动化流程和相关技术实验内容，记录从想法到实践的探索过程。',
     status: '构想中',
     category: 'Lab',
     href: '#',
-    tags: ['AI', 'Experiment', 'Workflow'],
+    tags: ['AI', 'Workflow', 'Experiment'],
   },
 ];
 
