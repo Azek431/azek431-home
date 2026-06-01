@@ -426,19 +426,6 @@ h3 {
 .nav a:hover::after {
   width: 100%;
 }
-
-.nav-card--disabled {
-  cursor: not-allowed;
-  opacity: 0.72;
-}
-
-.nav-card--disabled:hover {
-  transform: none;
-}
-
-.nav-card--disabled .nav-card__status {
-  opacity: 0.8;
-}
 /* Mobile polish start */
 @media (max-width: 720px) {
   body {
@@ -693,3 +680,32 @@ h3 {
 .card-disabled .card-action {
   opacity: 0.75;
 }
+/* Compatibility polish start */
+html {
+  min-height: 100%;
+  background-color: #020617;
+}
+
+body {
+  background-color: #020617;
+}
+
+@supports not (color: var(--text)) {
+  body {
+    color: #e5e7eb;
+    background-color: #020617;
+  }
+
+  .card {
+    border-color: rgba(148, 163, 184, 0.22);
+    background-color: rgba(15, 23, 42, 0.78);
+  }
+
+  .button.primary {
+    color: #020617;
+    background-color: #f8fafc;
+  }
+}
+/* Compatibility polish end */
+
+

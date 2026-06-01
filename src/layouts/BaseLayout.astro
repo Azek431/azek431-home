@@ -25,7 +25,6 @@ const keywords = siteConfig.keywords.join(', ');
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <meta name="author" content={siteConfig.author} />
-    <meta name="theme-color" content="#020617" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteConfig.name} />
@@ -38,6 +37,16 @@ const keywords = siteConfig.keywords.join(', ');
     <meta name="twitter:description" content={description} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      <meta name="theme-color" content="#020617" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Dark background fallback start -->
+    <style is:inline>
+      html,
+      body {
+        background-color: #020617;
+      }
+    </style>
+    <!-- Dark background fallback end -->
   </head>
 
   <body>
@@ -54,3 +63,4 @@ const keywords = siteConfig.keywords.join(', ');
     </div>
   </body>
 </html>
+
