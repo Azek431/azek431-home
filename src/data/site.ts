@@ -93,6 +93,33 @@ export const projects = [
     tags: ['Gitee', 'Mirror', 'China Access'],
   },
   {
+    name: 'Azek创游世界资料库',
+    description:
+      'Azek创游世界资料库的官网入口，用于展示项目介绍、资料内容、使用说明和后续更新信息。',
+    status: '已上线',
+    category: 'Website',
+    href: 'https://cysjdocs.pages.dev',
+    tags: ['Website', 'Docs', 'Official'],
+  },
+  {
+    name: 'Azek创游世界资料库 GitHub 仓库',
+    description:
+      'Azek创游世界资料库的 GitHub 源码仓库，用于查看源码、提交记录、README 文档和后续开发进展。',
+    status: '维护中',
+    category: 'Repository',
+    href: 'https://github.com/Azek431/cysj-data',
+    tags: ['GitHub', 'Source Code', 'Repository'],
+  },
+  {
+    name: 'Azek创游世界资料库 Gitee 镜像',
+    description:
+      'Azek创游世界资料库的 Gitee 国内镜像仓库，用于提升国内访问稳定性，方便国内用户查看源码和更新记录。',
+    status: '镜像同步',
+    category: 'Mirror',
+    href: 'https://gitee.com/Azek431/cysj-data',
+    tags: ['Gitee', 'Mirror', 'China Access'],
+  },
+  {
     name: 'Azek431 Blog',
     description:
       '计划用于记录技术文章、学习笔记、开发过程和长期思考的个人博客项目，后续会作为独立仓库维护。',
