@@ -1,4 +1,10 @@
 ---
+interface CardLink {
+  label: string;
+  href: string;
+  primary?: boolean;
+}
+
 interface Props {
   title: string;
   description: string;
@@ -6,39 +12,79 @@ interface Props {
   status?: string;
   category?: string;
   tags?: string[];
+  links?: CardLink[];
 }
 
-const { title, description, href = '#', status, category, tags = [] } = Astro.props;
+const { title, description, href = '#', status, category, tags = [], links = [] } = Astro.props;
 
+const hasLinks = links.length > 0;
 const isPlaceholder = !href || href === '#';
 const isExternal = href.startsWith('http://') || href.startsWith('https://');
 const actionText = isPlaceholder ? '即将开放' : isExternal ? '打开外部链接 ↗' : '查看详情 →';
+
+const normalizedLinks = links.map((link) => ({
+  ...link,
+  isExternal: link.href.startsWith('http://') || link.href.startsWith('https://'),
+}));
 ---
 
-<a
-  class:list={['card', { 'card-disabled': isPlaceholder }]}
-  href={isPlaceholder ? undefined : href}
-  target={isExternal ? '_blank' : undefined}
-  rel={isExternal ? 'noopener noreferrer' : undefined}
-  aria-disabled={isPlaceholder ? 'true' : undefined}
->
-  <div class="card-top">
-    {status && <span class="card-status">{status}</span>}
-    {category && <span class="card-category">{category}</span>}
-  </div>
+{
+  hasLinks ? (
+    <article class="card card-static">
+      <div class="card-top">
+        {status && <span class="card-status">{status}</span>}
+        {category && <span class="card-category">{category}</span>}
+      </div>
 
-  <h3>{title}</h3>
-  <p>{description}</p>
+      <h3>{title}</h3>
+      <p>{description}</p>
 
-  {
-    tags.length > 0 && (
-      <div class="card-tags" aria-label="标签">
-        {tags.map((tag) => (
-          <span>{tag}</span>
+      {tags.length > 0 && (
+        <div class="card-tags" aria-label="标签">
+          {tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <div class="card-actions" aria-label={`${title} 相关链接`}>
+        {normalizedLinks.map((link) => (
+          <a
+            class:list={['card-link', { 'card-link-primary': link.primary }]}
+            href={link.href}
+            target={link.isExternal ? '_blank' : undefined}
+            rel={link.isExternal ? 'noopener noreferrer' : undefined}
+          >
+            {link.label}
+          </a>
         ))}
       </div>
-    )
-  }
+    </article>
+  ) : (
+    <a
+      class:list={['card', { 'card-disabled': isPlaceholder }]}
+      href={isPlaceholder ? undefined : href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+      aria-disabled={isPlaceholder ? 'true' : undefined}
+    >
+      <div class="card-top">
+        {status && <span class="card-status">{status}</span>}
+        {category && <span class="card-category">{category}</span>}
+      </div>
 
-  <div class="card-action">{actionText}</div>
-</a>
+      <h3>{title}</h3>
+      <p>{description}</p>
+
+      {tags.length > 0 && (
+        <div class="card-tags" aria-label="标签">
+          {tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <div class="card-action">{actionText}</div>
+    </a>
+  )
+}

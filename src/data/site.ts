@@ -68,56 +68,51 @@ export const homeCards = [
 export const projects = [
   {
     name: 'Azek431 Home',
-    description: '我的个人主站与导航入口，用来集中展示个人介绍、项目作品、公开链接和后续内容导航。',
+    description:
+      '我的个人主站与数字导航入口，用来集中展示个人介绍、项目作品、公开链接和后续内容导航。',
     status: '已上线',
     category: 'Website',
     href: 'https://azek431.pages.dev',
     tags: ['Astro', 'Cloudflare Pages', 'Homepage'],
-  },
-  {
-    name: 'azek431-home',
-    description:
-      'Azek431 Home 的源码仓库，记录这个个人主站从初始化、组件拆分、移动端优化到 Cloudflare 部署的完整建设过程。',
-    status: '维护中',
-    category: 'Repository',
-    href: 'https://github.com/Azek431/azek431-home',
-    tags: ['GitHub', 'pnpm', 'Static Site'],
-  },
-  {
-    name: 'azek431-home 镜像',
-    description:
-      'azek431-home 的 Gitee 国内镜像仓库，用于提升国内访问稳定性，也方便国内用户查看源码和更新记录。',
-    status: '镜像同步',
-    category: 'Mirror',
-    href: 'https://gitee.com/Azek431/azek431-home',
-    tags: ['Gitee', 'Mirror', 'China Access'],
+    links: [
+      {
+        label: '访问网站',
+        href: 'https://azek431.pages.dev',
+        primary: true,
+      },
+      {
+        label: 'GitHub',
+        href: 'https://github.com/Azek431/azek431-home',
+      },
+      {
+        label: 'Gitee 镜像',
+        href: 'https://gitee.com/Azek431/azek431-home',
+      },
+    ],
   },
   {
     name: 'Azek创游世界资料库',
     description:
-      'Azek创游世界资料库的官网入口，用于展示项目介绍、资料内容、使用说明和后续更新信息。',
+      'Azek创游世界资料库的项目官网与资料入口，用于展示项目介绍、资料内容、使用说明和后续更新信息。',
     status: '已上线',
-    category: 'Website',
+    category: 'Docs',
     href: 'https://cysjdocs.pages.dev',
-    tags: ['Website', 'Docs', 'Official'],
-  },
-  {
-    name: 'Azek创游世界资料库 GitHub 仓库',
-    description:
-      'Azek创游世界资料库的 GitHub 源码仓库，用于查看源码、提交记录、README 文档和后续开发进展。',
-    status: '维护中',
-    category: 'Repository',
-    href: 'https://github.com/Azek431/cysj-data',
-    tags: ['GitHub', 'Source Code', 'Repository'],
-  },
-  {
-    name: 'Azek创游世界资料库 Gitee 镜像',
-    description:
-      'Azek创游世界资料库的 Gitee 国内镜像仓库，用于提升国内访问稳定性，方便国内用户查看源码和更新记录。',
-    status: '镜像同步',
-    category: 'Mirror',
-    href: 'https://gitee.com/Azek431/cysj-data',
-    tags: ['Gitee', 'Mirror', 'China Access'],
+    tags: ['Website', 'Docs', 'Cloudflare Pages'],
+    links: [
+      {
+        label: '访问官网',
+        href: 'https://cysjdocs.pages.dev',
+        primary: true,
+      },
+      {
+        label: 'GitHub',
+        href: 'https://github.com/Azek431/cysj-data',
+      },
+      {
+        label: 'Gitee 镜像',
+        href: 'https://gitee.com/Azek431/cysj-data',
+      },
+    ],
   },
   {
     name: 'Azek431 Blog',
