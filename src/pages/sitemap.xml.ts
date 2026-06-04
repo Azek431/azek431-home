@@ -11,6 +11,7 @@ const staticRoutes = [
   { path: '/now/',      priority: 0.7, changefreq: 'weekly'  },
   { path: '/uses/',      priority: 0.5, changefreq: 'monthly' },
   { path: '/colophon/',  priority: 0.6, changefreq: 'monthly' },
+  { path: '/rss.xml',    priority: 0.4, changefreq: 'weekly'  },
 ];
 
 function urlEntry(loc: string, lastmod: string, priority: number, changefreq: string) {

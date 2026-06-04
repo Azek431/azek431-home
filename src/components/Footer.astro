@@ -1,10 +1,28 @@
-﻿---
+---
 import { siteConfig } from '../data/site';
 
 const year = new Date().getFullYear();
+const startYear = 2025;
+const startMonth = 4;
+const siteAgeMonths = Math.max(0,
+  (new Date().getFullYear() - startYear) * 12 +
+  (new Date().getMonth() + 1 - startMonth)
+);
+const siteAgeLabel = siteAgeMonths >= 12
+  ? Math.floor(siteAgeMonths / 12) + ' 年 ' + (siteAgeMonths % 12) + ' 个月'
+  : siteAgeMonths + ' 个月';
 ---
 <footer class="footer">
-  <p>© {year} {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.</p>
+  <div class="footer-meta">
+    <p class="footer-line">© {year} {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.</p>
+    <p class="footer-line footer-sub">
+      <span>建站于 {startYear}.{String(startMonth).padStart(2, '0')} · 已运行 {siteAgeLabel}</span>
+      <span class="dot-sep" aria-hidden="true">·</span>
+      <a href="/rss.xml" target="_blank" rel="noreferrer noopener" class="footer-rss">RSS</a>
+      <span class="dot-sep" aria-hidden="true">·</span>
+      <a href="/sitemap.xml" target="_blank" rel="noreferrer noopener">Sitemap</a>
+    </p>
+  </div>
   <div class="footer-links">
     <a href="/">首页</a>
     <a href="/projects/">项目</a>
