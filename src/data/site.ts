@@ -24,6 +24,7 @@ export const navItems = [
   { label: '关于', href: '/about/' },
   { label: '项目', href: '/projects/' },
   { label: '链接', href: '/links/' },
+  { label: 'Now', href: '/now/' },
 ];
 
 export const homeCards = [

@@ -8,6 +8,7 @@ const staticRoutes = [
   { path: '/about/',    priority: 0.8, changefreq: 'monthly' },
   { path: '/projects/', priority: 0.9, changefreq: 'weekly'  },
   { path: '/links/',    priority: 0.7, changefreq: 'monthly' },
+  { path: '/now/',      priority: 0.7, changefreq: 'weekly'  },
 ];
 
 function urlEntry(loc: string, lastmod: string, priority: number, changefreq: string) {
