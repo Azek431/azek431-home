@@ -149,6 +149,9 @@ const quickJumps = [
             </div>
             <h3>{u.title}</h3>
             <p>{u.desc}</p>
+            <svg class="timeline-arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="m13 5 7 7-7 7"/>
+            </svg>
           </a>
         </li>
       ))}
@@ -160,19 +163,35 @@ const quickJumps = [
   <section class="section">
     <div class="writing-card">
       <div class="writing-left">
-        <p class="eyebrow">Currently Writing</p>
+        <p class="eyebrow">
+          Currently Writing
+          <span class="eyebrow-meta">写于 2026-06-02 · 5 天前</span>
+        </p>
         <h2>现在在写</h2>
         <p class="writing-desc">
           最近正在整理一些内容,可能在博客上线后发布。下面是其中一个片段。
         </p>
+        <div class="writing-tags">
+          <span class="writing-tag"># 设计系统</span>
+          <span class="writing-tag"># Astro 6</span>
+          <span class="writing-tag"># 主站</span>
+        </div>
       </div>
       <div class="writing-right">
         <div class="writing-window">
           <div class="writing-bar">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             <span class="writing-file">draft.md</span>
+            <span class="writing-status">
+              <span class="writing-status-dot" aria-hidden="true"></span>
+              live
+            </span>
           </div>
           <pre class="writing-body"><code data-typed></code></pre>
+          <div class="writing-footer">
+            <span>~ 320 字 · 12 行</span>
+            <span>UTF-8 · LF</span>
+          </div>
         </div>
       </div>
     </div>
