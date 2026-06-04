@@ -142,6 +142,27 @@ export const links = [
     category: 'Writing',
     tags: ['Blog', 'Notes'],
   },
+  {
+    name: 'Now',
+    description: '记录最近在做什么、读什么、关注什么。',
+    href: '/now/',
+    category: 'Profile',
+    tags: ['Now', 'Status'],
+  },
+  {
+    name: 'Colophon',
+    description: '技术栈 / 设计原则 / 受影响的站点。',
+    href: '/colophon/',
+    category: 'Profile',
+    tags: ['Colophon', 'About'],
+  },
+  {
+    name: 'Uses',
+    description: '我日常写代码、跑自动化用的装备和工具。',
+    href: '/uses/',
+    category: 'Profile',
+    tags: ['Uses', 'Tools'],
+  },
 ];
 
 export const recentUpdates = [

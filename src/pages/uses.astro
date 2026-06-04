@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const categories = [
   {
@@ -38,6 +39,7 @@ const categories = [
   title="Uses - Azek431"
   description="我日常用来搭建主站、写代码、托管和发布内容的装备与工具清单。"
 >
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Uses' }]} />
   <section class="page-hero uses-hero">
     <p class="eyebrow">Uses</p>
     <h1>日常装备</h1>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const skills = [
   { name: 'Astro / Static Site',     level: '熟练',     pct: 90, color: '#a8c8ff' },
@@ -20,6 +21,7 @@ const focus = [
   title="关于 - Azek431"
   description="关于 Azek431 的个人介绍、兴趣方向和网站内容定位。"
 >
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于' }]} />
   <section class="page-hero">
     <p class="eyebrow">About</p>
     <h1>关于我</h1>

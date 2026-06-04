@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import NavCard from '../components/NavCard.astro';
 import { links } from '../data/site';
 
@@ -7,6 +8,7 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
 ---
 
 <BaseLayout title="链接 - Azek431" description="Azek431 的公开链接集合，用于整理 GitHub、项目入口和其他公开资源。">
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '链接' }]} />
   <section class="page-hero">
     <p class="eyebrow">Links</p>
     <h1>链接集合</h1>

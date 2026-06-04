@@ -1,4 +1,4 @@
-﻿---
+---
 import { navItems, siteConfig } from '../data/site';
 
 const currentPath = Astro.url.pathname;
@@ -7,15 +7,21 @@ const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 <header class="site-header">
-  <a class="logo" href="/" aria-label={`${siteConfig.name} 首页`}>
+  <a class="logo" href="/" aria-label={siteConfig.name + ' 首页'}>
     <span class="logo-mark" aria-hidden="true">A</span>
     <span>{siteConfig.name}</span>
   </a>
 
-  <nav class="nav" aria-label="主导航">
+  <button class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" data-nav-toggle>
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+
+  <nav class="nav" aria-label="主导航" data-nav>
     {
       navItems.map((item) => (
-        <a class:list={[{ active: isActive(item.href) }]} href={item.href}>
+        <a class:list={['nav-link', { active: isActive(item.href) }]} href={item.href}>
           {item.label}
         </a>
       ))
@@ -34,4 +40,49 @@ const isActive = (href: string) =>
       <span>GitHub</span>
     </a>
   </nav>
+
+  <div class="nav-scrim" data-nav-scrim aria-hidden="true"></div>
 </header>
+
+<script is:inline>
+  (function () {
+    var btn = document.querySelector('[data-nav-toggle]');
+    var nav = document.querySelector('[data-nav]');
+    var scrim = document.querySelector('[data-nav-scrim]');
+    if (!btn || !nav) return;
+
+    var open = function () {
+      nav.classList.add('is-open');
+      if (scrim) scrim.classList.add('is-open');
+      btn.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-label', '关闭菜单');
+      document.body.style.overflow = 'hidden';
+    };
+    var close = function () {
+      nav.classList.remove('is-open');
+      if (scrim) scrim.classList.remove('is-open');
+      btn.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', '打开菜单');
+      document.body.style.overflow = '';
+    };
+    btn.addEventListener('click', function () {
+      if (nav.classList.contains('is-open')) close();
+      else open();
+    });
+    if (scrim) scrim.addEventListener('click', close);
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a');
+      if (a && nav.classList.contains('is-open')) {
+        setTimeout(close, 80);
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) close();
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 880) close();
+    });
+  })();
+</script>

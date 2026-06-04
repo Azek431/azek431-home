@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const stack = [
   { group: '框架 / 部署', items: [
@@ -43,6 +44,7 @@ const inspirations = [
   title="Colophon - Azek431"
   description="这个主站的技术栈、设计 token、字体选择和设计原则。"
 >
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Colophon' }]} />
   <section class="page-hero colo-hero">
     <p class="eyebrow">Colophon</p>
     <h1>致谢与设计</h1>

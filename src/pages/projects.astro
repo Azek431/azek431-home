@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import NavCard from '../components/NavCard.astro';
 import { projects } from '../data/site';
 
@@ -23,6 +24,7 @@ function withDetail(links: { label: string; href: string; primary?: boolean }[] 
 }
 ---
 <BaseLayout title="项目 - Azek431" description="Azek431 的项目展示与项目导航入口。">
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '项目' }]} />
   <section class="page-hero">
     <p class="eyebrow">Showcase</p>
     <h1>当前项目</h1>

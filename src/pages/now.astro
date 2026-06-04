@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteConfig } from '../data/site';
 
 const lastUpdated = '2026-06-05';
@@ -54,6 +55,7 @@ const statusTone = (s: string) => s === 'in-progress' ? 'active' : s === 'planni
   title="Now - Azek431"
   description="Azek431 现在正在做的事情、最近读的内容和日常用的工具。"
 >
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Now' }]} />
   <section class="page-hero now-hero">
     <p class="eyebrow">Now</p>
     <h1>现在在做的事</h1>
