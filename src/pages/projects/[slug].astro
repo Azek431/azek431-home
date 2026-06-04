@@ -12,6 +12,11 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 if (!project) return Astro.redirect('/projects/');
 
+import { projectDetails } from '../../data/projects';
+const idx = projectDetails.findIndex((p) => p.slug === project.slug);
+const prevProject = idx > 0 ? projectDetails[idx - 1] : projectDetails[projectDetails.length - 1];
+const nextProject = idx < projectDetails.length - 1 ? projectDetails[idx + 1] : projectDetails[0];
+
 const statusTone =
   project.status === '已上线' ? 'success'
   : project.status === '维护中' ? 'warning'
@@ -79,6 +84,17 @@ const allLinks = [
           返回项目列表
         </a>
       </div>
+
+      <nav class="prev-next" aria-label="项目分页">
+        <a class="prev-next-link prev" href={'/projects/' + prevProject.slug + '/'}>
+          <span class="pn-label">← 上一篇</span>
+          <span class="pn-title">{prevProject.title}</span>
+        </a>
+        <a class="prev-next-link next" href={'/projects/' + nextProject.slug + '/'}>
+          <span class="pn-label">下一篇 →</span>
+          <span class="pn-title">{nextProject.title}</span>
+        </a>
+      </nav>
 
       <aside class="detail-side">
         {highlights.length > 0 && (

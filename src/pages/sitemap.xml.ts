@@ -9,6 +9,8 @@ const staticRoutes = [
   { path: '/projects/', priority: 0.9, changefreq: 'weekly'  },
   { path: '/links/',    priority: 0.7, changefreq: 'monthly' },
   { path: '/now/',      priority: 0.7, changefreq: 'weekly'  },
+  { path: '/uses/',      priority: 0.5, changefreq: 'monthly' },
+  { path: '/colophon/',  priority: 0.6, changefreq: 'monthly' },
 ];
 
 function urlEntry(loc: string, lastmod: string, priority: number, changefreq: string) {

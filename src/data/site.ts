@@ -25,6 +25,8 @@ export const navItems = [
   { label: '项目', href: '/projects/' },
   { label: '链接', href: '/links/' },
   { label: 'Now', href: '/now/' },
+  { label: 'Uses', href: '/uses/' },
+  { label: 'Colophon', href: '/colophon/' },
 ];
 
 export const homeCards = [
