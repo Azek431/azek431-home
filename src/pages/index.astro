@@ -224,10 +224,10 @@ const quickJumps = [
         var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
         var tick = function () {
           var d = new Date();
-          el.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes());
+          el.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
         };
         tick();
-        setInterval(tick, 30000);
+        setInterval(tick, 1000);
       }
     })();
   </script>

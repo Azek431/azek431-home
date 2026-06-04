@@ -27,6 +27,8 @@ export const navItems = [
   { label: 'Now', href: '/now/' },
   { label: 'Uses', href: '/uses/' },
   { label: 'Colophon', href: '/colophon/' },
+  { label: 'Changelog', href: '/changelog/' },
+  { label: 'Stats', href: '/stats/' },
 ];
 
 export const homeCards = [
