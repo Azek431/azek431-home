@@ -8,10 +8,23 @@ const liveProjects = homeCards.filter((c) => c.status === '项目导航' || c.st
 const externalLinks = homeCards.filter((c) => c.status === '外部链接').length;
 const upcoming = homeCards.filter((c) => c.status === '即将上线').length;
 
+function daysAgo(dateStr: string): string {
+  const then = new Date(dateStr + 'T00:00:00Z').getTime();
+  const now = Date.now();
+  const d = Math.floor((now - then) / 86400000);
+  if (d < 1) return '今天';
+  if (d === 1) return '昨天';
+  if (d < 30) return d + ' 天前';
+  if (d < 365) return Math.floor(d / 30) + ' 个月前';
+  return Math.floor(d / 365) + ' 年前';
+}
+
 const quickJumps = [
   { label: '项目展示',  href: '/projects/', desc: 'Azek431 Home / 资料库 / Blog' },
   { label: 'GitHub',    href: siteConfig.github, desc: '代码 · 仓库 · 实践记录' },
   { label: '关于我',    href: '/about/',   desc: '兴趣方向 · 内容规划 · 联系方式' },
+  { label: 'Now',       href: '/now/',     desc: '最近在做什么 / 读什么' },
+  { label: 'Uses',      href: '/uses/',    desc: '日常装备 / 工具栈' },
   { label: '链接集合',  href: '/links/',   desc: '所有公开入口 · 按标签筛选' },
 ];
 ---
@@ -129,7 +142,7 @@ const quickJumps = [
           <a class="timeline-content" href={u.href}>
             <div class="timeline-meta">
               <span class="timeline-tag">{u.tag}</span>
-              <time>{u.date}</time>
+              <time>{u.date} · {daysAgo(u.date)}</time>
             </div>
             <h3>{u.title}</h3>
             <p>{u.desc}</p>

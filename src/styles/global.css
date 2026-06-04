@@ -3447,3 +3447,56 @@ a.card:hover .arrow {
   transition: transform 0.3s;
 }
 .home-quicklinks-list a:hover .arrow { transform: translateX(2px); }
+
+
+/* ============================================================
+   Round 15: detail accent propagation + timeline ago
+   ============================================================ */
+
+.detail-side .detail-card::before {
+  background: linear-gradient(90deg,
+    transparent,
+    var(--accent-color, rgba(168, 200, 255, 0.4)),
+    transparent
+  ) !important;
+}
+
+.detail-side .detail-stats .value {
+  background: linear-gradient(135deg,
+    var(--accent-color, #a8c8ff),
+    #c4b5fd
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.detail-side .detail-link-card {
+  border-left: 2px solid transparent;
+  border-left-color: var(--accent-color, rgba(168, 200, 255, 0.3));
+  padding-left: 14px;
+}
+
+.timeline-meta time {
+  font-variant-numeric: tabular-nums;
+}
+
+.home-quicklinks {
+  position: relative;
+  overflow: hidden;
+}
+.home-quicklinks::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side at 0% 50%, rgba(168, 200, 255, 0.08), transparent 60%);
+  pointer-events: none;
+  filter: blur(20px);
+}
+
+.quick-jump-link {
+  padding: 7px 10px;
+}
+.quick-jump .qj-desc {
+  font-size: 11px;
+}
