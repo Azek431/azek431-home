@@ -25,9 +25,16 @@ const toneColor: Record<string, string> = { major: '#6ee7b7', minor: '#a8c8ff', 
   </section>
 
   <section class="section">
+    <div class="filter-chips chl-filters" role="tablist" aria-label="按类型筛选">
+      <button type="button" class="filter-chip active" data-chl-filter="all" role="tab" aria-selected="true">全部 ({changelog.length})</button>
+      <button type="button" class="filter-chip chl-tone-major" data-chl-filter="major" role="tab" aria-selected="false">大版本 ({changelog.filter(e => e.tone === 'major').length})</button>
+      <button type="button" class="filter-chip chl-tone-minor" data-chl-filter="minor" role="tab" aria-selected="false">小版本 ({changelog.filter(e => e.tone === 'minor').length})</button>
+      <button type="button" class="filter-chip chl-tone-patch" data-chl-filter="patch" role="tab" aria-selected="false">补丁 ({changelog.filter(e => e.tone === 'patch').length})</button>
+    </div>
+
     <ol class="chl-list" aria-label="版本更新">
       {changelog.map((entry) => (
-        <li class:list={['chl-item', 'chl-' + (entry.tone || 'minor')]}>
+        <li class:list={['chl-item', 'chl-' + (entry.tone || 'minor')]} data-tone={entry.tone || 'minor'}>
           <div class="chl-marker">
             <span class="chl-version">{entry.version}</span>
             <span class="chl-date">{entry.date}</span>
@@ -46,3 +53,29 @@ const toneColor: Record<string, string> = { major: '#6ee7b7', minor: '#a8c8ff', 
     </ol>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    var chips = document.querySelectorAll('[data-chl-filter]');
+    var items = document.querySelectorAll('.chl-item');
+    if (!chips.length || !items.length) return;
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var filter = chip.getAttribute('data-chl-filter') || 'all';
+        chips.forEach(function (c) {
+          c.classList.remove('active');
+          c.setAttribute('aria-selected', 'false');
+        });
+        chip.classList.add('active');
+        chip.setAttribute('aria-selected', 'true');
+        var shown = 0;
+        items.forEach(function (it) {
+          var tone = it.getAttribute('data-tone') || '';
+          var match = filter === 'all' || tone === filter;
+          it.classList.toggle('filter-hidden', !match);
+          if (match) shown++;
+        });
+      });
+    });
+  })();
+</script>

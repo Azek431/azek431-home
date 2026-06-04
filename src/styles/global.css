@@ -3800,3 +3800,46 @@ a.card:hover .arrow {
 }
 
 .hero-clock { font-variant-numeric: tabular-nums; font-family: ui-monospace, monospace; }
+
+
+/* ============================================================
+   Round 19: changelog filter + live visit counter
+   ============================================================ */
+
+.chl-filters {
+  margin-bottom: 18px;
+}
+.filter-chip.chl-tone-major {
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.25);
+}
+.filter-chip.chl-tone-major:hover,
+.filter-chip.chl-tone-major.active {
+  background: rgba(110, 231, 183, 0.14);
+  border-color: rgba(110, 231, 183, 0.5);
+  color: #6ee7b7;
+}
+.filter-chip.chl-tone-minor {
+  color: #a8c8ff;
+  border-color: rgba(168, 200, 255, 0.25);
+}
+.filter-chip.chl-tone-minor:hover,
+.filter-chip.chl-tone-minor.active {
+  background: rgba(168, 200, 255, 0.14);
+  border-color: rgba(168, 200, 255, 0.5);
+  color: #a8c8ff;
+}
+.filter-chip.chl-tone-patch {
+  color: #c4b5fd;
+  border-color: rgba(196, 181, 253, 0.25);
+}
+.filter-chip.chl-tone-patch:hover,
+.filter-chip.chl-tone-patch.active {
+  background: rgba(196, 181, 253, 0.14);
+  border-color: rgba(196, 181, 253, 0.5);
+  color: #c4b5fd;
+}
+
+.filter-hidden {
+  display: none !important;
+}

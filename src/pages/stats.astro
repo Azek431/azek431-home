@@ -113,4 +113,55 @@ const toneColor: Record<string, string> = {
       </div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Live</p>
+      <h2>实时</h2>
+      <p>这部分数据由浏览器 localStorage 记录,只在你自己的设备上累计。</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card" style="--stat-accent: #6ee7b7;" data-visit-card>
+        <span class="stat-value" data-visit-count>—</span>
+        <span class="stat-label">本次会话访问</span>
+      </div>
+      <div class="stat-card" style="--stat-accent: #a8c8ff;" data-session-card>
+        <span class="stat-value" data-session-count>—</span>
+        <span class="stat-label">累计访问</span>
+      </div>
+      <div class="stat-card" style="--stat-accent: #c4b5fd;" data-first-card>
+        <span class="stat-value" data-first-date>—</span>
+        <span class="stat-label">首次访问</span>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    var key = 'azek431-visit';
+    var today = new Date().toISOString().slice(0, 10);
+    var data;
+    try {
+      data = JSON.parse(localStorage.getItem(key) || '{}');
+    } catch (e) { data = {}; }
+    if (data.date !== today) {
+      data.date = today;
+      data.todayCount = 1;
+    } else {
+      data.todayCount = (data.todayCount || 0) + 1;
+    }
+    data.totalCount = (data.totalCount || 0) + 1;
+    if (!data.firstDate) data.firstDate = today;
+    try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+
+    function set(sel, val) {
+      var el = document.querySelector(sel);
+      if (el) el.textContent = val;
+    }
+    set('[data-visit-count]', String(data.todayCount));
+    set('[data-session-count]', String(data.totalCount));
+    set('[data-first-date]', data.firstDate);
+  })();
+</script>
