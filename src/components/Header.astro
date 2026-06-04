@@ -1,6 +1,16 @@
 ---
 import { navItems, siteConfig } from '../data/site';
 
+const kbdMap: Record<string, string> = {
+  '/': 'g h',
+  '/about/': 'g a',
+  '/projects/': 'g p',
+  '/links/': 'g l',
+  '/now/': 'g n',
+  '/uses/': 'g u',
+  '/colophon/': 'g c',
+};
+
 const currentPath = Astro.url.pathname;
 
 const isActive = (href: string) =>
@@ -20,11 +30,14 @@ const isActive = (href: string) =>
 
   <nav class="nav" aria-label="主导航" data-nav>
     {
-      navItems.map((item) => (
-        <a class:list={['nav-link', { active: isActive(item.href) }]} href={item.href}>
-          {item.label}
-        </a>
-      ))
+      navItems.map((item) => {
+        return (
+          <a class:list={['nav-link', { active: isActive(item.href) }]} href={item.href} data-kbd={kbdMap[item.href] || ''}>
+            <span class="nav-link-label">{item.label}</span>
+            {kbdMap[item.href] && <kbd class="nav-kbd">{kbdMap[item.href]}</kbd>}
+          </a>
+        );
+      })
     }
 
     <a
