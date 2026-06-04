@@ -1,41 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import NavCard from '../components/NavCard.astro';
 import { projects } from '../data/site';
----
 
-<BaseLayout title="Projects" description="Azek431 的项目展示与项目导航入口。">
-  <PageHero
-    eyebrow="Showcase"
-    title="当前项目"
-    text="这里会手动整理我的网站、仓库、博客计划、AI 实验和其他技术实践。"
-  />
+const liveCount = projects.filter((p) => p.status === '已上线').length;
+const wipCount = projects.filter((p) => p.status === '维护中' || p.status === '计划中').length;
+const ideaCount = projects.filter((p) => p.status === '构想中').length;
+
+const slugMap: Record<string, string> = {
+  'Azek431 Home': 'azek431-home',
+  'Azek创游世界资料库': 'cysj-data',
+  'Azek431 Blog': 'azek431-blog',
+  'AI Experiments': 'ai-experiments',
+};
+
+function withDetail(links: { label: string; href: string; primary?: boolean }[] | undefined, slug: string | undefined) {
+  const base = (links || []).slice();
+  if (slug) {
+    base.push({ label: '项目详情', href: '/projects/' + slug + '/' });
+  }
+  return base;
+}
+---
+<BaseLayout title="项目 - Azek431" description="Azek431 的项目展示与项目导航入口。">
+  <section class="page-hero">
+    <p class="eyebrow">Showcase</p>
+    <h1>当前项目</h1>
+    <p class="page-hero-text">
+      这里会手动整理我的网站、仓库、博客计划、AI 实验和其他技术实践。
+    </p>
+  </section>
 
   <section class="section">
+    <div class="project-summary">
+      <div class="summary-item">
+        <strong>{liveCount}</strong>
+        <span>已上线</span>
+      </div>
+      <div class="summary-item">
+        <strong>{wipCount}</strong>
+        <span>进行中</span>
+      </div>
+      <div class="summary-item">
+        <strong>{ideaCount}</strong>
+        <span>构想中</span>
+      </div>
+      <div class="summary-item">
+        <strong>{projects.length}</strong>
+        <span>总项目</span>
+      </div>
+    </div>
+
     <div class="section-heading">
       <p class="eyebrow">Project Index</p>
       <h2>项目入口</h2>
       <p>
-        一个项目只显示一张卡片。已上线项目会在卡片底部提供官网、GitHub 和 Gitee
-        镜像入口；计划中的项目会先作为后续方向记录下来。
+        这里的项目由我手动维护。已上线的项目会提供访问入口,计划中的项目会先作为后续方向记录下来。
       </p>
     </div>
 
-    <div class="cards">
-      {
-        projects.map((project) => (
-          <NavCard
-            title={project.name}
-            description={project.description}
-            href={project.href}
-            status={project.status}
-            category={project.category}
-            tags={project.tags}
-            links={project.links}
-          />
-        ))
-      }
+    <div class="content-grid cards-3">
+      {projects.map((project) => (
+        <NavCard
+          title={project.name}
+          description={project.description}
+          href={project.href}
+          status={project.status}
+          statusTone={project.status === '已上线' ? 'success' : project.status === '维护中' ? 'warning' : 'muted'}
+          category={project.category}
+          icon={project.category === 'Website' ? 'W' : project.category === 'Docs' ? 'D' : project.category === 'Blog' ? 'B' : 'A'}
+          iconTone={project.status === '已上线' ? 'success' : project.category === 'Blog' ? 'accent' : 'primary'}
+          tags={project.tags}
+          links={withDetail(project.links, slugMap[project.name])}
+          lastUpdated={project.lastUpdated}
+          accent={project.accent}
+        />
+      ))}
     </div>
   </section>
 </BaseLayout>

@@ -1,23 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
----
+import { navItems } from '../data/site';
 
+const recommended = [
+  { label: '首页',   href: '/',                desc: '回到主站首页,继续浏览 Azek431 的个人空间。' },
+  { label: '项目',   href: '/projects/',       desc: '查看当前和后续整理的项目展示。' },
+  { label: '关于',   href: '/about/',         desc: '了解我的兴趣方向和内容规划。' },
+  { label: '链接',   href: '/links/',         desc: '整理常用链接、联系方式和入口。' },
+];
+---
 <BaseLayout
   title="页面未找到 - Azek431"
-  description="这个页面暂时不存在，你可以返回 Azek431 的个人主站继续浏览。"
+  description="这个页面暂时不存在,你可以返回 Azek431 的个人主站继续浏览。"
 >
   <section class="not-found">
     <p class="eyebrow">404</p>
-
-    <h1>页面未找到</h1>
-
+    <h1>404</h1>
     <p>
-      你访问的页面可能已经移动、删除，或者暂时还没有创建。 可以返回首页继续浏览 Azek431 的个人主站。
+      你访问的页面可能已经移动、删除,或者暂时还没有创建。<br />
+      可以从下面的入口继续浏览 Azek431 的个人主站。
     </p>
+    <p class="not-found-hint">
+      <span>~/requested-path</span><span class="cursor"></span>
+    </p>
+
+    <div class="not-found-grid">
+      {recommended.map((r) => (
+        <a class="card not-found-card" href={r.href}>
+          <span class="card-icon">→</span>
+          <h3>{r.label}</h3>
+          <p>{r.desc}</p>
+        </a>
+      ))}
+    </div>
 
     <div class="actions">
       <a class="button primary" href="/">返回首页</a>
       <a class="button secondary" href="/projects/">查看项目</a>
     </div>
   </section>
+  <script is:inline>
+    (function () {
+      var el = document.querySelector('.not-found-hint span');
+      if (el) el.textContent = '~' + (window.location.pathname || '/');
+    })();
+  </script>
 </BaseLayout>

@@ -10,29 +10,47 @@ interface Props {
   description: string;
   href?: string;
   status?: string;
+  statusTone?: 'default' | 'success' | 'warning' | 'accent' | 'muted';
   category?: string;
+  icon?: string;
+  iconTone?: 'primary' | 'accent' | 'success';
   tags?: string[];
   links?: CardLink[];
+  lastUpdated?: string;
+  accent?: string;
 }
 
-const { title, description, href = '#', status, category, tags = [], links = [] } = Astro.props;
+const {
+  title, description, href = '#', status, statusTone = 'default',
+  category, icon, iconTone = 'primary',
+  tags = [], links = [], lastUpdated, accent,
+} = Astro.props;
 
 const hasLinks = links.length > 0;
 const isPlaceholder = !href || href === '#';
 const isExternal = href.startsWith('http://') || href.startsWith('https://');
-const actionText = isPlaceholder ? '即将开放' : isExternal ? '打开外部链接 ↗' : '查看详情 →';
+const actionText = isPlaceholder ? '即将开放' : isExternal ? '打开外部链接' : '查看详情';
 
 const normalizedLinks = links.map((link) => ({
   ...link,
   isExternal: link.href.startsWith('http://') || link.href.startsWith('https://'),
 }));
+
+const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
 ---
 
 {
   hasLinks ? (
-    <article class="card card-static">
+    <article class="card card-static" style={accentStyle}>
+      {accent && <span class="card-accent" aria-hidden="true"></span>}
+      {icon && (
+        <span class:list={['card-icon', { accent: iconTone === 'accent', success: iconTone === 'success' }]}>
+          {icon}
+        </span>
+      )}
+
       <div class="card-top">
-        {status && <span class="card-status">{status}</span>}
+        {status && <span class="card-status" data-tone={statusTone}>{status}</span>}
         {category && <span class="card-category">{category}</span>}
       </div>
 
@@ -41,10 +59,18 @@ const normalizedLinks = links.map((link) => ({
 
       {tags.length > 0 && (
         <div class="card-tags" aria-label="标签">
-          {tags.map((tag) => (
-            <span>{tag}</span>
-          ))}
+          {tags.map((tag) => <button type="button" class="card-tag" data-tag={tag}>{tag}</button>)}
         </div>
+      )}
+
+      {lastUpdated && (
+        <p class="card-meta">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <path d="M16 2v4M8 2v4M3 10h18" />
+          </svg>
+          更新于 {lastUpdated}
+        </p>
       )}
 
       <div class="card-actions" aria-label={`${title} 相关链接`}>
@@ -56,6 +82,19 @@ const normalizedLinks = links.map((link) => ({
             rel={link.isExternal ? 'noopener noreferrer' : undefined}
           >
             {link.label}
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              {link.isExternal ? (
+                <>
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </>
+              ) : (
+                <>
+                  <path d="M5 12h14" />
+                  <path d="m13 5 7 7-7 7" />
+                </>
+              )}
+            </svg>
           </a>
         ))}
       </div>
@@ -67,9 +106,17 @@ const normalizedLinks = links.map((link) => ({
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
       aria-disabled={isPlaceholder ? 'true' : undefined}
+      style={accentStyle}
     >
+      {accent && <span class="card-accent" aria-hidden="true"></span>}
+      {icon && (
+        <span class:list={['card-icon', { accent: iconTone === 'accent', success: iconTone === 'success' }]}>
+          {icon}
+        </span>
+      )}
+
       <div class="card-top">
-        {status && <span class="card-status">{status}</span>}
+        {status && <span class="card-status" data-tone={statusTone}>{status}</span>}
         {category && <span class="card-category">{category}</span>}
       </div>
 
@@ -78,10 +125,18 @@ const normalizedLinks = links.map((link) => ({
 
       {tags.length > 0 && (
         <div class="card-tags" aria-label="标签">
-          {tags.map((tag) => (
-            <span>{tag}</span>
-          ))}
+          {tags.map((tag) => <button type="button" class="card-tag" data-tag={tag}>{tag}</button>)}
         </div>
+      )}
+
+      {lastUpdated && (
+        <p class="card-meta">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <path d="M16 2v4M8 2v4M3 10h18" />
+          </svg>
+          更新于 {lastUpdated}
+        </p>
       )}
 
       <div class="card-action">{actionText}</div>

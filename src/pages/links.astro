@@ -1,19 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import NavCard from '../components/NavCard.astro';
 import { links } from '../data/site';
+
+const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)))];
 ---
 
-<BaseLayout
-  title="链接 - Azek431"
-  description="Azek431 的公开链接集合，用于整理 GitHub、项目入口和其他公开资源。"
->
-  <PageHero
-    eyebrow="Links"
-    title="链接集合"
-    description="这里会整理我的 GitHub、项目入口、个人页面和其他公开链接，让所有内容入口更加清晰。"
-  />
+<BaseLayout title="链接 - Azek431" description="Azek431 的公开链接集合，用于整理 GitHub、项目入口和其他公开资源。">
+  <section class="page-hero">
+    <p class="eyebrow">Links</p>
+    <h1>链接集合</h1>
+    <p class="page-hero-text">
+      这里会整理我的 GitHub、项目入口、个人页面和其他公开链接，让所有内容入口更加清晰。
+    </p>
+  </section>
 
   <section class="section">
     <div class="section-heading">
@@ -22,19 +22,81 @@ import { links } from '../data/site';
       <p>这些链接会作为个人主站的长期导航入口，方便快速访问不同内容。</p>
     </div>
 
-    <div class="content-grid">
-      {
-        links.map((link) => (
+    <div class="filter-chips" role="tablist" aria-label="按分类筛选">
+      {categories.map((c, i) => (
+        <button
+          type="button"
+          class:list={['filter-chip', { active: i === 0 }]}
+          data-filter={c === '全部' ? '*' : c}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >
+          {c}
+        </button>
+      ))}
+    </div>
+
+    <div class="content-grid links-grid">
+      {links.map((link) => (
+        <div class="link-cell" data-category={link.category}>
           <NavCard
             title={link.name}
             description={link.description}
             href={link.href}
             status="公开链接"
+            statusTone="accent"
             category={link.category}
+            icon={link.name[0]}
+            iconTone={link.category === 'Code' ? 'success' : link.category === 'Writing' ? 'accent' : 'primary'}
             tags={link.tags}
+            accent={link.category === 'Code' ? '#6ee7b7' : link.category === 'Writing' ? '#c4b5fd' : link.category === 'Profile' ? '#fcd34d' : '#a8c8ff'}
           />
-        ))
-      }
+        </div>
+      ))}
     </div>
+
+    <p class="filter-empty" hidden>这个分类下暂时没有链接。</p>
   </section>
+
+  <script is:inline>
+    (function () {
+      var chips = document.querySelectorAll('.filter-chip');
+      var cells = document.querySelectorAll('.link-cell');
+      var empty = document.querySelector('.filter-empty');
+      if (!chips.length || !cells.length) return;
+
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var filter = chip.getAttribute('data-filter') || '*';
+          chips.forEach(function (c) {
+            c.classList.remove('active');
+            c.setAttribute('aria-selected', 'false');
+          });
+          chip.classList.add('active');
+          chip.setAttribute('aria-selected', 'true');
+
+          var shown = 0;
+          cells.forEach(function (cell) {
+            var cat = cell.getAttribute('data-category');
+            var match = filter === '*' || cat === filter;
+            cell.classList.toggle('filter-hidden', !match);
+            if (match) shown++;
+          });
+          if (empty) empty.hidden = shown !== 0;
+        });
+      });
+        // Apply ?tag= filter from query string
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var qt = params.get('tag');
+          if (qt) {
+            var matchChip = null;
+            chips.forEach(function (c) {
+              if ((c.getAttribute('data-filter') || '') === qt) matchChip = c;
+            });
+            if (matchChip) matchChip.click();
+          }
+        } catch (e) { /* ignore */ }
+    })();
+  </script>
 </BaseLayout>

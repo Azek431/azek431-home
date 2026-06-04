@@ -1,0 +1,33 @@
+---
+const milestones = [
+  { label: '2025 Q4', title: '主站起步',     desc: '完成 Azek431 Home 第一版,接入 Cloudflare Pages 自动部署。',           tone: 'done' },
+  { label: '2026 Q1', title: '设计系统升级', desc: '设计 tokens、玻璃质感、3D 倾斜、极光跟随等视觉体系完成。',              tone: 'done' },
+  { label: '2026 Q2', title: '项目详情 + 站点地图', desc: '为项目展示做子页结构,补齐 sitemap / 404 推荐 / 快速跳转。',     tone: 'active' },
+  { label: '2026 Q3', title: 'Blog 写作入口',       desc: '建立独立博客仓库,接入主站,文章用 Markdown + Git 维护。',         tone: 'next' },
+  { label: '2026 Q4', title: 'AI 实验记录',         desc: '把提示词 / 工作流 / 工具横评沉淀到独立子站,支持 RSS。',           tone: 'future' },
+];
+---
+<section class="section">
+  <div class="section-heading">
+    <p class="eyebrow">Roadmap</p>
+    <h2>2026 路线图</h2>
+    <p>主站和周边内容会按下面的节奏推进,已完成 / 进行中 / 后续 三个状态用不同视觉区分。</p>
+  </div>
+
+  <ol class="roadmap" aria-label="2026 路线图">
+    {milestones.map((m, i) => (
+      <li class:list={['roadmap-item', 'tone-' + m.tone]}>
+        <div class="roadmap-rail" aria-hidden="true">
+          <span class="roadmap-dot"></span>
+          {i < milestones.length - 1 && <span class="roadmap-line"></span>}
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label">{m.label}</span>
+          <h3>{m.title}</h3>
+          <p>{m.desc}</p>
+          <span class="roadmap-badge">{m.tone === 'done' ? '已完成' : m.tone === 'active' ? '进行中' : m.tone === 'next' ? '下一步' : '未来'}</span>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

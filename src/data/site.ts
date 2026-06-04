@@ -20,22 +20,10 @@ export const siteConfig = {
 };
 
 export const navItems = [
-  {
-    label: '首页',
-    href: '/',
-  },
-  {
-    label: '关于',
-    href: '/about/',
-  },
-  {
-    label: '项目',
-    href: '/projects/',
-  },
-  {
-    label: '链接',
-    href: '/links/',
-  },
+  { label: '首页', href: '/' },
+  { label: '关于', href: '/about/' },
+  { label: '项目', href: '/projects/' },
+  { label: '链接', href: '/links/' },
 ];
 
 export const homeCards = [
@@ -74,20 +62,12 @@ export const projects = [
     category: 'Website',
     href: 'https://azek431.pages.dev',
     tags: ['Astro', 'Cloudflare Pages', 'Homepage'],
+    lastUpdated: '2026-06-04',
+    accent: '#a8c8ff',
     links: [
-      {
-        label: '访问网站',
-        href: 'https://azek431.pages.dev',
-        primary: true,
-      },
-      {
-        label: 'GitHub',
-        href: 'https://github.com/Azek431/azek431-home',
-      },
-      {
-        label: 'Gitee 镜像',
-        href: 'https://gitee.com/Azek431/azek431-home',
-      },
+      { label: '访问网站', href: 'https://azek431.pages.dev', primary: true },
+      { label: 'GitHub', href: 'https://github.com/Azek431/azek431-home' },
+      { label: 'Gitee 镜像', href: 'https://gitee.com/Azek431/azek431-home' },
     ],
   },
   {
@@ -98,20 +78,12 @@ export const projects = [
     category: 'Docs',
     href: 'https://cysjdocs.pages.dev',
     tags: ['Website', 'Docs', 'Cloudflare Pages'],
+    lastUpdated: '2026-06-03',
+    accent: '#c4b5fd',
     links: [
-      {
-        label: '访问官网',
-        href: 'https://cysjdocs.pages.dev',
-        primary: true,
-      },
-      {
-        label: 'GitHub',
-        href: 'https://github.com/Azek431/cysj-data',
-      },
-      {
-        label: 'Gitee 镜像',
-        href: 'https://gitee.com/Azek431/cysj-data',
-      },
+      { label: '访问官网', href: 'https://cysjdocs.pages.dev', primary: true },
+      { label: 'GitHub', href: 'https://github.com/Azek431/cysj-data' },
+      { label: 'Gitee 镜像', href: 'https://gitee.com/Azek431/cysj-data' },
     ],
   },
   {
@@ -122,6 +94,8 @@ export const projects = [
     category: 'Blog',
     href: '#',
     tags: ['Writing', 'Notes', 'Tech'],
+    lastUpdated: '2026-05-20',
+    accent: '#6ee7b7',
   },
   {
     name: 'AI Experiments',
@@ -131,6 +105,8 @@ export const projects = [
     category: 'Lab',
     href: '#',
     tags: ['AI', 'Workflow', 'Experiment'],
+    lastUpdated: '2026-05-15',
+    accent: '#fcd34d',
   },
 ];
 
@@ -162,5 +138,36 @@ export const links = [
     href: '#',
     category: 'Writing',
     tags: ['Blog', 'Notes'],
+  },
+];
+
+export const recentUpdates = [
+  {
+    title: '升级主站视觉与微交互',
+    desc: '重写设计 tokens、加入滚动入场动画、极光跟随、按钮流光等。',
+    date: '2026-06-04',
+    tag: '主站',
+    href: '/',
+  },
+  {
+    title: '优化项目卡片展示',
+    desc: '把项目官网、GitHub 仓库和 Gitee 镜像入口合并到一张卡片，操作更简洁。',
+    date: '2026-06-03',
+    tag: '项目页',
+    href: '/projects/',
+  },
+  {
+    title: '完善移动端显示',
+    desc: '优化小屏幕导航、标题、按钮、卡片和留白表现。',
+    date: '2026-05-28',
+    tag: '主站',
+    href: '/',
+  },
+  {
+    title: '整理 Git 忽略规则',
+    desc: '完善 .gitignore，覆盖构建产物、依赖、日志、环境变量和系统文件。',
+    date: '2026-05-25',
+    tag: '配置',
+    href: 'https://github.com/Azek431/azek431-home',
   },
 ];

@@ -1,9 +1,48 @@
----
+﻿---
 import { siteConfig } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
-
 <footer class="footer">
-  <p>© {year} {siteConfig.name}. Built with Astro.</p>
+  <p>© {year} {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.</p>
+  <div class="footer-links">
+    <a href="/">首页</a>
+    <a href="/projects/">项目</a>
+    <a href={siteConfig.github} target="_blank" rel="noreferrer noopener">GitHub</a>
+    <button type="button" class="shortcut-trigger" data-shortcut-toggle aria-label="键盘快捷键提示">
+      <kbd>?</kbd>
+    </button>
+  </div>
 </footer>
+
+<div class="shortcut-hint" role="dialog" aria-label="键盘快捷键" aria-hidden="true">
+  <div class="shortcut-hint-card">
+    <div class="shortcut-hint-head">
+      <h3>键盘快捷键</h3>
+      <button type="button" class="shortcut-hint-close" aria-label="关闭">×</button>
+    </div>
+    <ul>
+      <li><kbd>g</kbd><kbd>h</kbd><span>首页</span></li>
+      <li><kbd>g</kbd><kbd>a</kbd><span>关于</span></li>
+      <li><kbd>g</kbd><kbd>p</kbd><span>项目</span></li>
+      <li><kbd>g</kbd><kbd>l</kbd><span>链接</span></li>
+      <li><kbd>?</kbd><span>显示 / 隐藏这个面板</span></li>
+    </ul>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var trig = document.querySelector('[data-shortcut-toggle]');
+    var hint = document.querySelector('.shortcut-hint');
+    var close = document.querySelector('.shortcut-hint-close');
+    if (!hint) return;
+    var close2 = function () { hint.classList.remove('visible'); hint.setAttribute('aria-hidden', 'true'); };
+    var open = function () { hint.classList.add('visible'); hint.setAttribute('aria-hidden', 'false'); };
+    if (trig) trig.addEventListener('click', function () { hint.classList.contains('visible') ? close2() : open(); });
+    if (close) close.addEventListener('click', close2);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && hint.classList.contains('visible')) close2();
+    });
+  })();
+</script>
