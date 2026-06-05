@@ -180,21 +180,6 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
           }
         });
 
-        // Card sheen: per-card mouse position
-        try {
-          var cards = document.querySelectorAll('.card');
-          if (cards.length && !reduce) {
-            cards.forEach(function (card) {
-              card.addEventListener('mousemove', function (e) {
-                var r = card.getBoundingClientRect();
-                var mx = ((e.clientX - r.left) / r.width) * 100;
-                var my = ((e.clientY - r.top) / r.height) * 100;
-                card.style.setProperty('--mx', mx + '%');
-                card.style.setProperty('--my', my + '%');
-              });
-            });
-          }
-        } catch (err) {}
         // Internal link route veil
         try {
           var veil = document.getElementById('routeVeil');
@@ -253,25 +238,26 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
           window.addEventListener('scroll', update, { passive: true });
         }
 
-        // Card mouse glow tracking
-        var cards = document.querySelectorAll('.card');
-        cards.forEach(function (card) {
-          card.addEventListener('mousemove', function (e) {
-            var r = card.getBoundingClientRect();
-            card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
-            card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+        // Card and button pointer glow tracking
+        if (!isCoarse && !reduce) {
+          var cards = document.querySelectorAll('.card');
+          cards.forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+              var r = card.getBoundingClientRect();
+              card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+              card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+            });
           });
-        });
 
-        // Button ripple tracking
-        var buttons = document.querySelectorAll('.button, .card-link');
-        buttons.forEach(function (btn) {
-          btn.addEventListener('mousemove', function (e) {
-            var r = btn.getBoundingClientRect();
-            btn.style.setProperty('--rx', ((e.clientX - r.left) / r.width) * 100 + '%');
-            btn.style.setProperty('--ry', ((e.clientY - r.top) / r.height) * 100 + '%');
+          var buttons = document.querySelectorAll('.button, .card-link');
+          buttons.forEach(function (btn) {
+            btn.addEventListener('mousemove', function (e) {
+              var r = btn.getBoundingClientRect();
+              btn.style.setProperty('--rx', ((e.clientX - r.left) / r.width) * 100 + '%');
+              btn.style.setProperty('--ry', ((e.clientY - r.top) / r.height) * 100 + '%');
+            });
           });
-        });
+        }
 
         // Click particle burst
         if (
@@ -487,6 +473,32 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
           if (t) window.location.href = '/links/?tag=' + encodeURIComponent(t);
         });
 
+        // Scroll progress + back to top
+        var prog = document.getElementById('scrollProgress');
+        var toTop = document.getElementById('toTopBtn');
+        var ticking = false;
+        function onScroll() {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+            if (prog) prog.style.width = pct + '%';
+            if (toTop) {
+              if (window.scrollY > 480) toTop.classList.add('visible');
+              else toTop.classList.remove('visible');
+            }
+            ticking = false;
+          });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        if (toTop)
+          toTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+          });
+
         if (reduce) return;
 
         // Reveal on scroll
@@ -519,32 +531,6 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
             el.classList.add('visible');
           });
         }
-
-        // 滚动进度条
-        var prog = document.getElementById('scrollProgress');
-        var toTop = document.getElementById('toTopBtn');
-        var ticking = false;
-        function onScroll() {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(function () {
-            var h = document.documentElement;
-            var max = h.scrollHeight - h.clientHeight;
-            var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-            if (prog) prog.style.width = pct + '%';
-            if (toTop) {
-              if (window.scrollY > 480) toTop.classList.add('visible');
-              else toTop.classList.remove('visible');
-            }
-            ticking = false;
-          });
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        if (toTop)
-          toTop.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-          });
       })();
     </script>
     <Toast />
