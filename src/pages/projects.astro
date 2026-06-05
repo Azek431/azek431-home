@@ -8,13 +8,6 @@ const liveCount = projects.filter((p) => p.status === '已上线').length;
 const wipCount = projects.filter((p) => p.status === '维护中' || p.status === '计划中').length;
 const ideaCount = projects.filter((p) => p.status === '构想中').length;
 
-const slugMap: Record<string, string> = {
-  'Azek431 Home': 'azek431-home',
-  'Azek创游世界资料库': 'cysj-data',
-  'Azek431 Blog': 'azek431-blog',
-  'AI Experiments': 'ai-experiments',
-};
-
 function withDetail(links: { label: string; href: string; primary?: boolean }[] | undefined, slug: string | undefined) {
   const base = (links || []).slice();
   if (slug) {
@@ -73,7 +66,7 @@ function withDetail(links: { label: string; href: string; primary?: boolean }[] 
           icon={project.category === 'Website' ? 'W' : project.category === 'Docs' ? 'D' : project.category === 'Blog' ? 'B' : 'A'}
           iconTone={project.status === '已上线' ? 'success' : project.category === 'Blog' ? 'accent' : 'primary'}
           tags={project.tags}
-          links={withDetail(project.links, slugMap[project.name])}
+          links={withDetail(project.links, project.slug)}
           lastUpdated={project.lastUpdated}
           accent={project.accent}
         />

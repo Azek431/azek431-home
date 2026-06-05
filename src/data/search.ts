@@ -33,18 +33,6 @@ const pageItems: SearchItem[] = navItems
   }))
   .concat([
     {
-      title: '搜索',
-      desc: '站内搜索,跨页面、项目、链接、内容索引。',
-      href: '/search/',
-      category: 'Page',
-    },
-    {
-      title: 'Blog',
-      desc: '个人博客入口,后续会接入独立写作仓库。',
-      href: '/blog/',
-      category: 'Page',
-    },
-    {
       title: 'GitHub 仓库',
       desc: 'Azek431 在 GitHub 上的代码和项目记录。',
       href: siteConfig.github,

@@ -3,8 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import { changelog } from '../data/changelog';
 
 const totalChanges = changelog.reduce((acc, e) => acc + e.changes.length, 0);
 const totalVersions = changelog.length;

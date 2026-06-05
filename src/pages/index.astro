@@ -2,19 +2,20 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NavCard from '../components/NavCard.astro';
 import Roadmap from '../components/Roadmap.astro';
-import { homeCards, siteConfig, recentUpdates } from '../data/site';
+import { homeCards, links, navItems, siteConfig, recentUpdates } from '../data/site';
+import { projectDetails } from '../data/projects';
 
-const liveProjects = homeCards.filter((c) => c.status === '项目导航' || c.status === '链接集合').length;
-const externalLinks = homeCards.filter((c) => c.status === '外部链接').length;
+const pageCount = navItems.length + projectDetails.length + 1;
+const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
+const externalLinks = links.filter((link) => link.href.startsWith('http')).length;
 const upcoming = homeCards.filter((c) => c.status === '即将上线').length;
 const recentCount = recentUpdates.length;
 const progressPct = Math.min(100, Math.round((recentCount / 6) * 100));
 const buildDate = new Date().toISOString().slice(0, 10);
-const pageCount = 16;
 const quickStats = [
   { num: homeCards.length,   label: '主站入口',  tone: 'primary' },
-  { num: 4,                  label: '项目',      tone: 'success' },
-  { num: 7,                  label: '公开链接',  tone: 'accent' },
+  { num: projectDetails.length, label: '项目',      tone: 'success' },
+  { num: links.length,       label: '公开链接',  tone: 'accent' },
   { num: recentUpdates.length, label: '近 30 天更新', tone: 'warning' },
 ];
 
@@ -117,7 +118,7 @@ const quickJumps = [
           <a class="button secondary" href={siteConfig.github} target="_blank" rel="noreferrer noopener">
             访问 GitHub
           </a>
-          <button type="button" class="button secondary" data-copy-url={siteConfig.url || 'https://azek431.pages.dev'}>
+          <button type="button" class="button secondary" data-copy-url={siteConfig.url}>
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             复制主页链接
           </button>

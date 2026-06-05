@@ -35,6 +35,8 @@ const categories = [
     ],
   },
 ];
+
+const totalItems = categories.reduce((sum, category) => sum + category.items.length, 0);
 ---
 <BaseLayout
   title="Uses - Azek431"
@@ -48,7 +50,7 @@ const categories = [
     meta={[
       { label: 'Last', value: '2026-06-04' },
       { label: '类型', value: '4 大类' },
-      { label: '总数', value: '28 件' },
+      { label: '总数', value: totalItems + ' 件' },
     ]}
   />
 

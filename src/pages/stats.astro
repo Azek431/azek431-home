@@ -4,12 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
 import { projectDetails } from '../data/projects';
-import { links, recentUpdates } from '../data/site';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import { changelog } from '../data/changelog';
-import { projectDetails } from '../data/projects';
-import { links, recentUpdates } from '../data/site';
-import { siteConfig } from '../data/site';
+import { links, navItems, recentUpdates } from '../data/site';
 
 const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
 const planProjects = projectDetails.filter((p) => p.status !== '已上线').length;
@@ -25,6 +20,7 @@ const now = new Date();
 const daysRunning = Math.floor((now.getTime() - startDate.getTime()) / 86400000);
 const weeksRunning = Math.floor(daysRunning / 7);
 const monthsRunning = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
+const pageCount = navItems.length + projectDetails.length + 1;
 
 const sections = [
   {
@@ -62,7 +58,7 @@ const sections = [
     metrics: [
       { label: '最近更新条目', value: recentUpdates.length, suffix: ' 条',  tone: 'primary' },
       { label: '公开链接',     value: links.length,         suffix: ' 个',  tone: 'accent'  },
-      { label: '站内页面',     value: 12,                    suffix: ' 个',  tone: 'success' },
+      { label: '站内页面',     value: pageCount,             suffix: ' 个',  tone: 'success' },
       { label: '订阅源',       value: 'RSS',                tone: 'muted'   },
       { label: '站点地图',     value: 'XML',                tone: 'muted'   },
     ],

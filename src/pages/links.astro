@@ -4,9 +4,6 @@ import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import NavCard from '../components/NavCard.astro';
 import { links } from '../data/site';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import NavCard from '../components/NavCard.astro';
-import { links } from '../data/site';
 
 const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)))];
 ---
@@ -19,7 +16,7 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
     description="这里会整理我的 GitHub、项目入口、个人页面和其他公开链接,让所有内容入口更加清晰。"
     meta={[
       { label: '总数', value: links.length + ' 条' },
-      { label: '分类', value: '6 类' },
+      { label: '分类', value: categories.length - 1 + ' 类' },
       { label: '最近', value: '2026-06-04' },
     ]}
   />

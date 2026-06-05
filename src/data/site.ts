@@ -1,9 +1,12 @@
+import { projectDetails } from './projects';
+
 export const siteConfig = {
   name: 'Azek431',
   title: 'Azek431 的个人主站',
   description: 'Azek431 的个人主站与导航入口，用于整理个人介绍、项目入口、学习记录和公开链接。',
   author: 'Azek431',
   locale: 'zh-CN',
+  url: 'https://azek431.pages.dev',
   github: 'https://github.com/Azek431',
   keywords: [
     'Azek431',
@@ -60,62 +63,32 @@ export const homeCards = [
   },
 ];
 
-export const projects = [
-  {
-    name: 'Azek431 Home',
-    description:
-      '我的个人主站与数字导航入口，用来集中展示个人介绍、项目作品、公开链接和后续内容导航。',
-    status: '已上线',
-    category: 'Website',
-    href: 'https://azek431.pages.dev',
-    tags: ['Astro', 'Cloudflare Pages', 'Homepage'],
-    lastUpdated: '2026-06-04',
-    accent: '#a8c8ff',
-    links: [
-      { label: '访问网站', href: 'https://azek431.pages.dev', primary: true },
-      { label: 'GitHub', href: 'https://github.com/Azek431/azek431-home' },
-      { label: 'Gitee 镜像', href: 'https://gitee.com/Azek431/azek431-home' },
-    ],
-  },
-  {
-    name: 'Azek创游世界资料库',
-    description:
-      'Azek创游世界资料库的项目官网与资料入口，用于展示项目介绍、资料内容、使用说明和后续更新信息。',
-    status: '已上线',
-    category: 'Docs',
-    href: 'https://cysjdocs.pages.dev',
-    tags: ['Website', 'Docs', 'Cloudflare Pages'],
-    lastUpdated: '2026-06-03',
-    accent: '#c4b5fd',
-    links: [
-      { label: '访问官网', href: 'https://cysjdocs.pages.dev', primary: true },
-      { label: 'GitHub', href: 'https://github.com/Azek431/cysj-data' },
-      { label: 'Gitee 镜像', href: 'https://gitee.com/Azek431/cysj-data' },
-    ],
-  },
-  {
-    name: 'Azek431 Blog',
-    description:
-      '计划用于记录技术文章、学习笔记、开发过程和长期思考的个人博客项目，后续会作为独立仓库维护。',
-    status: '计划中',
-    category: 'Blog',
-    href: '#',
-    tags: ['Writing', 'Notes', 'Tech'],
-    lastUpdated: '2026-05-20',
-    accent: '#6ee7b7',
-  },
-  {
-    name: 'AI Experiments',
-    description:
-      '用于整理 AI 工具、提示词、自动化流程和相关技术实验内容，记录从想法到实践的探索过程。',
-    status: '构想中',
-    category: 'Lab',
-    href: '#',
-    tags: ['AI', 'Workflow', 'Experiment'],
-    lastUpdated: '2026-05-15',
-    accent: '#fcd34d',
-  },
-];
+interface ProjectSummaryLink {
+  label: string;
+  href: string;
+  primary?: boolean;
+}
+
+function projectLinks(project: (typeof projectDetails)[number]): ProjectSummaryLink[] {
+  const links: ProjectSummaryLink[] = [];
+  if (project.websiteUrl) links.push({ label: '访问网站', href: project.websiteUrl, primary: true });
+  if (project.githubUrl) links.push({ label: 'GitHub', href: project.githubUrl });
+  if (project.giteeUrl) links.push({ label: 'Gitee 镜像', href: project.giteeUrl });
+  return links;
+}
+
+export const projects = projectDetails.map((project) => ({
+  slug: project.slug,
+  name: project.title,
+  description: project.description,
+  status: project.status,
+  category: project.category,
+  href: project.websiteUrl || '#',
+  tags: project.tags,
+  lastUpdated: project.lastUpdated,
+  accent: project.accent,
+  links: projectLinks(project),
+}));
 
 export const links = [
   {
