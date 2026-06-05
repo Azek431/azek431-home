@@ -9,6 +9,8 @@ const externalLinks = homeCards.filter((c) => c.status === '外部链接').lengt
 const upcoming = homeCards.filter((c) => c.status === '即将上线').length;
 const recentCount = recentUpdates.length;
 const progressPct = Math.min(100, Math.round((recentCount / 6) * 100));
+const buildDate = new Date().toISOString().slice(0, 10);
+const pageCount = 16;
 
 function daysAgo(dateStr: string): string {
   const then = new Date(dateStr + 'T00:00:00Z').getTime();
@@ -48,6 +50,11 @@ const quickJumps = [
       <span class="home-pulse-label">Next</span>
       <span class="home-pulse-value"><a href="/now/">看 /now →</a></span>
     </div>
+  </div>
+
+  <div class="build-info" aria-label="构建信息">
+    <span><span class="bi-dot"></span>Build {buildDate} · {pageCount} 页面 · 静态生成</span>
+    <a class="build-changelog" href="/changelog/">查看更新日志 →</a>
   </div>
 
   <nav class="home-quicklinks" aria-label="快捷入口">

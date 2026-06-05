@@ -4775,3 +4775,38 @@ a.card:hover .arrow {
 :root[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
 :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
 :root:not([data-theme="light"]) .theme-toggle .icon-sun  { display: block; }
+
+/* ============================================
+   build-info strip
+   ============================================ */
+.build-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 1.2rem;
+  padding: 0.55rem 0.95rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  color: var(--text-2);
+  background: var(--bg-soft, rgba(15, 23, 42, 0.5));
+  border: 1px dashed var(--border-1, rgba(148, 163, 184, 0.16));
+  border-radius: 10px;
+}
+.build-info > span { display: inline-flex; align-items: center; gap: 0.5rem; }
+.bi-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #b8e0c2;
+  box-shadow: 0 0 0 3px rgba(184, 224, 194, 0.2);
+  animation: pulse-blink 1.6s ease-in-out infinite;
+}
+.build-changelog {
+  color: var(--accent-1, #a8c8ff);
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+.build-changelog:hover { color: var(--text-1, #fff); }
