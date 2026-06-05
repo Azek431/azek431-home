@@ -7,6 +7,8 @@ import { homeCards, siteConfig, recentUpdates } from '../data/site';
 const liveProjects = homeCards.filter((c) => c.status === '项目导航' || c.status === '链接集合').length;
 const externalLinks = homeCards.filter((c) => c.status === '外部链接').length;
 const upcoming = homeCards.filter((c) => c.status === '即将上线').length;
+const recentCount = recentUpdates.length;
+const progressPct = Math.min(100, Math.round((recentCount / 6) * 100));
 
 function daysAgo(dateStr: string): string {
   const then = new Date(dateStr + 'T00:00:00Z').getTime();
@@ -29,6 +31,25 @@ const quickJumps = [
 ];
 ---
 <BaseLayout title={siteConfig.title} description={siteConfig.description}>
+  <div class="home-pulse" role="group" aria-label="实时状态">
+    <div class="home-pulse-item">
+      <span class="home-pulse-label">Mood</span>
+      <span class="home-pulse-value"><span class="home-pulse-dot"></span>正在打磨细节</span>
+    </div>
+    <div class="home-pulse-item">
+      <span class="home-pulse-label">主题</span>
+      <span class="home-pulse-value">设计系统 + Astro 6</span>
+    </div>
+    <div class="home-pulse-item">
+      <span class="home-pulse-label">阅读</span>
+      <span class="home-pulse-value">Designing Data-Intensive Apps</span>
+    </div>
+    <div class="home-pulse-item">
+      <span class="home-pulse-label">Next</span>
+      <span class="home-pulse-value"><a href="/now/">看 /now →</a></span>
+    </div>
+  </div>
+
   <nav class="home-quicklinks" aria-label="快捷入口">
     <span class="home-quicklinks-label">快捷入口</span>
     <ul class="home-quicklinks-list">
@@ -133,6 +154,12 @@ const quickJumps = [
       <p class="eyebrow">Recent Updates</p>
       <h2>最近更新</h2>
       <p>这里会记录主站、项目和其他内容的最近改动。</p>
+    </div>
+
+    <div class="timeline-progress" aria-label="本月更新进度">
+      <span>最近 30 天 · {recentCount} 条更新</span>
+      <div class="timeline-progress-bar"><div class="timeline-progress-fill" style="width: {progressPct}%"></div></div>
+      <span>{progressPct}%</span>
     </div>
 
     <ol class="timeline" aria-label="最近更新">

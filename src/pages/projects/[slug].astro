@@ -33,6 +33,17 @@ const allLinks = [
   project.githubUrl   && { label: 'GitHub 仓库', href: project.githubUrl, external: true },
   project.giteeUrl    && { label: 'Gitee 镜像', href: project.giteeUrl, external: true },
 ].filter(Boolean);
+
+const sharedTags = (a, b) => (a.tags || []).filter((t) => (b.tags || []).includes(t)).length;
+const relatedProjects = projectDetails
+  .filter((p) => p.slug !== project.slug)
+  .map((p) => ({
+    project: p,
+    score: (p.category === project.category ? 3 : 0) + sharedTags(p, project),
+  }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 2)
+  .map((x) => x.project);
 ---
 <BaseLayout
   title={project.title + ' - Azek431'}
@@ -86,6 +97,29 @@ const allLinks = [
           返回项目列表
         </a>
       </div>
+
+      {relatedProjects.length > 0 && (
+        <section class="related-projects">
+          <p class="eyebrow">Related</p>
+          <h2 class="detail-h2">相关项目</h2>
+          <div class="related-grid">
+            {relatedProjects.map((rp) => (
+              <a class="related-card" href={'/projects/' + rp.slug + '/'} style={'--rel-accent:' + rp.accent + ';'}>
+                <div class="related-head">
+                  <span class="related-cat">{rp.category}</span>
+                  <span class="related-status">{rp.status}</span>
+                </div>
+                <h3 class="related-title">{rp.title}</h3>
+                <p class="related-desc">{rp.description}</p>
+                <div class="related-tags">
+                  {(rp.tags || []).slice(0, 3).map((t) => <span class="related-tag">{t}</span>)}
+                </div>
+                <span class="related-cta">查看项目 →</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       <nav class="prev-next" aria-label="项目分页">
         <a class="prev-next-link prev" href={'/projects/' + prevProject.slug + '/'}>
