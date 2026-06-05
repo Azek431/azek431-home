@@ -4810,3 +4810,43 @@ a.card:hover .arrow {
   border-bottom: 1px dashed currentColor;
 }
 .build-changelog:hover { color: var(--text-1, #fff); }
+
+/* ============================================
+   links page: copy-url overlay
+   ============================================ */
+.link-wrap {
+  position: relative;
+  display: block;
+  height: 100%;
+}
+.link-copy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-3, rgba(20, 28, 48, 0.92));
+  color: var(--text-2);
+  border: 1px solid var(--border-1, rgba(148, 163, 184, 0.16));
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease, color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  padding: 0;
+}
+.link-wrap:hover .link-copy,
+.link-copy:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.link-copy:hover {
+  color: var(--accent-1, #a8c8ff);
+  border-color: var(--accent-1, #a8c8ff);
+  background: var(--bg-raised);
+}
+.link-copy svg { width: 0.9rem; height: 0.9rem; }

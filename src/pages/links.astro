@@ -48,18 +48,32 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
     <div class="content-grid links-grid">
       {links.map((link) => (
         <div class="link-cell" data-category={link.category}>
-          <NavCard
-            title={link.name}
-            description={link.description}
-            href={link.href}
-            status="公开链接"
-            statusTone="accent"
-            category={link.category}
-            icon={link.name[0]}
-            iconTone={link.category === 'Code' ? 'success' : link.category === 'Writing' ? 'accent' : 'primary'}
-            tags={link.tags}
-            accent={link.category === 'Code' ? '#6ee7b7' : link.category === 'Writing' ? '#c4b5fd' : link.category === 'Profile' ? '#fcd34d' : '#a8c8ff'}
-          />
+          <div class="link-wrap">
+            <NavCard
+              title={link.name}
+              description={link.description}
+              href={link.href}
+              status="公开链接"
+              statusTone="accent"
+              category={link.category}
+              icon={link.name[0]}
+              iconTone={link.category === 'Code' ? 'success' : link.category === 'Writing' ? 'accent' : 'primary'}
+              tags={link.tags}
+              accent={link.category === 'Code' ? '#6ee7b7' : link.category === 'Writing' ? '#c4b5fd' : link.category === 'Profile' ? '#fcd34d' : '#a8c8ff'}
+            />
+            <button
+              type="button"
+              class="link-copy"
+              data-copy-url={link.href}
+              aria-label={'复制 ' + link.name + ' 链接'}
+              title="复制链接"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
         </div>
       ))}
     </div>
