@@ -1609,12 +1609,111 @@ p, h1, h2, h3, h4 { margin-top: 0; letter-spacing: -0.012em; }
   font-size: 14px;
 }
 
+.links-groups {
+  display: grid;
+  gap: 34px;
+}
+
+.link-group {
+  scroll-margin-top: 110px;
+  padding-top: 28px;
+  border-top: 1px dashed var(--border);
+}
+
+.link-group:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.link-group[hidden] {
+  display: none;
+}
+
+.link-group-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.link-group-head h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 760;
+}
+
+.link-group-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.link-group-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.link-group-kicker::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+.link-group-kicker.tone-success { color: var(--success); }
+.link-group-kicker.tone-accent { color: var(--accent); }
+
+.link-group-count {
+  flex: 0 0 auto;
+  min-width: 66px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: rgba(13, 19, 36, 0.5);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+  text-align: center;
+}
+
+.links-grid {
+  padding-top: 0;
+}
+
 .link-cell {
   transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
 }
 
 .link-cell.filter-hidden {
   display: none;
+}
+
+@media (max-width: 720px) {
+  .links-groups {
+    gap: 28px;
+  }
+
+  .link-group {
+    padding-top: 24px;
+  }
+
+  .link-group-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 /* ---------- Hero-side 3D tilt transition ---------- */
@@ -4817,6 +4916,9 @@ a.card:hover .arrow {
 .link-wrap {
   position: relative;
   display: block;
+  height: 100%;
+}
+.link-wrap .card {
   height: 100%;
 }
 .link-copy {

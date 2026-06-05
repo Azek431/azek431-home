@@ -7,6 +7,51 @@ import { links } from '../data/site';
 import { siteUpdatedDate } from '../data/time';
 
 const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)))];
+
+const categoryMeta: Record<
+  string,
+  { title: string; desc: string; tone: 'success' | 'primary' | 'accent' }
+> = {
+  Main: {
+    title: '主入口',
+    desc: '最常用的公开主页、代码平台和当前主站入口。',
+    tone: 'success',
+  },
+  Site: {
+    title: '站内核心',
+    desc: '了解 Azek431、查看项目、进入未来博客的核心页面。',
+    tone: 'primary',
+  },
+  Extra: {
+    title: '补充页面',
+    desc: 'Now、Uses、更新记录、统计、订阅源等低优先级入口。',
+    tone: 'accent',
+  },
+};
+
+const linkGroups = categories
+  .filter((category) => category !== '全部')
+  .map((category) => ({
+    category,
+    ...(categoryMeta[category] || {
+      title: category,
+      desc: '这一组链接用于补充个人主站的公开入口。',
+      tone: 'primary' as const,
+    }),
+    items: links.filter((link) => link.category === category),
+  }));
+
+function categoryAccent(category: string) {
+  if (category === 'Main') return '#6ee7b7';
+  if (category === 'Extra') return '#c4b5fd';
+  return '#a8c8ff';
+}
+
+function categoryIconTone(category: string) {
+  if (category === 'Main') return 'success';
+  if (category === 'Extra') return 'accent';
+  return 'primary';
+}
 ---
 
 <BaseLayout
@@ -48,59 +93,64 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
       }
     </div>
 
-    <div class="content-grid links-grid">
+    <div class="links-groups">
       {
-        links.map((link) => (
-          <div class="link-cell" data-category={link.category}>
-            <div class="link-wrap">
-              <NavCard
-                title={link.name}
-                description={link.description}
-                href={link.href}
-                status="公开链接"
-                statusTone="accent"
-                category={link.category}
-                icon={link.name[0]}
-                iconTone={
-                  link.category === 'Code'
-                    ? 'success'
-                    : link.category === 'Writing'
-                      ? 'accent'
-                      : 'primary'
-                }
-                tags={link.tags}
-                accent={
-                  link.category === 'Code'
-                    ? '#6ee7b7'
-                    : link.category === 'Writing'
-                      ? '#c4b5fd'
-                      : link.category === 'Profile'
-                        ? '#fcd34d'
-                        : '#a8c8ff'
-                }
-              />
-              <button
-                type="button"
-                class="link-copy"
-                data-copy-url={link.href}
-                aria-label={'复制 ' + link.name + ' 链接'}
-                title="复制链接"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </button>
+        linkGroups.map((group) => (
+          <section class="link-group" data-link-group={group.category}>
+            <div class="link-group-head">
+              <div>
+                <p class:list={['link-group-kicker', 'tone-' + group.tone]}>{group.category}</p>
+                <h3>{group.title}</h3>
+                <p>{group.desc}</p>
+              </div>
+              <span class="link-group-count">{group.items.length} 条</span>
             </div>
-          </div>
+
+            <div class="content-grid links-grid">
+              {group.items.map((link) => (
+                <div
+                  class="link-cell"
+                  data-category={link.category}
+                  data-tags={link.tags.join('|')}
+                >
+                  <div class="link-wrap">
+                    <NavCard
+                      title={link.name}
+                      description={link.description}
+                      href={link.href}
+                      status="公开链接"
+                      statusTone="accent"
+                      category={link.category}
+                      icon={link.name[0]}
+                      iconTone={categoryIconTone(link.category)}
+                      tags={link.tags}
+                      accent={categoryAccent(link.category)}
+                    />
+                    <button
+                      type="button"
+                      class="link-copy"
+                      data-copy-url={link.href}
+                      aria-label={'复制 ' + link.name + ' 链接'}
+                      title="复制链接"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         ))
       }
     </div>
@@ -112,8 +162,34 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
     (function () {
       var chips = document.querySelectorAll('.filter-chip');
       var cells = document.querySelectorAll('.link-cell');
+      var groups = document.querySelectorAll('[data-link-group]');
       var empty = document.querySelector('.filter-empty');
       if (!chips.length || !cells.length) return;
+
+      function matches(cell, filter) {
+        if (filter === '*') return true;
+        var cat = cell.getAttribute('data-category') || '';
+        var tags = (cell.getAttribute('data-tags') || '').split('|');
+        return cat === filter || tags.indexOf(filter) !== -1;
+      }
+
+      function refreshGroups() {
+        groups.forEach(function (group) {
+          var visible = group.querySelectorAll('.link-cell:not(.filter-hidden)').length;
+          group.hidden = visible === 0;
+        });
+      }
+
+      function applyFilter(filter) {
+        var shown = 0;
+        cells.forEach(function (cell) {
+          var match = matches(cell, filter);
+          cell.classList.toggle('filter-hidden', !match);
+          if (match) shown++;
+        });
+        refreshGroups();
+        if (empty) empty.hidden = shown !== 0;
+      }
 
       chips.forEach(function (chip) {
         chip.addEventListener('click', function () {
@@ -124,18 +200,10 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
           });
           chip.classList.add('active');
           chip.setAttribute('aria-selected', 'true');
-
-          var shown = 0;
-          cells.forEach(function (cell) {
-            var cat = cell.getAttribute('data-category');
-            var match = filter === '*' || cat === filter;
-            cell.classList.toggle('filter-hidden', !match);
-            if (match) shown++;
-          });
-          if (empty) empty.hidden = shown !== 0;
+          applyFilter(filter);
         });
       });
-      // Apply ?tag= filter from query string
+      // Apply ?tag= filter from query string. Tags can come from cards on any page.
       try {
         var params = new URLSearchParams(window.location.search);
         var qt = params.get('tag');
@@ -145,6 +213,7 @@ const categories = ['全部', ...Array.from(new Set(links.map((l) => l.category)
             if ((c.getAttribute('data-filter') || '') === qt) matchChip = c;
           });
           if (matchChip) matchChip.click();
+          else applyFilter(qt);
         }
       } catch (e) {
         /* ignore */
