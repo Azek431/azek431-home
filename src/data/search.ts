@@ -24,33 +24,32 @@ const navDescriptions: Record<string, string> = {
   '/blog/': '博客入口,后续会接入独立的写作仓库。',
 };
 
-const pageItems: SearchItem[] = navItems
-  .map((n) => ({
+const pageItems: SearchItem[] = [
+  ...navItems.map<SearchItem>((n) => ({
     title: n.label,
     desc: navDescriptions[n.href] || '',
     href: n.href,
     category: 'Page' as const,
-  }))
-  .concat([
-    {
-      title: 'GitHub 仓库',
-      desc: 'Azek431 在 GitHub 上的代码和项目记录。',
-      href: siteConfig.github,
-      category: 'Link',
-    },
-    {
-      title: 'RSS 订阅',
-      desc: '主站 RSS feed,订阅最新更新。',
-      href: '/rss.xml',
-      category: 'Link',
-    },
-    {
-      title: '站点地图',
-      desc: 'XML sitemap,搜索引擎用。',
-      href: '/sitemap.xml',
-      category: 'Link',
-    },
-  ]);
+  })),
+  {
+    title: 'GitHub 仓库',
+    desc: 'Azek431 在 GitHub 上的代码和项目记录。',
+    href: siteConfig.github,
+    category: 'Link',
+  },
+  {
+    title: 'RSS 订阅',
+    desc: '主站 RSS feed,订阅最新更新。',
+    href: '/rss.xml',
+    category: 'Link',
+  },
+  {
+    title: '站点地图',
+    desc: 'XML sitemap,搜索引擎用。',
+    href: '/sitemap.xml',
+    category: 'Link',
+  },
+];
 
 const projectItems: SearchItem[] = projectDetails.map((p) => ({
   title: p.title,

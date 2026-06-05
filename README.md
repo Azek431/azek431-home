@@ -86,6 +86,32 @@
 | `/links/`    | 链接页，用于整理 GitHub、项目和公开链接  |
 | `/404.html`  | 自定义 404 页面                          |
 
+### 当前实现快照
+
+截至当前版本，主站已经扩展为 16 个静态页面，并额外生成 RSS 与 Sitemap：
+
+| 路径                | 说明                         |
+| ------------------- | ---------------------------- |
+| `/`                 | 首页与主站总览               |
+| `/about/`           | 关于页与个人方向             |
+| `/projects/`        | 项目列表                     |
+| `/projects/[slug]/` | 项目详情页                   |
+| `/links/`           | 公开链接集合与分类筛选       |
+| `/now/`             | 最近正在做的事               |
+| `/uses/`            | 日常装备和工具               |
+| `/blog/`            | 博客筹备入口                 |
+| `/colophon/`        | 技术栈、字体、设计原则与灵感 |
+| `/changelog/`       | 版本更新日志                 |
+| `/stats/`           | 项目、迭代、内容和访问统计   |
+| `/search/`          | 站内搜索                     |
+| `/rss.xml`          | RSS 订阅源                   |
+| `/sitemap.xml`      | XML 站点地图                 |
+| `/404.html`         | 自定义 404                   |
+
+当前主要组件包括 `Header`、`Footer`、`NavCard`、`PageHero`、`Breadcrumb`、`Roadmap`、`ThemeToggle` 和 `Toast`。
+数据分为 `site.ts`、`projects.ts`、`changelog.ts`、`search.ts` 四个模块，其中项目列表由项目详情数据派生，避免重复维护。
+提交前建议运行 `pnpm verify`，它会依次检查格式、Astro 类型与生产构建。
+
 ## 页面路由
 
 | 源文件                     | 路由         |
@@ -477,6 +503,8 @@ pnpm format:check
 | `pnpm dev`          | 启动本地开发服务器   |
 | `pnpm build`        | 构建生产环境静态文件 |
 | `pnpm preview`      | 本地预览构建结果     |
+| `pnpm check`        | Astro 类型与模板检查 |
+| `pnpm verify`       | 格式、类型和构建检查 |
 | `pnpm format`       | 格式化代码和文档     |
 | `pnpm format:check` | 检查代码和文档格式   |
 | `pnpm astro`        | 执行 Astro CLI 命令  |

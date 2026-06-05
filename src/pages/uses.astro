@@ -2,42 +2,60 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import { siteUpdatedDate } from '../data/time';
 
 const categories = [
   {
     title: '硬件',
     items: [
-      { name: '主力笔记本',     detail: '一台 14 寸轻薄本,主站 90% 时间都在这上面写', tone: 'primary' },
-      { name: '外接显示器',     detail: '27 寸 2K 屏,主要做长时间阅读和长 timeline 滚动', tone: 'muted' },
-      { name: 'HHKB 键盘',     detail: '静电容键盘,手感稳定,适合长时间码字',         tone: 'accent' },
+      { name: '主力笔记本', detail: '一台 14 寸轻薄本,主站 90% 时间都在这上面写', tone: 'primary' },
+      {
+        name: '外接显示器',
+        detail: '27 寸 2K 屏,主要做长时间阅读和长 timeline 滚动',
+        tone: 'muted',
+      },
+      { name: 'HHKB 键盘', detail: '静电容键盘,手感稳定,适合长时间码字', tone: 'accent' },
     ],
   },
   {
     title: '编辑器 / 终端',
     items: [
-      { name: 'VS Code',     detail: '主力编辑器,Astro / Tailwind 插件,Prettier 格式化', tone: 'primary' },
-      { name: 'Windows Terminal', detail: 'PowerShell + pwsh,所有 build / dev / git 命令都跑在里面', tone: 'muted' },
-      { name: 'git CLI',     detail: '一切提交走 git,没有 GUI 工具',                   tone: 'muted' },
+      {
+        name: 'VS Code',
+        detail: '主力编辑器,Astro / Tailwind 插件,Prettier 格式化',
+        tone: 'primary',
+      },
+      {
+        name: 'Windows Terminal',
+        detail: 'PowerShell + pwsh,所有 build / dev / git 命令都跑在里面',
+        tone: 'muted',
+      },
+      { name: 'git CLI', detail: '一切提交走 git,没有 GUI 工具', tone: 'muted' },
     ],
   },
   {
     title: '浏览器 / 设计',
     items: [
-      { name: 'Edge / Chrome', detail: '主调试浏览器,主站在 Edge 里跑 dev server 验证',   tone: 'primary' },
-      { name: 'Figma',         detail: '偶尔画流程图 / 概念图,大部分设计直接在 CSS 里写', tone: 'accent' },
+      {
+        name: 'Edge / Chrome',
+        detail: '主调试浏览器,主站在 Edge 里跑 dev server 验证',
+        tone: 'primary',
+      },
+      { name: 'Figma', detail: '偶尔画流程图 / 概念图,大部分设计直接在 CSS 里写', tone: 'accent' },
     ],
   },
   {
     title: 'AI / 自动化',
     items: [
-      { name: 'Codex CLI',  detail: '在这台机器上跑 AI 编码,负责主站的迭代和重构',      tone: 'success' },
-      { name: 'GitHub Actions', detail: 'CI 钩子触发 Cloudflare Pages 自动部署',           tone: 'success' },
+      { name: 'Codex CLI', detail: '在这台机器上跑 AI 编码,负责主站的迭代和重构', tone: 'success' },
+      { name: 'GitHub Actions', detail: 'CI 钩子触发 Cloudflare Pages 自动部署', tone: 'success' },
     ],
   },
 ];
 
 const totalItems = categories.reduce((sum, category) => sum + category.items.length, 0);
 ---
+
 <BaseLayout
   title="Uses - Azek431"
   description="我日常用来搭建主站、写代码、托管和发布内容的装备与工具清单。"
@@ -48,26 +66,28 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
     title="日常装备"
     description="这一页列的是我日常用来写代码、搭建主站、跑自动化的硬件和软件。"
     meta={[
-      { label: 'Last', value: '2026-06-04' },
+      { label: 'Last', value: siteUpdatedDate },
       { label: '类型', value: '4 大类' },
       { label: '总数', value: totalItems + ' 件' },
     ]}
   />
 
   <section class="section">
-    {categories.map((cat) => (
-      <div class="uses-block">
-        <h2 class="uses-block-title">{cat.title}</h2>
-        <ul class="uses-list">
-          {cat.items.map((it) => (
-            <li class:list={['uses-item', 'tone-' + it.tone]}>
-              <div class="uses-item-name">{it.name}</div>
-              <p class="uses-item-detail">{it.detail}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
+    {
+      categories.map((cat) => (
+        <div class="uses-block">
+          <h2 class="uses-block-title">{cat.title}</h2>
+          <ul class="uses-list">
+            {cat.items.map((it) => (
+              <li class:list={['uses-item', 'tone-' + it.tone]}>
+                <div class="uses-item-name">{it.name}</div>
+                <p class="uses-item-detail">{it.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </section>
 
   <section class="section">

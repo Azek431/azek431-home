@@ -4,6 +4,7 @@ import NavCard from '../components/NavCard.astro';
 import Roadmap from '../components/Roadmap.astro';
 import { homeCards, links, navItems, siteConfig, recentUpdates } from '../data/site';
 import { projectDetails } from '../data/projects';
+import { relativeDate, siteUpdatedDate, todayDate } from '../data/time';
 
 const pageCount = navItems.length + projectDetails.length + 1;
 const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
@@ -11,34 +12,26 @@ const externalLinks = links.filter((link) => link.href.startsWith('http')).lengt
 const upcoming = homeCards.filter((c) => c.status === '即将上线').length;
 const recentCount = recentUpdates.length;
 const progressPct = Math.min(100, Math.round((recentCount / 6) * 100));
-const buildDate = new Date().toISOString().slice(0, 10);
 const quickStats = [
-  { num: homeCards.length,   label: '主站入口',  tone: 'primary' },
-  { num: projectDetails.length, label: '项目',      tone: 'success' },
-  { num: links.length,       label: '公开链接',  tone: 'accent' },
+  { num: homeCards.length, label: '主站入口', tone: 'primary' },
+  { num: projectDetails.length, label: '项目', tone: 'success' },
+  { num: links.length, label: '公开链接', tone: 'accent' },
   { num: recentUpdates.length, label: '近 30 天更新', tone: 'warning' },
 ];
 
-function daysAgo(dateStr: string): string {
-  const then = new Date(dateStr + 'T00:00:00Z').getTime();
-  const now = Date.now();
-  const d = Math.floor((now - then) / 86400000);
-  if (d < 1) return '今天';
-  if (d === 1) return '昨天';
-  if (d < 30) return d + ' 天前';
-  if (d < 365) return Math.floor(d / 30) + ' 个月前';
-  return Math.floor(d / 365) + ' 年前';
-}
+const daysAgo = relativeDate;
+const writingDraftDate = '2026-06-02';
 
 const quickJumps = [
-  { label: '项目展示',  href: '/projects/', desc: 'Azek431 Home / 资料库 / Blog' },
-  { label: 'GitHub',    href: siteConfig.github, desc: '代码 · 仓库 · 实践记录' },
-  { label: '关于我',    href: '/about/',   desc: '兴趣方向 · 内容规划 · 联系方式' },
-  { label: 'Now',       href: '/now/',     desc: '最近在做什么 / 读什么' },
-  { label: 'Uses',      href: '/uses/',    desc: '日常装备 / 工具栈' },
-  { label: '链接集合',  href: '/links/',   desc: '所有公开入口 · 按标签筛选' },
+  { label: '项目展示', href: '/projects/', desc: 'Azek431 Home / 资料库 / Blog' },
+  { label: 'GitHub', href: siteConfig.github, desc: '代码 · 仓库 · 实践记录' },
+  { label: '关于我', href: '/about/', desc: '兴趣方向 · 内容规划 · 联系方式' },
+  { label: 'Now', href: '/now/', desc: '最近在做什么 / 读什么' },
+  { label: 'Uses', href: '/uses/', desc: '日常装备 / 工具栈' },
+  { label: '链接集合', href: '/links/', desc: '所有公开入口 · 按标签筛选' },
 ];
 ---
+
 <BaseLayout title={siteConfig.title} description={siteConfig.description}>
   <div class="home-pulse" role="group" aria-label="实时状态">
     <div class="home-pulse-item">
@@ -60,26 +53,72 @@ const quickJumps = [
   </div>
 
   <div class="build-info" aria-label="构建信息">
-    <span><span class="bi-dot"></span>Build {buildDate} · {pageCount} 页面 · 静态生成</span>
+    <span><span class="bi-dot"></span>Build {todayDate} · {pageCount} 页面 · 静态生成</span>
     <a class="build-changelog" href="/changelog/">查看更新日志 →</a>
   </div>
 
   <ul class="home-stats" aria-label="主站速览">
-    {quickStats.map((s) => (
-      <li class={'home-stat tone-' + s.tone}>
-        <span class="home-stat-num">{s.num}</span>
-        <span class="home-stat-label">{s.label}</span>
-      </li>
-    ))}
+    {
+      quickStats.map((s) => (
+        <li class={'home-stat tone-' + s.tone}>
+          <span class="home-stat-num">{s.num}</span>
+          <span class="home-stat-label">{s.label}</span>
+        </li>
+      ))
+    }
   </ul>
 
   <nav class="home-quicklinks" aria-label="快捷入口">
     <span class="home-quicklinks-label">快捷入口</span>
     <ul class="home-quicklinks-list">
-      <li><a href="/projects/"><span>查看所有项目</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></li>
-      <li><a href="/now/"><span>现在在做什么</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></li>
-      <li><a href="/rss.xml" target="_blank" rel="noreferrer noopener"><span>订阅 RSS</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></li>
-      <li><a href={siteConfig.github} target="_blank" rel="noreferrer noopener"><span>访问 GitHub</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></li>
+      <li>
+        <a href="/projects/"
+          ><span>查看所有项目</span><svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
+          ></a>
+      </li>
+      <li>
+        <a href="/now/"
+          ><span>现在在做什么</span><svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
+          ></a>
+      </li>
+      <li>
+        <a href="/rss.xml" target="_blank" rel="noreferrer noopener"
+          ><span>订阅 RSS</span><svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
+          ></a>
+      </li>
+      <li>
+        <a href={siteConfig.github} target="_blank" rel="noreferrer noopener"
+          ><span>访问 GitHub</span><svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
+          ></a>
+      </li>
     </ul>
   </nav>
   <section class="hero">
@@ -87,7 +126,7 @@ const quickJumps = [
       <div class="hero-main">
         <p class="eyebrow">
           Personal Digital Space
-          <span class="eyebrow-meta">最后更新 {recentUpdates[0].date} · {daysAgo(recentUpdates[0].date)}</span>
+          <span class="eyebrow-meta">最后更新 {siteUpdatedDate} · {daysAgo(siteUpdatedDate)}</span>
         </p>
         <h1>你好,我是 <span class="grad">Azek431</span>。</h1>
         <p class="hero-text">
@@ -113,13 +152,36 @@ const quickJumps = [
         <div class="actions">
           <a class="button primary" href="/projects/">
             查看项目
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
+            >
           </a>
-          <a class="button secondary" href={siteConfig.github} target="_blank" rel="noreferrer noopener">
+          <a
+            class="button secondary"
+            href={siteConfig.github}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             访问 GitHub
           </a>
           <button type="button" class="button secondary" data-copy-url={siteConfig.url}>
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+            >
             复制主页链接
           </button>
         </div>
@@ -129,7 +191,9 @@ const quickJumps = [
         <h3>主站信息</h3>
         <ul>
           <li><span class="label">状态</span><span class="signal">运行中</span></li>
-          <li><span class="label">导航入口</span><span class="value">{homeCards.length} 个</span></li>
+          <li>
+            <span class="label">导航入口</span><span class="value">{homeCards.length} 个</span>
+          </li>
           <li><span class="label">已上线项目</span><span class="value">{liveProjects}</span></li>
           <li><span class="label">外部链接</span><span class="value">{externalLinks}</span></li>
           <li><span class="label">技术栈</span><span class="value">Astro · Cloudflare</span></li>
@@ -139,15 +203,36 @@ const quickJumps = [
         <div class="quick-jump">
           <p class="quick-jump-title">快速跳转</p>
           <ul>
-            {quickJumps.map((q) => (
-              <li>
-                <a class="quick-jump-link" href={q.href} target={q.href.startsWith('http') ? '_blank' : undefined} rel={q.href.startsWith('http') ? 'noreferrer noopener' : undefined}>
-                  <span class="qj-label">{q.label}</span>
-                  <span class="qj-desc">{q.desc}</span>
-                  <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </a>
-              </li>
-            ))}
+            {
+              quickJumps.map((q) => (
+                <li>
+                  <a
+                    class="quick-jump-link"
+                    href={q.href}
+                    target={q.href.startsWith('http') ? '_blank' : undefined}
+                    rel={q.href.startsWith('http') ? 'noreferrer noopener' : undefined}
+                  >
+                    <span class="qj-label">{q.label}</span>
+                    <span class="qj-desc">{q.desc}</span>
+                    <svg
+                      class="arrow"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <>
+                        <path d="M5 12h14" />
+                        <path d="m13 5 7 7-7 7" />
+                      </>
+                    </svg>
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
       </aside>
@@ -155,8 +240,16 @@ const quickJumps = [
 
     <a class="scroll-hint" href="#scroll-here" aria-label="向下滚动查看更多">
       <span>向下滚动</span>
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path>
       </svg>
     </a>
   </section>
@@ -171,17 +264,35 @@ const quickJumps = [
     </div>
 
     <div class="cards">
-      {homeCards.map((item) => (
-        <NavCard
-          title={item.title}
-          description={item.description}
-          href={item.href}
-          status={item.status}
-          statusTone={item.status === '即将上线' ? 'muted' : item.status === '外部链接' ? 'accent' : 'success'}
-          icon={item.title === 'Blog' ? 'B' : item.title === 'Projects' ? 'P' : item.title === 'GitHub' ? 'G' : 'L'}
-          iconTone={item.title === 'Blog' ? 'accent' : item.title === 'GitHub' ? 'success' : 'primary'}
-        />
-      ))}
+      {
+        homeCards.map((item) => (
+          <NavCard
+            title={item.title}
+            description={item.description}
+            href={item.href}
+            status={item.status}
+            statusTone={
+              item.status === '即将上线'
+                ? 'muted'
+                : item.status === '外部链接'
+                  ? 'accent'
+                  : 'success'
+            }
+            icon={
+              item.title === 'Blog'
+                ? 'B'
+                : item.title === 'Projects'
+                  ? 'P'
+                  : item.title === 'GitHub'
+                    ? 'G'
+                    : 'L'
+            }
+            iconTone={
+              item.title === 'Blog' ? 'accent' : item.title === 'GitHub' ? 'success' : 'primary'
+            }
+          />
+        ))
+      }
     </div>
   </section>
 
@@ -194,30 +305,48 @@ const quickJumps = [
 
     <div class="timeline-progress" aria-label="本月更新进度">
       <span>最近 30 天 · {recentCount} 条更新</span>
-      <div class="timeline-progress-bar"><div class="timeline-progress-fill" style="width: {progressPct}%"></div></div>
+      <div class="timeline-progress-bar">
+        <div class="timeline-progress-fill" style="width: {progressPct}%"></div>
+      </div>
       <span>{progressPct}%</span>
     </div>
 
     <ol class="timeline" aria-label="最近更新">
-      {recentUpdates.map((u, i) => (
-        <li class="timeline-item">
-          <div class="timeline-marker" aria-hidden="true">
-            <span class="timeline-dot"></span>
-            {i < recentUpdates.length - 1 && <span class="timeline-line"></span>}
-          </div>
-          <a class="timeline-content" href={u.href}>
-            <div class="timeline-meta">
-              <span class="timeline-tag">{u.tag}</span>
-              <time>{u.date} · {daysAgo(u.date)}</time>
+      {
+        recentUpdates.map((u, i) => (
+          <li class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class="timeline-dot" />
+              {i < recentUpdates.length - 1 && <span class="timeline-line" />}
             </div>
-            <h3>{u.title}</h3>
-            <p>{u.desc}</p>
-            <svg class="timeline-arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/><path d="m13 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </li>
-      ))}
+            <a class="timeline-content" href={u.href}>
+              <div class="timeline-meta">
+                <span class="timeline-tag">{u.tag}</span>
+                <time>
+                  {u.date} · {daysAgo(u.date)}
+                </time>
+              </div>
+              <h3>{u.title}</h3>
+              <p>{u.desc}</p>
+              <svg
+                class="timeline-arrow"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <path d="M5 12h14" />
+                  <path d="m13 5 7 7-7 7" />
+                </>
+              </svg>
+            </a>
+          </li>
+        ))
+      }
     </ol>
   </section>
 
@@ -228,12 +357,10 @@ const quickJumps = [
       <div class="writing-left">
         <p class="eyebrow">
           Currently Writing
-          <span class="eyebrow-meta">写于 2026-06-02 · 5 天前</span>
+          <span class="eyebrow-meta">写于 {writingDraftDate} · {daysAgo(writingDraftDate)}</span>
         </p>
         <h2>现在在写</h2>
-        <p class="writing-desc">
-          最近正在整理一些内容,可能在博客上线后发布。下面是其中一个片段。
-        </p>
+        <p class="writing-desc">最近正在整理一些内容,可能在博客上线后发布。下面是其中一个片段。</p>
         <div class="writing-tags">
           <span class="writing-tag"># 设计系统</span>
           <span class="writing-tag"># Astro 6</span>
@@ -250,7 +377,7 @@ const quickJumps = [
               live
             </span>
           </div>
-          <pre class="writing-body"><code data-typed></code></pre>
+          <pre class="writing-body"><code data-typed /></pre>
           <div class="writing-footer">
             <span>~ 320 字 · 12 行</span>
             <span>UTF-8 · LF</span>
@@ -284,10 +411,13 @@ const quickJumps = [
     (function () {
       var el = document.querySelector('[data-clock]');
       if (el) {
-        var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+        var pad = function (n) {
+          return n < 10 ? '0' + n : '' + n;
+        };
         var tick = function () {
           var d = new Date();
-          el.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+          el.textContent =
+            pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
         };
         tick();
         setInterval(tick, 1000);

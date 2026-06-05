@@ -2,19 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteConfig } from '../data/site';
+import { siteUpdatedDate } from '../data/time';
 
-const lastUpdated = '2026-06-05';
+const lastUpdated = siteUpdatedDate;
 
 const workingOn = [
   {
     title: 'Azek431 Home 主站迭代',
-    detail: '把过去几个月累积的 UI 升级一次性整合到主站,补齐项目详情子页和站点地图,准备进入下个迭代周期。',
+    detail:
+      '把过去几个月累积的 UI 升级一次性整合到主站,补齐项目详情子页和站点地图,准备进入下个迭代周期。',
     status: 'in-progress',
     tag: '主站',
   },
   {
     title: '设计系统 / 设计 token 收尾',
-    detail: '把现在 global.css 里的 design tokens 拆分成独立 css variables 文件,后续切换主题会更顺。',
+    detail:
+      '把现在 global.css 里的 design tokens 拆分成独立 css variables 文件,后续切换主题会更顺。',
     status: 'in-progress',
     tag: '设计',
   },
@@ -40,17 +43,32 @@ const recentlyRead = [
 ];
 
 const tools = [
-  { name: 'Astro',         role: '主站框架',         tone: 'primary' },
-  { name: 'Cloudflare Pages', role: '托管 + CDN',   tone: 'accent' },
-  { name: 'GitHub',        role: '代码 + 部署触发',   tone: 'success' },
-  { name: 'pnpm',          role: '包管理',            tone: 'muted' },
-  { name: 'Prettier',      role: '格式化',            tone: 'muted' },
-  { name: 'VS Code',       role: '主力编辑器',        tone: 'primary' },
+  { name: 'Astro', role: '主站框架', tone: 'primary' },
+  { name: 'Cloudflare Pages', role: '托管 + CDN', tone: 'accent' },
+  { name: 'GitHub', role: '代码 + 部署触发', tone: 'success' },
+  { name: 'pnpm', role: '包管理', tone: 'muted' },
+  { name: 'Prettier', role: '格式化', tone: 'muted' },
+  { name: 'VS Code', role: '主力编辑器', tone: 'primary' },
 ];
 
-const statusLabel = (s: string) => s === 'in-progress' ? '进行中' : s === 'planning' ? '规划中' : s === 'exploring' ? '探索中' : '已完成';
-const statusTone = (s: string) => s === 'in-progress' ? 'active' : s === 'planning' ? 'next' : s === 'exploring' ? 'future' : 'done';
+const statusLabel = (s: string) =>
+  s === 'in-progress'
+    ? '进行中'
+    : s === 'planning'
+      ? '规划中'
+      : s === 'exploring'
+        ? '探索中'
+        : '已完成';
+const statusTone = (s: string) =>
+  s === 'in-progress'
+    ? 'active'
+    : s === 'planning'
+      ? 'next'
+      : s === 'exploring'
+        ? 'future'
+        : 'done';
 ---
+
 <BaseLayout
   title="Now - Azek431"
   description="Azek431 现在正在做的事情、最近读的内容和日常用的工具。"
@@ -87,16 +105,18 @@ const statusTone = (s: string) => s === 'in-progress' ? 'active' : s === 'planni
     </div>
 
     <div class="now-list">
-      {workingOn.map((w) => (
-        <article class:list={['now-list-item', 'tone-' + statusTone(w.status)]}>
-          <div class="now-list-head">
-            <span class="now-list-tag">{w.tag}</span>
-            <span class="now-list-status">{statusLabel(w.status)}</span>
-          </div>
-          <h3>{w.title}</h3>
-          <p>{w.detail}</p>
-        </article>
-      ))}
+      {
+        workingOn.map((w) => (
+          <article class:list={['now-list-item', 'tone-' + statusTone(w.status)]}>
+            <div class="now-list-head">
+              <span class="now-list-tag">{w.tag}</span>
+              <span class="now-list-status">{statusLabel(w.status)}</span>
+            </div>
+            <h3>{w.title}</h3>
+            <p>{w.detail}</p>
+          </article>
+        ))
+      }
     </div>
   </section>
 
@@ -108,13 +128,28 @@ const statusTone = (s: string) => s === 'in-progress' ? 'active' : s === 'planni
     </div>
 
     <ul class="reading-list" aria-label="最近读到的内容">
-      {recentlyRead.map((r) => (
-        <li class="reading-item">
-          <span class="reading-kind">{r.kind}</span>
-          <span class="reading-title">{r.title}</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-        </li>
-      ))}
+      {
+        recentlyRead.map((r) => (
+          <li class="reading-item">
+            <span class="reading-kind">{r.kind}</span>
+            <span class="reading-title">{r.title}</span>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <>
+                <path d="M5 12h14" />
+                <path d="m13 5 7 7-7 7" />
+              </>
+            </svg>
+          </li>
+        ))
+      }
     </ul>
   </section>
 
@@ -126,12 +161,14 @@ const statusTone = (s: string) => s === 'in-progress' ? 'active' : s === 'planni
     </div>
 
     <div class="tool-grid">
-      {tools.map((t) => (
-        <div class:list={['tool-chip', 'tone-' + t.tone]}>
-          <span class="tool-name">{t.name}</span>
-          <span class="tool-role">{t.role}</span>
-        </div>
-      ))}
+      {
+        tools.map((t) => (
+          <div class:list={['tool-chip', 'tone-' + t.tone]}>
+            <span class="tool-name">{t.name}</span>
+            <span class="tool-role">{t.role}</span>
+          </div>
+        ))
+      }
     </div>
   </section>
 
@@ -141,7 +178,12 @@ const statusTone = (s: string) => s === 'in-progress' ? 'active' : s === 'planni
       <p>关于页有更完整的介绍,链接页整理了所有公开入口,有想法也可以通过 GitHub 找到我。</p>
       <div class="actions">
         <a class="button primary" href="/about/">关于我</a>
-        <a class="button secondary" href={siteConfig.github} target="_blank" rel="noreferrer noopener">GitHub</a>
+        <a
+          class="button secondary"
+          href={siteConfig.github}
+          target="_blank"
+          rel="noreferrer noopener">GitHub</a
+        >
       </div>
     </div>
   </section>

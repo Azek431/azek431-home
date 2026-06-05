@@ -71,7 +71,8 @@ interface ProjectSummaryLink {
 
 function projectLinks(project: (typeof projectDetails)[number]): ProjectSummaryLink[] {
   const links: ProjectSummaryLink[] = [];
-  if (project.websiteUrl) links.push({ label: '访问网站', href: project.websiteUrl, primary: true });
+  if (project.websiteUrl)
+    links.push({ label: '访问网站', href: project.websiteUrl, primary: true });
   if (project.githubUrl) links.push({ label: 'GitHub', href: project.githubUrl });
   if (project.giteeUrl) links.push({ label: 'Gitee 镜像', href: project.giteeUrl });
   return links;
@@ -160,14 +161,14 @@ export const recentUpdates = [
   {
     title: '完善移动端显示',
     desc: '优化小屏幕导航、标题、按钮、卡片和留白表现。',
-    date: '2026-05-28',
+    date: '2026-06-01',
     tag: '主站',
     href: '/',
   },
   {
     title: '整理 Git 忽略规则',
     desc: '完善 .gitignore，覆盖构建产物、依赖、日志、环境变量和系统文件。',
-    date: '2026-05-25',
+    date: '2026-06-01',
     tag: '配置',
     href: 'https://github.com/Azek431/azek431-home',
   },

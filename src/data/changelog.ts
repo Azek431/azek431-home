@@ -97,49 +97,37 @@ export const changelog: ChangelogEntry[] = [
   },
   {
     version: 'v9',
-    date: '2026-05-25',
+    date: '2026-06-01',
     title: '整理 Git 忽略规则',
-    changes: [
-      '完善 .gitignore,覆盖构建产物 / 依赖 / 日志 / 环境变量',
-    ],
+    changes: ['完善 .gitignore,覆盖构建产物 / 依赖 / 日志 / 环境变量'],
     tone: 'patch',
   },
   {
     version: 'v8',
-    date: '2026-05-28',
+    date: '2026-06-01',
     title: '完善移动端显示',
-    changes: [
-      '优化小屏幕导航 / 标题 / 按钮 / 卡片和留白表现',
-    ],
+    changes: ['优化小屏幕导航 / 标题 / 按钮 / 卡片和留白表现'],
     tone: 'minor',
   },
   {
     version: 'v7',
     date: '2026-06-03',
     title: '优化项目卡片展示',
-    changes: [
-      '把项目官网 / GitHub 仓库 / Gitee 镜像入口合并到一张卡片',
-    ],
+    changes: ['把项目官网 / GitHub 仓库 / Gitee 镜像入口合并到一张卡片'],
     tone: 'minor',
   },
   {
     version: 'v6',
     date: '2026-06-04',
     title: '升级主站视觉与微交互',
-    changes: [
-      '重写设计 tokens',
-      '加入滚动入场动画 / 极光跟随 / 按钮流光',
-    ],
+    changes: ['重写设计 tokens', '加入滚动入场动画 / 极光跟随 / 按钮流光'],
     tone: 'major',
   },
   {
     version: 'v5',
-    date: '2025-10-12',
+    date: '2026-05-29',
     title: '主站起步 - Azek431 Home 第一版',
-    changes: [
-      '完成 Azek431 Home 第一版',
-      '接入 Cloudflare Pages 自动部署',
-    ],
+    changes: ['完成 Azek431 Home 第一版', '接入 Cloudflare Pages 自动部署'],
     tone: 'major',
   },
 ];

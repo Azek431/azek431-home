@@ -5,6 +5,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
 import { projectDetails } from '../data/projects';
 import { links, navItems, recentUpdates } from '../data/site';
+import { getSiteAge, siteStartedDotDate, siteUpdatedDate } from '../data/time';
 
 const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
 const planProjects = projectDetails.filter((p) => p.status !== '已上线').length;
@@ -15,52 +16,48 @@ const totalChanges = changelog.reduce((acc, e) => acc + e.changes.length, 0);
 const totalTags = projectDetails.reduce((acc, p) => acc + (p.tags?.length || 0), 0);
 const totalFeatures = projectDetails.reduce((acc, p) => acc + (p.features?.length || 0), 0);
 
-const startDate = new Date('2025-10-12T00:00:00Z');
-const now = new Date();
-const daysRunning = Math.floor((now.getTime() - startDate.getTime()) / 86400000);
-const weeksRunning = Math.floor(daysRunning / 7);
-const monthsRunning = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
+const siteAge = getSiteAge();
 const pageCount = navItems.length + projectDetails.length + 1;
 
 const sections = [
   {
     title: '项目',
     metrics: [
-      { label: '总项目数',   value: projectDetails.length, suffix: '个',     tone: 'primary' },
-      { label: '已上线',     value: liveProjects,           suffix: '个',     tone: 'success' },
-      { label: '规划 / 实验', value: planProjects,           suffix: '个',     tone: 'accent'  },
-      { label: '总标签数',   value: totalTags,              suffix: '个',     tone: 'primary' },
-      { label: '特性条目',   value: totalFeatures,          suffix: '条',     tone: 'primary' },
+      { label: '总项目数', value: projectDetails.length, suffix: '个', tone: 'primary' },
+      { label: '已上线', value: liveProjects, suffix: '个', tone: 'success' },
+      { label: '规划 / 实验', value: planProjects, suffix: '个', tone: 'accent' },
+      { label: '总标签数', value: totalTags, suffix: '个', tone: 'primary' },
+      { label: '特性条目', value: totalFeatures, suffix: '条', tone: 'primary' },
     ],
   },
   {
     title: '迭代',
     metrics: [
-      { label: '总版本',     value: changelog.length,       suffix: '个',     tone: 'primary' },
-      { label: '大版本',     value: majorReleases,          suffix: '次',     tone: 'success' },
-      { label: '小版本',     value: minorReleases,          suffix: '次',     tone: 'accent'  },
-      { label: '补丁',       value: patchReleases,          suffix: '次',     tone: 'muted'   },
-      { label: '总改动',     value: totalChanges,           suffix: '条',     tone: 'primary' },
+      { label: '总版本', value: changelog.length, suffix: '个', tone: 'primary' },
+      { label: '大版本', value: majorReleases, suffix: '次', tone: 'success' },
+      { label: '小版本', value: minorReleases, suffix: '次', tone: 'accent' },
+      { label: '补丁', value: patchReleases, suffix: '次', tone: 'muted' },
+      { label: '总改动', value: totalChanges, suffix: '条', tone: 'primary' },
     ],
   },
   {
     title: '时间',
     metrics: [
-      { label: '建站于',     value: '2025.10.12',           tone: 'muted'   },
-      { label: '已运行',     value: daysRunning,            suffix: ' 天',    tone: 'primary' },
-      { label: '约合',       value: weeksRunning,           suffix: ' 周',    tone: 'accent'  },
-      { label: '约合',       value: monthsRunning,          suffix: ' 个月',  tone: 'success' },
-      { label: '下次更新',   value: '随时',                 tone: 'muted'   },
+      { label: '建站于', value: siteStartedDotDate, tone: 'muted' },
+      { label: '已运行', value: siteAge.days, suffix: ' 天', tone: 'primary' },
+      { label: '约合', value: siteAge.weeks, suffix: ' 周', tone: 'accent' },
+      { label: '约合', value: siteAge.months, suffix: ' 个月', tone: 'success' },
+      { label: '下次更新', value: '随时', tone: 'muted' },
     ],
   },
   {
     title: '内容',
     metrics: [
-      { label: '最近更新条目', value: recentUpdates.length, suffix: ' 条',  tone: 'primary' },
-      { label: '公开链接',     value: links.length,         suffix: ' 个',  tone: 'accent'  },
-      { label: '站内页面',     value: pageCount,             suffix: ' 个',  tone: 'success' },
-      { label: '订阅源',       value: 'RSS',                tone: 'muted'   },
-      { label: '站点地图',     value: 'XML',                tone: 'muted'   },
+      { label: '最近更新条目', value: recentUpdates.length, suffix: ' 条', tone: 'primary' },
+      { label: '公开链接', value: links.length, suffix: ' 个', tone: 'accent' },
+      { label: '站内页面', value: pageCount, suffix: ' 个', tone: 'success' },
+      { label: '订阅源', value: 'RSS', tone: 'muted' },
+      { label: '站点地图', value: 'XML', tone: 'muted' },
     ],
   },
 ];
@@ -68,14 +65,12 @@ const sections = [
 const toneColor: Record<string, string> = {
   primary: '#a8c8ff',
   success: '#6ee7b7',
-  accent:  '#c4b5fd',
-  muted:   '#c4cee0',
+  accent: '#c4b5fd',
+  muted: '#c4cee0',
 };
 ---
-<BaseLayout
-  title="Stats - Azek431"
-  description="主站的简单数据和指标。"
->
+
+<BaseLayout title="Stats - Azek431" description="主站的简单数据和指标。">
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Stats' }]} />
 
   <PageHero
@@ -86,26 +81,31 @@ const toneColor: Record<string, string> = {
       { label: '项目', value: projectDetails.length + ' 个' },
       { label: '迭代', value: changelog.length + ' 版' },
       { label: '链接', value: links.length + ' 条' },
-      { label: '最近', value: '2026-06-04' },
+      { label: '最近', value: siteUpdatedDate },
     ]}
   />
 
-  {sections.map((s) => (
-    <section class="section">
-      <div class="section-heading">
-        <p class="eyebrow">{s.title}</p>
-        <h2>{s.title}</h2>
-      </div>
-      <div class="stats-grid">
-        {s.metrics.map((m) => (
-          <div class="stat-card" style={'--stat-accent:' + (toneColor[m.tone || 'primary']) + ';'}>
-            <span class="stat-value">{m.value}{m.suffix || ''}</span>
-            <span class="stat-label">{m.label}</span>
-          </div>
-        ))}
-      </div>
-    </section>
-  ))}
+  {
+    sections.map((s) => (
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">{s.title}</p>
+          <h2>{s.title}</h2>
+        </div>
+        <div class="stats-grid">
+          {s.metrics.map((m) => (
+            <div class="stat-card" style={'--stat-accent:' + toneColor[m.tone || 'primary'] + ';'}>
+              <span class="stat-value">
+                {m.value}
+                {m.suffix || ''}
+              </span>
+              <span class="stat-label">{m.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))
+  }
 
   <section class="section">
     <div class="now-cta">
@@ -113,7 +113,9 @@ const toneColor: Record<string, string> = {
       <p>所有数据在 build 时计算,不会实时更新;真正的"运行中"状态以最近一次 commit 为准。</p>
       <div class="actions">
         <a class="button primary" href="/changelog/">看更新日志</a>
-        <a class="button secondary" href="/rss.xml" target="_blank" rel="noreferrer noopener">订阅 RSS</a>
+        <a class="button secondary" href="/rss.xml" target="_blank" rel="noreferrer noopener"
+          >订阅 RSS</a
+        >
       </div>
     </div>
   </section>
@@ -139,7 +141,6 @@ const toneColor: Record<string, string> = {
       </div>
     </div>
   </section>
-
 </BaseLayout>
 
 <script is:inline>
@@ -149,7 +150,9 @@ const toneColor: Record<string, string> = {
     var data;
     try {
       data = JSON.parse(localStorage.getItem(key) || '{}');
-    } catch (e) { data = {}; }
+    } catch (e) {
+      data = {};
+    }
     if (data.date !== today) {
       data.date = today;
       data.todayCount = 1;
@@ -158,7 +161,9 @@ const toneColor: Record<string, string> = {
     }
     data.totalCount = (data.totalCount || 0) + 1;
     if (!data.firstDate) data.firstDate = today;
-    try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {}
 
     function set(sel, val) {
       var el = document.querySelector(sel);

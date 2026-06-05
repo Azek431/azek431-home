@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { searchItems, type SearchItem } from '../data/search';
+import { searchItems } from '../data/search';
 
 const counts = {
   total: searchItems.length,
@@ -13,25 +13,31 @@ const counts = {
 };
 const serialized = JSON.stringify(searchItems);
 ---
-<BaseLayout
-  title="Search - Azek431"
-  description="站内搜索,跨页面、项目、链接、内容索引。"
->
+
+<BaseLayout title="Search - Azek431" description="站内搜索,跨页面、项目、链接、内容索引。">
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Search' }]} />
 
   <section class="page-hero search-hero">
     <p class="eyebrow">Search</p>
     <h1>站内搜索</h1>
     <p class="page-hero-text">
-      跨 {counts.total} 条内容索引——页面、项目、链接、更新日志。
-      在下面输入关键词,实时筛选,按回车跳转到第一项。
+      跨 {counts.total} 条内容索引——页面、项目、链接、更新日志。 在下面输入关键词,实时筛选,按回车跳转到第一项。
     </p>
   </section>
 
   <section class="section">
     <div class="search-bar">
-      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+      <svg
+        class="search-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
       </svg>
       <input
         type="search"
@@ -46,34 +52,74 @@ const serialized = JSON.stringify(searchItems);
     </div>
 
     <div class="search-filters" role="tablist" aria-label="按分类筛选">
-      <button type="button" class="filter-chip active" data-cat="all" role="tab" aria-selected="true">全部 ({counts.total})</button>
-      <button type="button" class="filter-chip" data-cat="Page" role="tab" aria-selected="false">页面 ({counts.Page})</button>
-      <button type="button" class="filter-chip" data-cat="Project" role="tab" aria-selected="false">项目 ({counts.Project})</button>
-      <button type="button" class="filter-chip" data-cat="Link" role="tab" aria-selected="false">链接 ({counts.Link})</button>
-      <button type="button" class="filter-chip" data-cat="Update" role="tab" aria-selected="false">更新 ({counts.Update})</button>
-      <button type="button" class="filter-chip" data-cat="Changelog" role="tab" aria-selected="false">日志 ({counts.Changelog})</button>
+      <button
+        type="button"
+        class="filter-chip active"
+        data-cat="all"
+        role="tab"
+        aria-selected="true">全部 ({counts.total})</button
+      >
+      <button type="button" class="filter-chip" data-cat="Page" role="tab" aria-selected="false"
+        >页面 ({counts.Page})</button
+      >
+      <button type="button" class="filter-chip" data-cat="Project" role="tab" aria-selected="false"
+        >项目 ({counts.Project})</button
+      >
+      <button type="button" class="filter-chip" data-cat="Link" role="tab" aria-selected="false"
+        >链接 ({counts.Link})</button
+      >
+      <button type="button" class="filter-chip" data-cat="Update" role="tab" aria-selected="false"
+        >更新 ({counts.Update})</button
+      >
+      <button
+        type="button"
+        class="filter-chip"
+        data-cat="Changelog"
+        role="tab"
+        aria-selected="false">日志 ({counts.Changelog})</button
+      >
     </div>
 
     <p class="search-status" data-search-status>输入关键词开始搜索。</p>
 
     <ol class="search-results" data-search-results aria-label="搜索结果">
-      {searchItems.slice(0, 30).map((it) => (
-        <li class="search-item" data-cat={it.category} data-text={(it.title + ' ' + it.desc + ' ' + (it.tags || []).join(' ')).toLowerCase()}>
-          <a class="search-link" href={it.href}>
-            <span class="search-cat">{it.category}</span>
-            <span class="search-title">{it.title}</span>
-            <span class="search-desc">{it.desc}</span>
-            {it.tags && it.tags.length > 0 && (
-              <span class="search-tags">
-                {it.tags.slice(0, 4).map((t) => <span class="search-tag">#{t}</span>)}
-              </span>
-            )}
-            <svg class="search-arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/><path d="m13 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </li>
-      ))}
+      {
+        searchItems.slice(0, 30).map((it) => (
+          <li
+            class="search-item"
+            data-cat={it.category}
+            data-text={(it.title + ' ' + it.desc + ' ' + (it.tags || []).join(' ')).toLowerCase()}
+          >
+            <a class="search-link" href={it.href}>
+              <span class="search-cat">{it.category}</span>
+              <span class="search-title">{it.title}</span>
+              <span class="search-desc">{it.desc}</span>
+              {it.tags && it.tags.length > 0 && (
+                <span class="search-tags">
+                  {it.tags.slice(0, 4).map((t) => (
+                    <span class="search-tag">#{t}</span>
+                  ))}
+                </span>
+              )}
+              <svg
+                class="search-arrow"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <path d="M5 12h14" />
+                  <path d="m13 5 7 7-7 7" />
+                </>
+              </svg>
+            </a>
+          </li>
+        ))
+      }
     </ol>
 
     <div class="search-empty" data-search-empty hidden>
@@ -84,7 +130,9 @@ const serialized = JSON.stringify(searchItems);
         <a class="search-empty-pill" href="/links/">链接集合</a>
         <a class="search-empty-pill" href="/changelog/">更新日志</a>
         <a class="search-empty-pill" href="/blog/">博客筹备</a>
-        <button type="button" class="search-empty-pill search-empty-reset" data-search-reset>清空筛选</button>
+        <button type="button" class="search-empty-pill search-empty-reset" data-search-reset
+          >清空筛选</button
+        >
       </div>
     </div>
   </section>
@@ -130,7 +178,8 @@ const serialized = JSON.stringify(searchItems);
           var parts = [];
           if (q) parts.push('关键词 "' + currentQuery + '"');
           if (currentCat !== 'all') parts.push('分类 ' + currentCat);
-          status.textContent = '找到 ' + visible + ' 条结果' + (parts.length ? ' · ' + parts.join(' · ') : '');
+          status.textContent =
+            '找到 ' + visible + ' 条结果' + (parts.length ? ' · ' + parts.join(' · ') : '');
         }
       }
     }
@@ -165,7 +214,11 @@ const serialized = JSON.stringify(searchItems);
     document.addEventListener('keydown', function (e) {
       if (e.key !== '/') return;
       var active = document.activeElement;
-      if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) return;
+      if (
+        active &&
+        (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)
+      )
+        return;
       if (input) {
         e.preventDefault();
         input.focus();

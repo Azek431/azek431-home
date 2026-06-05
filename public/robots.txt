@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://azek431.pages.dev/sitemap.xml

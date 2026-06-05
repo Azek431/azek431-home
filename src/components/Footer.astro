@@ -1,22 +1,19 @@
 ---
 import { siteConfig } from '../data/site';
+import { getSiteAge, siteStartedMonth } from '../data/time';
 
 const year = new Date().getFullYear();
-const startYear = 2025;
-const startMonth = 4;
-const siteAgeMonths = Math.max(0,
-  (new Date().getFullYear() - startYear) * 12 +
-  (new Date().getMonth() + 1 - startMonth)
-);
-const siteAgeLabel = siteAgeMonths >= 12
-  ? Math.floor(siteAgeMonths / 12) + ' 年 ' + (siteAgeMonths % 12) + ' 个月'
-  : siteAgeMonths + ' 个月';
+const siteAge = getSiteAge();
 ---
+
 <footer class="footer">
   <div class="footer-meta">
-    <p class="footer-line">© {year} {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.</p>
+    <p class="footer-line">
+      © {year}
+      {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.
+    </p>
     <p class="footer-line footer-sub">
-      <span>建站于 {startYear}.{String(startMonth).padStart(2, '0')} · 已运行 {siteAgeLabel}</span>
+      <span>建站于 {siteStartedMonth} · 已运行 {siteAge.label}</span>
       <span class="dot-sep" aria-hidden="true">·</span>
       <a href="/rss.xml" target="_blank" rel="noreferrer noopener" class="footer-rss">RSS</a>
       <span class="dot-sep" aria-hidden="true">·</span>
@@ -65,9 +62,18 @@ const siteAgeLabel = siteAgeMonths >= 12
     var hint = document.querySelector('.shortcut-hint');
     var close = document.querySelector('.shortcut-hint-close');
     if (!hint) return;
-    var close2 = function () { hint.classList.remove('visible'); hint.setAttribute('aria-hidden', 'true'); };
-    var open = function () { hint.classList.add('visible'); hint.setAttribute('aria-hidden', 'false'); };
-    if (trig) trig.addEventListener('click', function () { hint.classList.contains('visible') ? close2() : open(); });
+    var close2 = function () {
+      hint.classList.remove('visible');
+      hint.setAttribute('aria-hidden', 'true');
+    };
+    var open = function () {
+      hint.classList.add('visible');
+      hint.setAttribute('aria-hidden', 'false');
+    };
+    if (trig)
+      trig.addEventListener('click', function () {
+        hint.classList.contains('visible') ? close2() : open();
+      });
     if (close) close.addEventListener('click', close2);
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && hint.classList.contains('visible')) close2();

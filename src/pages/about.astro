@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import { todayDate, todayWeekday } from '../data/time';
 
 const skills = [
-  { name: 'Astro / Static Site',     level: '熟练',     pct: 90, color: '#a8c8ff' },
-  { name: 'CSS / 设计系统',          level: '熟练',     pct: 85, color: '#c4b5fd' },
-  { name: 'TypeScript / JavaScript', level: '扎实',     pct: 78, color: '#6ee7b7' },
-  { name: 'Cloudflare 部署 / 运维',   level: '入门',     pct: 60, color: '#fcd34d' },
-  { name: 'AI 工具 / 提示词工程',     level: '探索中',   pct: 55, color: '#f9a8d4' },
+  { name: 'Astro / Static Site', level: '熟练', pct: 90, color: '#a8c8ff' },
+  { name: 'CSS / 设计系统', level: '熟练', pct: 85, color: '#c4b5fd' },
+  { name: 'TypeScript / JavaScript', level: '扎实', pct: 78, color: '#6ee7b7' },
+  { name: 'Cloudflare 部署 / 运维', level: '入门', pct: 60, color: '#fcd34d' },
+  { name: 'AI 工具 / 提示词工程', level: '探索中', pct: 55, color: '#f9a8d4' },
 ];
 
 const focus = [
@@ -18,16 +19,29 @@ const focus = [
 ];
 
 const focusItems = [
-  { num: '01', title: 'AI 工具与自动化', desc: '提示词写法、Agent 搭建、不同模型能力边界', icon: '🤖' },
-  { num: '02', title: '网站搭建与部署',  desc: 'Astro 静态站、Cloudflare Pages 部署、域名管理',  icon: '🌐' },
-  { num: '03', title: 'GitHub 项目维护',  desc: '开源记录、版本管理、镜像同步、Issue 处理',   icon: '📦' },
-  { num: '04', title: '前端细节优化',     desc: '交互微动效、排版、配色、可访问性',           icon: '✨' },
+  {
+    num: '01',
+    title: 'AI 工具与自动化',
+    desc: '提示词写法、Agent 搭建、不同模型能力边界',
+    icon: '🤖',
+  },
+  {
+    num: '02',
+    title: '网站搭建与部署',
+    desc: 'Astro 静态站、Cloudflare Pages 部署、域名管理',
+    icon: '🌐',
+  },
+  {
+    num: '03',
+    title: 'GitHub 项目维护',
+    desc: '开源记录、版本管理、镜像同步、Issue 处理',
+    icon: '📦',
+  },
+  { num: '04', title: '前端细节优化', desc: '交互微动效、排版、配色、可访问性', icon: '✨' },
 ];
 ---
-<BaseLayout
-  title="关于 - Azek431"
-  description="关于 Azek431 的个人介绍、兴趣方向和网站内容定位。"
->
+
+<BaseLayout title="关于 - Azek431" description="关于 Azek431 的个人介绍、兴趣方向和网站内容定位。">
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于' }]} />
   <section class="page-hero">
     <p class="eyebrow">About</p>
@@ -70,17 +84,14 @@ const focusItems = [
         <span class="now-tag accent">探索</span>
         <h3>AI 工具与自动化</h3>
         <p>
-          尝试把日常重复工作交给 AI / 自动化流程,研究提示词写法、
-          小型 agent 搭建以及不同模型的能力边界。
+          尝试把日常重复工作交给 AI / 自动化流程,研究提示词写法、 小型 agent
+          搭建以及不同模型的能力边界。
         </p>
       </div>
       <div class="now-card">
         <span class="now-tag warning">规划中</span>
         <h3>独立博客</h3>
-        <p>
-          准备单独建一个博客仓库,用来沉淀技术文章、学习笔记和长期思考,
-          之后从主站统一跳转。
-        </p>
+        <p>准备单独建一个博客仓库,用来沉淀技术文章、学习笔记和长期思考, 之后从主站统一跳转。</p>
       </div>
       <div class="now-card">
         <span class="now-tag success">维护中</span>
@@ -99,23 +110,29 @@ const focusItems = [
           <span class="mood-emoji" aria-hidden="true">🛠️</span>
           <div class="mood-text">
             <span class="mood-title">在细节里反复打磨</span>
-            <span class="mood-sub">2026-06-05 · 周五 · 上海</span>
+            <span class="mood-sub">{todayDate} · {todayWeekday} · 上海</span>
           </div>
         </div>
         <div class="mood-meter">
           <div class="mood-meter-row">
             <span class="mood-meter-label">ENERGY</span>
-            <div class="mood-meter-bar"><div class="mood-meter-fill energy" style="width: 72%"></div></div>
+            <div class="mood-meter-bar">
+              <div class="mood-meter-fill energy" style="width: 72%"></div>
+            </div>
             <span class="mood-meter-val">72%</span>
           </div>
           <div class="mood-meter-row">
             <span class="mood-meter-label">FOCUS</span>
-            <div class="mood-meter-bar"><div class="mood-meter-fill focus" style="width: 86%"></div></div>
+            <div class="mood-meter-bar">
+              <div class="mood-meter-fill focus" style="width: 86%"></div>
+            </div>
             <span class="mood-meter-val">86%</span>
           </div>
           <div class="mood-meter-row">
             <span class="mood-meter-label">SOCIAL</span>
-            <div class="mood-meter-bar"><div class="mood-meter-fill social" style="width: 38%"></div></div>
+            <div class="mood-meter-bar">
+              <div class="mood-meter-fill social" style="width: 38%"></div>
+            </div>
             <span class="mood-meter-val">38%</span>
           </div>
         </div>
@@ -124,31 +141,44 @@ const focusItems = [
       <div class="dash-card">
         <h3>技术 / 熟练度</h3>
         <ul class="skill-list">
-          {skills.map((s) => (
-            <li>
-              <div class="skill-meta">
-                <span class="skill-name">{s.name}</span>
-                <span class="skill-level">{s.level}</span>
-              </div>
-              <div class="skill-bar" style={'--skill-pct:' + s.pct + '%; --skill-color:' + s.color + ';'}></div>
-            </li>
-          ))}
+          {
+            skills.map((s) => (
+              <li>
+                <div class="skill-meta">
+                  <span class="skill-name">{s.name}</span>
+                  <span class="skill-level">{s.level}</span>
+                </div>
+                <div
+                  class="skill-bar"
+                  style={'--skill-pct:' + s.pct + '%; --skill-color:' + s.color + ';'}
+                />
+              </li>
+            ))
+          }
         </ul>
       </div>
 
       <div class="dash-card">
         <h3>关注 / 定位</h3>
         <div class="focus-quad">
-          {focus.map((f) => (
-            <div class="quad-cell">
-              <span class="quad-label">{f.label}</span>
-              <span class="quad-value">{f.value}</span>
-            </div>
-          ))}
+          {
+            focus.map((f) => (
+              <div class="quad-cell">
+                <span class="quad-label">{f.label}</span>
+                <span class="quad-value">{f.value}</span>
+              </div>
+            ))
+          }
         </div>
-        <p style="margin-top: 14px; font-size: 13.5px; color: var(--muted, #9ca8c2); line-height: 1.7;">
+        <p
+          style="margin-top: 14px; font-size: 13.5px; color: var(--muted, #9ca8c2); line-height: 1.7;"
+        >
           更即时的状态可以看
-          <a href="/now/" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed currentColor;">/now</a>
+          <a
+            href="/now/"
+            style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed currentColor;"
+            >/now</a
+          >
           页面,会持续更新。
         </p>
       </div>
@@ -162,22 +192,23 @@ const focusItems = [
       <p>这些是我长期感兴趣、愿意持续投入时间的方向。</p>
     </div>
 
-    
-
-
     <ul class="focus-grid" aria-label="关注方向">
-      {focusItems.map((f) => (
-        <li class="focus-cell">
-          <span class="focus-icon" aria-hidden="true">{f.icon}</span>
-          <div class="focus-text">
-            <div class="focus-head">
-              <span class="focus-num">{f.num}</span>
-              <span class="focus-title">{f.title}</span>
+      {
+        focusItems.map((f) => (
+          <li class="focus-cell">
+            <span class="focus-icon" aria-hidden="true">
+              {f.icon}
+            </span>
+            <div class="focus-text">
+              <div class="focus-head">
+                <span class="focus-num">{f.num}</span>
+                <span class="focus-title">{f.title}</span>
+              </div>
+              <p class="focus-desc">{f.desc}</p>
             </div>
-            <p class="focus-desc">{f.desc}</p>
-          </div>
-        </li>
-      ))}
+          </li>
+        ))
+      }
     </ul>
   </section>
 </BaseLayout>

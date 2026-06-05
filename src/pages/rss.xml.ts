@@ -1,9 +1,10 @@
 import type { APIRoute } from 'astro';
 import { projectDetails } from '../data/projects';
+import { siteConfig } from '../data/site';
 
-const siteOrigin = 'https://azek431.pages.dev';
-const siteName = 'Azek431';
-const siteDesc = 'Azek431 的个人主站与项目入口。';
+const siteOrigin = siteConfig.url;
+const siteName = siteConfig.name;
+const siteDesc = siteConfig.description;
 
 const nowItems = [
   {
@@ -24,7 +25,7 @@ const projectItems = projectDetails.map((p) => ({
 }));
 
 const allItems = [...nowItems, ...projectItems].sort(
-  (a, b) => b.pubDate.getTime() - a.pubDate.getTime()
+  (a, b) => b.pubDate.getTime() - a.pubDate.getTime(),
 );
 
 function escapeXml(s: string) {
@@ -36,15 +37,31 @@ function escapeXml(s: string) {
     .replace(/'/g, '&apos;');
 }
 
-function itemEntry(item: typeof allItems[number]) {
-  return '  <item>\n' +
-    '    <title>' + escapeXml(item.title) + '</title>\n' +
-    '    <link>' + siteOrigin + item.link + '</link>\n' +
-    '    <guid isPermaLink="true">' + siteOrigin + item.link + '</guid>\n' +
-    '    <pubDate>' + item.pubDate.toUTCString() + '</pubDate>\n' +
-    '    <description>' + escapeXml(item.description) + '</description>\n' +
-    '    <category>' + escapeXml(item.category) + '</category>\n' +
-    '  </item>';
+function itemEntry(item: (typeof allItems)[number]) {
+  return (
+    '  <item>\n' +
+    '    <title>' +
+    escapeXml(item.title) +
+    '</title>\n' +
+    '    <link>' +
+    siteOrigin +
+    item.link +
+    '</link>\n' +
+    '    <guid isPermaLink="true">' +
+    siteOrigin +
+    item.link +
+    '</guid>\n' +
+    '    <pubDate>' +
+    item.pubDate.toUTCString() +
+    '</pubDate>\n' +
+    '    <description>' +
+    escapeXml(item.description) +
+    '</description>\n' +
+    '    <category>' +
+    escapeXml(item.category) +
+    '</category>\n' +
+    '  </item>'
+  );
 }
 
 export const GET: APIRoute = () => {
@@ -53,13 +70,24 @@ export const GET: APIRoute = () => {
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n' +
     '  <channel>\n' +
-    '    <title>' + siteName + '</title>\n' +
-    '    <link>' + siteOrigin + '</link>\n' +
-    '    <description>' + escapeXml(siteDesc) + '</description>\n' +
+    '    <title>' +
+    siteName +
+    '</title>\n' +
+    '    <link>' +
+    siteOrigin +
+    '</link>\n' +
+    '    <description>' +
+    escapeXml(siteDesc) +
+    '</description>\n' +
     '    <language>zh-CN</language>\n' +
-    '    <lastBuildDate>' + lastBuild + '</lastBuildDate>\n' +
-    '    <atom:link href="' + siteOrigin + '/rss.xml" rel="self" type="application/rss+xml"/>\n' +
-    allItems.map(itemEntry).join('\n') + '\n' +
+    '    <lastBuildDate>' +
+    lastBuild +
+    '</lastBuildDate>\n' +
+    '    <atom:link href="' +
+    siteOrigin +
+    '/rss.xml" rel="self" type="application/rss+xml"/>\n' +
+    allItems.map(itemEntry).join('\n') +
+    '\n' +
     '  </channel>\n' +
     '</rss>\n';
 
