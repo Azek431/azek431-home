@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 
 const categories = [
@@ -40,16 +41,16 @@ const categories = [
   description="我日常用来搭建主站、写代码、托管和发布内容的装备与工具清单。"
 >
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Uses' }]} />
-  <section class="page-hero uses-hero">
-    <p class="eyebrow">Uses</p>
-    <h1>日常装备</h1>
-    <p class="page-hero-text">
-      这一页列的是我日常用来写代码、搭建主站、跑自动化的硬件和软件。
-      借用的是
-      <a href="https://uses.tech" target="_blank" rel="noreferrer noopener" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed currentColor;">uses.tech</a>
-      的灵感——把自己的工具栈公开,方便日后回看。
-    </p>
-  </section>
+  <PageHero
+    eyebrow="Uses"
+    title="日常装备"
+    description="这一页列的是我日常用来写代码、搭建主站、跑自动化的硬件和软件。"
+    meta={[
+      { label: 'Last', value: '2026-06-04' },
+      { label: '类型', value: '4 大类' },
+      { label: '总数', value: '28 件' },
+    ]}
+  />
 
   <section class="section">
     {categories.map((cat) => (

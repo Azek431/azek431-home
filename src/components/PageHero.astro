@@ -1,14 +1,25 @@
-﻿---
+---
 interface Props {
   eyebrow: string;
   title: string;
   description?: string;
+  meta?: Array<{ label: string; value: string }>;
 }
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, meta } = Astro.props;
 ---
 <section class="page-hero">
   <p class="eyebrow">{eyebrow}</p>
   <h1>{title}</h1>
   {description && <p class="page-hero-text">{description}</p>}
+  {meta && meta.length > 0 && (
+    <ul class="page-hero-meta" aria-label="页面信息">
+      {meta.map((m) => (
+        <li>
+          <span class="phm-label">{m.label}</span>
+          <span class="phm-value">{m.value}</span>
+        </li>
+      ))}
+    </ul>
+  )}
 </section>

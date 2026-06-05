@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 
 const stack = [
@@ -45,14 +47,16 @@ const inspirations = [
   description="这个主站的技术栈、设计 token、字体选择和设计原则。"
 >
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Colophon' }]} />
-  <section class="page-hero colo-hero">
-    <p class="eyebrow">Colophon</p>
-    <h1>致谢与设计</h1>
-    <p class="page-hero-text">
-      这一页讲的是主站本身——用了什么技术、怎么设计、参考了哪些站点。
-      因为这个站会长期迭代,留下笔记方便回看。
-    </p>
-  </section>
+  <PageHero
+    eyebrow="Colophon"
+    title="致谢与设计"
+    description="这一页讲的是主站本身——用了什么技术、怎么设计、参考了哪些站点。"
+    meta={[
+      { label: '更新', value: '2026-06-04' },
+      { label: '技术组', value: '3 大组' },
+      { label: '设计原则', value: '4 条' },
+    ]}
+  />
 
   <section class="section">
     <div class="section-heading">

@@ -1,5 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { changelog } from '../data/changelog';
+import { projectDetails } from '../data/projects';
+import { links, recentUpdates } from '../data/site';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
 import { projectDetails } from '../data/projects';
@@ -77,14 +82,17 @@ const toneColor: Record<string, string> = {
 >
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Stats' }]} />
 
-  <section class="page-hero stats-hero">
-    <p class="eyebrow">Stats</p>
-    <h1>主站数据</h1>
-    <p class="page-hero-text">
-      这一页用最简单的数字展示主站的"形状"——项目、迭代、时间、内容四个维度。
-      数字不一定代表什么,只是为了让"在维护"这件事有可触摸的痕迹。
-    </p>
-  </section>
+  <PageHero
+    eyebrow="Stats"
+    title="主站数据"
+    description="这一页用最简单的数字展示主站的「形状」——项目、迭代、时间、内容四个维度。数字不一定代表什么,只是为了「在维护」这件事有可触摸的痕迹。"
+    meta={[
+      { label: '项目', value: projectDetails.length + ' 个' },
+      { label: '迭代', value: changelog.length + ' 版' },
+      { label: '链接', value: links.length + ' 条' },
+      { label: '最近', value: '2026-06-04' },
+    ]}
+  />
 
   {sections.map((s) => (
     <section class="section">
