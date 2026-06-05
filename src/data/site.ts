@@ -200,6 +200,13 @@ export const links = [
 
 export const recentUpdates = [
   {
+    title: '修复站点时间与入口体验',
+    desc: '建站时间改为首个 Git 提交,Links 分组更清晰,移动端菜单不再产生横向溢出。',
+    date: '2026-06-05',
+    tag: '主站',
+    href: '/changelog/#v18',
+  },
+  {
     title: '升级主站视觉与微交互',
     desc: '重写设计 tokens、加入滚动入场动画、极光跟随、按钮流光等。',
     date: '2026-06-04',

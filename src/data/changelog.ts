@@ -8,6 +8,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v18',
+    date: '2026-06-05',
+    title: '站点时间精确化和入口体验收口',
+    changes: [
+      '站点建站时间改为读取首个 Git 提交,并在 Footer / Stats 中显示到秒',
+      'Links 页面按 Main / Site / Extra 分组,标签过滤会隐藏无结果分组',
+      '修复移动端菜单关闭态造成横向溢出的问题',
+      '收口全局交互脚本,减少重复监听并保留 reduced-motion 下的基础滚动反馈',
+    ],
+    tone: 'minor',
+  },
+  {
     version: 'v17',
     date: '2026-06-05',
     title: 'timeline 交互 + writing-card polish + features 行 hover',

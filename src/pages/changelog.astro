@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
-import { siteStartedMonth } from '../data/time';
+import { siteStartedDotDate, siteStartedMonth } from '../data/time';
 
 const totalChanges = changelog.reduce((acc, e) => acc + e.changes.length, 0);
 const totalVersions = changelog.length;
@@ -17,7 +17,7 @@ const toneColor: Record<string, string> = { major: '#6ee7b7', minor: '#a8c8ff', 
   <PageHero
     eyebrow="Changelog"
     title="更新日志"
-    description={`这一页记录主站 ${totalVersions} 个版本、${totalChanges} 条具体改动。从 2025 年 10 月的第一版到现在,每一步都写在这里,方便回看哪些是真正落地、哪些只是设想。`}
+    description={`这一页记录主站 ${totalVersions} 个版本、${totalChanges} 条具体改动。从 ${siteStartedDotDate} 的第一版到现在,每一步都写在这里,方便回看哪些是真正落地、哪些只是设想。`}
     meta={[
       { label: 'Versions', value: totalVersions + ' 个' },
       { label: 'Changes', value: totalChanges + ' 条' },
@@ -63,6 +63,7 @@ const toneColor: Record<string, string> = { major: '#6ee7b7', minor: '#a8c8ff', 
           <li
             class:list={['chl-item', 'chl-' + (entry.tone || 'minor')]}
             data-tone={entry.tone || 'minor'}
+            id={entry.version}
           >
             <div class="chl-marker">
               <span class="chl-version">{entry.version}</span>
