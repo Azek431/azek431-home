@@ -51,9 +51,9 @@ const sections = [
     title: '时间',
     metrics: [
       { label: '建站于', value: siteStartedDateTime, tone: 'muted' },
-      { label: '已运行', value: siteAge.days, suffix: ' 天', tone: 'primary' },
-      { label: '余下小时', value: siteAge.hours, suffix: ' 小时', tone: 'primary' },
-      { label: '余下分钟', value: siteAge.minutes, suffix: ' 分钟', tone: 'primary' },
+      { label: '完整天数', value: siteAge.days, suffix: ' 天', tone: 'primary' },
+      { label: '不足一天', value: siteAge.hours, suffix: ' 小时', tone: 'primary' },
+      { label: '不足一小时', value: siteAge.minutes, suffix: ' 分钟', tone: 'primary' },
       { label: '约合', value: siteAge.weeks, suffix: ' 周', tone: 'accent' },
       { label: '约合', value: siteAge.months, suffix: ' 个月', tone: 'success' },
       { label: '下次更新', value: '随时', tone: 'muted' },
