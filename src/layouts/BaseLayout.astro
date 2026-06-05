@@ -20,6 +20,14 @@ const keywords = siteConfig.keywords.join(', ');
 <html lang={siteConfig.locale}>
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('azek431-theme');
+          if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>{pageTitle}</title>
@@ -70,6 +78,22 @@ const keywords = siteConfig.keywords.join(', ');
   (function () {
     if (typeof window === 'undefined') return;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Theme toggle
+    try {
+      var root = document.documentElement;
+      var themeBtns = document.querySelectorAll('[data-theme-toggle]');
+      themeBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var cur = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+          var next = cur === 'light' ? 'dark' : 'light';
+          if (next === 'light') root.setAttribute('data-theme', 'light');
+          else root.removeAttribute('data-theme');
+          try { localStorage.setItem('azek431-theme', next); } catch (e) {}
+          if (window.__toast) window.__toast(next === 'light' ? '已切换到明亮主题' : '已切换到暗黑主题', 'info');
+        });
+      });
+    } catch (err) {}
 
     // Copy-URL buttons + global delegation
     document.addEventListener('click', function (e) {
@@ -345,6 +369,12 @@ const keywords = siteConfig.keywords.join(', ');
           // Second key
           if (pending === 'g') {
             var map = { h: '/', a: '/about/', p: '/projects/', l: '/links/', n: '/now/', u: '/uses/', b: '/blog/', c: '/colophon/', k: '/changelog/', s: '/stats/' };
+          // 't' toggles theme
+          if (k === 't') {
+            e.preventDefault();
+            var themeBtn = document.querySelector('[data-theme-toggle]');
+            if (themeBtn) themeBtn.click();
+          }
             if (map[k]) {
               e.preventDefault();
               window.location.href = map[k];

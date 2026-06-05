@@ -64,6 +64,17 @@
   --grad-aurora-2: radial-gradient(50% 45% at 92% 0%, rgba(168, 85, 247, 0.3) 0%, transparent 72%);
   --grad-aurora-3: radial-gradient(45% 38% at 50% 100%, rgba(14, 165, 233, 0.2) 0%, transparent 72%);
   --grad-mouse: radial-gradient(50% 50% at var(--mx, 50%) var(--my, 0%), rgba(99, 102, 241, 0.18) 0%, transparent 60%);
+
+  /* Alias tokens for newer components (map to base palette) */
+  --surface-1: var(--bg-raised);
+  --surface-2: var(--bg-card);
+  --surface-3: rgba(20, 28, 48, 0.92);
+  --border-1:  var(--border);
+  --text-1:     var(--text-strong);
+  --text-2:     var(--muted);
+  --text-3:     var(--subtle);
+  --accent-1:   var(--primary);
+  --shadow-soft: 0 6px 18px rgba(2, 6, 23, 0.32);
 }
 
 @keyframes reveal-in {
@@ -4663,3 +4674,104 @@ a.card:hover .arrow {
   opacity: 1;
   transition: opacity 0.05s ease;
 }
+
+/* ============================================
+   light theme override
+   ============================================ */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f5f7fc;
+  --bg-deep: #e7ecf6;
+  --bg-raised: rgba(255, 255, 255, 0.95);
+  --bg-soft: rgba(248, 250, 255, 0.78);
+  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-card-hover: rgba(255, 255, 255, 0.92);
+  --bg-glass: rgba(255, 255, 255, 0.6);
+
+  --text: #1a2236;
+  --text-strong: #0b1023;
+  --muted: #4a5675;
+  --subtle: #7682a0;
+  --faint: rgba(74, 86, 117, 0.45);
+
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --primary-soft: rgba(37, 99, 235, 0.12);
+  --accent: #7c3aed;
+  --accent-soft: rgba(124, 58, 237, 0.12);
+  --success: #059669;
+  --success-soft: rgba(5, 150, 105, 0.12);
+  --warning: #d97706;
+  --warning-soft: rgba(217, 119, 6, 0.12);
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.1);
+  --info: #0284c7;
+  --info-soft: rgba(2, 132, 199, 0.12);
+
+  --border: rgba(15, 23, 42, 0.12);
+  --border-soft: rgba(15, 23, 42, 0.06);
+  --border-strong: rgba(37, 99, 235, 0.45);
+
+  --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow: 0 14px 36px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.14);
+
+  --grad-text: linear-gradient(120deg, #1d4ed8 0%, #7c3aed 55%, #0284c7 100%);
+  --grad-card: linear-gradient(152deg, rgba(37, 99, 235, 0.05) 0%, rgba(124, 58, 237, 0.03) 100%);
+  --grad-aurora-1: radial-gradient(60% 55% at 12% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 72%);
+  --grad-aurora-2: radial-gradient(50% 45% at 92% 0%, rgba(124, 58, 237, 0.16) 0%, transparent 72%);
+  --grad-aurora-3: radial-gradient(45% 38% at 50% 100%, rgba(2, 132, 199, 0.1) 0%, transparent 72%);
+  --grad-mouse: radial-gradient(50% 50% at var(--mx, 50%) var(--my, 0%), rgba(37, 99, 235, 0.1) 0%, transparent 60%);
+
+  --surface-1: var(--bg-raised);
+  --surface-2: var(--bg-card);
+  --surface-3: rgba(255, 255, 255, 0.96);
+  --border-1:  var(--border);
+  --text-1:     var(--text-strong);
+  --text-2:     var(--muted);
+  --text-3:     var(--subtle);
+  --accent-1:   var(--primary);
+  --shadow-soft: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="light"] body {
+  background: linear-gradient(180deg, #f5f7fc 0%, #e7ecf6 100%);
+}
+:root[data-theme="light"] .scroll-progress,
+:root[data-theme="light"] .scroll-hint,
+:root[data-theme="light"] .toast-msg {
+  background: var(--surface-3) !important;
+  color: var(--text) !important;
+}
+:root[data-theme="light"] .route-veil {
+  background: linear-gradient(135deg, #f5f7fc 0%, #e7ecf6 50%, #f5f7fc 100%);
+}
+
+/* ============================================
+   theme switcher button
+   ============================================ */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  padding: 0;
+}
+.theme-toggle:hover {
+  background: var(--bg-soft);
+  color: var(--text-strong);
+  border-color: var(--border-strong);
+}
+.theme-toggle svg { width: 1rem; height: 1rem; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
+:root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+:root:not([data-theme="light"]) .theme-toggle .icon-sun  { display: block; }

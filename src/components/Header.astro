@@ -1,5 +1,6 @@
 ---
 import { navItems, siteConfig } from '../data/site';
+import ThemeToggle from './ThemeToggle.astro';
 
 const kbdMap: Record<string, string> = {
   '/': 'g h',
@@ -25,6 +26,8 @@ const isActive = (href: string) =>
     <span class="logo-mark" aria-hidden="true">A</span>
     <span>{siteConfig.name}</span>
   </a>
+
+  <ThemeToggle />
 
   <button class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false" data-nav-toggle>
     <span class="bar"></span>
