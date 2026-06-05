@@ -10,10 +10,12 @@ const staticRoutes = [
   { path: '/links/',    priority: 0.7, changefreq: 'monthly' },
   { path: '/now/',      priority: 0.7, changefreq: 'weekly'  },
   { path: '/uses/',      priority: 0.5, changefreq: 'monthly' },
+  { path: '/blog/',      priority: 0.7, changefreq: 'weekly'  },
   { path: '/colophon/',  priority: 0.6, changefreq: 'monthly' },
   { path: '/rss.xml',    priority: 0.4, changefreq: 'weekly'  },
   { path: '/changelog/',  priority: 0.5, changefreq: 'weekly'  },
   { path: '/stats/',      priority: 0.4, changefreq: 'monthly' },
+  { path: '/search/',     priority: 0.5, changefreq: 'monthly' },
 ];
 
 function urlEntry(loc: string, lastmod: string, priority: number, changefreq: string) {

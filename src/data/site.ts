@@ -26,9 +26,11 @@ export const navItems = [
   { label: '链接', href: '/links/' },
   { label: 'Now', href: '/now/' },
   { label: 'Uses', href: '/uses/' },
+  { label: 'Blog', href: '/blog/' },
   { label: 'Colophon', href: '/colophon/' },
   { label: 'Changelog', href: '/changelog/' },
   { label: 'Stats', href: '/stats/' },
+  { label: 'Search', href: '/search/' },
 ];
 
 export const homeCards = [

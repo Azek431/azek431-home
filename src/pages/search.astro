@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { searchItems, type SearchItem } from '../data/search';
+
+const counts = {
+  total: searchItems.length,
+  Page: searchItems.filter((i) => i.category === 'Page').length,
+  Project: searchItems.filter((i) => i.category === 'Project').length,
+  Link: searchItems.filter((i) => i.category === 'Link').length,
+  Update: searchItems.filter((i) => i.category === 'Update').length,
+  Changelog: searchItems.filter((i) => i.category === 'Changelog').length,
+};
+const serialized = JSON.stringify(searchItems);
+---
+<BaseLayout
+  title="Search - Azek431"
+  description="站内搜索,跨页面、项目、链接、内容索引。"
+>
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Search' }]} />
+
+  <section class="page-hero search-hero">
+    <p class="eyebrow">Search</p>
+    <h1>站内搜索</h1>
+    <p class="page-hero-text">
+      跨 {counts.total} 条内容索引——页面、项目、链接、更新日志。
+      在下面输入关键词,实时筛选,按回车跳转到第一项。
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="search-bar">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+      </svg>
+      <input
+        type="search"
+        id="searchInput"
+        class="search-input"
+        placeholder="试试输入:项目、RSS、colophon、Azek431..."
+        autocomplete="off"
+        autofocus
+        aria-label="搜索关键词"
+      />
+      <kbd class="search-kbd">/</kbd>
+    </div>
+
+    <div class="search-filters" role="tablist" aria-label="按分类筛选">
+      <button type="button" class="filter-chip active" data-cat="all" role="tab" aria-selected="true">全部 ({counts.total})</button>
+      <button type="button" class="filter-chip" data-cat="Page" role="tab" aria-selected="false">页面 ({counts.Page})</button>
+      <button type="button" class="filter-chip" data-cat="Project" role="tab" aria-selected="false">项目 ({counts.Project})</button>
+      <button type="button" class="filter-chip" data-cat="Link" role="tab" aria-selected="false">链接 ({counts.Link})</button>
+      <button type="button" class="filter-chip" data-cat="Update" role="tab" aria-selected="false">更新 ({counts.Update})</button>
+      <button type="button" class="filter-chip" data-cat="Changelog" role="tab" aria-selected="false">日志 ({counts.Changelog})</button>
+    </div>
+
+    <p class="search-status" data-search-status>输入关键词开始搜索。</p>
+
+    <ol class="search-results" data-search-results aria-label="搜索结果">
+      {searchItems.slice(0, 30).map((it) => (
+        <li class="search-item" data-cat={it.category} data-text={(it.title + ' ' + it.desc + ' ' + (it.tags || []).join(' ')).toLowerCase()}>
+          <a class="search-link" href={it.href}>
+            <span class="search-cat">{it.category}</span>
+            <span class="search-title">{it.title}</span>
+            <span class="search-desc">{it.desc}</span>
+            {it.tags && it.tags.length > 0 && (
+              <span class="search-tags">
+                {it.tags.slice(0, 4).map((t) => <span class="search-tag">#{t}</span>)}
+              </span>
+            )}
+            <svg class="search-arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="m13 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>
+
+<script is:inline define:vars={{ serialized }}>
+  (function () {
+    var items = JSON.parse(serialized);
+    var input = document.getElementById('searchInput');
+    var dom = document.querySelectorAll('.search-item');
+    var chips = document.querySelectorAll('[data-cat]');
+    var status = document.querySelector('[data-search-status]');
+    var currentCat = 'all';
+    var currentQuery = '';
+
+    function applyFilter() {
+      var q = currentQuery.toLowerCase().trim();
+      var visible = 0;
+      dom.forEach(function (el) {
+        var cat = el.getAttribute('data-cat');
+        var text = el.getAttribute('data-text') || '';
+        var catMatch = currentCat === 'all' || cat === currentCat;
+        var textMatch = !q || text.indexOf(q) >= 0;
+        var ok = catMatch && textMatch;
+        el.classList.toggle('filter-hidden', !ok);
+        if (ok) visible++;
+      });
+      if (status) {
+        if (!q && currentCat === 'all') {
+          status.textContent = '显示前 30 条,共 ' + items.length + ' 条。输入关键词开始搜索。';
+        } else {
+          var parts = [];
+          if (q) parts.push('关键词 "' + currentQuery + '"');
+          if (currentCat !== 'all') parts.push('分类 ' + currentCat);
+          status.textContent = '找到 ' + visible + ' 条结果' + (parts.length ? ' · ' + parts.join(' · ') : '');
+        }
+      }
+    }
+
+    if (input) {
+      input.addEventListener('input', function () {
+        currentQuery = input.value;
+        applyFilter();
+      });
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          var first = document.querySelector('.search-item:not(.filter-hidden) .search-link');
+          if (first) window.location.href = first.getAttribute('href');
+        }
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        currentCat = chip.getAttribute('data-cat') || 'all';
+        chips.forEach(function (c) {
+          c.classList.remove('active');
+          c.setAttribute('aria-selected', 'false');
+        });
+        chip.classList.add('active');
+        chip.setAttribute('aria-selected', 'true');
+        applyFilter();
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== '/') return;
+      var active = document.activeElement;
+      if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) return;
+      if (input) {
+        e.preventDefault();
+        input.focus();
+      }
+    });
+
+    applyFilter();
+  })();
+</script>
