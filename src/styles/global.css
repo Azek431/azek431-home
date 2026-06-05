@@ -4496,3 +4496,55 @@ a.card:hover .arrow {
 @media (max-width: 600px) {
   .related-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   hero scroll-hint
+   ============================================ */
+.scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0.45rem 0.95rem 0.45rem 1.1rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border-1);
+  border-radius: 999px;
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.04em;
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.scroll-hint:hover {
+  color: var(--text-1);
+  border-color: var(--accent-1);
+  background: var(--surface-3);
+  transform: translateY(1px);
+}
+.scroll-hint svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  animation: scroll-bounce 1.6s ease-in-out infinite;
+}
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ============================================
+   page transition (route)
+   ============================================ */
+.route-veil {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0c1322 0%, #131b30 50%, #0a0f1e 100%);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.route-veil.flash {
+  opacity: 1;
+  transition: opacity 0.05s ease;
+}
