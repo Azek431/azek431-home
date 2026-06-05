@@ -11,6 +11,12 @@ const recentCount = recentUpdates.length;
 const progressPct = Math.min(100, Math.round((recentCount / 6) * 100));
 const buildDate = new Date().toISOString().slice(0, 10);
 const pageCount = 16;
+const quickStats = [
+  { num: homeCards.length,   label: '主站入口',  tone: 'primary' },
+  { num: 4,                  label: '项目',      tone: 'success' },
+  { num: 7,                  label: '公开链接',  tone: 'accent' },
+  { num: recentUpdates.length, label: '近 30 天更新', tone: 'warning' },
+];
 
 function daysAgo(dateStr: string): string {
   const then = new Date(dateStr + 'T00:00:00Z').getTime();
@@ -56,6 +62,15 @@ const quickJumps = [
     <span><span class="bi-dot"></span>Build {buildDate} · {pageCount} 页面 · 静态生成</span>
     <a class="build-changelog" href="/changelog/">查看更新日志 →</a>
   </div>
+
+  <ul class="home-stats" aria-label="主站速览">
+    {quickStats.map((s) => (
+      <li class={'home-stat tone-' + s.tone}>
+        <span class="home-stat-num">{s.num}</span>
+        <span class="home-stat-label">{s.label}</span>
+      </li>
+    ))}
+  </ul>
 
   <nav class="home-quicklinks" aria-label="快捷入口">
     <span class="home-quicklinks-label">快捷入口</span>

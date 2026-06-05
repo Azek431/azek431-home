@@ -79,6 +79,25 @@ const keywords = siteConfig.keywords.join(', ');
     if (typeof window === 'undefined') return;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // 'r' = jump to a random project; 'esc' closes the shortcut hint
+    try {
+      document.addEventListener('keydown', function (e) {
+        var active = document.activeElement;
+        if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) return;
+        var k = e.key.toLowerCase();
+        if (k === 'r' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault();
+          var links = ['/projects/azek431-home/', '/projects/cysj-data/', '/projects/azek431-blog/', '/projects/ai-experiments/'];
+          var pick = links[Math.floor(Math.random() * links.length)];
+          window.location.href = pick;
+        }
+        if (e.key === 'Escape') {
+          var hint = document.querySelector('.shortcut-hint');
+          if (hint && hint.classList.contains('visible')) hint.classList.remove('visible');
+        }
+      });
+    } catch (err) {}
+
     // Theme toggle
     try {
       var root = document.documentElement;
