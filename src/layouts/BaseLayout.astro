@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Toast from '../components/Toast.astro';
 import { siteConfig } from '../data/site';
 import '../styles/global.css';
 
@@ -69,6 +70,47 @@ const keywords = siteConfig.keywords.join(', ');
   (function () {
     if (typeof window === 'undefined') return;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Copy-URL buttons + global delegation
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('[data-copy-url]');
+      if (!btn) return;
+      e.preventDefault();
+      var url = btn.getAttribute('data-copy-url') || location.href;
+      var done = function () {
+        if (window.__toast) window.__toast('链接已复制 · ' + url, 'success');
+      };
+      var fail = function () {
+        if (window.__toast) window.__toast('复制失败,请手动选择', 'error');
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, function () {
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = url;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            done();
+          } catch (e) { fail(); }
+        });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = url;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done();
+        } catch (e) { fail(); }
+      }
+    });
 
     // Card sheen: per-card mouse position
     try {
@@ -373,5 +415,6 @@ const keywords = siteConfig.keywords.join(', ');
         });
   })();
 </script>
+  <Toast />
   </body>
 </html>
