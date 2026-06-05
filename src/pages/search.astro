@@ -75,6 +75,18 @@ const serialized = JSON.stringify(searchItems);
         </li>
       ))}
     </ol>
+
+    <div class="search-empty" data-search-empty hidden>
+      <p class="search-empty-title">没有匹配的结果</p>
+      <p class="search-empty-desc">试试调整关键词,或清空筛选条件,也可以直接浏览:</p>
+      <div class="search-empty-suggest">
+        <a class="search-empty-pill" href="/projects/">所有项目</a>
+        <a class="search-empty-pill" href="/links/">链接集合</a>
+        <a class="search-empty-pill" href="/changelog/">更新日志</a>
+        <a class="search-empty-pill" href="/blog/">博客筹备</a>
+        <button type="button" class="search-empty-pill search-empty-reset" data-search-reset>清空筛选</button>
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
@@ -100,6 +112,17 @@ const serialized = JSON.stringify(searchItems);
         el.classList.toggle('filter-hidden', !ok);
         if (ok) visible++;
       });
+      var empty = document.querySelector('[data-search-empty]');
+      var list = document.querySelector('[data-search-results]');
+      if (empty && list) {
+        if (visible === 0) {
+          empty.hidden = false;
+          list.hidden = true;
+        } else {
+          empty.hidden = true;
+          list.hidden = false;
+        }
+      }
       if (status) {
         if (!q && currentCat === 'all') {
           status.textContent = '显示前 30 条,共 ' + items.length + ' 条。输入关键词开始搜索。';
@@ -148,6 +171,26 @@ const serialized = JSON.stringify(searchItems);
         input.focus();
       }
     });
+
+    var resetBtn = document.querySelector('[data-search-reset]');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        if (input) input.value = '';
+        currentQuery = '';
+        currentCat = 'all';
+        chips.forEach(function (c) {
+          c.classList.remove('active');
+          c.setAttribute('aria-selected', 'false');
+        });
+        var allChip = document.querySelector('.filter-chip[data-cat="all"]');
+        if (allChip) {
+          allChip.classList.add('active');
+          allChip.setAttribute('aria-selected', 'true');
+        }
+        if (input) input.focus();
+        applyFilter();
+      });
+    }
 
     applyFilter();
   })();
