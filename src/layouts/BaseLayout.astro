@@ -79,12 +79,25 @@ const keywords = siteConfig.keywords.join(', ');
     if (typeof window === 'undefined') return;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 'r' = jump to a random project; 'esc' closes the shortcut hint
+    // Global shortcuts for search, theme, random project, and dismissing overlays.
     try {
       document.addEventListener('keydown', function (e) {
         var active = document.activeElement;
         if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) return;
         var k = e.key.toLowerCase();
+        if (k === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault();
+          var searchInput = document.getElementById('searchInput');
+          if (searchInput) searchInput.focus();
+          else window.location.href = '/search/';
+          return;
+        }
+        if (k === 't' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault();
+          var globalThemeBtn = document.querySelector('[data-theme-toggle]');
+          if (globalThemeBtn) globalThemeBtn.click();
+          return;
+        }
         if (k === 'r' && !e.metaKey && !e.ctrlKey && !e.altKey) {
           e.preventDefault();
           var links = ['/projects/azek431-home/', '/projects/cysj-data/', '/projects/azek431-blog/', '/projects/ai-experiments/'];
@@ -388,12 +401,6 @@ const keywords = siteConfig.keywords.join(', ');
           // Second key
           if (pending === 'g') {
             var map = { h: '/', a: '/about/', p: '/projects/', l: '/links/', n: '/now/', u: '/uses/', b: '/blog/', c: '/colophon/', k: '/changelog/', s: '/stats/' };
-          // 't' toggles theme
-          if (k === 't') {
-            e.preventDefault();
-            var themeBtn = document.querySelector('[data-theme-toggle]');
-            if (themeBtn) themeBtn.click();
-          }
             if (map[k]) {
               e.preventDefault();
               window.location.href = map[k];

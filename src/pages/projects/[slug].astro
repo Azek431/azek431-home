@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
-import { projectDetails, getProjectBySlug } from '../../data/projects';
+import { projectDetails } from '../../data/projects';
 
 export function getStaticPaths() {
   return projectDetails.map((p) => ({
@@ -13,7 +13,6 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 if (!project) return Astro.redirect('/projects/');
 
-import { projectDetails } from '../../data/projects';
 const idx = projectDetails.findIndex((p) => p.slug === project.slug);
 const prevProject = idx > 0 ? projectDetails[idx - 1] : projectDetails[projectDetails.length - 1];
 const nextProject = idx < projectDetails.length - 1 ? projectDetails[idx + 1] : projectDetails[0];
@@ -168,7 +167,7 @@ const relatedProjects = projectDetails
         <div class="detail-card detail-card-soft">
           <h3>下一步</h3>
           <p>如果你对这个项目感兴趣,可以通过上面的链接访问,或返回项目列表查看其他项目。</p>
-          <a class="button secondary" href="/links/?tag={encodeURIComponent(project.category)}">查看相关链接</a>
+          <a class="button secondary" href={'/links/?tag=' + encodeURIComponent(project.category)}>查看相关链接</a>
         </div>
       </aside>
     </div>
