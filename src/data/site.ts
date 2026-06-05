@@ -8,6 +8,7 @@ export const siteConfig = {
   locale: 'zh-CN',
   url: 'https://azek431.pages.dev',
   github: 'https://github.com/Azek431',
+  gitee: 'https://gitee.com/Azek431',
   keywords: [
     'Azek431',
     '个人主页',
@@ -27,6 +28,9 @@ export const navItems = [
   { label: '关于', href: '/about/' },
   { label: '项目', href: '/projects/' },
   { label: '链接', href: '/links/' },
+];
+
+export const secondaryNavItems = [
   { label: 'Now', href: '/now/' },
   { label: 'Uses', href: '/uses/' },
   { label: 'Blog', href: '/blog/' },
@@ -35,6 +39,8 @@ export const navItems = [
   { label: 'Stats', href: '/stats/' },
   { label: 'Search', href: '/search/' },
 ];
+
+export const sitePages = [...navItems, ...secondaryNavItems];
 
 export const homeCards = [
   {
@@ -96,8 +102,22 @@ export const links = [
     name: 'GitHub',
     description: '查看我的代码、项目记录和开源实践。',
     href: 'https://github.com/Azek431',
-    category: 'Code',
+    category: 'Main',
     tags: ['GitHub', 'Projects'],
+  },
+  {
+    name: 'Gitee',
+    description: 'GitHub 主仓库的国内镜像入口。',
+    href: 'https://gitee.com/Azek431',
+    category: 'Main',
+    tags: ['Gitee', 'Mirror'],
+  },
+  {
+    name: '当前主站',
+    description: 'Azek431 Home 的线上访问入口。',
+    href: siteConfig.url,
+    category: 'Main',
+    tags: ['Homepage', 'Cloudflare'],
   },
   {
     name: 'Projects',
@@ -110,36 +130,71 @@ export const links = [
     name: 'About',
     description: '了解我的兴趣方向、网站定位和个人内容规划。',
     href: '/about/',
-    category: 'Profile',
+    category: 'Site',
     tags: ['About', 'Azek431'],
   },
   {
     name: 'Blog',
     description: '个人博客入口，后续用于记录文章、笔记和学习过程。',
     href: '#',
-    category: 'Writing',
+    category: 'Site',
     tags: ['Blog', 'Notes'],
   },
   {
     name: 'Now',
     description: '记录最近在做什么、读什么、关注什么。',
     href: '/now/',
-    category: 'Profile',
+    category: 'Extra',
     tags: ['Now', 'Status'],
-  },
-  {
-    name: 'Colophon',
-    description: '技术栈 / 设计原则 / 受影响的站点。',
-    href: '/colophon/',
-    category: 'Profile',
-    tags: ['Colophon', 'About'],
   },
   {
     name: 'Uses',
     description: '我日常写代码、跑自动化用的装备和工具。',
     href: '/uses/',
-    category: 'Profile',
+    category: 'Extra',
     tags: ['Uses', 'Tools'],
+  },
+  {
+    name: 'Changelog',
+    description: '查看主站每一轮迭代的更新记录。',
+    href: '/changelog/',
+    category: 'Extra',
+    tags: ['Changelog', 'Updates'],
+  },
+  {
+    name: 'Stats',
+    description: '查看主站项目、内容和本地访问统计。',
+    href: '/stats/',
+    category: 'Extra',
+    tags: ['Stats', 'Site'],
+  },
+  {
+    name: 'Colophon',
+    description: '技术栈 / 设计原则 / 受影响的站点。',
+    href: '/colophon/',
+    category: 'Extra',
+    tags: ['Colophon', 'About'],
+  },
+  {
+    name: 'Search',
+    description: '跨页面、项目、链接和更新日志搜索站内内容。',
+    href: '/search/',
+    category: 'Extra',
+    tags: ['Search', 'Navigation'],
+  },
+  {
+    name: 'RSS',
+    description: '订阅主站项目和 Now 页面的最新更新。',
+    href: '/rss.xml',
+    category: 'Extra',
+    tags: ['RSS', 'Feed'],
+  },
+  {
+    name: 'Sitemap',
+    description: '提供给搜索引擎使用的 XML 站点地图。',
+    href: '/sitemap.xml',
+    category: 'Extra',
+    tags: ['Sitemap', 'SEO'],
   },
 ];
 

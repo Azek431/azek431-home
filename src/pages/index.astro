@@ -2,11 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NavCard from '../components/NavCard.astro';
 import Roadmap from '../components/Roadmap.astro';
-import { homeCards, links, navItems, siteConfig, recentUpdates } from '../data/site';
+import { homeCards, links, sitePages, siteConfig, recentUpdates } from '../data/site';
 import { projectDetails } from '../data/projects';
 import { relativeDate, siteUpdatedDate, todayDate } from '../data/time';
 
-const pageCount = navItems.length + projectDetails.length + 1;
+const pageCount = sitePages.length + projectDetails.length + 1;
 const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
 const externalLinks = links.filter((link) => link.href.startsWith('http')).length;
 const upcoming = homeCards.filter((c) => c.status === '即将上线').length;
@@ -81,7 +81,8 @@ const quickJumps = [
             stroke-width="2.4"
             stroke-linecap="round"
             stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
-          ></a>
+          ></a
+        >
       </li>
       <li>
         <a href="/now/"
@@ -93,7 +94,8 @@ const quickJumps = [
             stroke-width="2.4"
             stroke-linecap="round"
             stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
-          ></a>
+          ></a
+        >
       </li>
       <li>
         <a href="/rss.xml" target="_blank" rel="noreferrer noopener"
@@ -105,7 +107,8 @@ const quickJumps = [
             stroke-width="2.4"
             stroke-linecap="round"
             stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
-          ></a>
+          ></a
+        >
       </li>
       <li>
         <a href={siteConfig.github} target="_blank" rel="noreferrer noopener"
@@ -117,7 +120,8 @@ const quickJumps = [
             stroke-width="2.4"
             stroke-linecap="round"
             stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path></svg
-          ></a>
+          ></a
+        >
       </li>
     </ul>
   </nav>

@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
 import { projectDetails } from '../data/projects';
-import { links, navItems, recentUpdates } from '../data/site';
+import { links, sitePages, recentUpdates } from '../data/site';
 import { getSiteAge, siteStartedDotDate, siteUpdatedDate } from '../data/time';
 
 const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
@@ -17,7 +17,7 @@ const totalTags = projectDetails.reduce((acc, p) => acc + (p.tags?.length || 0),
 const totalFeatures = projectDetails.reduce((acc, p) => acc + (p.features?.length || 0), 0);
 
 const siteAge = getSiteAge();
-const pageCount = navItems.length + projectDetails.length + 1;
+const pageCount = sitePages.length + projectDetails.length + 1;
 
 const sections = [
   {

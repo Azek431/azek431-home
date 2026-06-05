@@ -1,4 +1,4 @@
-import { navItems, links, recentUpdates, siteConfig } from './site';
+import { sitePages, links, recentUpdates, siteConfig } from './site';
 import { projectDetails } from './projects';
 import { changelog } from './changelog';
 
@@ -25,7 +25,7 @@ const navDescriptions: Record<string, string> = {
 };
 
 const pageItems: SearchItem[] = [
-  ...navItems.map<SearchItem>((n) => ({
+  ...sitePages.map<SearchItem>((n) => ({
     title: n.label,
     desc: navDescriptions[n.href] || '',
     href: n.href,
