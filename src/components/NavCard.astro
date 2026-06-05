@@ -43,6 +43,7 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
   hasLinks ? (
     <article class="card card-static" style={accentStyle}>
       {accent && <span class="card-accent" aria-hidden="true"></span>}
+      <span class="card-sheen" aria-hidden="true"></span>
       {icon && (
         <span class:list={['card-icon', { accent: iconTone === 'accent', success: iconTone === 'success' }]}>
           {icon}
@@ -109,6 +110,7 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
       style={accentStyle}
     >
       {accent && <span class="card-accent" aria-hidden="true"></span>}
+      <span class="card-sheen" aria-hidden="true"></span>
       {icon && (
         <span class:list={['card-icon', { accent: iconTone === 'accent', success: iconTone === 'success' }]}>
           {icon}

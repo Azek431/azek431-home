@@ -16,6 +16,13 @@ const focus = [
   { label: '语言', value: '中文 / English' },
   { label: '地点', value: '线上 · GitHub' },
 ];
+
+const focusItems = [
+  { num: '01', title: 'AI 工具与自动化', desc: '提示词写法、Agent 搭建、不同模型能力边界', icon: '🤖' },
+  { num: '02', title: '网站搭建与部署',  desc: 'Astro 静态站、Cloudflare Pages 部署、域名管理',  icon: '🌐' },
+  { num: '03', title: 'GitHub 项目维护',  desc: '开源记录、版本管理、镜像同步、Issue 处理',   icon: '📦' },
+  { num: '04', title: '前端细节优化',     desc: '交互微动效、排版、配色、可访问性',           icon: '✨' },
+];
 ---
 <BaseLayout
   title="关于 - Azek431"
@@ -155,11 +162,22 @@ const focus = [
       <p>这些是我长期感兴趣、愿意持续投入时间的方向。</p>
     </div>
 
-    <ul class="focus-list" aria-label="关注方向">
-      <li>AI 工具、提示词、自动化流程实验</li>
-      <li>个人网站搭建与 Cloudflare 部署</li>
-      <li>GitHub 开源项目维护与版本管理</li>
-      <li>前端交互、排版与设计细节优化</li>
+    
+
+
+    <ul class="focus-grid" aria-label="关注方向">
+      {focusItems.map((f) => (
+        <li class="focus-cell">
+          <span class="focus-icon" aria-hidden="true">{f.icon}</span>
+          <div class="focus-text">
+            <div class="focus-head">
+              <span class="focus-num">{f.num}</span>
+              <span class="focus-title">{f.title}</span>
+            </div>
+            <p class="focus-desc">{f.desc}</p>
+          </div>
+        </li>
+      ))}
     </ul>
   </section>
 </BaseLayout>
