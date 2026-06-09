@@ -1,54 +1,34 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteUpdatedDate } from '../data/time';
 
 const categories = [
   {
-    title: '硬件',
+    title: '开发环境',
+    desc: '主站开发、代码编辑和终端工作流。',
     items: [
-      { name: '主力笔记本', detail: '一台 14 寸轻薄本,主站 90% 时间都在这上面写', tone: 'primary' },
-      {
-        name: '外接显示器',
-        detail: '27 寸 2K 屏,主要做长时间阅读和长 timeline 滚动',
-        tone: 'muted',
-      },
-      { name: 'HHKB 键盘', detail: '静电容键盘,手感稳定,适合长时间码字', tone: 'accent' },
+      { name: 'VS Code', detail: '主力编辑器，负责 Astro、TypeScript、CSS 和 Markdown。' },
+      { name: 'Windows Terminal', detail: '日常 PowerShell / pnpm / git 命令入口。' },
+      { name: 'Git', detail: '记录每一次改动，保持项目可回溯。' },
     ],
   },
   {
-    title: '编辑器 / 终端',
+    title: '网站技术',
+    desc: '个人主站的核心技术栈。',
     items: [
-      {
-        name: 'VS Code',
-        detail: '主力编辑器,Astro / Tailwind 插件,Prettier 格式化',
-        tone: 'primary',
-      },
-      {
-        name: 'Windows Terminal',
-        detail: 'PowerShell + pwsh,所有 build / dev / git 命令都跑在里面',
-        tone: 'muted',
-      },
-      { name: 'git CLI', detail: '一切提交走 git,没有 GUI 工具', tone: 'muted' },
-    ],
-  },
-  {
-    title: '浏览器 / 设计',
-    items: [
-      {
-        name: 'Edge / Chrome',
-        detail: '主调试浏览器,主站在 Edge 里跑 dev server 验证',
-        tone: 'primary',
-      },
-      { name: 'Figma', detail: '偶尔画流程图 / 概念图,大部分设计直接在 CSS 里写', tone: 'accent' },
+      { name: 'Astro', detail: '静态生成、组件化和极少运行时 JS。' },
+      { name: 'Cloudflare Pages', detail: '自动部署、CDN 和正式域名托管。' },
+      { name: 'pnpm', detail: '快速、稳定、适合长期维护的包管理。' },
     ],
   },
   {
     title: 'AI / 自动化',
+    desc: '辅助开发、分析和内容整理。',
     items: [
-      { name: 'Codex CLI', detail: '在这台机器上跑 AI 编码,负责主站的迭代和重构', tone: 'success' },
-      { name: 'GitHub Actions', detail: 'CI 钩子触发 Cloudflare Pages 自动部署', tone: 'success' },
+      { name: 'ChatGPT', detail: '辅助规划、重构、审查和文案整理。' },
+      { name: 'Codex', detail: '辅助代码理解、修改和项目迭代。' },
+      { name: 'GitHub Actions', detail: '用于自动检查和部署流程。' },
     ],
   },
 ];
@@ -57,47 +37,71 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
 ---
 
 <BaseLayout
-  title="Uses - Azek431"
-  description="我日常用来搭建主站、写代码、托管和发布内容的装备与工具清单。"
+  title="Uses · Azek431"
+  description="Azek431 日常使用的硬件、软件、开发工具和网站技术栈。"
 >
-  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Uses' }]} />
-  <PageHero
-    eyebrow="Uses"
-    title="日常装备"
-    description="这一页列的是我日常用来写代码、搭建主站、跑自动化的硬件和软件。"
-    meta={[
-      { label: 'Last', value: siteUpdatedDate },
-      { label: '类型', value: '4 大类' },
-      { label: '总数', value: totalItems + ' 件' },
-    ]}
-  />
+  <Breadcrumb items={[{ label: 'Uses', href: '/uses/' }]} />
 
-  <section class="section">
+  <section class="page-v2-hero uses-hero-v2">
+    <div>
+      <p class="page-v2-kicker">Uses</p>
+      <h1>我在用什么</h1>
+      <p>
+        这里记录我搭建主站、写代码、托管内容和整理项目时常用的工具。
+        工具会变化，但原则是长期、稳定、清晰和可维护。
+      </p>
+    </div>
+
+    <div class="page-v2-stat-grid">
+      <article data-tone="blue">
+        <strong>{categories.length}</strong>
+        <span>工具分类</span>
+      </article>
+      <article data-tone="green">
+        <strong>{totalItems}</strong>
+        <span>常用工具</span>
+      </article>
+      <article data-tone="violet">
+        <strong>{siteUpdatedDate}</strong>
+        <span>最近更新</span>
+      </article>
+      <article data-tone="amber">
+        <strong>Stable</strong>
+        <span>使用原则</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="uses-grid-v2">
     {
-      categories.map((cat) => (
-        <div class="uses-block">
-          <h2 class="uses-block-title">{cat.title}</h2>
-          <ul class="uses-list">
-            {cat.items.map((it) => (
-              <li class:list={['uses-item', 'tone-' + it.tone]}>
-                <div class="uses-item-name">{it.name}</div>
-                <p class="uses-item-detail">{it.detail}</p>
+      categories.map((category) => (
+        <article>
+          <div>
+            <p>{category.title}</p>
+            <h2>{category.desc}</h2>
+          </div>
+
+          <ul>
+            {category.items.map((item) => (
+              <li>
+                <strong>{item.name}</strong>
+                <span>{item.detail}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </article>
       ))
     }
   </section>
 
-  <section class="section">
-    <div class="now-cta">
-      <h3>装备会变,原则不变</h3>
-      <p>我倾向于用最少、最稳定的工具,长期维护优先于追新。具体设计原则可以看 colophon 页面。</p>
-      <div class="actions">
-        <a class="button primary" href="/colophon/">看 colophon</a>
-        <a class="button secondary" href="/now/">回 /now</a>
-      </div>
+  <section class="about-narrative-v2">
+    <p>
+      装备会变，原则不变。我更在意一套工具能不能长期稳定地服务项目，而不是追求看起来很复杂的配置。
+    </p>
+
+    <div>
+      <a class="ui-button ui-button-primary" href="/colophon/">查看设计说明</a>
+      <a class="ui-button ui-button-secondary" href="/now/">回到 Now</a>
     </div>
   </section>
 </BaseLayout>

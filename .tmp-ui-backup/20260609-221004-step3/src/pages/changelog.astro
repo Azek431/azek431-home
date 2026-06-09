@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { changelog } from '../data/changelog';
+import { siteStartedDotDate, siteStartedMonth } from '../data/time';
+
+const totalChanges = changelog.reduce((acc, e) => acc + e.changes.length, 0);
+const totalVersions = changelog.length;
+const toneLabel: Record<string, string> = { major: '大版本', minor: '小版本', patch: '补丁' };
+const toneColor: Record<string, string> = { major: '#6ee7b7', minor: '#a8c8ff', patch: '#c4b5fd' };
+---
+
+<BaseLayout title="Changelog - Azek431" description="主站迭代记录,所有版本更新一览。">
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Changelog' }]} />
+
+  <PageHero
+    eyebrow="Changelog"
+    title="更新日志"
+    description={`这一页记录主站 ${totalVersions} 个版本、${totalChanges} 条具体改动。从 ${siteStartedDotDate} 的第一版到现在,每一步都写在这里,方便回看哪些是真正落地、哪些只是设想。`}
+    meta={[
+      { label: 'Versions', value: totalVersions + ' 个' },
+      { label: 'Changes', value: totalChanges + ' 条' },
+      { label: '首版', value: siteStartedMonth },
+    ]}
+  />
+
+  <section class="section">
+    <div class="filter-chips chl-filters" role="tablist" aria-label="按类型筛选">
+      <button
+        type="button"
+        class="filter-chip active"
+        data-chl-filter="all"
+        role="tab"
+        aria-selected="true">全部 ({changelog.length})</button
+      >
+      <button
+        type="button"
+        class="filter-chip chl-tone-major"
+        data-chl-filter="major"
+        role="tab"
+        aria-selected="false">大版本 ({changelog.filter((e) => e.tone === 'major').length})</button
+      >
+      <button
+        type="button"
+        class="filter-chip chl-tone-minor"
+        data-chl-filter="minor"
+        role="tab"
+        aria-selected="false">小版本 ({changelog.filter((e) => e.tone === 'minor').length})</button
+      >
+      <button
+        type="button"
+        class="filter-chip chl-tone-patch"
+        data-chl-filter="patch"
+        role="tab"
+        aria-selected="false">补丁 ({changelog.filter((e) => e.tone === 'patch').length})</button
+      >
+    </div>
+
+    <ol class="chl-list" aria-label="版本更新">
+      {
+        changelog.map((entry) => (
+          <li
+            class:list={['chl-item', 'chl-' + (entry.tone || 'minor')]}
+            data-tone={entry.tone || 'minor'}
+            id={entry.version}
+          >
+            <div class="chl-marker">
+              <span class="chl-version">{entry.version}</span>
+              <span class="chl-date">{entry.date}</span>
+              <span
+                class="chl-tone"
+                style={'--chl-accent:' + toneColor[entry.tone || 'minor'] + ';'}
+              >
+                {toneLabel[entry.tone || 'minor']}
+              </span>
+            </div>
+            <div class="chl-content">
+              <h2>{entry.title}</h2>
+              <ul>
+                {entry.changes.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var chips = document.querySelectorAll('[data-chl-filter]');
+    var items = document.querySelectorAll('.chl-item');
+    if (!chips.length || !items.length) return;
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var filter = chip.getAttribute('data-chl-filter') || 'all';
+        chips.forEach(function (c) {
+          c.classList.remove('active');
+          c.setAttribute('aria-selected', 'false');
+        });
+        chip.classList.add('active');
+        chip.setAttribute('aria-selected', 'true');
+        var shown = 0;
+        items.forEach(function (it) {
+          var tone = it.getAttribute('data-tone') || '';
+          var match = filter === 'all' || tone === filter;
+          it.classList.toggle('filter-hidden', !match);
+          if (match) shown++;
+        });
+      });
+    });
+  })();
+</script>

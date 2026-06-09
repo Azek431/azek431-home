@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { todayDate, todayWeekday } from '../data/time';
+
+const skills = [
+  { name: 'Astro / Static Site', level: '熟练', pct: 90, color: '#a8c8ff' },
+  { name: 'CSS / 设计系统', level: '熟练', pct: 85, color: '#c4b5fd' },
+  { name: 'TypeScript / JavaScript', level: '扎实', pct: 78, color: '#6ee7b7' },
+  { name: 'Cloudflare 部署 / 运维', level: '入门', pct: 60, color: '#fcd34d' },
+  { name: 'AI 工具 / 提示词工程', level: '探索中', pct: 55, color: '#f9a8d4' },
+];
+
+const focus = [
+  { label: '方向', value: 'Web · AI · Open Source' },
+  { label: '关注', value: '长期维护 / 简洁优先' },
+  { label: '语言', value: '中文 / English' },
+  { label: '地点', value: '线上 · GitHub' },
+];
+
+const focusItems = [
+  {
+    num: '01',
+    title: 'AI 工具与自动化',
+    desc: '提示词写法、Agent 搭建、不同模型能力边界',
+    icon: '🤖',
+  },
+  {
+    num: '02',
+    title: '网站搭建与部署',
+    desc: 'Astro 静态站、Cloudflare Pages 部署、域名管理',
+    icon: '🌐',
+  },
+  {
+    num: '03',
+    title: 'GitHub 项目维护',
+    desc: '开源记录、版本管理、镜像同步、Issue 处理',
+    icon: '📦',
+  },
+  { num: '04', title: '前端细节优化', desc: '交互微动效、排版、配色、可访问性', icon: '✨' },
+];
+---
+
+<BaseLayout title="关于 - Azek431" description="关于 Azek431 的个人介绍、兴趣方向和网站内容定位。">
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于' }]} />
+  <section class="page-hero">
+    <p class="eyebrow">About</p>
+    <h1>关于我</h1>
+    <p class="page-hero-text">
+      你好,我是 Azek431。我喜欢研究 AI、网站搭建、GitHub 项目部署和软件开发。
+      这个网站会记录我的学习过程、项目实践和一些有趣的想法。
+    </p>
+  </section>
+
+  <section class="content-block">
+    <p>
+      这个主站是我整理个人内容和项目入口的起点。它会先保持轻量、简洁和稳定,
+      后续再逐步扩展更多页面和内容。
+    </p>
+
+    <p>
+      我希望这个网站不只是一个静态页面,而是一个长期维护的个人数字空间。
+      它会连接我的项目、学习记录、技术实践和公开链接。
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Now</p>
+      <h2>现在在做的事</h2>
+      <p>当前阶段的关注方向、正在探索的工具和接下来想继续打磨的事。</p>
+    </div>
+
+    <div class="now-grid">
+      <div class="now-card">
+        <span class="now-tag">进行中</span>
+        <h3>打磨个人主站</h3>
+        <p>
+          重构设计系统、加入滚动入场动画、按钮流光、鼠标极光跟随等微交互,
+          让主站既精致又有自己的特色。
+        </p>
+      </div>
+      <div class="now-card">
+        <span class="now-tag accent">探索</span>
+        <h3>AI 工具与自动化</h3>
+        <p>
+          尝试把日常重复工作交给 AI / 自动化流程,研究提示词写法、 小型 agent
+          搭建以及不同模型的能力边界。
+        </p>
+      </div>
+      <div class="now-card">
+        <span class="now-tag warning">规划中</span>
+        <h3>独立博客</h3>
+        <p>准备单独建一个博客仓库,用来沉淀技术文章、学习笔记和长期思考, 之后从主站统一跳转。</p>
+      </div>
+      <div class="now-card">
+        <span class="now-tag success">维护中</span>
+        <h3>项目官网与镜像</h3>
+        <p>
+          持续完善 Azek创游世界资料库官网、个人项目页的版本管理和镜像同步,
+          保证公开仓库的可用性和一致性。
+        </p>
+      </div>
+    </div>
+
+    <div class="about-dashboard">
+      <div class="dash-card dash-card-mood">
+        <h3>今日状态</h3>
+        <div class="mood-row">
+          <span class="mood-emoji" aria-hidden="true">🛠️</span>
+          <div class="mood-text">
+            <span class="mood-title">在细节里反复打磨</span>
+            <span class="mood-sub">{todayDate} · {todayWeekday} · 上海</span>
+          </div>
+        </div>
+        <div class="mood-meter">
+          <div class="mood-meter-row">
+            <span class="mood-meter-label">ENERGY</span>
+            <div class="mood-meter-bar">
+              <div class="mood-meter-fill energy" style="width: 72%"></div>
+            </div>
+            <span class="mood-meter-val">72%</span>
+          </div>
+          <div class="mood-meter-row">
+            <span class="mood-meter-label">FOCUS</span>
+            <div class="mood-meter-bar">
+              <div class="mood-meter-fill focus" style="width: 86%"></div>
+            </div>
+            <span class="mood-meter-val">86%</span>
+          </div>
+          <div class="mood-meter-row">
+            <span class="mood-meter-label">SOCIAL</span>
+            <div class="mood-meter-bar">
+              <div class="mood-meter-fill social" style="width: 38%"></div>
+            </div>
+            <span class="mood-meter-val">38%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3>技术 / 熟练度</h3>
+        <ul class="skill-list">
+          {
+            skills.map((s) => (
+              <li>
+                <div class="skill-meta">
+                  <span class="skill-name">{s.name}</span>
+                  <span class="skill-level">{s.level}</span>
+                </div>
+                <div
+                  class="skill-bar"
+                  style={'--skill-pct:' + s.pct + '%; --skill-color:' + s.color + ';'}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="dash-card">
+        <h3>关注 / 定位</h3>
+        <div class="focus-quad">
+          {
+            focus.map((f) => (
+              <div class="quad-cell">
+                <span class="quad-label">{f.label}</span>
+                <span class="quad-value">{f.value}</span>
+              </div>
+            ))
+          }
+        </div>
+        <p
+          style="margin-top: 14px; font-size: 13.5px; color: var(--muted, #9ca8c2); line-height: 1.7;"
+        >
+          更即时的状态可以看
+          <a
+            href="/now/"
+            style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed currentColor;"
+            >/now</a
+          >
+          页面,会持续更新。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Focus</p>
+      <h2>关注方向</h2>
+      <p>这些是我长期感兴趣、愿意持续投入时间的方向。</p>
+    </div>
+
+    <ul class="focus-grid" aria-label="关注方向">
+      {
+        focusItems.map((f) => (
+          <li class="focus-cell">
+            <span class="focus-icon" aria-hidden="true">
+              {f.icon}
+            </span>
+            <div class="focus-text">
+              <div class="focus-head">
+                <span class="focus-num">{f.num}</span>
+                <span class="focus-title">{f.title}</span>
+              </div>
+              <p class="focus-desc">{f.desc}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

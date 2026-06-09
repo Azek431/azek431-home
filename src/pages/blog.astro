@@ -7,137 +7,138 @@ const plans = [
     num: 1,
     tag: '写作基础',
     title: 'Markdown 工作流 + Git 版本管理',
-    desc: '用 Markdown 写正文,Git 仓库管理多版本草稿,支持本地预览与一键发布。',
-    state: 'in-progress',
+    desc: '用 Markdown 写正文，Git 管理多版本草稿，支持本地预览与一键发布。',
+    state: '进行中',
   },
   {
     num: 2,
     tag: '内容检索',
     title: '标签体系 + 全站搜索',
-    desc: '统一标签分类,接入现有 search 索引,实现跨文章、跨项目的全文检索。',
-    state: 'planning',
+    desc: '统一标签分类，接入现有 search 索引，实现跨文章、跨项目检索。',
+    state: '规划中',
   },
   {
     num: 3,
     tag: '订阅分发',
-    title: 'RSS 全文输出 + OG 卡片',
-    desc: '为每篇文章生成独立 RSS 源和 OG 分享卡,提高订阅和社媒传播效果。',
-    state: 'planning',
+    title: 'RSS 输出 + OG 卡片',
+    desc: '为文章生成订阅源和分享预览，提高阅读和传播体验。',
+    state: '规划中',
   },
   {
     num: 4,
     tag: '阅读体验',
-    title: 'Shiki 代码高亮 + 主题切换',
-    desc: '统一代码块主题,支持亮 / 暗双主题切换,锚点导航 + 阅读进度条。',
-    state: 'planning',
+    title: '代码高亮 + 阅读进度',
+    desc: '统一代码块主题，补充锚点导航、目录和阅读进度。',
+    state: '规划中',
   },
 ];
 
 const drafts = [
   {
-    title: '建站一年记',
-    desc: '回顾从零搭站到现在的迭代节点、技术选型、心路历程。',
+    title: '建站记录',
+    desc: '记录从个人主页到数字中枢的重构过程。',
     tag: '随笔',
-    est: '2026-07',
+    est: '2026 Q3',
   },
   {
     title: 'Azek431 设计系统',
-    desc: '颜色、字体、间距、动效的统一规范,所有页面共享同一套视觉语言。',
+    desc: '整理颜色、字体、间距、卡片和动效规则。',
     tag: '设计',
-    est: '2026-08',
+    est: '2026 Q3',
   },
   {
-    title: 'Astro 6 SEO 实战',
-    desc: '从 sitemap、RSS、OG 到结构化数据,讲清楚每个细节的最佳实践。',
+    title: 'Astro 主站 SEO 实战',
+    desc: '记录 sitemap、RSS、OG、结构化数据和部署细节。',
     tag: '技术',
-    est: '2026-09',
+    est: '2026 Q3',
   },
 ];
 ---
 
-<BaseLayout title="Blog - Azek431" description="博客筹备中,先看看写作计划与草稿列表。">
-  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Blog' }]} />
+<BaseLayout title="Blog · Azek431" description="Azek431 的博客计划、写作方向和草稿列表。">
+  <Breadcrumb items={[{ label: 'Blog', href: '/blog/' }]} />
 
-  <section class="page-hero blog-hero">
-    <p class="eyebrow">Blog</p>
-    <h1>博客筹备中</h1>
-    <p class="page-hero-text">
-      想认真写一些东西——技术随笔、设计笔记、长期思考。 下面是写作计划、标签体系和当前草稿。
-    </p>
-    <div class="blog-meta">
-      <span class="blog-meta-item"><span class="blog-dot tone-in-progress"></span>4 项计划</span>
-      <span class="blog-meta-item"><span class="blog-dot tone-planning"></span>3 篇草稿</span>
-      <span class="blog-meta-item">预计 2026 Q3 上线</span>
+  <section class="page-v2-hero blog-hero-v2">
+    <div>
+      <p class="page-v2-kicker">Blog</p>
+      <h1>博客筹备中</h1>
+      <p>
+        我想认真写一些东西：技术随笔、设计笔记、项目复盘和长期思考。
+        当前先把写作计划、草稿方向和订阅入口整理好。
+      </p>
+    </div>
+
+    <div class="page-v2-stat-grid">
+      <article data-tone="blue">
+        <strong>{plans.length}</strong>
+        <span>建设步骤</span>
+      </article>
+      <article data-tone="green">
+        <strong>{drafts.length}</strong>
+        <span>草稿方向</span>
+      </article>
+      <article data-tone="violet">
+        <strong>RSS</strong>
+        <span>订阅支持</span>
+      </article>
+      <article data-tone="amber">
+        <strong>Q3</strong>
+        <span>预计上线</span>
+      </article>
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Plan</p>
-      <h2>写作计划</h2>
-      <p class="section-sub">分四步把博客体系搭起来,每一步都围绕「更好写、更好读」展开。</p>
+  <section class="section-v2">
+    <div class="section-head-v2">
+      <p>Plan</p>
+      <h2>写作系统会分阶段搭起来</h2>
+      <span>先保证好写、好维护，再慢慢补齐阅读体验和订阅分发。</span>
     </div>
 
-    <ol class="blog-plan">
+    <div class="blog-plan-v2">
       {
-        plans.map((p) => (
-          <li class={'blog-plan-item tone-' + p.state}>
-            <div class="blog-plan-rail">
-              <span class="blog-plan-num">{String(p.num).padStart(2, '0')}</span>
-              <span class="blog-plan-line" />
-            </div>
-            <div class="blog-plan-content">
-              <div class="blog-plan-head">
-                <span class="blog-plan-tag">{p.tag}</span>
-                <span class="blog-plan-state">
-                  {p.state === 'in-progress' ? '进行中' : '规划中'}
-                </span>
-              </div>
-              <h3 class="blog-plan-title">{p.title}</h3>
-              <p class="blog-plan-desc">{p.desc}</p>
-            </div>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Drafts</p>
-      <h2>草稿列表</h2>
-      <p class="section-sub">已经在写、但还没打磨好发布的内容,先列个目录占位。</p>
-    </div>
-
-    <div class="blog-drafts">
-      {
-        drafts.map((d) => (
-          <article class="blog-draft">
-            <header class="blog-draft-head">
-              <span class="blog-draft-tag">{d.tag}</span>
-              <span class="blog-draft-est">预计 {d.est}</span>
-            </header>
-            <h3 class="blog-draft-title">{d.title}</h3>
-            <p class="blog-draft-desc">{d.desc}</p>
-            <div class="blog-draft-foot">
-              <span class="blog-draft-status">
-                <span class="blog-dot tone-in-progress" />
-                撰写中
-              </span>
-              <span class="blog-draft-hint">敬请期待</span>
-            </div>
+        plans.map((plan) => (
+          <article>
+            <span>{String(plan.num).padStart(2, '0')}</span>
+            <p>
+              {plan.tag} · {plan.state}
+            </p>
+            <h3>{plan.title}</h3>
+            <small>{plan.desc}</small>
           </article>
         ))
       }
     </div>
   </section>
 
-  <section class="section">
-    <div class="now-cta">
-      <p class="eyebrow">Stay tuned</p>
-      <h2>想第一时间看到更新?</h2>
-      <p>RSS 已经把现有项目与 Now 同步出去,博客上线后会再加一条专门的 feed。</p>
-      <a class="cta-btn" href="/rss.xml">订阅 RSS</a>
+  <section class="section-v2">
+    <div class="section-head-v2">
+      <p>Drafts</p>
+      <h2>草稿方向</h2>
+      <span>这些内容会先作为方向记录，后续再逐步写成正式文章。</span>
+    </div>
+
+    <div class="draft-grid-v2">
+      {
+        drafts.map((draft) => (
+          <article>
+            <div>
+              <span>{draft.tag}</span>
+              <small>{draft.est}</small>
+            </div>
+            <h3>{draft.title}</h3>
+            <p>{draft.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="about-narrative-v2">
+    <p>博客上线前，RSS 会先同步现有项目、Now 和更新记录。</p>
+    <div>
+      <a class="ui-button ui-button-primary" href="/rss.xml">订阅 RSS</a>
+      <a class="ui-button ui-button-secondary" href="/changelog/">查看更新</a>
     </div>
   </section>
 </BaseLayout>

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteUpdatedDate } from '../data/time';
 
@@ -9,215 +8,111 @@ const stack = [
     group: '框架 / 部署',
     items: [
       {
-        name: 'Astro 6',
-        role: '主站静态站点生成',
-        detail: '6.4.x,组件式开发 + 零 JS 默认,只在需要的页面用 <script is:inline> 注入微交互',
+        name: 'Astro',
+        detail: '静态生成、组件化开发、默认极少运行时 JavaScript。',
       },
       {
         name: 'Cloudflare Pages',
-        role: '托管 + CDN',
-        detail: 'azek431.top 正式访问，Cloudflare Pages 部署，GitHub 推送即触发 build',
+        detail: '负责托管、CDN、自动部署和正式域名访问。',
       },
       {
-        name: 'GitHub + Gitee',
-        role: '代码 / 镜像',
-        detail: '主仓库 GitHub,国内访问通过 Gitee 镜像同步',
+        name: 'GitHub',
+        detail: '代码管理、版本记录和后续 Actions 自动检查。',
       },
     ],
   },
   {
-    group: '样式 / 设计',
+    group: '设计系统',
     items: [
       {
-        name: '原生 CSS + variables',
-        role: 'design tokens',
-        detail: '~74KB global.css,所有颜色 / 阴影 / 缓动走 CSS 变量,后续可平滑换主题',
+        name: 'UI System V2',
+        detail: '统一页面底座、卡片、按钮、背景、光晕和响应式规则。',
       },
       {
-        name: '玻璃质感 + 极光',
-        role: '视觉风格',
-        detail: 'backdrop-filter: blur + body::before / ::after 渐变跟随',
+        name: 'Glass / Dark',
+        detail: '深色玻璃质感，强调层级、聚焦和开发者主站氛围。',
       },
       {
-        name: '微交互',
-        role: '动效',
-        detail: '卡片 3D 倾斜 / 鼠标光晕 / 滚动入场 / 状态呼吸 / 极光漂移 / 滚动进度条',
+        name: 'Reduced Motion',
+        detail: '照顾低性能设备和减少动效偏好的用户。',
       },
     ],
   },
   {
-    group: '工具 / 流程',
+    group: '维护方式',
     items: [
-      { name: 'pnpm', role: '包管理', detail: '节省磁盘 / 安装快 / monorepo 友好' },
-      { name: 'Prettier', role: '格式化', detail: 'prettier + prettier-plugin-astro,统一代码风格' },
-      { name: 'VS Code', role: '主力编辑器', detail: 'Astro / Tailwind IntelliSense 插件' },
+      {
+        name: 'pnpm',
+        detail: '管理依赖和脚本，日常优先轻量检查。',
+      },
+      {
+        name: 'Prettier',
+        detail: '统一格式，减少无意义 diff。',
+      },
+      {
+        name: 'Astro Check',
+        detail: '在提交前检查页面和组件类型问题。',
+      },
     ],
   },
-];
-
-const fonts = [
-  {
-    name: '系统字体栈',
-    role: '正文 / UI',
-    detail: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-  },
-  { name: 'ui-monospace', role: '代码 / 终端', detail: 'SF Mono, Menlo, Consolas, monospace' },
 ];
 
 const principles = [
-  { title: '简洁优先', desc: '少组件,少依赖,长生命周期优先于花哨功能' },
-  { title: '可读性 > 装饰', desc: '文字、间距、对比度是主旋律,动效只做点缀' },
-  { title: '长期维护', desc: '每次提交都考虑一年后回来看是否还能维护' },
-  { title: '公开过程', desc: '把构建过程 / 设计选择 / 内容方向都写在主站上' },
-];
-
-const inspirations = [
-  { name: 'Derek Sivers /now', href: 'https://sive.rs/now' },
-  { name: 'Maggie Appleton', href: 'https://maggieappleton.com' },
-  { name: 'rauchg.com', href: 'https://rauchg.com' },
-  { name: 'Lee Robinson', href: 'https://leerob.io' },
-  { name: 'Astro docs', href: 'https://docs.astro.build' },
+  '先稳定，再好看',
+  '先统一，再扩展',
+  '少依赖，少运行时',
+  '让每一次修改都容易回滚',
 ];
 ---
 
 <BaseLayout
-  title="Colophon - Azek431"
-  description="这个主站的技术栈、设计 token、字体选择和设计原则。"
+  title="Colophon · Azek431"
+  description="Azek431 主站的技术栈、设计系统、部署方式和维护原则。"
 >
-  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Colophon' }]} />
-  <PageHero
-    eyebrow="Colophon"
-    title="致谢与设计"
-    description="这一页讲的是主站本身——用了什么技术、怎么设计、参考了哪些站点。"
-    meta={[
-      { label: '更新', value: siteUpdatedDate },
-      { label: '技术组', value: '3 大组' },
-      { label: '设计原则', value: '4 条' },
-    ]}
-  />
+  <Breadcrumb items={[{ label: 'Colophon', href: '/colophon/' }]} />
 
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Stack</p>
-      <h2>技术栈</h2>
-      <p>当前主站依赖的 3 大块:框架与部署、样式与设计、工具与流程。</p>
+  <section class="page-v2-hero colophon-hero-v2">
+    <div>
+      <p class="page-v2-kicker">Colophon</p>
+      <h1>这个网站如何构建</h1>
+      <p>
+        这里记录主站背后的技术栈、设计系统、部署方式和维护原则。 最近一次构建记录：{
+          siteUpdatedDate
+        }。
+      </p>
     </div>
 
-    <div class="colo-groups">
+    <div class="colophon-principles-v2">
       {
-        stack.map((g) => (
-          <div class="colo-group">
-            <h3 class="colo-group-title">{g.group}</h3>
-            <ul class="colo-list">
-              {g.items.map((it) => (
-                <li class="colo-item">
-                  <div class="colo-item-head">
-                    <span class="colo-item-name">{it.name}</span>
-                    <span class="colo-item-role">{it.role}</span>
-                  </div>
-                  <p class="colo-item-detail">{it.detail}</p>
-                </li>
-              ))}
-            </ul>
+        principles.map((item, index) => (
+          <article>
+            <strong>{String(index + 1).padStart(2, '0')}</strong>
+            <span>{item}</span>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="uses-grid-v2 colophon-stack-v2">
+    {
+      stack.map((group) => (
+        <article>
+          <div>
+            <p>{group.group}</p>
+            <h2>长期维护的一部分</h2>
           </div>
-        ))
-      }
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Type</p>
-      <h2>字体</h2>
-      <p>全部使用系统字体栈,不引入外部 webfont,首屏快且隐私友好。</p>
-    </div>
-
-    <div class="font-list">
-      {
-        fonts.map((f) => (
-          <div class="font-item">
-            <div
-              class="font-preview"
-              style={
-                'font-family:' +
-                (f.name.includes('mono') ? 'ui-monospace, monospace' : 'inherit') +
-                ';'
-              }
-            >
-              {f.name}
-            </div>
-            <div class="font-meta">
-              <span class="font-role">{f.role}</span>
-              <code class="font-stack">{f.detail}</code>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Principles</p>
-      <h2>设计原则</h2>
-      <p>做这个主站时一直记在心里的 4 条原则。</p>
-    </div>
-
-    <div class="principle-grid">
-      {
-        principles.map((p, i) => (
-          <div class="principle-card">
-            <span class="principle-num">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{p.title}</h3>
-            <p>{p.desc}</p>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Inspiration</p>
-      <h2>受影响的站点</h2>
-      <p>以下站点在结构 / 内容 / 风格上给我不少启发。</p>
-    </div>
-
-    <ul class="inspire-list">
-      {
-        inspirations.map((i) => (
-          <li>
-            <a class="inspire-link" href={i.href} target="_blank" rel="noreferrer noopener">
-              <span>{i.name}</span>
-              <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <>
-                  <path d="M7 17 17 7" />
-                  <path d="M8 7h9v9" />
-                </>
-              </svg>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="now-cta">
-      <h3>想看现在在做什么?</h3>
-      <p>/now 页面会持续更新,记录我最近关注的方向、正在做的项目和读到的内容。</p>
-      <div class="actions">
-        <a class="button primary" href="/now/">去 /now 页面</a>
-        <a class="button secondary" href="/uses/">看 /uses 装备</a>
-      </div>
-    </div>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <strong>{item.name}</strong>
+                <span>{item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
   </section>
 </BaseLayout>

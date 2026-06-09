@@ -1,58 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { projectDetails } from '../data/projects';
-
-const recommended = projectDetails.map((p) => ({
-  label: p.title,
-  href: '/projects/' + p.slug + '/',
-  desc: p.description,
-  icon:
-    p.category === 'Website'
-      ? 'W'
-      : p.category === 'Docs'
-        ? 'D'
-        : p.category === 'Blog'
-          ? 'B'
-          : 'A',
-}));
 ---
 
 <BaseLayout
-  title="页面未找到 - Azek431"
-  description="这个页面暂时不存在,你可以返回 Azek431 的个人主站继续浏览。"
+  title="页面未找到 · Azek431"
+  description="这个页面不存在，可以返回首页、项目页或搜索页继续浏览。"
 >
-  <section class="not-found">
-    <p class="eyebrow">404</p>
-    <h1>404</h1>
+  <section class="not-found-v2">
+    <p class="page-v2-kicker">404</p>
+    <h1>页面没有找到</h1>
     <p>
-      你访问的页面可能已经移动、删除,或者暂时还没有创建。<br />
-      可以从下面的入口继续浏览 Azek431 的个人主站。
-    </p>
-    <p class="not-found-hint">
-      <span>~/requested-path</span><span class="cursor"></span>
+      你访问的页面可能已经移动、删除，或者暂时还没有创建。 可以返回首页继续浏览 Azek431 的个人主站。
     </p>
 
-    <div class="not-found-grid">
-      {
-        recommended.map((r) => (
-          <a class="card not-found-card" href={r.href}>
-            <span class="card-icon">→</span>
-            <h3>{r.label}</h3>
-            <p>{r.desc}</p>
-          </a>
-        ))
-      }
-    </div>
-
-    <div class="actions">
-      <a class="button primary" href="/">返回首页</a>
-      <a class="button secondary" href="/projects/">查看项目</a>
+    <div>
+      <a class="ui-button ui-button-primary" href="/">返回首页</a>
+      <a class="ui-button ui-button-secondary" href="/projects/">查看项目</a>
+      <a class="ui-button ui-button-ghost" href="/search/">站内搜索</a>
     </div>
   </section>
-  <script is:inline>
-    (function () {
-      var el = document.querySelector('.not-found-hint span');
-      if (el) el.textContent = '~' + (window.location.pathname || '/');
-    })();
-  </script>
 </BaseLayout>
