@@ -11,128 +11,79 @@ const counts = {
   Update: searchItems.filter((i) => i.category === 'Update').length,
   Changelog: searchItems.filter((i) => i.category === 'Changelog').length,
 };
+
+const categories = ['全部', 'Page', 'Project', 'Link', 'Update', 'Changelog'];
 const serialized = JSON.stringify(searchItems);
 ---
 
-<BaseLayout title="Search - Azek431" description="站内搜索,跨页面、项目、链接、内容索引。">
-  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Search' }]} />
+<BaseLayout title="搜索 · Azek431" description="跨页面、项目、链接、更新日志的站内搜索。">
+  <Breadcrumb items={[{ label: '搜索', href: '/search/' }]} />
 
-  <section class="page-hero search-hero">
-    <p class="eyebrow">Search</p>
-    <h1>站内搜索</h1>
-    <p class="page-hero-text">
-      跨 {counts.total} 条内容索引——页面、项目、链接、更新日志。 在下面输入关键词,实时筛选,按回车跳转到第一项。
-    </p>
+  <section class="page-v2-hero search-hero-v2">
+    <div>
+      <p class="page-v2-kicker">Command Search</p>
+      <h1>站内搜索</h1>
+      <p>
+        跨 {counts.total} 条内容索引搜索页面、项目、链接和更新记录。 输入关键词即可实时筛选，按回车可以打开第一条结果。
+      </p>
+    </div>
+
+    <div class="search-console-v2" role="search">
+      <label for="site-search">搜索关键词</label>
+      <div>
+        <span>/</span>
+        <input
+          id="site-search"
+          type="search"
+          placeholder="搜索项目、链接、页面、更新..."
+          autocomplete="off"
+          data-search-input
+        />
+      </div>
+    </div>
   </section>
 
-  <section class="section">
-    <div class="search-bar">
-      <svg
-        class="search-icon"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
-      </svg>
-      <input
-        type="search"
-        id="searchInput"
-        class="search-input"
-        placeholder="试试输入:项目、RSS、colophon、Azek431..."
-        autocomplete="off"
-        autofocus
-        aria-label="搜索关键词"
-      />
-      <kbd class="search-kbd">/</kbd>
-    </div>
+  <section class="search-filter-v2" aria-label="搜索分类">
+    {
+      categories.map((category, index) => (
+        <button
+          type="button"
+          data-search-category={category}
+          aria-pressed={index === 0 ? 'true' : 'false'}
+        >
+          <span>{category}</span>
+          <strong>
+            {category === '全部' ? counts.total : counts[category as keyof typeof counts]}
+          </strong>
+        </button>
+      ))
+    }
+  </section>
 
-    <div class="search-filters" role="tablist" aria-label="按分类筛选">
-      <button
-        type="button"
-        class="filter-chip active"
-        data-cat="all"
-        role="tab"
-        aria-selected="true">全部 ({counts.total})</button
-      >
-      <button type="button" class="filter-chip" data-cat="Page" role="tab" aria-selected="false"
-        >页面 ({counts.Page})</button
-      >
-      <button type="button" class="filter-chip" data-cat="Project" role="tab" aria-selected="false"
-        >项目 ({counts.Project})</button
-      >
-      <button type="button" class="filter-chip" data-cat="Link" role="tab" aria-selected="false"
-        >链接 ({counts.Link})</button
-      >
-      <button type="button" class="filter-chip" data-cat="Update" role="tab" aria-selected="false"
-        >更新 ({counts.Update})</button
-      >
-      <button
-        type="button"
-        class="filter-chip"
-        data-cat="Changelog"
-        role="tab"
-        aria-selected="false">日志 ({counts.Changelog})</button
-      >
-    </div>
+  <section class="search-results-v2" aria-live="polite">
+    <p class="search-hint-v2" data-search-hint>输入关键词开始搜索，也可以直接点击分类查看索引。</p>
 
-    <p class="search-status" data-search-status>输入关键词开始搜索。</p>
-
-    <ol class="search-results" data-search-results aria-label="搜索结果">
+    <ol data-search-results>
       {
-        searchItems.slice(0, 30).map((it) => (
-          <li
-            class="search-item"
-            data-cat={it.category}
-            data-text={(it.title + ' ' + it.desc + ' ' + (it.tags || []).join(' ')).toLowerCase()}
-          >
-            <a class="search-link" href={it.href}>
-              <span class="search-cat">{it.category}</span>
-              <span class="search-title">{it.title}</span>
-              <span class="search-desc">{it.desc}</span>
-              {it.tags && it.tags.length > 0 && (
-                <span class="search-tags">
-                  {it.tags.slice(0, 4).map((t) => (
-                    <span class="search-tag">#{t}</span>
-                  ))}
-                </span>
-              )}
-              <svg
-                class="search-arrow"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <>
-                  <path d="M5 12h14" />
-                  <path d="m13 5 7 7-7 7" />
-                </>
-              </svg>
+        searchItems.slice(0, 30).map((item) => (
+          <li data-search-static>
+            <a href={item.href}>
+              <span>{item.category}</span>
+              <strong>{item.title}</strong>
+              <small>{item.desc}</small>
             </a>
           </li>
         ))
       }
     </ol>
 
-    <div class="search-empty" data-search-empty hidden>
-      <p class="search-empty-title">没有匹配的结果</p>
-      <p class="search-empty-desc">试试调整关键词,或清空筛选条件,也可以直接浏览:</p>
-      <div class="search-empty-suggest">
-        <a class="search-empty-pill" href="/projects/">所有项目</a>
-        <a class="search-empty-pill" href="/links/">链接集合</a>
-        <a class="search-empty-pill" href="/changelog/">更新日志</a>
-        <a class="search-empty-pill" href="/blog/">博客筹备</a>
-        <button type="button" class="search-empty-pill search-empty-reset" data-search-reset
-          >清空筛选</button
-        >
+    <div class="search-empty-v2" data-search-empty hidden>
+      <h2>没有匹配的结果</h2>
+      <p>试试换一个关键词，或直接查看项目、链接和更新日志。</p>
+      <div>
+        <a class="ui-button ui-button-secondary" href="/projects/">所有项目</a>
+        <a class="ui-button ui-button-secondary" href="/links/">链接集合</a>
+        <a class="ui-button ui-button-secondary" href="/changelog/">更新日志</a>
       </div>
     </div>
   </section>
@@ -141,110 +92,111 @@ const serialized = JSON.stringify(searchItems);
 <script is:inline define:vars={{ serialized }}>
   (function () {
     var items = JSON.parse(serialized);
-    var input = document.getElementById('searchInput');
-    var dom = document.querySelectorAll('.search-item');
-    var chips = document.querySelectorAll('.search-filters [data-cat]');
-    var status = document.querySelector('[data-search-status]');
-    var currentCat = 'all';
-    var currentQuery = '';
+    var input = document.querySelector('[data-search-input]');
+    var results = document.querySelector('[data-search-results]');
+    var empty = document.querySelector('[data-search-empty]');
+    var hint = document.querySelector('[data-search-hint]');
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-search-category]'));
 
-    function applyFilter() {
-      var q = currentQuery.toLowerCase().trim();
-      var visible = 0;
-      dom.forEach(function (el) {
-        var cat = el.getAttribute('data-cat');
-        var text = el.getAttribute('data-text') || '';
-        var catMatch = currentCat === 'all' || cat === currentCat;
-        var textMatch = !q || text.indexOf(q) >= 0;
-        var ok = catMatch && textMatch;
-        el.classList.toggle('filter-hidden', !ok);
-        if (ok) visible++;
-      });
-      var empty = document.querySelector('[data-search-empty]');
-      var list = document.querySelector('[data-search-results]');
-      if (empty && list) {
-        if (visible === 0) {
-          empty.hidden = false;
-          list.hidden = true;
-        } else {
-          empty.hidden = true;
-          list.hidden = false;
-        }
-      }
-      if (status) {
-        if (!q && currentCat === 'all') {
-          status.textContent = '显示前 30 条,共 ' + items.length + ' 条。输入关键词开始搜索。';
-        } else {
-          var parts = [];
-          if (q) parts.push('关键词 "' + currentQuery + '"');
-          if (currentCat !== 'all') parts.push('分类 ' + currentCat);
-          status.textContent =
-            '找到 ' + visible + ' 条结果' + (parts.length ? ' · ' + parts.join(' · ') : '');
-        }
-      }
-    }
+    if (!input || !results) return;
 
-    if (input) {
-      input.addEventListener('input', function () {
-        currentQuery = input.value;
-        applyFilter();
-      });
-      input.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          var first = document.querySelector('.search-item:not(.filter-hidden) .search-link');
-          if (first) window.location.href = first.getAttribute('href');
-        }
-      });
-    }
+    var activeCategory = '全部';
 
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        currentCat = chip.getAttribute('data-cat') || 'all';
-        chips.forEach(function (c) {
-          c.classList.remove('active');
-          c.setAttribute('aria-selected', 'false');
+    var normalize = function (value) {
+      return String(value || '')
+        .toLowerCase()
+        .trim();
+    };
+
+    var scoreItem = function (item, query) {
+      if (!query) return 1;
+
+      var title = normalize(item.title);
+      var desc = normalize(item.desc);
+      var href = normalize(item.href);
+      var tags = normalize((item.tags || []).join(' '));
+
+      if (title === query) return 100;
+      if (title.indexOf(query) >= 0) return 80;
+      if (tags.indexOf(query) >= 0) return 62;
+      if (desc.indexOf(query) >= 0) return 42;
+      if (href.indexOf(query) >= 0) return 24;
+
+      return 0;
+    };
+
+    var render = function () {
+      var query = normalize(input.value);
+
+      var matched = items
+        .map(function (item) {
+          return {
+            item: item,
+            score: scoreItem(item, query),
+          };
+        })
+        .filter(function (entry) {
+          var categoryMatch = activeCategory === '全部' || entry.item.category === activeCategory;
+          return categoryMatch && entry.score > 0;
+        })
+        .sort(function (a, b) {
+          return b.score - a.score;
+        })
+        .slice(0, 40);
+
+      results.innerHTML = matched
+        .map(function (entry) {
+          var item = entry.item;
+          var tags = (item.tags || [])
+            .slice(0, 4)
+            .map(function (tag) {
+              return '<em>#' + tag + '</em>';
+            })
+            .join('');
+
+          return (
+            '<li><a href="' +
+            item.href +
+            '"><span>' +
+            item.category +
+            '</span><strong>' +
+            item.title +
+            '</strong><small>' +
+            item.desc +
+            '</small><div>' +
+            tags +
+            '</div></a></li>'
+          );
+        })
+        .join('');
+
+      if (hint) hint.hidden = query.length > 0 || activeCategory !== '全部';
+      if (empty) empty.hidden = matched.length !== 0;
+    };
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        activeCategory = button.getAttribute('data-search-category') || '全部';
+
+        buttons.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', btn === button ? 'true' : 'false');
         });
-        chip.classList.add('active');
-        chip.setAttribute('aria-selected', 'true');
-        applyFilter();
+
+        render();
       });
     });
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== '/') return;
-      var active = document.activeElement;
-      if (
-        active &&
-        (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)
-      )
-        return;
-      if (input) {
-        e.preventDefault();
-        input.focus();
+    input.addEventListener('input', render);
+
+    input.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter') return;
+      var first = results.querySelector('a');
+      if (first) {
+        event.preventDefault();
+        first.click();
       }
     });
 
-    var resetBtn = document.querySelector('[data-search-reset]');
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        if (input) input.value = '';
-        currentQuery = '';
-        currentCat = 'all';
-        chips.forEach(function (c) {
-          c.classList.remove('active');
-          c.setAttribute('aria-selected', 'false');
-        });
-        var allChip = document.querySelector('.filter-chip[data-cat="all"]');
-        if (allChip) {
-          allChip.classList.add('active');
-          allChip.setAttribute('aria-selected', 'true');
-        }
-        if (input) input.focus();
-        applyFilter();
-      });
-    }
-
-    applyFilter();
+    render();
   })();
 </script>

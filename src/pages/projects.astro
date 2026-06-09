@@ -1,100 +1,93 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import NavCard from '../components/NavCard.astro';
 import { projects } from '../data/site';
 
 const liveCount = projects.filter((p) => p.status === '已上线').length;
 const wipCount = projects.filter((p) => p.status === '维护中' || p.status === '计划中').length;
 const ideaCount = projects.filter((p) => p.status === '构想中').length;
 
-function withDetail(
-  links: { label: string; href: string; primary?: boolean }[] | undefined,
-  slug: string | undefined,
-) {
-  const base = (links || []).slice();
-  if (slug) {
-    base.push({ label: '项目详情', href: '/projects/' + slug + '/' });
-  }
-  return base;
+const stats = [
+  { label: '已上线', value: liveCount, tone: 'green' },
+  { label: '进行中', value: wipCount, tone: 'blue' },
+  { label: '构想中', value: ideaCount, tone: 'violet' },
+  { label: '总项目', value: projects.length, tone: 'amber' },
+];
+
+function projectHref(project: (typeof projects)[number]) {
+  return `/projects/${project.slug}/`;
 }
 ---
 
-<BaseLayout title="项目 - Azek431" description="Azek431 的项目展示与项目导航入口。">
-  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '项目' }]} />
-  <section class="page-hero">
-    <p class="eyebrow">Showcase</p>
-    <h1>当前项目</h1>
-    <p class="page-hero-text">这里会手动整理我的网站、仓库、博客计划、AI 实验和其他技术实践。</p>
-  </section>
+<BaseLayout title="项目 · Azek431" description="Azek431 的项目展示、网站入口、实验记录和后续计划。">
+  <Breadcrumb items={[{ label: '项目', href: '/projects/' }]} />
 
-  <section class="section">
-    <div class="project-summary">
-      <div class="summary-item">
-        <strong>{liveCount}</strong>
-        <span>已上线</span>
-      </div>
-      <div class="summary-item">
-        <strong>{wipCount}</strong>
-        <span>进行中</span>
-      </div>
-      <div class="summary-item">
-        <strong>{ideaCount}</strong>
-        <span>构想中</span>
-      </div>
-      <div class="summary-item">
-        <strong>{projects.length}</strong>
-        <span>总项目</span>
-      </div>
-    </div>
-
-    <div class="section-heading">
-      <p class="eyebrow">Project Index</p>
-      <h2>项目入口</h2>
+  <section class="page-v2-hero project-hero-v2">
+    <div>
+      <p class="page-v2-kicker">Project Showcase</p>
+      <h1>项目展示台</h1>
       <p>
-        这里的项目由我手动维护。已上线的项目会提供访问入口,计划中的项目会先作为后续方向记录下来。
+        这里集中整理我的个人主站、文档站、博客计划、AI 实验和后续技术实践。
+        已上线项目会提供访问入口，计划中项目会作为长期方向持续记录。
       </p>
     </div>
 
-    <div class="content-grid cards-3">
+    <div class="page-v2-stat-grid">
       {
-        projects.map((project) => (
-          <NavCard
-            title={project.name}
-            description={project.description}
-            href={project.href}
-            status={project.status}
-            statusTone={
-              project.status === '已上线'
-                ? 'success'
-                : project.status === '维护中'
-                  ? 'warning'
-                  : 'muted'
-            }
-            category={project.category}
-            icon={
-              project.category === 'Website'
-                ? 'W'
-                : project.category === 'Docs'
-                  ? 'D'
-                  : project.category === 'Blog'
-                    ? 'B'
-                    : 'A'
-            }
-            iconTone={
-              project.status === '已上线'
-                ? 'success'
-                : project.category === 'Blog'
-                  ? 'accent'
-                  : 'primary'
-            }
-            tags={project.tags}
-            links={withDetail(project.links, project.slug)}
-            lastUpdated={project.lastUpdated}
-            accent={project.accent}
-          />
+        stats.map((stat) => (
+          <article data-tone={stat.tone}>
+            <strong>{stat.value}</strong>
+            <span>{stat.label}</span>
+          </article>
         ))
       }
     </div>
+  </section>
+
+  <section class="project-lab-v2" aria-label="项目列表">
+    {
+      projects.map((project, index) => (
+        <article
+          class="project-lab-card"
+          style={`--project-accent: ${project.accent}; --project-index: ${index + 1};`}
+        >
+          <div class="project-lab-card-head">
+            <p>{project.category}</p>
+            <span>{project.status}</span>
+          </div>
+
+          <h2>{project.name}</h2>
+          <p class="project-lab-desc">{project.description}</p>
+
+          <ul class="project-lab-tags">
+            {project.tags.slice(0, 6).map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+
+          <div class="project-lab-meta">
+            <span>更新于 {project.lastUpdated}</span>
+            <span>#{String(index + 1).padStart(2, '0')}</span>
+          </div>
+
+          <div class="project-lab-actions">
+            <a class="ui-button ui-button-primary" href={projectHref(project)}>
+              查看详情
+            </a>
+
+            {project.links?.slice(0, 2).map((link) => (
+              <a
+                class="ui-button ui-button-ghost"
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </article>
+      ))
+    }
   </section>
 </BaseLayout>

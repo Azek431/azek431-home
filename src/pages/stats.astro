@@ -1,188 +1,181 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
 import { projectDetails } from '../data/projects';
-import { links, sitePages, recentUpdates } from '../data/site';
+import { links, recentUpdates, sitePages } from '../data/site';
 import {
   getSiteAge,
   siteStartedDateTime,
   siteStartedHash,
-  siteUpdatedDate,
   siteUpdatedDateTime,
   siteUpdatedHash,
 } from '../data/time';
 
 const liveProjects = projectDetails.filter((p) => p.status === '已上线').length;
 const planProjects = projectDetails.filter((p) => p.status !== '已上线').length;
-const majorReleases = changelog.filter((e) => e.tone === 'major').length;
-const minorReleases = changelog.filter((e) => e.tone === 'minor').length;
-const patchReleases = changelog.filter((e) => e.tone === 'patch').length;
-const totalChanges = changelog.reduce((acc, e) => acc + e.changes.length, 0);
-const totalTags = projectDetails.reduce((acc, p) => acc + (p.tags?.length || 0), 0);
-const totalFeatures = projectDetails.reduce((acc, p) => acc + (p.features?.length || 0), 0);
-
+const totalChanges = changelog.reduce((acc, item) => acc + item.changes.length, 0);
+const totalTags = projectDetails.reduce((acc, item) => acc + (item.tags?.length || 0), 0);
 const siteAge = getSiteAge();
 const pageCount = sitePages.length + projectDetails.length + 1;
 
-const sections = [
+const overview = [
+  { label: '站内页面', value: pageCount, suffix: ' 个', tone: 'blue' },
+  { label: '项目记录', value: projectDetails.length, suffix: ' 个', tone: 'green' },
+  { label: '公开链接', value: links.length, suffix: ' 个', tone: 'violet' },
+  { label: '更新版本', value: changelog.length, suffix: ' 个', tone: 'amber' },
+];
+
+const groups = [
   {
     title: '项目',
+    desc: '项目数量、状态和内容结构。',
     metrics: [
-      { label: '总项目数', value: projectDetails.length, suffix: '个', tone: 'primary' },
-      { label: '已上线', value: liveProjects, suffix: '个', tone: 'success' },
-      { label: '规划 / 实验', value: planProjects, suffix: '个', tone: 'accent' },
-      { label: '总标签数', value: totalTags, suffix: '个', tone: 'primary' },
-      { label: '特性条目', value: totalFeatures, suffix: '条', tone: 'primary' },
+      { label: '已上线', value: liveProjects, suffix: ' 个' },
+      { label: '规划 / 实验', value: planProjects, suffix: ' 个' },
+      { label: '项目标签', value: totalTags, suffix: ' 个' },
     ],
   },
   {
     title: '迭代',
+    desc: '更新日志和版本变更记录。',
     metrics: [
-      { label: '总版本', value: changelog.length, suffix: '个', tone: 'primary' },
-      { label: '大版本', value: majorReleases, suffix: '次', tone: 'success' },
-      { label: '小版本', value: minorReleases, suffix: '次', tone: 'accent' },
-      { label: '补丁', value: patchReleases, suffix: '次', tone: 'muted' },
-      { label: '总改动', value: totalChanges, suffix: '条', tone: 'primary' },
+      { label: '版本记录', value: changelog.length, suffix: ' 个' },
+      { label: '总改动', value: totalChanges, suffix: ' 条' },
+      { label: '最近更新', value: recentUpdates.length, suffix: ' 条' },
     ],
   },
   {
     title: '时间',
+    desc: '建站时间和当前站点年龄。',
     metrics: [
-      { label: '建站于', value: siteStartedDateTime, tone: 'muted' },
-      { label: '完整天数', value: siteAge.days, suffix: ' 天', tone: 'primary' },
-      { label: '不足一天', value: siteAge.hours, suffix: ' 小时', tone: 'primary' },
-      { label: '不足一小时', value: siteAge.minutes, suffix: ' 分钟', tone: 'primary' },
-      { label: '约合', value: siteAge.weeks, suffix: ' 周', tone: 'accent' },
-      { label: '约合', value: siteAge.months, suffix: ' 个月', tone: 'success' },
-      { label: '下次更新', value: '随时', tone: 'muted' },
+      { label: '完整天数', value: siteAge.days, suffix: ' 天' },
+      { label: '约合周数', value: siteAge.weeks, suffix: ' 周' },
+      { label: '约合月份', value: siteAge.months, suffix: ' 个月' },
     ],
   },
   {
-    title: '内容',
+    title: '构建',
+    desc: '构建时间和提交信息。',
     metrics: [
-      { label: '最近更新条目', value: recentUpdates.length, suffix: ' 条', tone: 'primary' },
-      { label: '公开链接', value: links.length, suffix: ' 个', tone: 'accent' },
-      { label: '站内页面', value: pageCount, suffix: ' 个', tone: 'success' },
-      { label: '订阅源', value: 'RSS', tone: 'muted' },
-      { label: '站点地图', value: 'XML', tone: 'muted' },
-      { label: '首个提交', value: siteStartedHash, tone: 'muted' },
-      { label: '构建提交', value: siteUpdatedHash, tone: 'muted' },
-      { label: '最近构建时间', value: siteUpdatedDateTime, tone: 'muted' },
+      { label: '首个提交', value: siteStartedHash },
+      { label: '构建提交', value: siteUpdatedHash },
+      { label: '订阅源', value: 'RSS' },
     ],
   },
 ];
-
-const toneColor: Record<string, string> = {
-  primary: '#a8c8ff',
-  success: '#6ee7b7',
-  accent: '#c4b5fd',
-  muted: '#c4cee0',
-};
 ---
 
-<BaseLayout title="Stats - Azek431" description="主站的简单数据和指标。">
-  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Stats' }]} />
+<BaseLayout title="统计 · Azek431" description="Azek431 个人主站的项目、内容、时间和本地访问统计。">
+  <Breadcrumb items={[{ label: '统计', href: '/stats/' }]} />
 
-  <PageHero
-    eyebrow="Stats"
-    title="主站数据"
-    description="这一页用最简单的数字展示主站的「形状」——项目、迭代、时间、内容四个维度。数字不一定代表什么,只是为了「在维护」这件事有可触摸的痕迹。"
-    meta={[
-      { label: '项目', value: projectDetails.length + ' 个' },
-      { label: '迭代', value: changelog.length + ' 版' },
-      { label: '链接', value: links.length + ' 条' },
-      { label: '最近', value: siteUpdatedDate },
-    ]}
-  />
+  <section class="page-v2-hero stats-hero-v2">
+    <div>
+      <p class="page-v2-kicker">Site Dashboard</p>
+      <h1>主站数据</h1>
+      <p>
+        这里记录主站的页面、项目、链接、更新日志和构建信息。
+        部分数据来自静态构建，部分访问数据只保存在当前浏览器。
+      </p>
+    </div>
 
-  {
-    sections.map((s) => (
-      <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow">{s.title}</p>
-          <h2>{s.title}</h2>
-        </div>
-        <div class="stats-grid">
-          {s.metrics.map((m) => (
-            <div class="stat-card" style={'--stat-accent:' + toneColor[m.tone || 'primary'] + ';'}>
-              <span class="stat-value">
-                {m.value}
-                {m.suffix || ''}
-              </span>
-              <span class="stat-label">{m.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-    ))
-  }
-
-  <section class="section">
-    <div class="now-cta">
-      <h3>数字会变,主站会继续</h3>
-      <p>所有数据在 build 时计算,不会实时更新;真正的"运行中"状态以最近一次构建和公开提交为准。</p>
-      <div class="actions">
-        <a class="button primary" href="/changelog/">看更新日志</a>
-        <a class="button secondary" href="/rss.xml" target="_blank" rel="noreferrer noopener"
-          >订阅 RSS</a
-        >
-      </div>
+    <div class="stats-build-card">
+      <span>Started</span>
+      <strong>{siteStartedDateTime}</strong>
+      <span>Last build</span>
+      <strong>{siteUpdatedDateTime}</strong>
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <p class="eyebrow">Live</p>
-      <h2>实时</h2>
-      <p>这部分数据由浏览器 localStorage 记录,只在你自己的设备上累计。</p>
+  <section class="stats-overview-v2" aria-label="站点总览">
+    {
+      overview.map((item) => (
+        <article data-tone={item.tone}>
+          <strong>
+            {item.value}
+            {item.suffix}
+          </strong>
+          <span>{item.label}</span>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="stats-grid-v2" aria-label="详细统计">
+    {
+      groups.map((group) => (
+        <article>
+          <div>
+            <p>{group.title}</p>
+            <h2>{group.desc}</h2>
+          </div>
+
+          <dl>
+            {group.metrics.map((metric) => (
+              <div>
+                <dt>{metric.label}</dt>
+                <dd>
+                  {metric.value}
+                  {metric.suffix || ''}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="local-stats-v2" aria-label="本地访问统计">
+    <div>
+      <p>Local</p>
+      <h2>本设备访问记录</h2>
+      <span> 这部分由浏览器 localStorage 记录，只在你自己的设备上累计。 </span>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card" style="--stat-accent: #6ee7b7;" data-visit-card>
-        <span class="stat-value" data-visit-count>—</span>
-        <span class="stat-label">本次会话访问</span>
-      </div>
-      <div class="stat-card" style="--stat-accent: #a8c8ff;" data-session-card>
-        <span class="stat-value" data-session-count>—</span>
-        <span class="stat-label">累计访问</span>
-      </div>
-      <div class="stat-card" style="--stat-accent: #c4b5fd;" data-first-card>
-        <span class="stat-value" data-first-date>—</span>
-        <span class="stat-label">首次访问</span>
-      </div>
+
+    <div class="local-stats-grid-v2">
+      <article>
+        <strong data-session-count>—</strong>
+        <span>本次会话访问</span>
+      </article>
+      <article>
+        <strong data-total-count>—</strong>
+        <span>累计访问</span>
+      </article>
+      <article>
+        <strong data-first-visit>—</strong>
+        <span>首次访问</span>
+      </article>
     </div>
   </section>
 </BaseLayout>
 
 <script is:inline>
   (function () {
-    var key = 'azek431-visit';
-    var today = new Date().toISOString().slice(0, 10);
-    var data;
-    try {
-      data = JSON.parse(localStorage.getItem(key) || '{}');
-    } catch (e) {
-      data = {};
-    }
-    if (data.date !== today) {
-      data.date = today;
-      data.todayCount = 1;
-    } else {
-      data.todayCount = (data.todayCount || 0) + 1;
-    }
-    data.totalCount = (data.totalCount || 0) + 1;
-    if (!data.firstDate) data.firstDate = today;
-    try {
-      localStorage.setItem(key, JSON.stringify(data));
-    } catch (e) {}
+    var sessionEl = document.querySelector('[data-session-count]');
+    var totalEl = document.querySelector('[data-total-count]');
+    var firstEl = document.querySelector('[data-first-visit]');
 
-    function set(sel, val) {
-      var el = document.querySelector(sel);
-      if (el) el.textContent = val;
+    if (!sessionEl || !totalEl || !firstEl) return;
+
+    var sessionKey = 'azek431-session-count';
+    var totalKey = 'azek431-total-count';
+    var firstKey = 'azek431-first-visit';
+
+    var session = Number(sessionStorage.getItem(sessionKey) || '0') + 1;
+    var total = Number(localStorage.getItem(totalKey) || '0') + 1;
+    var first = localStorage.getItem(firstKey);
+
+    if (!first) {
+      first = new Date().toLocaleString('zh-CN');
+      localStorage.setItem(firstKey, first);
     }
-    set('[data-visit-count]', String(data.todayCount));
-    set('[data-session-count]', String(data.totalCount));
-    set('[data-first-date]', data.firstDate);
+
+    sessionStorage.setItem(sessionKey, String(session));
+    localStorage.setItem(totalKey, String(total));
+
+    sessionEl.textContent = String(session);
+    totalEl.textContent = String(total);
+    firstEl.textContent = first;
   })();
 </script>
