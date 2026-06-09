@@ -132,7 +132,7 @@ export function getSiteAge(now = new Date()) {
   const months = Math.max(0, (current.year - start.year) * 12 + current.month - start.month);
 
   const label = `${days} 天 ${hours} 小时`;
-  const preciseLabel = `${days} 天 ${hours} 小时 ${minutes} 分钟`;
+  const preciseLabel = `${days} 天 ${hours} 小时 ${minutes} 分 ${seconds} 秒`;
 
   return {
     days,
