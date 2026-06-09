@@ -3896,8 +3896,12 @@ html.is-page-ready body {
   height: 100%;
   transform: scaleX(0);
   transform-origin: left center;
-  background:
-    linear-gradient(90deg, rgba(125, 211, 252, 0.95), rgba(196, 181, 253, 0.88), rgba(110, 231, 183, 0.8));
+  background: linear-gradient(
+    90deg,
+    rgba(125, 211, 252, 0.95),
+    rgba(196, 181, 253, 0.88),
+    rgba(110, 231, 183, 0.8)
+  );
   box-shadow:
     0 0 18px rgba(125, 211, 252, 0.5),
     0 0 42px rgba(196, 181, 253, 0.24);
@@ -4001,8 +4005,12 @@ html.is-page-ready body {
   width: min(320px, 52vw);
   height: 1px;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(125, 211, 252, 0.36), rgba(196, 181, 253, 0.18), transparent);
+  background: linear-gradient(
+    90deg,
+    rgba(125, 211, 252, 0.36),
+    rgba(196, 181, 253, 0.18),
+    transparent
+  );
   box-shadow: 0 0 16px rgba(125, 211, 252, 0.16);
 }
 
@@ -4055,8 +4063,16 @@ html.is-page-ready body {
 .feature-grid-v2 article,
 .footer-shell {
   background-image:
-    radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.18), transparent 16%),
-    radial-gradient(circle at calc(var(--mx, 50%) + 90px) calc(var(--my, 0%) + 90px), rgba(125, 211, 252, 0.12), transparent 32%),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(255, 255, 255, 0.18),
+      transparent 16%
+    ),
+    radial-gradient(
+      circle at calc(var(--mx, 50%) + 90px) calc(var(--my, 0%) + 90px),
+      rgba(125, 211, 252, 0.12),
+      transparent 32%
+    ),
     linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.026)),
     repeating-linear-gradient(
       135deg,
