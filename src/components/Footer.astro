@@ -1,123 +1,149 @@
 ---
+import RuntimeCounter from './RuntimeCounter.astro';
 import { siteConfig } from '../data/site';
 import { getSiteAge, siteStartedAtIso, siteStartedDateTime } from '../data/time';
 
 const year = new Date().getFullYear();
 const siteAge = getSiteAge();
+
+const footerLinks = [
+  { label: '首页', href: '/' },
+  { label: '项目', href: '/projects/' },
+  { label: '链接', href: '/links/' },
+  { label: 'RSS', href: '/rss.xml' },
+  { label: 'Sitemap', href: '/sitemap.xml' },
+  { label: 'GitHub', href: siteConfig.github },
+];
+
+const shortcuts = [
+  ['g h', '首页'],
+  ['g a', '关于'],
+  ['g p', '项目'],
+  ['g l', '链接'],
+  ['g n', 'Now'],
+  ['g u', 'Uses'],
+  ['g c', 'Colophon'],
+  ['g k', 'Changelog'],
+  ['g s', 'Stats'],
+  ['g b', 'Blog'],
+  ['/', '站内搜索'],
+  ['t', '切换明 / 暗主题'],
+  ['r', '随机打开一个项目'],
+  ['esc', '关闭这个面板'],
+  ['?', '显示 / 隐藏这个面板'],
+];
 ---
 
-<footer class="footer">
-  <div class="footer-meta">
-    <p class="footer-line">
-      © {year}
-      {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.
-    </p>
-    <p class="footer-line footer-sub">
-      <span
-        >建站于 {siteStartedDateTime} · 已运行 <span
-          class="footer-runtime"
-          data-runtime
-          data-started-at={siteStartedAtIso}
-          aria-live="off">{siteAge.preciseLabel}</span
-        ></span
-      >
-      <span class="dot-sep" aria-hidden="true">·</span>
-      <a href="/rss.xml" target="_blank" rel="noreferrer noopener" class="footer-rss">RSS</a>
-      <span class="dot-sep" aria-hidden="true">·</span>
-      <a href="/sitemap.xml" target="_blank" rel="noreferrer noopener">Sitemap</a>
-    </p>
-  </div>
-  <div class="footer-links">
-    <a href="/">首页</a>
-    <a href="/projects/">项目</a>
-    <a href={siteConfig.github} target="_blank" rel="noreferrer noopener">GitHub</a>
-    <button type="button" class="shortcut-trigger" data-shortcut-toggle aria-label="键盘快捷键提示">
-      <kbd>?</kbd>
-    </button>
-  </div>
-</footer>
-<div class="shortcut-hint" role="dialog" aria-label="键盘快捷键" aria-hidden="true">
-  <div class="shortcut-hint-card">
-    <div class="shortcut-hint-head">
-      <h3>键盘快捷键</h3>
-      <button type="button" class="shortcut-hint-close" aria-label="关闭">×</button>
+<footer class="site-footer" aria-labelledby="footer-title">
+  <div class="footer-shell">
+    <div class="footer-brand">
+      <p class="footer-kicker">Azek431 Digital Nexus</p>
+      <h2 id="footer-title">{siteConfig.name}</h2>
+      <p>
+        © {year}
+        {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.
+      </p>
+      <p class="footer-runtime-line">
+        建站于 {siteStartedDateTime} · 已运行
+        <RuntimeCounter
+          startedAt={siteStartedAtIso}
+          fallback={siteAge.preciseLabel}
+          className="footer-runtime"
+        />
+      </p>
     </div>
-    <ul>
-      <li><kbd>g</kbd><kbd>h</kbd><span>首页</span></li>
-      <li><kbd>g</kbd><kbd>a</kbd><span>关于</span></li>
-      <li><kbd>g</kbd><kbd>p</kbd><span>项目</span></li>
-      <li><kbd>g</kbd><kbd>l</kbd><span>链接</span></li>
-      <li><kbd>g</kbd><kbd>n</kbd><span>Now</span></li>
-      <li><kbd>g</kbd><kbd>u</kbd><span>Uses</span></li>
-      <li><kbd>g</kbd><kbd>c</kbd><span>Colophon</span></li>
-      <li><kbd>g</kbd><kbd>k</kbd><span>Changelog</span></li>
-      <li><kbd>g</kbd><kbd>s</kbd><span>Stats</span></li>
-      <li><kbd>g</kbd><kbd>b</kbd><span>Blog</span></li>
-      <li><kbd>/</kbd><span>站内搜索</span></li>
-      <li><kbd>t</kbd><span>切换明 / 暗主题</span></li>
-      <li><kbd>r</kbd><span>随机打开一个项目</span></li>
-      <li><kbd>esc</kbd><span>关闭这个面板</span></li>
-      <li><kbd>?</kbd><span>显示 / 隐藏这个面板</span></li>
-    </ul>
+
+    <nav class="footer-nav" aria-label="页脚导航">
+      {
+        footerLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="footer-actions">
+      <button
+        class="shortcut-trigger"
+        type="button"
+        data-shortcuts-trigger
+        aria-expanded="false"
+        aria-controls="shortcut-panel"
+      >
+        ?
+      </button>
+      <span>快捷键</span>
+    </div>
   </div>
-</div>
+
+  <section
+    class="shortcut-panel"
+    id="shortcut-panel"
+    data-shortcuts-panel
+    hidden
+    aria-label="键盘快捷键"
+  >
+    <div class="shortcut-panel-head">
+      <h3>键盘快捷键</h3>
+      <button type="button" data-shortcuts-close aria-label="关闭快捷键面板"> × </button>
+    </div>
+
+    <ul>
+      {
+        shortcuts.map(([key, label]) => (
+          <li>
+            <kbd>{key}</kbd>
+            <span>{label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</footer>
 
 <script is:inline>
   (function () {
-    var trig = document.querySelector('[data-shortcut-toggle]');
-    var hint = document.querySelector('.shortcut-hint');
-    var close = document.querySelector('.shortcut-hint-close');
-    if (!hint) return;
-    var close2 = function () {
-      hint.classList.remove('visible');
-      hint.setAttribute('aria-hidden', 'true');
+    var trigger = document.querySelector('[data-shortcuts-trigger]');
+    var panel = document.querySelector('[data-shortcuts-panel]');
+    var close = document.querySelector('[data-shortcuts-close]');
+
+    if (!trigger || !panel) return;
+
+    var setOpen = function (open) {
+      panel.hidden = !open;
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
     };
-    var open = function () {
-      hint.classList.add('visible');
-      hint.setAttribute('aria-hidden', 'false');
-    };
-    if (trig)
-      trig.addEventListener('click', function () {
-        hint.classList.contains('visible') ? close2() : open();
-      });
-    if (close) close.addEventListener('click', close2);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && hint.classList.contains('visible')) close2();
+
+    trigger.addEventListener('click', function () {
+      setOpen(panel.hidden);
     });
-  })();
-</script>
 
-<script is:inline data-runtime-script>
-  (function () {
-    var runtimeEl = document.querySelector('[data-runtime]');
-    if (!runtimeEl) return;
+    if (close) {
+      close.addEventListener('click', function () {
+        setOpen(false);
+        trigger.focus();
+      });
+    }
 
-    var startedAt = runtimeEl.getAttribute('data-started-at');
-    var startedTime = startedAt ? new Date(startedAt).getTime() : NaN;
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
 
-    if (!Number.isFinite(startedTime)) return;
+      if (event.key === '?' && !event.ctrlKey && !event.metaKey && !event.altKey) {
+        var target = event.target;
+        var tag = target && target.tagName ? target.tagName.toLowerCase() : '';
+        if (tag === 'input' || tag === 'textarea' || target.isContentEditable) return;
 
-    var pad = function (value) {
-      return String(value).padStart(2, '0');
-    };
-
-    var renderRuntime = function () {
-      var diff = Math.max(0, Date.now() - startedTime);
-      var totalSeconds = Math.floor(diff / 1000);
-      var days = Math.floor(totalSeconds / 86400);
-      var hours = Math.floor((totalSeconds % 86400) / 3600);
-      var minutes = Math.floor((totalSeconds % 3600) / 60);
-      var seconds = totalSeconds % 60;
-
-      runtimeEl.textContent =
-        days + ' 天 ' + pad(hours) + ' 小时 ' + pad(minutes) + ' 分 ' + pad(seconds) + ' 秒';
-    };
-
-    renderRuntime();
-    window.setInterval(renderRuntime, 1000);
-
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden) renderRuntime();
+        event.preventDefault();
+        setOpen(panel.hidden);
+      }
     });
   })();
 </script>

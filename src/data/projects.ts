@@ -53,7 +53,7 @@ export const projectDetails: ProjectDetail[] = [
     category: 'Docs',
     tags: ['Website', 'Docs', 'Cloudflare Pages'],
     accent: '#c4b5fd',
-    websiteUrl: 'https://cysjdocs.pages.dev',
+    websiteUrl: 'https://cysjdocs.azek431.top',
     githubUrl: 'https://github.com/Azek431/cysj-data',
     giteeUrl: 'https://gitee.com/Azek431/cysj-data',
     features: [
