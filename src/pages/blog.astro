@@ -55,18 +55,14 @@ const drafts = [
 ];
 ---
 
-<BaseLayout
-  title="Blog - Azek431"
-  description="博客筹备中,先看看写作计划与草稿列表。"
->
+<BaseLayout title="Blog - Azek431" description="博客筹备中,先看看写作计划与草稿列表。">
   <Breadcrumb items={[{ label: '首页', href: '/' }, { label: 'Blog' }]} />
 
   <section class="page-hero blog-hero">
     <p class="eyebrow">Blog</p>
     <h1>博客筹备中</h1>
     <p class="page-hero-text">
-      想认真写一些东西——技术随笔、设计笔记、长期思考。
-      下面是写作计划、标签体系和当前草稿。
+      想认真写一些东西——技术随笔、设计笔记、长期思考。 下面是写作计划、标签体系和当前草稿。
     </p>
     <div class="blog-meta">
       <span class="blog-meta-item"><span class="blog-dot tone-in-progress"></span>4 项计划</span>
@@ -83,22 +79,26 @@ const drafts = [
     </div>
 
     <ol class="blog-plan">
-      {plans.map((p) => (
-        <li class={'blog-plan-item tone-' + p.state}>
-          <div class="blog-plan-rail">
-            <span class="blog-plan-num">{String(p.num).padStart(2, '0')}</span>
-            <span class="blog-plan-line"></span>
-          </div>
-          <div class="blog-plan-content">
-            <div class="blog-plan-head">
-              <span class="blog-plan-tag">{p.tag}</span>
-              <span class="blog-plan-state">{p.state === 'in-progress' ? '进行中' : '规划中'}</span>
+      {
+        plans.map((p) => (
+          <li class={'blog-plan-item tone-' + p.state}>
+            <div class="blog-plan-rail">
+              <span class="blog-plan-num">{String(p.num).padStart(2, '0')}</span>
+              <span class="blog-plan-line" />
             </div>
-            <h3 class="blog-plan-title">{p.title}</h3>
-            <p class="blog-plan-desc">{p.desc}</p>
-          </div>
-        </li>
-      ))}
+            <div class="blog-plan-content">
+              <div class="blog-plan-head">
+                <span class="blog-plan-tag">{p.tag}</span>
+                <span class="blog-plan-state">
+                  {p.state === 'in-progress' ? '进行中' : '规划中'}
+                </span>
+              </div>
+              <h3 class="blog-plan-title">{p.title}</h3>
+              <p class="blog-plan-desc">{p.desc}</p>
+            </div>
+          </li>
+        ))
+      }
     </ol>
   </section>
 
@@ -110,20 +110,25 @@ const drafts = [
     </div>
 
     <div class="blog-drafts">
-      {drafts.map((d) => (
-        <article class="blog-draft">
-          <header class="blog-draft-head">
-            <span class="blog-draft-tag">{d.tag}</span>
-            <span class="blog-draft-est">预计 {d.est}</span>
-          </header>
-          <h3 class="blog-draft-title">{d.title}</h3>
-          <p class="blog-draft-desc">{d.desc}</p>
-          <div class="blog-draft-foot">
-            <span class="blog-draft-status"><span class="blog-dot tone-in-progress"></span>撰写中</span>
-            <span class="blog-draft-hint">敬请期待</span>
-          </div>
-        </article>
-      ))}
+      {
+        drafts.map((d) => (
+          <article class="blog-draft">
+            <header class="blog-draft-head">
+              <span class="blog-draft-tag">{d.tag}</span>
+              <span class="blog-draft-est">预计 {d.est}</span>
+            </header>
+            <h3 class="blog-draft-title">{d.title}</h3>
+            <p class="blog-draft-desc">{d.desc}</p>
+            <div class="blog-draft-foot">
+              <span class="blog-draft-status">
+                <span class="blog-dot tone-in-progress" />
+                撰写中
+              </span>
+              <span class="blog-draft-hint">敬请期待</span>
+            </div>
+          </article>
+        ))
+      }
     </div>
   </section>
 

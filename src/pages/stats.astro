@@ -68,8 +68,8 @@ const sections = [
       { label: '订阅源', value: 'RSS', tone: 'muted' },
       { label: '站点地图', value: 'XML', tone: 'muted' },
       { label: '首个提交', value: siteStartedHash, tone: 'muted' },
-      { label: '最近提交', value: siteUpdatedHash, tone: 'muted' },
-      { label: '最近提交时间', value: siteUpdatedDateTime, tone: 'muted' },
+      { label: '构建提交', value: siteUpdatedHash, tone: 'muted' },
+      { label: '最近构建时间', value: siteUpdatedDateTime, tone: 'muted' },
     ],
   },
 ];
@@ -122,7 +122,7 @@ const toneColor: Record<string, string> = {
   <section class="section">
     <div class="now-cta">
       <h3>数字会变,主站会继续</h3>
-      <p>所有数据在 build 时计算,不会实时更新;真正的"运行中"状态以最近一次 commit 为准。</p>
+      <p>所有数据在 build 时计算,不会实时更新;真正的"运行中"状态以最近一次构建和公开提交为准。</p>
       <div class="actions">
         <a class="button primary" href="/changelog/">看更新日志</a>
         <a class="button secondary" href="/rss.xml" target="_blank" rel="noreferrer noopener"

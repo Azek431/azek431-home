@@ -75,7 +75,7 @@ const updateItems: SearchItem[] = recentUpdates.map((u) => ({
   tags: [u.tag],
 }));
 
-const changelogItems: SearchItem[] = changelog.slice(0, 6).map((c) => ({
+const changelogItems: SearchItem[] = changelog.map((c) => ({
   title: c.title,
   desc: c.changes.slice(0, 2).join(' / '),
   href: '/changelog/#' + c.version,

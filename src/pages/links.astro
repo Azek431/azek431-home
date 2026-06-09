@@ -155,7 +155,7 @@ function categoryIconTone(category: string) {
       }
     </div>
 
-    <p class="filter-empty" hidden>这个分类下暂时没有链接。</p>
+    <p class="filter-empty is-hidden" hidden aria-live="polite">这个分类下暂时没有链接。</p>
   </section>
 
   <script is:inline>
@@ -188,7 +188,11 @@ function categoryIconTone(category: string) {
           if (match) shown++;
         });
         refreshGroups();
-        if (empty) empty.hidden = shown !== 0;
+        if (empty) {
+          const shouldShowEmpty = shown === 0;
+          empty.hidden = !shouldShowEmpty;
+          empty.classList.toggle('is-hidden', !shouldShowEmpty);
+        }
       }
 
       chips.forEach(function (chip) {

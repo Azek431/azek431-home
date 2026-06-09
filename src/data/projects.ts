@@ -26,7 +26,7 @@ export const projectDetails: ProjectDetail[] = [
     category: 'Website',
     tags: ['Astro', 'Cloudflare Pages', 'Personal Website'],
     accent: '#a8c8ff',
-    websiteUrl: 'https://azek431.pages.dev',
+    websiteUrl: 'https://azek431.top',
     githubUrl: 'https://github.com/Azek431/azek431-home',
     giteeUrl: 'https://gitee.com/Azek431/azek431-home',
     features: [

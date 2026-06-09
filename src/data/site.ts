@@ -6,7 +6,7 @@ export const siteConfig = {
   description: 'Azek431 的个人主站与导航入口，用于整理个人介绍、项目入口、学习记录和公开链接。',
   author: 'Azek431',
   locale: 'zh-CN',
-  url: 'https://azek431.pages.dev',
+  url: 'https://azek431.top',
   github: 'https://github.com/Azek431',
   gitee: 'https://gitee.com/Azek431',
   keywords: [
@@ -46,8 +46,8 @@ export const homeCards = [
   {
     title: 'Blog',
     description: '记录我的技术文章、学习笔记和长期思考。',
-    href: '#',
-    status: '即将上线',
+    href: '/blog/',
+    status: '筹备中',
   },
   {
     title: 'Projects',
@@ -90,7 +90,7 @@ export const projects = projectDetails.map((project) => ({
   description: project.description,
   status: project.status,
   category: project.category,
-  href: project.websiteUrl || '#',
+  href: project.websiteUrl || `/projects/${project.slug}/`,
   tags: project.tags,
   lastUpdated: project.lastUpdated,
   accent: project.accent,
@@ -136,7 +136,7 @@ export const links = [
   {
     name: 'Blog',
     description: '个人博客入口，后续用于记录文章、笔记和学习过程。',
-    href: '#',
+    href: '/blog/',
     category: 'Site',
     tags: ['Blog', 'Notes'],
   },

@@ -1,56 +1,30 @@
-import { execSync } from 'node:child_process';
-
-const fallbackStartedAt = '2026-05-29T21:40:43+08:00';
-const fallbackUpdatedAt = '2026-06-05T20:40:46+08:00';
-const fallbackStartedHash = 'dd42d40';
-const fallbackUpdatedHash = '8c62c27';
+const siteStartedAtIsoValue = '2026-05-29T21:40:43+08:00';
+const siteStartedHashValue = 'dd42d40';
 const timeZone = 'Asia/Shanghai';
 
-function runGit(command: string) {
-  return execSync(command, {
-    cwd: process.cwd(),
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'ignore'],
-  }).trim();
+function readEnv(name: string) {
+  if (typeof process === 'undefined') return '';
+  return process.env[name]?.trim() || '';
 }
 
-function readFirstCommitIso() {
-  try {
-    return (
-      runGit('git log --reverse --max-parents=0 --format=%cI').split(/\r?\n/)[0] ||
-      fallbackStartedAt
-    );
-  } catch {
-    return fallbackStartedAt;
-  }
+function safeDate(value: string, fallback: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return new Date(fallback);
+  return date;
 }
 
-function readLatestCommitIso() {
-  try {
-    return runGit('git log -1 --format=%cI') || fallbackUpdatedAt;
-  } catch {
-    return fallbackUpdatedAt;
-  }
+function shortHash(value: string) {
+  const clean = value.trim();
+  if (!clean) return 'local';
+  return clean.slice(0, 7);
 }
 
-function readFirstCommitHash() {
-  try {
-    return (
-      runGit('git log --reverse --max-parents=0 --format=%H').split(/\r?\n/)[0] ||
-      fallbackStartedHash
-    ).slice(0, 7);
-  } catch {
-    return fallbackStartedHash;
-  }
-}
+const configuredBuildTime = readEnv('PUBLIC_BUILD_TIME') || readEnv('BUILD_TIME') || '';
 
-function readLatestCommitHash() {
-  try {
-    return (runGit('git rev-parse --short=7 HEAD') || fallbackUpdatedHash).slice(0, 7);
-  } catch {
-    return fallbackUpdatedHash;
-  }
-}
+const configuredCommitHash =
+  readEnv('PUBLIC_COMMIT_SHA') || readEnv('CF_PAGES_COMMIT_SHA') || readEnv('GITHUB_SHA') || '';
+
+const buildTimeIso = configuredBuildTime || new Date().toISOString();
 
 function dateParts(date: Date) {
   const parts = new Intl.DateTimeFormat('zh-CN', {
@@ -59,7 +33,9 @@ function dateParts(date: Date) {
     month: '2-digit',
     day: '2-digit',
   }).formatToParts(date);
+
   const get = (type: string) => parts.find((part) => part.type === type)?.value || '';
+
   return {
     year: Number(get('year')),
     month: Number(get('month')),
@@ -80,7 +56,9 @@ function timeParts(date: Date) {
     hour12: false,
     hourCycle: 'h23',
   }).formatToParts(date);
+
   const get = (type: string) => parts.find((part) => part.type === type)?.value || '00';
+
   return {
     hour: get('hour'),
     minute: get('minute'),
@@ -109,11 +87,18 @@ export function formatMonth(date: Date) {
 }
 
 export function formatWeekday(date: Date) {
-  return new Intl.DateTimeFormat('zh-CN', { timeZone, weekday: 'short' }).format(date);
+  return new Intl.DateTimeFormat('zh-CN', {
+    timeZone,
+    weekday: 'short',
+  }).format(date);
 }
 
 export function relativeDate(date: Date | string, now = new Date()) {
-  const target = typeof date === 'string' ? new Date(date + 'T00:00:00+08:00') : date;
+  const target =
+    typeof date === 'string'
+      ? new Date(date.includes('T') ? date : date + 'T00:00:00+08:00')
+      : date;
+
   const targetNoon = new Date(formatDate(target) + 'T12:00:00+08:00').getTime();
   const nowNoon = new Date(formatDate(now) + 'T12:00:00+08:00').getTime();
   const days = Math.floor((nowNoon - targetNoon) / 86400000);
@@ -125,6 +110,15 @@ export function relativeDate(date: Date | string, now = new Date()) {
   return `${Math.floor(days / 365)} 年前`;
 }
 
+export const siteStartedHash = siteStartedHashValue;
+export const siteUpdatedHash = shortHash(configuredCommitHash);
+
+export const siteStartedAtIso = siteStartedAtIsoValue;
+export const siteUpdatedAtIso = buildTimeIso;
+
+export const siteStartedAt = safeDate(siteStartedAtIso, siteStartedAtIsoValue);
+export const siteUpdatedAt = safeDate(siteUpdatedAtIso, new Date().toISOString());
+
 export function getSiteAge(now = new Date()) {
   const diffMs = Math.max(0, now.getTime() - siteStartedAt.getTime());
   const days = Math.floor(diffMs / 86400000);
@@ -132,27 +126,34 @@ export function getSiteAge(now = new Date()) {
   const minutes = Math.floor((diffMs % 3600000) / 60000);
   const seconds = Math.floor((diffMs % 60000) / 1000);
   const weeks = Math.floor(days / 7);
+
   const start = dateParts(siteStartedAt);
   const current = dateParts(now);
   const months = Math.max(0, (current.year - start.year) * 12 + current.month - start.month);
+
   const label = `${days} 天 ${hours} 小时`;
   const preciseLabel = `${days} 天 ${hours} 小时 ${minutes} 分钟`;
 
-  return { days, hours, minutes, seconds, weeks, months, label, preciseLabel };
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+    weeks,
+    months,
+    label,
+    preciseLabel,
+  };
 }
 
-export const siteStartedHash = readFirstCommitHash();
-export const siteUpdatedHash = readLatestCommitHash();
-export const siteStartedAtIso = readFirstCommitIso();
-export const siteUpdatedAtIso = readLatestCommitIso();
-export const siteStartedAt = new Date(siteStartedAtIso);
-export const siteUpdatedAt = new Date(siteUpdatedAtIso);
 export const siteStartedDate = formatDate(siteStartedAt);
 export const siteStartedDotDate = formatDotDate(siteStartedAt);
 export const siteStartedDateTime = formatDateTime(siteStartedAt);
 export const siteStartedMonth = formatMonth(siteStartedAt);
+
 export const siteUpdatedDate = formatDate(siteUpdatedAt);
 export const siteUpdatedDotDate = formatDotDate(siteUpdatedAt);
 export const siteUpdatedDateTime = formatDateTime(siteUpdatedAt);
+
 export const todayDate = formatDate(new Date());
 export const todayWeekday = formatWeekday(new Date());

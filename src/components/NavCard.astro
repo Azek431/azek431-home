@@ -21,9 +21,18 @@ interface Props {
 }
 
 const {
-  title, description, href = '#', status, statusTone = 'default',
-  category, icon, iconTone = 'primary',
-  tags = [], links = [], lastUpdated, accent,
+  title,
+  description,
+  href = '#',
+  status,
+  statusTone = 'default',
+  category,
+  icon,
+  iconTone = 'primary',
+  tags = [],
+  links = [],
+  lastUpdated,
+  accent,
 } = Astro.props;
 
 const hasLinks = links.length > 0;
@@ -42,16 +51,25 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
 {
   hasLinks ? (
     <article class="card card-static" style={accentStyle}>
-      {accent && <span class="card-accent" aria-hidden="true"></span>}
-      <span class="card-sheen" aria-hidden="true"></span>
+      {accent && <span class="card-accent" aria-hidden="true" />}
+      <span class="card-sheen" aria-hidden="true" />
       {icon && (
-        <span class:list={['card-icon', { accent: iconTone === 'accent', success: iconTone === 'success' }]}>
+        <span
+          class:list={[
+            'card-icon',
+            { accent: iconTone === 'accent', success: iconTone === 'success' },
+          ]}
+        >
           {icon}
         </span>
       )}
 
       <div class="card-top">
-        {status && <span class="card-status" data-tone={statusTone}>{status}</span>}
+        {status && (
+          <span class="card-status" data-tone={statusTone}>
+            {status}
+          </span>
+        )}
         {category && <span class="card-category">{category}</span>}
       </div>
 
@@ -60,13 +78,25 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
 
       {tags.length > 0 && (
         <div class="card-tags" aria-label="标签">
-          {tags.map((tag) => <button type="button" class="card-tag" data-tag={tag}>{tag}</button>)}
+          {tags.map((tag) => (
+            <button type="button" class="card-tag" data-tag={tag}>
+              {tag}
+            </button>
+          ))}
         </div>
       )}
 
       {lastUpdated && (
         <p class="card-meta">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <path d="M16 2v4M8 2v4M3 10h18" />
           </svg>
@@ -83,7 +113,15 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
             rel={link.isExternal ? 'noopener noreferrer' : undefined}
           >
             {link.label}
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               {link.isExternal ? (
                 <>
                   <path d="M7 17 17 7" />
@@ -109,16 +147,25 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
       aria-disabled={isPlaceholder ? 'true' : undefined}
       style={accentStyle}
     >
-      {accent && <span class="card-accent" aria-hidden="true"></span>}
-      <span class="card-sheen" aria-hidden="true"></span>
+      {accent && <span class="card-accent" aria-hidden="true" />}
+      <span class="card-sheen" aria-hidden="true" />
       {icon && (
-        <span class:list={['card-icon', { accent: iconTone === 'accent', success: iconTone === 'success' }]}>
+        <span
+          class:list={[
+            'card-icon',
+            { accent: iconTone === 'accent', success: iconTone === 'success' },
+          ]}
+        >
           {icon}
         </span>
       )}
 
       <div class="card-top">
-        {status && <span class="card-status" data-tone={statusTone}>{status}</span>}
+        {status && (
+          <span class="card-status" data-tone={statusTone}>
+            {status}
+          </span>
+        )}
         {category && <span class="card-category">{category}</span>}
       </div>
 
@@ -127,13 +174,25 @@ const accentStyle = accent ? '--accent-color:' + accent + ';' : '';
 
       {tags.length > 0 && (
         <div class="card-tags" aria-label="标签">
-          {tags.map((tag) => <button type="button" class="card-tag" data-tag={tag}>{tag}</button>)}
+          {tags.map((tag) => (
+            <button type="button" class="card-tag" data-tag={tag}>
+              {tag}
+            </button>
+          ))}
         </div>
       )}
 
       {lastUpdated && (
         <p class="card-meta">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <path d="M16 2v4M8 2v4M3 10h18" />
           </svg>

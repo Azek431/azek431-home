@@ -6,9 +6,17 @@ const recommended = projectDetails.map((p) => ({
   label: p.title,
   href: '/projects/' + p.slug + '/',
   desc: p.description,
-  icon: p.category === 'Website' ? 'W' : p.category === 'Docs' ? 'D' : p.category === 'Blog' ? 'B' : 'A',
+  icon:
+    p.category === 'Website'
+      ? 'W'
+      : p.category === 'Docs'
+        ? 'D'
+        : p.category === 'Blog'
+          ? 'B'
+          : 'A',
 }));
 ---
+
 <BaseLayout
   title="页面未找到 - Azek431"
   description="这个页面暂时不存在,你可以返回 Azek431 的个人主站继续浏览。"
@@ -25,13 +33,15 @@ const recommended = projectDetails.map((p) => ({
     </p>
 
     <div class="not-found-grid">
-      {recommended.map((r) => (
-        <a class="card not-found-card" href={r.href}>
-          <span class="card-icon">→</span>
-          <h3>{r.label}</h3>
-          <p>{r.desc}</p>
-        </a>
-      ))}
+      {
+        recommended.map((r) => (
+          <a class="card not-found-card" href={r.href}>
+            <span class="card-icon">→</span>
+            <h3>{r.label}</h3>
+            <p>{r.desc}</p>
+          </a>
+        ))
+      }
     </div>
 
     <div class="actions">
