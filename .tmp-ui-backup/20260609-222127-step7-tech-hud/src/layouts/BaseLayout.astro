@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import VisualAura from '../components/VisualAura.astro';
-import InterfaceFX from '../components/InterfaceFX.astro';
 import Footer from '../components/Footer.astro';
 import Toast from '../components/Toast.astro';
 import { siteConfig } from '../data/site';
@@ -71,7 +70,6 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
 
   <body>
     <VisualAura />
-    <InterfaceFX />
     <div class="route-veil" id="routeVeil" aria-hidden="true"></div>
     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
     <button class="to-top" id="toTopBtn" type="button" aria-label="返回顶部" title="返回顶部">
