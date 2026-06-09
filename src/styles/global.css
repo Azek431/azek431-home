@@ -3939,6 +3939,7 @@ a.card:hover .arrow {
   border: 1px solid rgba(168, 200, 255, 0.1);
   position: relative;
   overflow: hidden;
+  scroll-margin-top: 110px;
 }
 @media (max-width: 720px) { .chl-item { grid-template-columns: 1fr; gap: 12px; } }
 .chl-item::before {
