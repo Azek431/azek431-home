@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://azek431.pages.dev/sitemap.xml
+Sitemap: https://azek431.top/sitemap.xml

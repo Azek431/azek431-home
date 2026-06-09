@@ -1236,7 +1236,7 @@ git ls-files |
 检查 Cloudflare 响应头：
 
 ```powershell
-curl.exe -I https://azek431.pages.dev
+curl.exe -I https://azek431.top
 ```
 
 ---
