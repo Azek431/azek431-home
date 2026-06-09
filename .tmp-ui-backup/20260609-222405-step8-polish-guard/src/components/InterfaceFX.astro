@@ -21,7 +21,6 @@
     var progress = document.querySelector('[data-scroll-progress]');
     var hudPercent = document.querySelector('[data-hud-percent]');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var lastScrollY = window.scrollY;
 
     root.classList.add('is-enhanced-ui');
 
@@ -31,22 +30,6 @@
       var text = String(Math.round(percent * 100)).padStart(2, '0') + '%';
 
       root.style.setProperty('--scroll-progress', String(percent));
-
-      if (window.scrollY > 12) {
-        root.classList.add('is-scrolled');
-      } else {
-        root.classList.remove('is-scrolled');
-      }
-
-      if (window.scrollY > lastScrollY && window.scrollY > 80) {
-        root.classList.add('is-scrolling-down');
-        root.classList.remove('is-scrolling-up');
-      } else {
-        root.classList.add('is-scrolling-up');
-        root.classList.remove('is-scrolling-down');
-      }
-
-      lastScrollY = window.scrollY;
 
       if (progress) {
         progress.style.transform = 'scaleX(' + percent + ')';
