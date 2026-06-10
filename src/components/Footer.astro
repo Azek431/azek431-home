@@ -1,149 +1,91 @@
 ---
 import RuntimeCounter from './RuntimeCounter.astro';
+import ShortcutPanel from './ShortcutPanel.astro';
 import { siteConfig } from '../data/site';
 import { getSiteAge, siteStartedAtIso, siteStartedDateTime } from '../data/time';
 
 const year = new Date().getFullYear();
 const siteAge = getSiteAge();
 
-const footerLinks = [
+const primaryLinks = [
   { label: '首页', href: '/' },
   { label: '项目', href: '/projects/' },
   { label: '链接', href: '/links/' },
+  { label: '搜索', href: '/search/' },
+];
+
+const secondaryLinks = [
+  { label: 'About', href: '/about/' },
+  { label: 'Now', href: '/now/' },
+  { label: 'Stats', href: '/stats/' },
+  { label: 'Changelog', href: '/changelog/' },
+];
+
+const publicLinks = [
+  { label: 'GitHub', href: siteConfig.github },
   { label: 'RSS', href: '/rss.xml' },
   { label: 'Sitemap', href: '/sitemap.xml' },
-  { label: 'GitHub', href: siteConfig.github },
 ];
 
-const shortcuts = [
-  ['g h', '首页'],
-  ['g a', '关于'],
-  ['g p', '项目'],
-  ['g l', '链接'],
-  ['g n', 'Now'],
-  ['g u', 'Uses'],
-  ['g c', 'Colophon'],
-  ['g k', 'Changelog'],
-  ['g s', 'Stats'],
-  ['g b', 'Blog'],
-  ['/', '站内搜索'],
-  ['t', '切换明 / 暗主题'],
-  ['r', '随机打开一个项目'],
-  ['esc', '关闭这个面板'],
-  ['?', '显示 / 隐藏这个面板'],
-];
+const isExternal = (href: string) => href.startsWith('http');
 ---
 
-<footer class="site-footer" aria-labelledby="footer-title">
-  <div class="footer-shell">
-    <div class="footer-brand">
-      <p class="footer-kicker">Azek431 Digital Nexus</p>
-      <h2 id="footer-title">{siteConfig.name}</h2>
-      <p>
-        © {year}
-        {siteConfig.name}. Built with Astro &amp; deployed on Cloudflare Pages.
-      </p>
-      <p class="footer-runtime-line">
-        建站于 {siteStartedDateTime} · 已运行
-        <RuntimeCounter
-          startedAt={siteStartedAtIso}
-          fallback={siteAge.preciseLabel}
-          className="footer-runtime"
-        />
-      </p>
-    </div>
+<footer class="site-footer" aria-label="站点页脚">
+  <div class="footer-shell footer-shell-v3">
+    <section class="footer-brand-v3" aria-labelledby="footer-brand-title">
+      <p>Azek431 Digital Nexus</p>
+      <h2 id="footer-brand-title">{siteConfig.name}</h2>
+      <span> 一个持续打磨的个人数字空间，用来连接项目、学习记录、AI 实验和公开入口。 </span>
+    </section>
 
-    <nav class="footer-nav" aria-label="页脚导航">
-      {
-        footerLinks.map((link) => (
-          <a
-            href={link.href}
-            target={link.href.startsWith('http') ? '_blank' : undefined}
-            rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
-          >
-            {link.label}
-          </a>
-        ))
-      }
+    <nav class="footer-nav-v3" aria-label="页脚主要导航">
+      <div>
+        <h3>Navigate</h3>
+        {primaryLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </div>
+
+      <div>
+        <h3>System</h3>
+        {secondaryLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </div>
+
+      <div>
+        <h3>Public</h3>
+        {
+          publicLinks.map((link) => (
+            <a
+              href={link.href}
+              target={isExternal(link.href) ? '_blank' : undefined}
+              rel={isExternal(link.href) ? 'noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
     </nav>
 
-    <div class="footer-actions">
-      <button
-        class="shortcut-trigger"
-        type="button"
-        data-shortcuts-trigger
-        aria-expanded="false"
-        aria-controls="shortcut-panel"
-      >
-        ?
-      </button>
-      <span>快捷键</span>
+    <section class="footer-runtime-v3" aria-label="站点运行时间">
+      <div>
+        <span>Created</span>
+        <strong>{siteStartedDateTime}</strong>
+      </div>
+
+      <div>
+        <span>Running</span>
+        <strong>
+          <RuntimeCounter
+            startedAt={siteStartedAtIso}
+            fallback={siteAge.preciseLabel}
+            className="footer-runtime-counter"
+          />
+        </strong>
+      </div>
+    </section>
+
+    <div class="footer-bottom-v3">
+      <p>© {year} {siteConfig.name}. Built with Astro & deployed on Cloudflare Pages.</p>
+      <ShortcutPanel />
     </div>
   </div>
-
-  <section
-    class="shortcut-panel"
-    id="shortcut-panel"
-    data-shortcuts-panel
-    hidden
-    aria-label="键盘快捷键"
-  >
-    <div class="shortcut-panel-head">
-      <h3>键盘快捷键</h3>
-      <button type="button" data-shortcuts-close aria-label="关闭快捷键面板"> × </button>
-    </div>
-
-    <ul>
-      {
-        shortcuts.map(([key, label]) => (
-          <li>
-            <kbd>{key}</kbd>
-            <span>{label}</span>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
 </footer>
-
-<script is:inline>
-  (function () {
-    var trigger = document.querySelector('[data-shortcuts-trigger]');
-    var panel = document.querySelector('[data-shortcuts-panel]');
-    var close = document.querySelector('[data-shortcuts-close]');
-
-    if (!trigger || !panel) return;
-
-    var setOpen = function (open) {
-      panel.hidden = !open;
-      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    };
-
-    trigger.addEventListener('click', function () {
-      setOpen(panel.hidden);
-    });
-
-    if (close) {
-      close.addEventListener('click', function () {
-        setOpen(false);
-        trigger.focus();
-      });
-    }
-
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') {
-        setOpen(false);
-        return;
-      }
-
-      if (event.key === '?' && !event.ctrlKey && !event.metaKey && !event.altKey) {
-        var target = event.target;
-        var tag = target && target.tagName ? target.tagName.toLowerCase() : '';
-        if (tag === 'input' || tag === 'textarea' || target.isContentEditable) return;
-
-        event.preventDefault();
-        setOpen(panel.hidden);
-      }
-    });
-  })();
-</script>

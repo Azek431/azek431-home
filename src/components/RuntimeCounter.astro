@@ -5,54 +5,40 @@ interface Props {
   className?: string;
 }
 
-const { startedAt, fallback, className = '' } = Astro.props;
+const { startedAt, fallback, className = '' } = Astro.props as Props;
 ---
 
-<span
-  class:list={['runtime-counter', className]}
-  data-runtime-counter
-  data-started-at={startedAt}
-  aria-live="off"
->
-  {fallback}
-</span>
+<span class={className} data-runtime-counter data-started-at={startedAt}>{fallback}</span>
 
 <script is:inline>
   (function () {
-    var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-runtime-counter]'));
+    if (window.__azekRuntimeCounterMounted) return;
+    window.__azekRuntimeCounterMounted = true;
 
-    if (!nodes.length) return;
+    function formatDuration(startedAt) {
+      var start = new Date(startedAt).getTime();
+      var now = Date.now();
+      var diff = Math.max(0, now - start);
 
-    var pad = function (value) {
-      return String(value).padStart(2, '0');
-    };
+      var days = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff % 86400000) / 3600000);
+      var minutes = Math.floor((diff % 3600000) / 60000);
+      var seconds = Math.floor((diff % 60000) / 1000);
 
-    var renderNode = function (node) {
-      var startedAt = node.getAttribute('data-started-at');
-      var startedTime = startedAt ? new Date(startedAt).getTime() : NaN;
+      return days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+    }
 
-      if (!Number.isFinite(startedTime)) return;
+    function tick() {
+      var counters = document.querySelectorAll('[data-runtime-counter][data-started-at]');
 
-      var diff = Math.max(0, Date.now() - startedTime);
-      var totalSeconds = Math.floor(diff / 1000);
-      var days = Math.floor(totalSeconds / 86400);
-      var hours = Math.floor((totalSeconds % 86400) / 3600);
-      var minutes = Math.floor((totalSeconds % 3600) / 60);
-      var seconds = totalSeconds % 60;
+      counters.forEach(function (counter) {
+        var startedAt = counter.getAttribute('data-started-at');
+        if (!startedAt) return;
+        counter.textContent = formatDuration(startedAt);
+      });
+    }
 
-      node.textContent =
-        days + ' 天 ' + pad(hours) + ' 小时 ' + pad(minutes) + ' 分 ' + pad(seconds) + ' 秒';
-    };
-
-    var renderAll = function () {
-      nodes.forEach(renderNode);
-    };
-
-    renderAll();
-    window.setInterval(renderAll, 1000);
-
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden) renderAll();
-    });
+    tick();
+    window.setInterval(tick, 1000);
   })();
 </script>

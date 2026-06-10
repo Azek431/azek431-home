@@ -1,92 +1,197 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { siteConfig } from '../data/site';
+import PageHero from '../components/PageHero.astro';
+import { todayDate, todayWeekday } from '../data/time';
 
-const principles = [
+const profileItems = [
+  { label: '方向', value: 'Web · AI · Open Source' },
+  { label: '关注', value: '长期维护 / 简洁优先' },
+  { label: '语言', value: '中文 / English' },
+  { label: '状态', value: '线上 · GitHub' },
+];
+
+const nowItems = [
   {
-    title: '长期维护',
-    desc: '我更喜欢能持续迭代的项目，而不是只做一次就放弃的页面。',
+    status: '进行中',
+    title: '打磨个人主站',
+    desc: '继续整理设计系统、页面结构、第一代玻璃氛围、可访问性和仓库工程卫生。',
   },
   {
-    title: '真实记录',
-    desc: '把学习、开发、踩坑和优化过程留下来，让项目本身也成为成长记录。',
+    status: '探索',
+    title: 'AI 工具与自动化',
+    desc: '研究提示词写法、小型 agent 工作流、不同模型能力边界，以及怎么把重复工作交给自动化。',
   },
   {
-    title: '简洁可用',
-    desc: '页面可以好看，但更重要的是稳定、快速、清晰和容易继续维护。',
+    status: '规划中',
+    title: '独立博客',
+    desc: '后续准备单独维护博客仓库，用来沉淀技术文章、学习笔记、开发过程和长期思考。',
+  },
+  {
+    status: '维护中',
+    title: '项目官网与镜像',
+    desc: '持续完善项目官网、GitHub 仓库、Gitee 镜像和公开入口的一致性。',
   },
 ];
 
-const tracks = [
-  { label: 'AI', value: '工具、提示词、自动化实验' },
-  { label: 'Web', value: 'Astro、前端、个人网站' },
-  { label: 'Open', value: 'GitHub 项目和公开记录' },
+const skills = [
+  { name: 'Astro / Static Site', level: '熟练', pct: 90 },
+  { name: 'CSS / 设计系统', level: '熟练', pct: 86 },
+  { name: 'TypeScript / JavaScript', level: '扎实', pct: 78 },
+  { name: 'Cloudflare 部署 / 运维', level: '成长中', pct: 64 },
+  { name: 'AI 工具 / 提示词工程', level: '探索中', pct: 58 },
+];
+
+const focusItems = [
+  {
+    num: '01',
+    title: 'AI 工具与自动化',
+    desc: '提示词写法、Agent 搭建、模型能力边界和日常自动化。',
+  },
+  {
+    num: '02',
+    title: '网站搭建与部署',
+    desc: 'Astro 静态站、Cloudflare Pages、域名、设计系统和性能优化。',
+  },
+  {
+    num: '03',
+    title: 'GitHub 项目维护',
+    desc: '开源记录、版本管理、镜像同步、README、Issue 和长期维护。',
+  },
+  {
+    num: '04',
+    title: '前端细节优化',
+    desc: '布局、配色、玻璃质感、微交互、可访问性和响应式体验。',
+  },
 ];
 ---
 
-<BaseLayout title="关于 · Azek431" description="关于 Azek431、个人主站、项目方向和长期维护理念。">
-  <Breadcrumb items={[{ label: '关于', href: '/about/' }]} />
+<BaseLayout
+  title="关于我"
+  description="了解 Azek431 的个人方向、当前状态、技术栈、项目维护和未来计划。"
+>
+  <main class="about-v3">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于我' }]} />
 
-  <section class="page-v2-hero about-hero-v2">
-    <div>
-      <p class="page-v2-kicker">About</p>
-      <h1>关于这个数字空间</h1>
-      <p>
-        这个主站是我整理个人内容和项目入口的起点。它会连接我的项目、
-        学习记录、技术实践和公开链接，也会随着我的开发习惯持续演进。
-      </p>
-    </div>
+    <PageHero
+      eyebrow="About"
+      title="关于我"
+      description="你好，我是 Azek431。我喜欢研究 AI、网站搭建、GitHub 项目部署和软件开发，也在把这个主站打磨成一个长期维护的个人数字空间。"
+      meta={profileItems}
+    />
 
-    <aside class="about-profile-v2">
-      <p>Azek431</p>
-      <h2>{siteConfig.name}</h2>
-      <span>{siteConfig.description}</span>
+    <section class="about-narrative-v3" aria-labelledby="about-narrative-title">
+      <p>Profile</p>
+      <h2 id="about-narrative-title">一个持续生长的个人数字空间</h2>
 
       <div>
+        <p>
+          这个主站是我整理项目、学习记录、AI
+          实验和公开入口的起点。它不会只是一个堆链接的导航页，而会逐步变成一个有结构、有审美、有维护记录的个人系统。
+        </p>
+        <p>
+          我更喜欢长期打磨：从一个小入口开始，慢慢整理组件、页面、设计系统、文档、部署流程和开源记录。每一次优化都应该留下清晰的痕迹，也让下一次维护更轻松。
+        </p>
+      </div>
+    </section>
+
+    <section class="about-now-v3" aria-labelledby="about-now-title">
+      <div class="section-head-v2">
+        <p>Now</p>
+        <h2 id="about-now-title">现在在做的事</h2>
+        <span>当前阶段关注方向、正在探索的工具和接下来想继续打磨的事。</span>
+      </div>
+
+      <div class="about-now-grid-v3">
         {
-          tracks.map((item) => (
+          nowItems.map((item) => (
             <article>
-              <strong>{item.label}</strong>
-              <span>{item.value}</span>
+              <span>{item.status}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
             </article>
           ))
         }
       </div>
-    </aside>
-  </section>
+    </section>
 
-  <section class="section-v2">
-    <div class="section-head-v2">
-      <p>Principles</p>
-      <h2>我希望这个站点保持的方向</h2>
-      <span>
-        个人网站不是一次性作品，而是长期维护的系统。结构、视觉和内容都应该为后续扩展服务。
-      </span>
-    </div>
+    <section class="about-status-v3" aria-labelledby="about-status-title">
+      <div>
+        <p>Today</p>
+        <h2 id="about-status-title">今日状态</h2>
+        <span>正在细节里反复打磨 · {todayDate} · {todayWeekday}</span>
+      </div>
 
-    <div class="principle-grid-v2">
-      {
-        principles.map((item, index) => (
-          <article>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <h3>{item.title}</h3>
-            <p>{item.desc}</p>
-          </article>
-        ))
-      }
-    </div>
-  </section>
+      <dl>
+        <div>
+          <dt>Energy</dt>
+          <dd>72%</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd>86%</dd>
+        </div>
+        <div>
+          <dt>Mode</dt>
+          <dd>Build</dd>
+        </div>
+      </dl>
+    </section>
 
-  <section class="about-narrative-v2">
-    <p>
-      我希望这个网站不只是一个静态页面，而是一个长期维护的个人数字空间。
-      它会把项目、工具、文章、实验和公开入口统一整理起来，也会记录每一次设计和工程上的优化。
-    </p>
+    <section class="about-skills-v3" aria-labelledby="about-skills-title">
+      <div class="section-head-v2">
+        <p>Skills</p>
+        <h2 id="about-skills-title">技术 / 熟练度</h2>
+        <span>这些不是最终标签，只是当前阶段比较常用和正在成长的方向。</span>
+      </div>
 
-    <div>
-      <a class="ui-button ui-button-primary" href="/projects/">查看项目</a>
-      <a class="ui-button ui-button-secondary" href={siteConfig.github}>GitHub</a>
-    </div>
-  </section>
+      <div class="about-skill-list-v3">
+        {
+          skills.map((skill) => (
+            <article>
+              <div>
+                <strong>{skill.name}</strong>
+                <span>{skill.level}</span>
+              </div>
+              <div class="about-skill-meter-v3" aria-hidden="true">
+                <span style={`--skill-value: ${skill.pct}%`} />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="about-focus-v3" aria-labelledby="about-focus-title">
+      <div class="section-head-v2">
+        <p>Focus</p>
+        <h2 id="about-focus-title">关注方向</h2>
+        <span>这些是我长期感兴趣、愿意持续投入时间的方向。</span>
+      </div>
+
+      <div class="about-focus-grid-v3">
+        {
+          focusItems.map((item) => (
+            <article>
+              <span>{item.num}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="about-next-v3" aria-labelledby="about-next-title">
+      <div>
+        <p>Next</p>
+        <h2 id="about-next-title">后续计划</h2>
+        <span>
+          继续让主站更稳定、更漂亮、更有结构，然后逐步扩展博客、项目官网、AI 实验和更多公开内容。
+        </span>
+      </div>
+
+      <a class="ui-button ui-button-primary" href="/now/">查看 Now 页面</a>
+    </section>
+  </main>
 </BaseLayout>

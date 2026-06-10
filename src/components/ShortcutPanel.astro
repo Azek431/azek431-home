@@ -1,0 +1,148 @@
+---
+const shortcuts = [
+  { keys: ['g', 'h'], label: '首页' },
+  { keys: ['g', 'a'], label: '关于' },
+  { keys: ['g', 'p'], label: '项目' },
+  { keys: ['g', 'l'], label: '链接' },
+  { keys: ['g', 'n'], label: 'Now' },
+  { keys: ['g', 'u'], label: 'Uses' },
+  { keys: ['g', 'c'], label: 'Colophon' },
+  { keys: ['g', 'k'], label: 'Changelog' },
+  { keys: ['g', 's'], label: 'Stats' },
+  { keys: ['g', 'b'], label: 'Blog' },
+  { keys: ['/'], label: '站内搜索' },
+  { keys: ['t'], label: '切换明 / 暗主题' },
+  { keys: ['r'], label: '随机打开一个项目' },
+  { keys: ['Esc'], label: '关闭这个面板' },
+  { keys: ['?'], label: '显示 / 隐藏这个面板' },
+];
+---
+
+<div class="shortcut-system" data-shortcut-system>
+  <button
+    class="shortcut-trigger"
+    type="button"
+    aria-expanded="false"
+    aria-controls="shortcut-panel"
+    data-shortcut-trigger
+  >
+    <span aria-hidden="true">?</span>
+    快捷键
+  </button>
+
+  <div
+    id="shortcut-panel"
+    class="shortcut-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="shortcut-panel-title"
+    aria-hidden="true"
+    hidden
+    data-shortcut-panel
+  >
+    <div class="shortcut-panel__head">
+      <div>
+        <p>Keyboard</p>
+        <h2 id="shortcut-panel-title">快捷键</h2>
+      </div>
+
+      <button
+        class="shortcut-panel__close"
+        type="button"
+        aria-label="关闭快捷键面板"
+        data-shortcut-close
+      >
+        ×
+      </button>
+    </div>
+
+    <ul class="shortcut-panel__list">
+      {
+        shortcuts.map((shortcut) => (
+          <li>
+            <span class="shortcut-panel__keys">
+              {shortcut.keys.map((key) => (
+                <kbd>{key}</kbd>
+              ))}
+            </span>
+            <span>{shortcut.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var system = document.querySelector('[data-shortcut-system]');
+    if (!system) return;
+
+    var trigger = system.querySelector('[data-shortcut-trigger]');
+    var panel = system.querySelector('[data-shortcut-panel]');
+    var closeButton = system.querySelector('[data-shortcut-close]');
+    var lastFocused = null;
+
+    if (!trigger || !panel || !closeButton) return;
+
+    function isOpen() {
+      return trigger.getAttribute('aria-expanded') === 'true';
+    }
+
+    function openPanel() {
+      lastFocused = document.activeElement;
+      trigger.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      panel.setAttribute('aria-hidden', 'false');
+      window.setTimeout(function () {
+        closeButton.focus();
+      }, 0);
+    }
+
+    function closePanel() {
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
+      panel.hidden = true;
+
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+    }
+
+    function togglePanel() {
+      if (isOpen()) {
+        closePanel();
+      } else {
+        openPanel();
+      }
+    }
+
+    trigger.addEventListener('click', togglePanel);
+    closeButton.addEventListener('click', closePanel);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && isOpen()) {
+        event.preventDefault();
+        closePanel();
+        return;
+      }
+
+      if (event.key === '?' && !event.ctrlKey && !event.metaKey && !event.altKey) {
+        var target = event.target;
+        var tagName = target && target.tagName ? target.tagName.toLowerCase() : '';
+        var isTyping = tagName === 'input' || tagName === 'textarea' || target.isContentEditable;
+
+        if (!isTyping) {
+          event.preventDefault();
+          togglePanel();
+        }
+      }
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!isOpen()) return;
+      if (system.contains(event.target)) return;
+      closePanel();
+    });
+  })();
+</script>
