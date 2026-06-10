@@ -1,0 +1,35 @@
+---
+type NavigationItem = {
+  label: string;
+  title: string;
+  href: string;
+  desc: string;
+  accent: string;
+};
+
+type Props = {
+  items: NavigationItem[];
+};
+
+const { items } = Astro.props as Props;
+---
+
+<section class="section-v2" aria-labelledby="home-navigation-title">
+  <div class="section-head-v2">
+    <p>Navigation Matrix</p>
+    <h2 id="home-navigation-title">主要入口</h2>
+    <span>把站内入口整理成更清晰的控制台矩阵。</span>
+  </div>
+
+  <div class="home-v3-nav-grid">
+    {
+      items.map((item) => (
+        <a href={item.href} data-accent={item.accent} aria-label={item.title}>
+          <span>{item.label}</span>
+          <strong>{item.title}</strong>
+          <small>{item.desc}</small>
+        </a>
+      ))
+    }
+  </div>
+</section>

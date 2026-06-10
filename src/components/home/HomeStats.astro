@@ -1,0 +1,26 @@
+---
+type QuickStat = {
+  value: number;
+  label: string;
+  caption: string;
+  tone: string;
+};
+
+type Props = {
+  stats: QuickStat[];
+};
+
+const { stats } = Astro.props as Props;
+---
+
+<section class="home-v3-stats" aria-label="站点概览数据">
+  {
+    stats.map((stat) => (
+      <article data-tone={stat.tone}>
+        <span>{stat.label}</span>
+        <strong>{stat.value}</strong>
+        <small>{stat.caption}</small>
+      </article>
+    ))
+  }
+</section>

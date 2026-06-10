@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links, recentUpdates, siteConfig, sitePages } from '../data/site';
+import { projectDetails } from '../data/projects';
+import { relativeDate, siteUpdatedDate, todayDate } from '../data/time';
+
+const pageCount = sitePages.length + projectDetails.length + 1;
+const liveProjects = projectDetails.filter((project) => project.status === '已上线').length;
+const plannedProjects = projectDetails.length - liveProjects;
+const externalLinks = links.filter((link) => link.href.startsWith('http')).length;
+
+const quickStats = [
+  {
+    value: pageCount,
+    label: 'Pages',
+    caption: '静态页面',
+    tone: 'blue',
+  },
+  {
+    value: projectDetails.length,
+    label: 'Projects',
+    caption: '项目记录',
+    tone: 'violet',
+  },
+  {
+    value: liveProjects,
+    label: 'Live',
+    caption: `${plannedProjects} 个规划中`,
+    tone: 'green',
+  },
+  {
+    value: recentUpdates.length,
+    label: 'Updates',
+    caption: '近期更新',
+    tone: 'amber',
+  },
+];
+
+const focusItems = [
+  {
+    title: 'AI',
+    desc: '工具、工作流与实验记录',
+  },
+  {
+    title: 'Web',
+    desc: 'Astro、前端与网站建设',
+  },
+  {
+    title: 'Open',
+    desc: 'GitHub 项目与长期维护',
+  },
+];
+
+const navigationMatrix = [
+  {
+    label: 'Project Matrix',
+    title: '查看项目',
+    href: '/projects/',
+    desc: '项目、工具、网站和实验入口。',
+    accent: 'blue',
+  },
+  {
+    label: 'Command Search',
+    title: '站内搜索',
+    href: '/search/',
+    desc: '快速检索页面、项目、链接和更新。',
+    accent: 'violet',
+  },
+  {
+    label: 'Now Status',
+    title: '现在在做',
+    href: '/now/',
+    desc: '最近状态、关注方向和工具流。',
+    accent: 'green',
+  },
+  {
+    label: 'Stats Dashboard',
+    title: '站点数据',
+    href: '/stats/',
+    desc: '查看页面、项目、更新和本地访问统计。',
+    accent: 'amber',
+  },
+];
+
+const featuredProjects = projectDetails.slice(0, 3);
+const mainProject = featuredProjects[0];
+const sideProjects = featuredProjects.slice(1);
+
+const networkLinks = links.filter((link) =>
+  ['GitHub', 'Gitee', '当前主站', 'RSS', 'Sitemap'].includes(link.name),
+);
+
+const featuredUpdates = recentUpdates.slice(0, 3);
+
+const phases = [
+  {
+    step: 'Phase 01',
+    title: 'Home System',
+    desc: '统一主站首页、项目入口、公开链接和站点状态。',
+    status: '已启动',
+  },
+  {
+    step: 'Phase 02',
+    title: 'Content Layer',
+    desc: '继续完善 Blog、Changelog、Search、RSS 和长期记录。',
+    status: '推进中',
+  },
+  {
+    step: 'Phase 03',
+    title: 'AI Tools',
+    desc: '后续连接 AI 实验、自动化工作流和更多工具型页面。',
+    status: '规划中',
+  },
+];
+
+const isExternal = (href: string) => href.startsWith('http');
+---
+
+<BaseLayout
+  title="Azek431 Digital Nexus"
+  description="Azek431 的个人数字中枢，用于连接项目、AI 实验、学习记录、公开入口和长期内容。"
+>
+  <main class="home-v3">
+    <section class="home-v3-hero" aria-labelledby="home-v3-title">
+      <div class="home-v3-copy">
+        <p class="home-v3-kicker">
+          <span></span>
+          Build {todayDate} · {pageCount} pages · Astro / Cloudflare
+        </p>
+
+        <h1 id="home-v3-title">
+          <span>Azek431</span>
+          <span>Digital Nexus</span>
+        </h1>
+
+        <p class="home-v3-lead">
+          一个持续进化的个人数字中枢。用于连接项目、AI 实验、学习记录与公开入口。
+        </p>
+
+        <div class="home-v3-actions" aria-label="首页主要操作">
+          <a
+            class="ui-button ui-button-primary"
+            href="/projects/"
+            aria-label="查看 Azek431 的项目列表"
+          >
+            查看项目
+          </a>
+          <a
+            class="ui-button ui-button-secondary"
+            href={siteConfig.github}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="在新窗口打开 Azek431 的 GitHub 主页"
+          >
+            GitHub
+          </a>
+          <button class="ui-button ui-button-ghost" type="button" data-copy-url>
+            复制主页链接
+          </button>
+        </div>
+
+        <div class="home-v3-tracks" aria-label="站点关注方向">
+          {
+            focusItems.map((item) => (
+              <article>
+                <strong>{item.title}</strong>
+                <span>{item.desc}</span>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="home-v3-console" aria-label="站点运行状态">
+        <div class="home-v3-console-head">
+          <span>site.status</span>
+          <strong>Running</strong>
+        </div>
+
+        <dl>
+          <div>
+            <dt>Last update</dt>
+            <dd>{siteUpdatedDate} · {relativeDate(siteUpdatedDate)}</dd>
+          </div>
+          <div>
+            <dt>Live projects</dt>
+            <dd>{liveProjects} online / {plannedProjects} planned</dd>
+          </div>
+          <div>
+            <dt>External links</dt>
+            <dd>{externalLinks} public entries</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>Astro · TypeScript · CSS</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="home-v3-stats" aria-label="站点概览数据">
+      {
+        quickStats.map((stat) => (
+          <article data-tone={stat.tone}>
+            <span>{stat.label}</span>
+            <strong>{stat.value}</strong>
+            <small>{stat.caption}</small>
+          </article>
+        ))
+      }
+    </section>
+
+    <section class="home-v3-command" aria-labelledby="home-command-title">
+      <div>
+        <p>Command Palette</p>
+        <h2 id="home-command-title">从搜索开始探索整个主站</h2>
+        <span>搜索项目、链接、页面、更新记录和后续内容入口。</span>
+      </div>
+
+      <a href="/search/" aria-label="打开站内搜索页面">
+        <kbd>/</kbd>
+        <span>搜索项目、页面、链接、更新...</span>
+        <strong>Open</strong>
+      </a>
+    </section>
+
+    <section class="section-v2 home-v3-projects" aria-labelledby="home-projects-title">
+      <div class="section-head-v2">
+        <p>Featured Projects</p>
+        <h2 id="home-projects-title">项目精选</h2>
+        <span>先展示最重要的作品，再展开更多项目和实验。</span>
+      </div>
+
+      <div class="home-v3-project-layout">
+        {
+          mainProject && (
+            <article class="home-v3-project-main" style={`--project-accent: ${mainProject.accent}`}>
+              <div>
+                <p>{mainProject.category}</p>
+                <strong>{mainProject.status}</strong>
+              </div>
+
+              <h3>{mainProject.title}</h3>
+              <p>{mainProject.description}</p>
+
+              <ul>
+                {mainProject.tags.slice(0, 4).map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+
+              <a
+                class="ui-button ui-button-primary"
+                href={`/projects/${mainProject.slug}/`}
+                aria-label={`查看 ${mainProject.title} 项目详情`}
+              >
+                查看主项目
+              </a>
+            </article>
+          )
+        }
+
+        <div class="home-v3-project-side">
+          {
+            sideProjects.map((project) => (
+              <article style={`--project-accent: ${project.accent}`}>
+                <div>
+                  <span>{project.category}</span>
+                  <strong>{project.status}</strong>
+                </div>
+
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+
+                <a
+                  href={`/projects/${project.slug}/`}
+                  aria-label={`查看 ${project.title} 项目详情`}
+                >
+                  查看详情 →
+                </a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section-v2" aria-labelledby="home-navigation-title">
+      <div class="section-head-v2">
+        <p>Navigation Matrix</p>
+        <h2 id="home-navigation-title">主要入口</h2>
+        <span>把站内入口整理成更清晰的控制台矩阵。</span>
+      </div>
+
+      <div class="home-v3-nav-grid">
+        {
+          navigationMatrix.map((item) => (
+            <a href={item.href} data-accent={item.accent} aria-label={item.title}>
+              <span>{item.label}</span>
+              <strong>{item.title}</strong>
+              <small>{item.desc}</small>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section-v2 home-v3-split" aria-label="最近更新和公开入口">
+      <div class="home-v3-updates">
+        <div class="section-head-v2">
+          <p>Activity Timeline</p>
+          <h2>最近更新</h2>
+          <span>首页只保留最新 3 条，完整记录放到 Changelog。</span>
+        </div>
+
+        <div class="home-v3-timeline">
+          {
+            featuredUpdates.map((update) => (
+              <a
+                href={update.href}
+                target={isExternal(update.href) ? '_blank' : undefined}
+                rel={isExternal(update.href) ? 'noreferrer' : undefined}
+                aria-label={`查看更新：${update.title}`}
+              >
+                <span>
+                  {update.date} · {relativeDate(update.date)}
+                </span>
+                <strong>{update.title}</strong>
+                <small>{update.desc}</small>
+              </a>
+            ))
+          }
+        </div>
+
+        <a class="home-v3-text-link" href="/changelog/">查看全部更新 →</a>
+      </div>
+
+      <aside class="home-v3-network">
+        <div class="section-head-v2">
+          <p>Public Network</p>
+          <h2>公开入口</h2>
+          <span>这里只保留真正的公开网络入口，避免和站内导航重复。</span>
+        </div>
+
+        <div>
+          {
+            networkLinks.map((link) => (
+              <a
+                href={link.href}
+                target={isExternal(link.href) ? '_blank' : undefined}
+                rel={isExternal(link.href) ? 'noreferrer' : undefined}
+                aria-label={`打开 ${link.name}`}
+              >
+                <strong>{link.name}</strong>
+                <span>{link.category}</span>
+              </a>
+            ))
+          }
+        </div>
+      </aside>
+    </section>
+
+    <section class="section-v2 home-v3-roadmap" aria-labelledby="home-roadmap-title">
+      <div class="section-head-v2">
+        <p>Roadmap</p>
+        <h2 id="home-roadmap-title">下一步会继续扩展</h2>
+        <span>从主站，到内容层，再到 AI 工具与自动化实验。</span>
+      </div>
+
+      <div class="home-v3-phase-grid">
+        {
+          phases.map((phase) => (
+            <article>
+              <span>{phase.step}</span>
+              <strong>{phase.title}</strong>
+              <p>{phase.desc}</p>
+              <small>{phase.status}</small>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    (function () {
+      var button = document.querySelector('[data-copy-url]');
+      if (!button) return;
+
+      var defaultText = button.textContent || '复制主页链接';
+
+      button.addEventListener('click', function () {
+        var url = window.location.href;
+
+        if (!navigator.clipboard) {
+          button.textContent = url;
+          window.setTimeout(function () {
+            button.textContent = defaultText;
+          }, 1600);
+          return;
+        }
+
+        navigator.clipboard
+          .writeText(url)
+          .then(function () {
+            button.textContent = '已复制 ✓';
+          })
+          .catch(function () {
+            button.textContent = '复制失败';
+          })
+          .finally(function () {
+            window.setTimeout(function () {
+              button.textContent = defaultText;
+            }, 1400);
+          });
+      });
+    })();
+  </script>
+</BaseLayout>

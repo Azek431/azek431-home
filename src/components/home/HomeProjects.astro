@@ -1,0 +1,76 @@
+---
+type ProjectItem = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  status: string;
+  accent: string;
+  tags: string[];
+};
+
+type Props = {
+  mainProject?: ProjectItem;
+  sideProjects: ProjectItem[];
+};
+
+const { mainProject, sideProjects } = Astro.props as Props;
+---
+
+<section class="section-v2 home-v3-projects" aria-labelledby="home-projects-title">
+  <div class="section-head-v2">
+    <p>Featured Projects</p>
+    <h2 id="home-projects-title">项目精选</h2>
+    <span>先展示最重要的作品，再展开更多项目和实验。</span>
+  </div>
+
+  <div class="home-v3-project-layout">
+    {
+      mainProject && (
+        <article class="home-v3-project-main" style={`--project-accent: ${mainProject.accent}`}>
+          <div>
+            <p>{mainProject.category}</p>
+            <strong>{mainProject.status}</strong>
+          </div>
+
+          <h3>{mainProject.title}</h3>
+          <p>{mainProject.description}</p>
+
+          <ul>
+            {mainProject.tags.slice(0, 4).map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+
+          <a
+            class="ui-button ui-button-primary"
+            href={`/projects/${mainProject.slug}/`}
+            aria-label={`查看 ${mainProject.title} 项目详情`}
+          >
+            查看主项目
+          </a>
+        </article>
+      )
+    }
+
+    <div class="home-v3-project-side">
+      {
+        sideProjects.map((project) => (
+          <article style={`--project-accent: ${project.accent}`}>
+            <div>
+              <span>{project.category}</span>
+              <strong>{project.status}</strong>
+            </div>
+
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+
+            <a href={`/projects/${project.slug}/`} aria-label={`查看 ${project.title} 项目详情`}>
+              查看详情 →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+---
+import { relativeDate } from '../../data/time';
+
+type UpdateItem = {
+  title: string;
+  desc: string;
+  href: string;
+  date: string;
+};
+
+type NetworkLink = {
+  name: string;
+  category: string;
+  href: string;
+};
+
+type Props = {
+  updates: UpdateItem[];
+  networkLinks: NetworkLink[];
+};
+
+const { updates, networkLinks } = Astro.props as Props;
+
+const isExternal = (href: string) => href.startsWith('http');
+---
+
+<section class="section-v2 home-v3-split" aria-label="最近更新和公开入口">
+  <div class="home-v3-updates">
+    <div class="section-head-v2">
+      <p>Activity Timeline</p>
+      <h2>最近更新</h2>
+      <span>首页只保留最新 3 条，完整记录放到 Changelog。</span>
+    </div>
+
+    <div class="home-v3-timeline">
+      {
+        updates.map((update) => (
+          <a
+            href={update.href}
+            target={isExternal(update.href) ? '_blank' : undefined}
+            rel={isExternal(update.href) ? 'noreferrer' : undefined}
+            aria-label={`查看更新：${update.title}`}
+          >
+            <span>
+              {update.date} · {relativeDate(update.date)}
+            </span>
+            <strong>{update.title}</strong>
+            <small>{update.desc}</small>
+          </a>
+        ))
+      }
+    </div>
+
+    <a class="home-v3-text-link" href="/changelog/">查看全部更新 →</a>
+  </div>
+
+  <aside class="home-v3-network">
+    <div class="section-head-v2">
+      <p>Public Network</p>
+      <h2>公开入口</h2>
+      <span>这里只保留真正的公开网络入口，避免和站内导航重复。</span>
+    </div>
+
+    <div>
+      {
+        networkLinks.map((link) => (
+          <a
+            href={link.href}
+            target={isExternal(link.href) ? '_blank' : undefined}
+            rel={isExternal(link.href) ? 'noreferrer' : undefined}
+            aria-label={`打开 ${link.name}`}
+          >
+            <strong>{link.name}</strong>
+            <span>{link.category}</span>
+          </a>
+        ))
+      }
+    </div>
+  </aside>
+</section>

@@ -1,0 +1,35 @@
+---
+type Phase = {
+  step: string;
+  title: string;
+  desc: string;
+  status: string;
+};
+
+type Props = {
+  phases: Phase[];
+};
+
+const { phases } = Astro.props as Props;
+---
+
+<section class="section-v2 home-v3-roadmap" aria-labelledby="home-roadmap-title">
+  <div class="section-head-v2">
+    <p>Roadmap</p>
+    <h2 id="home-roadmap-title">下一步会继续扩展</h2>
+    <span>从主站，到内容层，再到 AI 工具与自动化实验。</span>
+  </div>
+
+  <div class="home-v3-phase-grid">
+    {
+      phases.map((phase) => (
+        <article>
+          <span>{phase.step}</span>
+          <strong>{phase.title}</strong>
+          <p>{phase.desc}</p>
+          <small>{phase.status}</small>
+        </article>
+      ))
+    }
+  </div>
+</section>
