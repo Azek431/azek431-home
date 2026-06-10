@@ -5854,3 +5854,239 @@ html.is-home-page .section-v2::after {
     transform: none !important;
   }
 }
+
+/* ---------- Azek431 UI System V2 Step 12 Home Legacy Fine Tune ---------- */
+
+/*
+  第 12 步：首页第一代氛围精修 + 工程收口。
+  目标：保留新版组件化首页，但让首页更接近第一代 CSS 的柔和、高级、梦幻玻璃感。
+*/
+
+html.is-home-page {
+  --home-legacy-focus: rgba(168, 200, 255, 0.22);
+  --home-legacy-focus-soft: rgba(196, 181, 253, 0.13);
+  --home-legacy-mint-soft: rgba(110, 231, 183, 0.09);
+  --home-legacy-panel: rgba(9, 15, 29, 0.6);
+  --home-legacy-panel-deep: rgba(6, 10, 20, 0.68);
+}
+
+/* 首页整体多一层第一代那种柔和空间光，不用硬扫描线抢注意力 */
+html.is-home-page .home-v3 {
+  isolation: isolate;
+}
+
+html.is-home-page .home-v3::before,
+html.is-home-page .home-v3::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(34px);
+}
+
+html.is-home-page .home-v3::before {
+  top: 8vh;
+  left: 50%;
+  width: min(820px, 86vw);
+  height: 280px;
+  background:
+    radial-gradient(circle at 30% 50%, rgba(168, 200, 255, 0.13), transparent 62%),
+    radial-gradient(circle at 72% 46%, rgba(196, 181, 253, 0.11), transparent 64%);
+  transform: translateX(-50%);
+}
+
+html.is-home-page .home-v3::after {
+  right: 8vw;
+  bottom: 12%;
+  width: min(520px, 62vw);
+  height: 260px;
+  background: radial-gradient(circle, rgba(110, 231, 183, 0.08), transparent 68%);
+}
+
+/* 第一代感的关键：Hero 更像一整块柔软玻璃，而不是硬科技面板 */
+html.is-home-page .home-v3-copy,
+html.is-home-page .home-v3-console {
+  transform: translateZ(0);
+}
+
+html.is-home-page .home-v3-copy {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.17), transparent 23%),
+    radial-gradient(circle at 86% 8%, var(--home-legacy-focus), transparent 36%),
+    radial-gradient(circle at 50% 108%, var(--home-legacy-mint-soft), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.112), rgba(255, 255, 255, 0.024)),
+    var(--home-legacy-panel);
+  box-shadow:
+    0 46px 150px rgba(0, 0, 0, 0.44),
+    0 20px 80px rgba(168, 200, 255, 0.065),
+    inset 0 1px 0 rgba(255, 255, 255, 0.165),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html.is-home-page .home-v3-console {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.13), transparent 28%),
+    radial-gradient(circle at 88% 12%, var(--home-legacy-focus-soft), transparent 36%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.096), rgba(255, 255, 255, 0.022)),
+    var(--home-legacy-panel-deep);
+}
+
+/* 标题：减少硬赛博感，增加第一代那种干净发光 */
+html.is-home-page .home-v3 h1 {
+  text-wrap: balance;
+}
+
+html.is-home-page .home-v3 h1 span:last-child {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #dbeafe 20%,
+    #a8c8ff 46%,
+    #c4b5fd 78%,
+    #d9f99d 110%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: none;
+}
+
+/* 副文案更柔和，但保证可读性 */
+html.is-home-page .home-v3-lead,
+html.is-home-page .home-v3-project-main > p,
+html.is-home-page .home-v3-project-side p,
+html.is-home-page .home-v3-nav-grid small,
+html.is-home-page .home-v3-timeline small,
+html.is-home-page .home-v3-phase-grid p {
+  color: rgba(226, 232, 240, 0.8);
+}
+
+/* 首页卡片统一第一代玻璃卡风格：更轻，更柔，不用太重的科技纹理 */
+html.is-home-page .home-v3-command,
+html.is-home-page .home-v3-project-main,
+html.is-home-page .home-v3-project-side article,
+html.is-home-page .home-v3-nav-grid a,
+html.is-home-page .home-v3-timeline a,
+html.is-home-page .home-v3-network,
+html.is-home-page .home-v3-phase-grid article {
+  background:
+    radial-gradient(circle at 86% 0%, rgba(168, 200, 255, 0.095), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.021)),
+    rgba(9, 15, 29, 0.56);
+  box-shadow:
+    0 24px 84px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 主项目可以更强，但还是第一代那种柔光，不是强 HUD */
+html.is-home-page .home-v3-project-main {
+  background:
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--project-accent) 24%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.12), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.106), rgba(255, 255, 255, 0.024)),
+    rgba(9, 15, 29, 0.62);
+}
+
+/* 让首页按钮回到更像第一代的玻璃按钮 */
+html.is-home-page .home-v3 .ui-button {
+  min-height: 44px;
+  border-radius: 999px;
+}
+
+html.is-home-page .home-v3 .ui-button-primary {
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.36), rgba(196, 181, 253, 0.24)),
+    rgba(255, 255, 255, 0.07);
+}
+
+/* Command Palette 不要太硬，像一条漂亮的入口 */
+html.is-home-page .home-v3-command a {
+  border-color: rgba(168, 200, 255, 0.18);
+  background:
+    linear-gradient(90deg, rgba(168, 200, 255, 0.07), transparent 42%), rgba(255, 255, 255, 0.038);
+}
+
+html.is-home-page .home-v3-command kbd {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* 导航矩阵彩条更柔和，减少模板感 */
+html.is-home-page .home-v3-nav-grid a::before {
+  opacity: 0.78;
+  filter: blur(0.2px);
+}
+
+/* Roadmap 更像规划卡，而不是硬科技面板 */
+html.is-home-page .home-v3-phase-grid article {
+  min-height: 228px;
+}
+
+html.is-home-page .home-v3-phase-grid small {
+  color: rgba(226, 232, 240, 0.78);
+}
+
+/* 首页 hover 更贴近第一代：轻浮起、软光，不爆闪 */
+@media (hover: hover) and (pointer: fine) {
+  html.is-home-page .home-v3-copy:hover,
+  html.is-home-page .home-v3-console:hover,
+  html.is-home-page .home-v3-command:hover,
+  html.is-home-page .home-v3-project-main:hover,
+  html.is-home-page .home-v3-project-side article:hover,
+  html.is-home-page .home-v3-nav-grid a:hover,
+  html.is-home-page .home-v3-timeline a:hover,
+  html.is-home-page .home-v3-network:hover,
+  html.is-home-page .home-v3-phase-grid article:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 40px 130px rgba(0, 0, 0, 0.42),
+      0 16px 60px rgba(168, 200, 255, 0.075),
+      inset 0 1px 0 rgba(255, 255, 255, 0.145);
+  }
+}
+
+/* 首页移动端：保留第一代氛围，但进一步减轻 */
+@media (max-width: 760px) {
+  html.is-home-page .home-v3 {
+    gap: 44px;
+  }
+
+  html.is-home-page .home-v3::before {
+    top: 4vh;
+    height: 220px;
+    opacity: 0.72;
+  }
+
+  html.is-home-page .home-v3-copy,
+  html.is-home-page .home-v3-console,
+  html.is-home-page .home-v3-command,
+  html.is-home-page .home-v3-project-main,
+  html.is-home-page .home-v3-network {
+    border-radius: 28px;
+  }
+
+  html.is-home-page .home-v3-copy {
+    box-shadow:
+      0 28px 90px rgba(0, 0, 0, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  }
+}
+
+/* 不支持 backdrop-filter 时，保持干净深色玻璃外观 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  html.is-home-page .home-v3-copy,
+  html.is-home-page .home-v3-console,
+  html.is-home-page .home-v3-command,
+  html.is-home-page .home-v3-project-main,
+  html.is-home-page .home-v3-project-side article,
+  html.is-home-page .home-v3-nav-grid a,
+  html.is-home-page .home-v3-timeline a,
+  html.is-home-page .home-v3-network,
+  html.is-home-page .home-v3-phase-grid article {
+    background: rgba(9, 15, 29, 0.92);
+  }
+}

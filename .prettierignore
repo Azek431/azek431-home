@@ -4,3 +4,12 @@ dist
 .cache
 .vite
 pnpm-lock.yaml
+
+.tmp-ui-backup
+.vercel
+.wrangler
+coverage
+
+# Local generated files
+# Dependencies
+# Lockfile

@@ -856,3 +856,51 @@ https://github.com/Azek431
 当前项目主要用于个人网站建设和展示。
 
 后续可以根据实际需要补充开源许可证。
+
+## 当前实现补充：UI v2 与数字中枢视觉系统
+
+当前主站已经从早期的普通个人主页，逐步升级为 Azek431 Digital Nexus 风格的个人数字中枢。
+
+最新结构重点包括：
+
+- 首页采用组件化结构，核心组件位于 src/components/home/
+- HomeHero 负责首页首屏和主要行动入口
+- HomeStatusConsole 负责首页运行状态面板
+- HomeStats 负责首页概览数据
+- HomeCommand 负责 Command Palette 风格搜索入口
+- HomeProjects 负责项目精选展示
+- HomeNavigation 负责主要入口矩阵
+- HomeActivityNetwork 负责最近更新和公开入口
+- HomeRoadmap 负责阶段规划展示
+- VisualAura 负责全站背景氛围、液态玻璃光晕、鼠标光照和视觉空间感
+- InterfaceFX 负责滚动进度、轻量 HUD、滚动入场和界面状态增强
+- RuntimeCounter 负责 Footer 运行时间展示
+- Toast、ThemeToggle、Breadcrumb 等组件负责交互、主题和页面辅助体验
+
+样式方面，当前主要使用：
+
+- src/styles/global.css：基础样式、旧结构兼容和全局规则
+- src/styles/ui-system-v2.css：新 UI 系统、液态玻璃、高级首页、科技感、响应式和无障碍增强
+
+当前视觉方向：
+
+- 深色数字中枢
+- 柔和液态玻璃
+- 第一代主页氛围回调
+- 高级卡片层级
+- 科技感但不过度喧宾夺主
+- 移动端和低动态偏好降级
+
+## 日常开发检查
+
+日常小改建议优先运行轻量检查：
+
+- pnpm format:check
+- pnpm check
+- git diff --check
+
+只有在发布版本、部署前最终确认、依赖或构建配置变化、大结构改动时，再运行完整验证：
+
+- pnpm verify
+
+本地临时备份目录 .tmp-ui-backup/ 只用于回滚和对比，不应该提交到 Git 仓库。

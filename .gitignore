@@ -331,3 +331,8 @@ coverage/
 *.old
 *.temp
 *.tmp
+
+.tmp-ui-backup/
+.vercel/
+
+# Local generated files
