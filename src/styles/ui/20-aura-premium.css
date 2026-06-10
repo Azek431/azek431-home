@@ -1,0 +1,2381 @@
+/*
+  20-aura-premium.css
+  VisualAura、InterfaceFX、premium glass、liquid tech、HUD 和动效外壳。
+
+  注意：此文件由第 29 步从旧 ui-system-v2.css 拆分而来。
+  后续可以继续人工精修，但不要随意改变导入顺序。
+*/
+
+/* ---------- Azek431 UI System V2 Step 4 Premium Glass ---------- */
+
+:root {
+  --aura-x: 50vw;
+  --aura-y: 18vh;
+  --glass-edge: rgba(255, 255, 255, 0.16);
+  --glass-edge-strong: rgba(255, 255, 255, 0.24);
+  --glass-highlight: rgba(255, 255, 255, 0.075);
+  --glass-shadow-deep: 0 32px 120px rgba(0, 0, 0, 0.42);
+  --glass-shadow-soft: 0 18px 70px rgba(0, 0, 0, 0.3);
+  --glass-blue: rgba(168, 200, 255, 0.22);
+  --glass-violet: rgba(196, 181, 253, 0.18);
+  --glass-green: rgba(110, 231, 183, 0.12);
+}
+
+/* 全站氛围层：固定在背景，不影响点击 */
+.visual-aura {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(168, 200, 255, 0.12), transparent 32%),
+    radial-gradient(circle at 20% 110%, rgba(110, 231, 183, 0.08), transparent 30%);
+}
+
+.visual-aura__orb {
+  position: absolute;
+  width: 42vw;
+  min-width: 360px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  filter: blur(34px);
+  opacity: 0.62;
+  mix-blend-mode: screen;
+  transform: translate3d(0, 0, 0);
+}
+
+.visual-aura__orb--one {
+  top: -14vw;
+  left: -10vw;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(168, 200, 255, 0.32), transparent 56%),
+    radial-gradient(circle at 70% 60%, rgba(196, 181, 253, 0.18), transparent 58%);
+  animation: auraDriftOne 18s ease-in-out infinite alternate;
+}
+
+.visual-aura__orb--two {
+  top: 8vh;
+  right: -16vw;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(196, 181, 253, 0.28), transparent 58%),
+    radial-gradient(circle at 68% 62%, rgba(168, 200, 255, 0.14), transparent 58%);
+  animation: auraDriftTwo 22s ease-in-out infinite alternate;
+}
+
+.visual-aura__orb--three {
+  left: 28vw;
+  bottom: -20vw;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(110, 231, 183, 0.2), transparent 60%),
+    radial-gradient(circle at 62% 42%, rgba(168, 200, 255, 0.1), transparent 58%);
+  animation: auraDriftThree 26s ease-in-out infinite alternate;
+}
+
+.visual-aura__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.038) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image:
+    radial-gradient(circle at var(--aura-x) var(--aura-y), black 0, transparent 36vw),
+    linear-gradient(to bottom, black 0%, transparent 86%);
+}
+
+.visual-aura__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.55) 0 1px, transparent 1px);
+  background-size:
+    38px 38px,
+    54px 54px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+}
+
+.visual-aura__cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 420px;
+  height: 420px;
+  margin: -210px 0 0 -210px;
+  border-radius: 999px;
+  opacity: 0.2;
+  background: radial-gradient(circle, rgba(168, 200, 255, 0.5), transparent 62%);
+  filter: blur(12px);
+  transform: translate3d(var(--aura-x), var(--aura-y), 0);
+  transition: opacity 0.2s ease;
+}
+
+/* 统一让玻璃卡片拥有更明显的边缘、高光和深度 */
+.hero-copy,
+.hero-console,
+.page-v2-hero,
+.project-lab-card,
+.resource-group-v2,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.nexus-card,
+.card,
+.card-static,
+.stats-grid-v2 article,
+.local-stats-v2,
+.uses-grid-v2 > article,
+.principle-grid-v2 article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.changelog-entry-v2,
+.project-detail-hero-v2,
+.project-story-v2,
+.project-tags-v2,
+.feature-grid-v2 article,
+.footer-shell,
+.not-found-v2,
+.about-narrative-v2 {
+  border-color: var(--glass-edge);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.025)),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(168, 200, 255, 0.12),
+      transparent 36%
+    ),
+    rgba(8, 13, 24, 0.6);
+  box-shadow:
+    var(--glass-shadow-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(24px) saturate(165%);
+  -webkit-backdrop-filter: blur(24px) saturate(165%);
+}
+
+.hero-copy::after,
+.hero-console::after,
+.page-v2-hero::after,
+.project-lab-card::after,
+.resource-group-v2::after,
+.quick-action-card::after,
+.project-showcase-card::after,
+.nexus-card::after,
+.footer-shell::after,
+.about-narrative-v2::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.11), transparent 28%),
+    linear-gradient(315deg, rgba(168, 200, 255, 0.055), transparent 34%);
+  mask-image: linear-gradient(135deg, black 0%, transparent 42%);
+  opacity: 0.7;
+}
+
+/* Header 更像悬浮玻璃导航 */
+.site-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(7, 11, 20, 0.82), rgba(7, 11, 20, 0.56)), rgba(7, 11, 20, 0.68);
+  box-shadow:
+    0 12px 42px rgba(0, 0, 0, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.045);
+}
+
+/* 首屏标题高级一点：更紧凑、更像数字中枢 */
+.hero-copy h1,
+.page-v2-hero h1,
+.project-detail-hero-v2 h1,
+.not-found-v2 h1 {
+  text-shadow:
+    0 0 38px rgba(168, 200, 255, 0.13),
+    0 16px 60px rgba(0, 0, 0, 0.35);
+}
+
+.hero-copy h1 span {
+  background: linear-gradient(90deg, #dbeafe 0%, #a8c8ff 28%, #c4b5fd 58%, #6ee7b7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* 按钮加入更明显的玻璃边缘与流光 */
+.ui-button {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 34px rgba(0, 0, 0, 0.18);
+}
+
+.ui-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  transform: translateX(-120%);
+  transition: transform 0.5s ease;
+}
+
+.ui-button:hover::before {
+  transform: translateX(120%);
+}
+
+.ui-button-primary {
+  border-color: rgba(168, 200, 255, 0.46);
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.36), rgba(196, 181, 253, 0.24)),
+    rgba(255, 255, 255, 0.075);
+  box-shadow:
+    0 18px 56px rgba(99, 102, 241, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 数据卡片更像 dashboard tile */
+.home-stats-v2 article,
+.page-v2-stat-grid article,
+.stats-overview-v2 article,
+.local-stats-grid-v2 article {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-stats-v2 article::after,
+.page-v2-stat-grid article::after,
+.stats-overview-v2 article::after,
+.local-stats-grid-v2 article::after {
+  content: '';
+  position: absolute;
+  right: -38px;
+  top: -48px;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--tone-color, var(--v2-blue)) 32%, transparent),
+    transparent 70%
+  );
+}
+
+/* 卡片 hover 更克制但更高级 */
+.project-lab-card:hover,
+.resource-card-v2:hover,
+.quick-action-card:hover,
+.project-showcase-card:hover,
+.nexus-card a:hover,
+.update-list-v2 a:hover,
+.ecosystem-grid a:hover,
+.card:hover,
+.project-card:hover,
+.link-card:hover,
+.stat-card:hover {
+  transform: translateY(-6px) scale(1.006);
+  border-color: var(--glass-edge-strong);
+  box-shadow:
+    var(--glass-shadow-deep),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+/* 搜索框更像 Command Palette */
+.search-console-v2 div {
+  border-color: rgba(168, 200, 255, 0.22);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.02)),
+    rgba(0, 0, 0, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.18);
+}
+
+.search-console-v2 input:focus {
+  color: #ffffff;
+}
+
+/* Footer 变成真正的底部控制台 */
+.site-footer {
+  isolation: isolate;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 0;
+  z-index: -1;
+  height: 220px;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(168, 200, 255, 0.12), transparent 68%);
+  filter: blur(20px);
+}
+
+.footer-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-runtime,
+.runtime-counter {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(168, 200, 255, 0.18);
+}
+
+/* 细节：选中文本、滚动条、焦点状态 */
+::selection {
+  color: #08111f;
+  background: rgba(168, 200, 255, 0.88);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(168, 200, 255, 0.86);
+  outline-offset: 4px;
+}
+
+* {
+  scrollbar-color: rgba(168, 200, 255, 0.32) rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid rgba(7, 11, 20, 0.92);
+  border-radius: 999px;
+  background: rgba(168, 200, 255, 0.38);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 181, 253, 0.48);
+}
+
+@keyframes auraDriftOne {
+  from {
+    transform: translate3d(-2vw, -1vh, 0) rotate(0deg) scale(1);
+  }
+  to {
+    transform: translate3d(7vw, 5vh, 0) rotate(10deg) scale(1.08);
+  }
+}
+
+@keyframes auraDriftTwo {
+  from {
+    transform: translate3d(2vw, 2vh, 0) rotate(0deg) scale(1);
+  }
+  to {
+    transform: translate3d(-8vw, 7vh, 0) rotate(-12deg) scale(1.05);
+  }
+}
+
+@keyframes auraDriftThree {
+  from {
+    transform: translate3d(0, 3vh, 0) scale(1);
+  }
+  to {
+    transform: translate3d(5vw, -5vh, 0) scale(1.08);
+  }
+}
+
+@media (max-width: 760px) {
+  .visual-aura__orb {
+    min-width: 300px;
+    opacity: 0.42;
+    filter: blur(40px);
+  }
+
+  .visual-aura__cursor {
+    display: none;
+  }
+
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2 {
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visual-aura__orb,
+  .visual-aura__cursor,
+  .ui-button::before {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .visual-aura__cursor {
+    display: none;
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 5 Legacy Premium Restore ---------- */
+
+/*
+  这一层用于把早期高级视觉补丁里的“玻璃、光晕、流光、卡片深度、
+  控制台质感、细节交互”重新整理回 UI System V2。
+  不再污染 global.css，只作为新视觉系统的最终高级增强层。
+*/
+
+:root {
+  --azek-premium-border: rgba(255, 255, 255, 0.18);
+  --azek-premium-border-strong: rgba(255, 255, 255, 0.28);
+  --azek-premium-glow-blue: rgba(168, 200, 255, 0.2);
+  --azek-premium-glow-violet: rgba(196, 181, 253, 0.18);
+  --azek-premium-glow-green: rgba(110, 231, 183, 0.13);
+  --azek-premium-panel: rgba(8, 13, 24, 0.68);
+  --azek-premium-panel-soft: rgba(13, 20, 36, 0.52);
+  --azek-premium-shadow: 0 28px 110px rgba(0, 0, 0, 0.42);
+  --azek-premium-shadow-soft: 0 18px 70px rgba(0, 0, 0, 0.28);
+  --azek-premium-inner:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(255, 255, 255, 0.035);
+}
+
+/* 背景更接近“深色数字中枢”：轻微极光 + 网格 + 空间感 */
+body {
+  background:
+    radial-gradient(circle at 8% 8%, rgba(168, 200, 255, 0.18), transparent 32vw),
+    radial-gradient(circle at 92% 10%, rgba(196, 181, 253, 0.16), transparent 30vw),
+    radial-gradient(circle at 50% 112%, rgba(110, 231, 183, 0.105), transparent 38vw),
+    linear-gradient(180deg, #070b14 0%, #080d18 45%, #070b14 100%);
+}
+
+.visual-aura {
+  opacity: 1;
+}
+
+.visual-aura__grid {
+  opacity: 0.28;
+  background-size: 46px 46px;
+}
+
+.visual-aura__noise {
+  opacity: 0.105;
+}
+
+/* 统一高级玻璃容器：新 UI + 兼容之前的旧 class */
+.hero-copy,
+.hero-console,
+.home-v2-hero,
+.page-v2-hero,
+.project-detail-hero-v2,
+.footer-shell,
+.nexus-card,
+.about-narrative-v2,
+.not-found-v2,
+.project-lab-card,
+.resource-group-v2,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.stats-grid-v2 article,
+.local-stats-v2,
+.uses-grid-v2 > article,
+.principle-grid-v2 article,
+.tool-grid-v2 article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.changelog-entry-v2,
+.project-story-v2,
+.project-tags-v2,
+.feature-grid-v2 article,
+.card,
+.card-static,
+.project-card,
+.link-card,
+.stat-card,
+.content-card,
+.hero-main,
+.hero-side,
+.build-island,
+.home-quicklinks,
+.timeline-content,
+.writing-card,
+.about-preview {
+  position: relative;
+  border-color: var(--azek-premium-border);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.026)),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(168, 200, 255, 0.13),
+      transparent 38%
+    ),
+    var(--azek-premium-panel);
+  box-shadow: var(--azek-premium-shadow-soft), var(--azek-premium-inner);
+  backdrop-filter: blur(26px) saturate(172%);
+  -webkit-backdrop-filter: blur(26px) saturate(172%);
+}
+
+/* 玻璃边缘高光：让卡片不再“平” */
+.hero-copy::after,
+.hero-console::after,
+.page-v2-hero::after,
+.project-detail-hero-v2::after,
+.footer-shell::after,
+.nexus-card::after,
+.about-narrative-v2::after,
+.not-found-v2::after,
+.project-lab-card::after,
+.resource-group-v2::after,
+.quick-action-card::after,
+.project-showcase-card::after,
+.card::after,
+.card-static::after,
+.hero-main::after,
+.hero-side::after,
+.home-quicklinks::after,
+.writing-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 28%),
+    linear-gradient(315deg, rgba(168, 200, 255, 0.06), transparent 34%),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.09), transparent 28%);
+  mask-image: linear-gradient(135deg, black 0%, transparent 44%);
+  opacity: 0.78;
+}
+
+.hero-copy > *,
+.hero-console > *,
+.page-v2-hero > *,
+.project-detail-hero-v2 > *,
+.footer-shell > *,
+.nexus-card > *,
+.about-narrative-v2 > *,
+.not-found-v2 > *,
+.project-lab-card > *,
+.resource-group-v2 > *,
+.quick-action-card > *,
+.project-showcase-card > *,
+.card > *,
+.card-static > *,
+.hero-main > *,
+.hero-side > *,
+.home-quicklinks > *,
+.writing-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 恢复之前很有感觉的卡片流光 */
+.project-lab-card::before,
+.resource-card-v2::before,
+.quick-action-card::before,
+.project-showcase-card::before,
+.update-list-v2 a::before,
+.ecosystem-grid a::before,
+.card::before,
+.card-static::before,
+.timeline-content::before,
+.writing-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.075), transparent),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(196, 181, 253, 0.14),
+      transparent 42%
+    );
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.project-lab-card:hover::before,
+.resource-card-v2:hover::before,
+.quick-action-card:hover::before,
+.project-showcase-card:hover::before,
+.update-list-v2 a:hover::before,
+.ecosystem-grid a:hover::before,
+.card:hover::before,
+.card-static:hover::before,
+.timeline-content:hover::before,
+.writing-card:hover::before {
+  opacity: 1;
+}
+
+/* 首页首屏更高级：标题压缩、渐变更亮、控制台更像真实仪表盘 */
+.hero-copy h1,
+.page-v2-hero h1,
+.project-detail-hero-v2 h1,
+.not-found-v2 h1 {
+  letter-spacing: -0.092em;
+  text-shadow:
+    0 0 42px rgba(168, 200, 255, 0.16),
+    0 18px 68px rgba(0, 0, 0, 0.42);
+}
+
+.hero-copy h1 span,
+.grad {
+  background: linear-gradient(90deg, #eef6ff 0%, #a8c8ff 25%, #c4b5fd 58%, #6ee7b7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 28px rgba(168, 200, 255, 0.18));
+}
+
+.hero-pill,
+.page-v2-kicker,
+.footer-kicker {
+  text-shadow: 0 0 22px rgba(168, 200, 255, 0.18);
+}
+
+.hero-console,
+.stats-build-card,
+.search-console-v2 div,
+.console-body dl div,
+.project-detail-data-v2,
+.about-profile-v2,
+.now-status-v2,
+.colophon-principles-v2 {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.024)),
+    rgba(0, 0, 0, 0.22);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 16px 50px rgba(0, 0, 0, 0.22);
+}
+
+/* 之前那种快捷入口胶囊高级感也兼容回来 */
+.home-quicklinks,
+.link-filter-v2,
+.search-filter-v2 {
+  border-radius: 999px;
+}
+
+.link-filter-v2,
+.search-filter-v2 {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+    rgba(8, 13, 24, 0.52);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+.link-filter-pill,
+.search-filter-v2 button {
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.link-filter-pill:hover,
+.search-filter-v2 button:hover {
+  transform: translateY(-1px);
+  color: var(--v2-text);
+  background: rgba(255, 255, 255, 0.065);
+}
+
+.link-filter-pill[aria-pressed='true'],
+.search-filter-v2 button[aria-pressed='true'] {
+  box-shadow:
+    0 10px 30px rgba(99, 102, 241, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* 按钮恢复流光、磁吸、玻璃高光 */
+.ui-button,
+.button,
+a.button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ui-button {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.ui-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(168, 200, 255, 0.18),
+      transparent 40%
+    );
+  transform: translateX(-130%);
+  transition: transform 0.52s ease;
+}
+
+.ui-button:hover::before {
+  transform: translateX(130%);
+}
+
+.ui-button-primary {
+  border-color: rgba(168, 200, 255, 0.48);
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.38), rgba(196, 181, 253, 0.25)),
+    rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 62px rgba(99, 102, 241, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.ui-button-secondary {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025)),
+    rgba(13, 19, 36, 0.58);
+}
+
+.ui-button-ghost {
+  color: var(--v2-muted);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* 卡片 hover 恢复“高级但不浮夸”的 3D 感 */
+.project-lab-card,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.card,
+.card-static,
+.project-card,
+.link-card,
+.stat-card,
+.tool-grid-v2 article,
+.principle-grid-v2 article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.feature-grid-v2 article {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.project-lab-card:hover,
+.resource-card-v2:hover,
+.quick-action-card:hover,
+.project-showcase-card:hover,
+.update-list-v2 a:hover,
+.ecosystem-grid a:hover,
+.card:hover,
+.card-static:hover,
+.project-card:hover,
+.link-card:hover,
+.stat-card:hover,
+.tool-grid-v2 article:hover,
+.principle-grid-v2 article:hover,
+.blog-plan-v2 article:hover,
+.draft-grid-v2 article:hover,
+.feature-grid-v2 article:hover {
+  transform: translateY(-7px) scale(1.008);
+  border-color: var(--azek-premium-border-strong);
+  box-shadow:
+    var(--azek-premium-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* 数据卡片恢复 dashboard tile 的能量感 */
+.home-stats-v2 article,
+.page-v2-stat-grid article,
+.stats-overview-v2 article,
+.local-stats-grid-v2 article,
+.home-stat {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.026)),
+    rgba(13, 20, 36, 0.56);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 14px 42px rgba(0, 0, 0, 0.22);
+}
+
+.home-stats-v2 article::before,
+.page-v2-stat-grid article::before,
+.stats-overview-v2 article::before,
+.local-stats-grid-v2 article::before,
+.home-stat::before {
+  content: '';
+  position: absolute;
+  right: -42px;
+  top: -54px;
+  width: 136px;
+  height: 136px;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--tone-color, var(--v2-blue)) 36%, transparent),
+    transparent 72%
+  );
+  opacity: 0.92;
+}
+
+.home-stats-v2 strong,
+.page-v2-stat-grid strong,
+.stats-overview-v2 strong,
+.local-stats-grid-v2 strong,
+.home-stat-num {
+  text-shadow: 0 0 24px rgba(168, 200, 255, 0.12);
+}
+
+/* Header 和 Footer 恢复更强悬浮层级 */
+.site-header {
+  background:
+    linear-gradient(180deg, rgba(7, 11, 20, 0.86), rgba(7, 11, 20, 0.58)), rgba(7, 11, 20, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.085);
+  box-shadow:
+    0 14px 48px rgba(0, 0, 0, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.site-footer::before {
+  opacity: 1;
+}
+
+.footer-shell {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(168, 200, 255, 0.12), transparent 38%),
+    radial-gradient(circle at 90% 20%, rgba(196, 181, 253, 0.1), transparent 36%),
+    rgba(8, 13, 24, 0.68);
+}
+
+.footer-runtime,
+.runtime-counter {
+  color: #ffffff;
+  font-weight: 820;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 0 18px rgba(168, 200, 255, 0.22),
+    0 0 42px rgba(196, 181, 253, 0.1);
+}
+
+/* 搜索页面恢复命令面板质感 */
+.search-console-v2 div {
+  min-height: 66px;
+  border-color: rgba(168, 200, 255, 0.26);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(168, 200, 255, 0.11), transparent 42%),
+    rgba(0, 0, 0, 0.25);
+}
+
+.search-console-v2 input {
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.search-console-v2 input:focus {
+  color: #fff;
+}
+
+/* 详情页更像项目发布页 */
+.project-detail-hero-v2 {
+  background:
+    radial-gradient(
+      circle at 88% 8%,
+      color-mix(in srgb, var(--project-accent) 26%, transparent),
+      transparent 36%
+    ),
+    radial-gradient(circle at 8% 0%, rgba(168, 200, 255, 0.12), transparent 36%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.026)),
+    rgba(8, 13, 24, 0.68);
+}
+
+.project-detail-meta-v2 span,
+.project-tags-v2 span,
+.project-lab-tags li,
+.resource-card-v2 li,
+.ecosystem-grid span,
+.now-work-list-v2 span,
+.now-work-list-v2 small,
+.draft-grid-v2 span,
+.draft-grid-v2 small,
+.blog-plan-v2 p {
+  border-color: rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* 文本心理层级：标题更聚焦，正文更舒服 */
+.hero-lead,
+.page-v2-hero p:not(.page-v2-kicker),
+.section-head-v2 span,
+.project-lab-desc,
+.resource-card-v2 span,
+.update-list-v2 span,
+.about-narrative-v2 p,
+.project-story-v2 div {
+  color: rgba(203, 213, 225, 0.78);
+}
+
+.section-head-v2 h2,
+.project-lab-card h2,
+.resource-group-head h2,
+.stats-grid-v2 h2,
+.uses-grid-v2 h2,
+.changelog-entry-v2 h2,
+.project-story-v2 h2,
+.project-tags-v2 h2 {
+  text-shadow: 0 0 26px rgba(168, 200, 255, 0.08);
+}
+
+/* 选中、焦点、滚动条继续高级化 */
+::selection {
+  color: #08111f;
+  background: rgba(168, 200, 255, 0.9);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(168, 200, 255, 0.9);
+  outline-offset: 4px;
+}
+
+* {
+  scrollbar-color: rgba(168, 200, 255, 0.34) rgba(255, 255, 255, 0.055);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid rgba(7, 11, 20, 0.92);
+  border-radius: 999px;
+  background: rgba(168, 200, 255, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 181, 253, 0.5);
+}
+
+/* 移动端：保留高级感，但减少过强 blur 和 hover 成本 */
+@media (max-width: 760px) {
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2,
+  .footer-shell,
+  .project-lab-card,
+  .resource-group-v2,
+  .quick-action-card,
+  .project-showcase-card,
+  .nexus-card {
+    backdrop-filter: blur(18px) saturate(148%);
+    -webkit-backdrop-filter: blur(18px) saturate(148%);
+  }
+
+  .link-filter-v2,
+  .search-filter-v2 {
+    border-radius: var(--v2-radius-lg);
+  }
+
+  .hero-copy h1,
+  .page-v2-hero h1,
+  .project-detail-hero-v2 h1 {
+    letter-spacing: -0.075em;
+  }
+}
+
+/* 无障碍 / 低动态：保留视觉，不保留动效 */
+@media (prefers-reduced-motion: reduce) {
+  .project-lab-card,
+  .resource-card-v2,
+  .quick-action-card,
+  .project-showcase-card,
+  .update-list-v2 a,
+  .ecosystem-grid a,
+  .card,
+  .card-static,
+  .project-card,
+  .link-card,
+  .stat-card,
+  .tool-grid-v2 article,
+  .principle-grid-v2 article,
+  .blog-plan-v2 article,
+  .draft-grid-v2 article,
+  .feature-grid-v2 article,
+  .ui-button {
+    transition: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .project-lab-card:hover,
+  .resource-card-v2:hover,
+  .quick-action-card:hover,
+  .project-showcase-card:hover,
+  .update-list-v2 a:hover,
+  .ecosystem-grid a:hover,
+  .card:hover,
+  .card-static:hover,
+  .project-card:hover,
+  .link-card:hover,
+  .stat-card:hover,
+  .tool-grid-v2 article:hover,
+  .principle-grid-v2 article:hover,
+  .blog-plan-v2 article:hover,
+  .draft-grid-v2 article:hover,
+  .feature-grid-v2 article:hover {
+    transform: none !important;
+  }
+
+  .ui-button::before,
+  .project-lab-card::before,
+  .resource-card-v2::before,
+  .quick-action-card::before,
+  .project-showcase-card::before,
+  .update-list-v2 a::before,
+  .ecosystem-grid a::before,
+  .card::before,
+  .card-static::before,
+  .timeline-content::before,
+  .writing-card::before {
+    display: none !important;
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 6 Liquid Tech Glass ---------- */
+
+/*
+  第 6 步：液态玻璃 + 科技中枢增强层。
+  目标：在已有 UI v2 / Premium Glass 基础上增加“液态折射、扫描线、能量边框、
+  hologram 数据卡片、科技背景”的高级质感。
+*/
+
+:root {
+  --liquid-cyan: rgba(125, 211, 252, 0.2);
+  --liquid-blue: rgba(168, 200, 255, 0.24);
+  --liquid-violet: rgba(196, 181, 253, 0.2);
+  --liquid-green: rgba(110, 231, 183, 0.14);
+  --liquid-white: rgba(255, 255, 255, 0.18);
+  --liquid-edge: rgba(226, 232, 240, 0.22);
+  --tech-line: rgba(168, 200, 255, 0.18);
+  --tech-line-soft: rgba(168, 200, 255, 0.08);
+  --tech-shadow: 0 34px 130px rgba(0, 0, 0, 0.46);
+}
+
+/* 背景再加一层液态折射光，不靠图片，纯 CSS */
+.visual-aura__liquid {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 42% 58% 62% 38% / 48% 44% 56% 52%;
+  filter: blur(18px);
+  opacity: 0.32;
+  mix-blend-mode: screen;
+}
+
+.visual-aura__liquid--one {
+  top: 16vh;
+  left: 8vw;
+  width: min(460px, 46vw);
+  aspect-ratio: 1.35;
+  background:
+    radial-gradient(circle at 26% 32%, rgba(255, 255, 255, 0.34), transparent 14%),
+    radial-gradient(circle at 68% 30%, rgba(168, 200, 255, 0.34), transparent 34%),
+    radial-gradient(circle at 48% 74%, rgba(196, 181, 253, 0.26), transparent 38%),
+    rgba(125, 211, 252, 0.14);
+  animation: liquidMorphOne 16s ease-in-out infinite alternate;
+}
+
+.visual-aura__liquid--two {
+  right: 10vw;
+  bottom: 16vh;
+  width: min(520px, 52vw);
+  aspect-ratio: 1.15;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.24), transparent 16%),
+    radial-gradient(circle at 72% 44%, rgba(110, 231, 183, 0.28), transparent 36%),
+    radial-gradient(circle at 48% 72%, rgba(168, 200, 255, 0.22), transparent 42%),
+    rgba(196, 181, 253, 0.12);
+  animation: liquidMorphTwo 20s ease-in-out infinite alternate;
+}
+
+.visual-aura__ring {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0.2;
+  background: conic-gradient(
+    from 120deg,
+    transparent 0deg,
+    rgba(168, 200, 255, 0.34) 52deg,
+    transparent 112deg,
+    rgba(196, 181, 253, 0.28) 184deg,
+    transparent 260deg,
+    rgba(110, 231, 183, 0.2) 320deg,
+    transparent 360deg
+  );
+  mask-image: radial-gradient(circle, transparent 58%, black 60%, black 64%, transparent 66%);
+  filter: blur(0.2px);
+}
+
+.visual-aura__ring--one {
+  top: 9vh;
+  right: 18vw;
+  width: 340px;
+  height: 340px;
+  animation: techRingSpin 26s linear infinite;
+}
+
+.visual-aura__ring--two {
+  left: 12vw;
+  bottom: 12vh;
+  width: 420px;
+  height: 420px;
+  animation: techRingSpin 34s linear infinite reverse;
+}
+
+.visual-aura__scanner {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.13;
+  background:
+    linear-gradient(to bottom, transparent, rgba(168, 200, 255, 0.18), transparent),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 13px,
+      rgba(255, 255, 255, 0.04) 14px,
+      transparent 15px
+    );
+  background-size:
+    100% 360px,
+    100% 18px;
+  animation: scannerMove 9s linear infinite;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 72%, transparent 100%);
+}
+
+/* 液态玻璃容器：更像 iOS / visionOS 的折射玻璃 */
+.hero-copy,
+.hero-console,
+.page-v2-hero,
+.project-detail-hero-v2,
+.footer-shell,
+.nexus-card,
+.about-narrative-v2,
+.not-found-v2,
+.project-lab-card,
+.resource-group-v2,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.stats-grid-v2 article,
+.local-stats-v2,
+.uses-grid-v2 > article,
+.principle-grid-v2 article,
+.tool-grid-v2 article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.changelog-entry-v2,
+.project-story-v2,
+.project-tags-v2,
+.feature-grid-v2 article {
+  border-color: var(--liquid-edge);
+  background:
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(255, 255, 255, 0.16),
+      transparent 18%
+    ),
+    radial-gradient(
+      circle at calc(var(--mx, 50%) + 80px) calc(var(--my, 0%) + 80px),
+      rgba(168, 200, 255, 0.13),
+      transparent 34%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.026)),
+    linear-gradient(315deg, rgba(125, 211, 252, 0.07), rgba(196, 181, 253, 0.04)),
+    rgba(8, 13, 24, 0.66);
+  box-shadow:
+    var(--tech-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.045),
+    inset 0 0 34px rgba(168, 200, 255, 0.035);
+  backdrop-filter: blur(30px) saturate(185%) contrast(1.06);
+  -webkit-backdrop-filter: blur(30px) saturate(185%) contrast(1.06);
+}
+
+/* 液态边框：用双层渐变模拟折射边缘 */
+.hero-copy::after,
+.hero-console::after,
+.page-v2-hero::after,
+.project-detail-hero-v2::after,
+.footer-shell::after,
+.nexus-card::after,
+.about-narrative-v2::after,
+.not-found-v2::after,
+.project-lab-card::after,
+.resource-group-v2::after,
+.quick-action-card::after,
+.project-showcase-card::after {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 24%),
+    linear-gradient(315deg, rgba(125, 211, 252, 0.11), transparent 34%),
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 82% 8%, rgba(196, 181, 253, 0.12), transparent 28%);
+  opacity: 0.92;
+}
+
+/* 科技感：卡片内部细线、角标、能量边缘 */
+.project-lab-card,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.stats-grid-v2 article,
+.uses-grid-v2 > article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.feature-grid-v2 article,
+.changelog-entry-v2 {
+  isolation: isolate;
+}
+
+.project-lab-card::marker,
+.resource-card-v2::marker {
+  display: none;
+}
+
+.project-lab-card::before,
+.resource-card-v2::before,
+.quick-action-card::before,
+.project-showcase-card::before,
+.update-list-v2 a::before,
+.ecosystem-grid a::before,
+.stats-grid-v2 article::before,
+.uses-grid-v2 > article::before,
+.blog-plan-v2 article::before,
+.draft-grid-v2 article::before,
+.feature-grid-v2 article::before,
+.changelog-entry-v2::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(125, 211, 252, 0.16),
+      transparent 34%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 18px,
+      rgba(168, 200, 255, 0.035) 19px,
+      transparent 20px
+    );
+}
+
+/* 四角科技切角线 */
+.project-lab-card,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.nexus-card,
+.page-v2-hero,
+.project-detail-hero-v2,
+.footer-shell {
+  --corner-size: 18px;
+}
+
+.project-lab-card > :first-child::before,
+.resource-card-v2 > :first-child::before,
+.quick-action-card > :first-child::before,
+.project-showcase-card > :first-child::before,
+.nexus-card > :first-child::before,
+.page-v2-hero > :first-child::before,
+.project-detail-hero-v2 > :first-child::before,
+.footer-shell > :first-child::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  width: var(--corner-size);
+  height: var(--corner-size);
+  pointer-events: none;
+  border-top: 1px solid rgba(168, 200, 255, 0.42);
+  border-left: 1px solid rgba(168, 200, 255, 0.42);
+  border-radius: 5px 0 0 0;
+  opacity: 0.66;
+}
+
+/* 首页：标题和控制台更科技 */
+.hero-copy h1 span,
+.grad {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #dbeafe 16%,
+    #7dd3fc 34%,
+    #c4b5fd 66%,
+    #6ee7b7 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 22px rgba(125, 211, 252, 0.2))
+    drop-shadow(0 0 46px rgba(196, 181, 253, 0.1));
+}
+
+.hero-pill,
+.console-label,
+.page-v2-kicker,
+.section-head-v2 p,
+.footer-kicker {
+  color: #bfe2ff;
+  text-shadow:
+    0 0 16px rgba(125, 211, 252, 0.24),
+    0 0 36px rgba(168, 200, 255, 0.12);
+}
+
+/* 数据卡片 hologram 化 */
+.home-stats-v2 article,
+.page-v2-stat-grid article,
+.stats-overview-v2 article,
+.local-stats-grid-v2 article {
+  border-color: rgba(125, 211, 252, 0.18);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.024)),
+    radial-gradient(
+      circle at 82% 0%,
+      color-mix(in srgb, var(--tone-color, #7dd3fc) 22%, transparent),
+      transparent 38%
+    ),
+    rgba(8, 13, 24, 0.54);
+}
+
+.home-stats-v2 strong,
+.page-v2-stat-grid strong,
+.stats-overview-v2 strong,
+.local-stats-grid-v2 strong {
+  color: #f8fbff;
+  text-shadow:
+    0 0 20px color-mix(in srgb, var(--tone-color, #7dd3fc) 28%, transparent),
+    0 14px 36px rgba(0, 0, 0, 0.32);
+}
+
+/* 按钮：科技能量边框 */
+.ui-button {
+  border-color: rgba(125, 211, 252, 0.2);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.025)),
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(125, 211, 252, 0.13),
+      transparent 44%
+    ),
+    rgba(255, 255, 255, 0.038);
+}
+
+.ui-button-primary {
+  border-color: rgba(125, 211, 252, 0.48);
+  background:
+    linear-gradient(135deg, rgba(125, 211, 252, 0.36), rgba(196, 181, 253, 0.27)),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.18), transparent 36%),
+    rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 22px 70px rgba(14, 165, 233, 0.2),
+    0 16px 48px rgba(99, 102, 241, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+/* 搜索框：更像科幻命令面板 */
+.search-console-v2 div {
+  border-color: rgba(125, 211, 252, 0.32);
+  background:
+    linear-gradient(90deg, rgba(125, 211, 252, 0.08), transparent 34%),
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.11), transparent 34%),
+    rgba(0, 0, 0, 0.28);
+}
+
+.search-console-v2 span {
+  color: #7dd3fc;
+  text-shadow: 0 0 18px rgba(125, 211, 252, 0.38);
+}
+
+/* Footer：底部像控制台基座 */
+.footer-shell {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(125, 211, 252, 0.16), transparent 34%),
+    radial-gradient(circle at 88% 20%, rgba(196, 181, 253, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.026)),
+    rgba(8, 13, 24, 0.7);
+}
+
+.footer-nav a,
+.shortcut-trigger {
+  border-color: rgba(125, 211, 252, 0.16);
+}
+
+.runtime-counter,
+.footer-runtime {
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(125, 211, 252, 0.28),
+    0 0 42px rgba(196, 181, 253, 0.13);
+}
+
+/* hover：更像液态玻璃浮起，而不是普通卡片浮起 */
+.project-lab-card:hover,
+.resource-card-v2:hover,
+.quick-action-card:hover,
+.project-showcase-card:hover,
+.update-list-v2 a:hover,
+.ecosystem-grid a:hover,
+.stats-grid-v2 article:hover,
+.uses-grid-v2 > article:hover,
+.blog-plan-v2 article:hover,
+.draft-grid-v2 article:hover,
+.feature-grid-v2 article:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(125, 211, 252, 0.32);
+  box-shadow:
+    0 38px 140px rgba(0, 0, 0, 0.5),
+    0 18px 60px rgba(14, 165, 233, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* 滤镜类效果不要太重，移动端降级 */
+@keyframes liquidMorphOne {
+  0% {
+    border-radius: 42% 58% 62% 38% / 48% 44% 56% 52%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  100% {
+    border-radius: 56% 44% 38% 62% / 40% 58% 42% 60%;
+    transform: translate3d(4vw, 3vh, 0) rotate(8deg) scale(1.08);
+  }
+}
+
+@keyframes liquidMorphTwo {
+  0% {
+    border-radius: 58% 42% 46% 54% / 52% 38% 62% 48%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  100% {
+    border-radius: 40% 60% 58% 42% / 44% 58% 42% 56%;
+    transform: translate3d(-5vw, -3vh, 0) rotate(-9deg) scale(1.06);
+  }
+}
+
+@keyframes techRingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scannerMove {
+  from {
+    background-position:
+      0 -360px,
+      0 0;
+  }
+
+  to {
+    background-position:
+      0 360px,
+      0 18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .visual-aura__liquid {
+    opacity: 0.2;
+    filter: blur(28px);
+  }
+
+  .visual-aura__ring,
+  .visual-aura__scanner {
+    opacity: 0.08;
+  }
+
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2,
+  .footer-shell,
+  .project-lab-card,
+  .resource-group-v2,
+  .resource-card-v2,
+  .quick-action-card,
+  .project-showcase-card,
+  .nexus-card {
+    backdrop-filter: blur(20px) saturate(155%);
+    -webkit-backdrop-filter: blur(20px) saturate(155%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visual-aura__liquid,
+  .visual-aura__ring,
+  .visual-aura__scanner {
+    animation: none !important;
+  }
+
+  .visual-aura__scanner {
+    display: none;
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 7 Tech HUD Microinteractions ---------- */
+
+/*
+  第 7 步：科技 HUD + 液态微交互增强层。
+  目标：加入滚动进度、科技角标、轻量入场动画、页面就绪状态和更强的中枢感。
+*/
+
+:root {
+  --scroll-progress: 0;
+  --hud-line: rgba(125, 211, 252, 0.26);
+  --hud-line-soft: rgba(125, 211, 252, 0.12);
+  --hud-text: rgba(226, 246, 255, 0.78);
+  --hud-glow: rgba(125, 211, 252, 0.24);
+}
+
+/* 页面初始轻量加载感 */
+html.is-enhanced-ui body {
+  opacity: 0.985;
+}
+
+html.is-page-ready body {
+  opacity: 1;
+}
+
+/* 顶部滚动进度条：像系统能量条 */
+.interface-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+}
+
+.interface-fx__progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.interface-fx__progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    rgba(125, 211, 252, 0.95),
+    rgba(196, 181, 253, 0.88),
+    rgba(110, 231, 183, 0.8)
+  );
+  box-shadow:
+    0 0 18px rgba(125, 211, 252, 0.5),
+    0 0 42px rgba(196, 181, 253, 0.24);
+}
+
+/* 四角科技 HUD，增强“数字中枢”氛围 */
+.interface-fx__corner {
+  position: fixed;
+  z-index: 90;
+  width: 34px;
+  height: 34px;
+  border-color: var(--hud-line);
+  opacity: 0.58;
+  filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.18));
+}
+
+.interface-fx__corner--tl {
+  top: 18px;
+  left: 18px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-radius: 10px 0 0 0;
+}
+
+.interface-fx__corner--tr {
+  top: 18px;
+  right: 18px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-radius: 0 10px 0 0;
+}
+
+.interface-fx__corner--bl {
+  bottom: 18px;
+  left: 18px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-radius: 0 0 0 10px;
+}
+
+.interface-fx__corner--br {
+  right: 18px;
+  bottom: 18px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-radius: 0 0 10px 0;
+}
+
+/* 右下角小型状态 HUD */
+.interface-fx__hud {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 95;
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 999px;
+  color: var(--hud-text);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
+    rgba(7, 11, 20, 0.58);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.interface-fx__hud strong {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.interface-fx__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #6ee7b7;
+  box-shadow:
+    0 0 0 4px rgba(110, 231, 183, 0.08),
+    0 0 18px rgba(110, 231, 183, 0.64);
+}
+
+/* 科技分割线：让大区块之间更有仪表盘层级 */
+.section-v2 {
+  position: relative;
+}
+
+.section-v2::before {
+  content: '';
+  position: absolute;
+  top: -26px;
+  left: 0;
+  width: min(320px, 52vw);
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(125, 211, 252, 0.36),
+    rgba(196, 181, 253, 0.18),
+    transparent
+  );
+  box-shadow: 0 0 16px rgba(125, 211, 252, 0.16);
+}
+
+.section-v2::after {
+  content: '';
+  position: absolute;
+  top: -29px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  pointer-events: none;
+  border-radius: 999px;
+  background: rgba(125, 211, 252, 0.9);
+  box-shadow:
+    0 0 0 4px rgba(125, 211, 252, 0.08),
+    0 0 18px rgba(125, 211, 252, 0.42);
+}
+
+/* 滚动入场：轻量，不影响无障碍 */
+.fx-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.992);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: calc(min(var(--reveal-index, 0), 8) * 36ms);
+}
+
+.fx-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* 液态玻璃新增“内侧折射纹理” */
+.hero-copy,
+.hero-console,
+.page-v2-hero,
+.project-detail-hero-v2,
+.project-lab-card,
+.resource-group-v2,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.nexus-card,
+.stats-grid-v2 article,
+.local-stats-v2,
+.uses-grid-v2 > article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.feature-grid-v2 article,
+.footer-shell {
+  background-image:
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(255, 255, 255, 0.18),
+      transparent 16%
+    ),
+    radial-gradient(
+      circle at calc(var(--mx, 50%) + 90px) calc(var(--my, 0%) + 90px),
+      rgba(125, 211, 252, 0.12),
+      transparent 32%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.026)),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 26px,
+      rgba(255, 255, 255, 0.018) 27px,
+      transparent 28px
+    ),
+    rgba(8, 13, 24, 0.66);
+}
+
+/* 卡片标题多一点科技字符间距，但不影响中文阅读 */
+.project-lab-card h2,
+.project-showcase-card h3,
+.quick-action-card span,
+.resource-card-v2 strong,
+.stats-grid-v2 h2,
+.uses-grid-v2 h2,
+.changelog-entry-v2 h2,
+.project-story-v2 h2,
+.project-tags-v2 h2 {
+  letter-spacing: -0.055em;
+}
+
+/* 标签胶囊变成更像状态芯片 */
+.project-detail-meta-v2 span,
+.project-tags-v2 span,
+.project-lab-tags li,
+.resource-card-v2 li,
+.ecosystem-grid span,
+.now-work-list-v2 span,
+.now-work-list-v2 small,
+.draft-grid-v2 span,
+.draft-grid-v2 small,
+.blog-plan-v2 p,
+.link-filter-pill,
+.search-filter-v2 button {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-detail-meta-v2 span::before,
+.project-tags-v2 span::before,
+.project-lab-tags li::before,
+.resource-card-v2 li::before,
+.ecosystem-grid span::before,
+.now-work-list-v2 span::before,
+.now-work-list-v2 small::before,
+.draft-grid-v2 span::before,
+.draft-grid-v2 small::before,
+.blog-plan-v2 p::before,
+.link-filter-pill::before,
+.search-filter-v2 button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-120%);
+  transition: transform 0.45s ease;
+}
+
+.project-detail-meta-v2 span:hover::before,
+.project-tags-v2 span:hover::before,
+.project-lab-tags li:hover::before,
+.resource-card-v2 li:hover::before,
+.ecosystem-grid span:hover::before,
+.now-work-list-v2 span:hover::before,
+.now-work-list-v2 small:hover::before,
+.draft-grid-v2 span:hover::before,
+.draft-grid-v2 small:hover::before,
+.blog-plan-v2 p:hover::before,
+.link-filter-pill:hover::before,
+.search-filter-v2 button:hover::before {
+  transform: translateX(120%);
+}
+
+/* 首页控制台更像系统状态 */
+.console-body h2 {
+  color: #f8fbff;
+  text-shadow:
+    0 0 22px rgba(110, 231, 183, 0.18),
+    0 0 48px rgba(125, 211, 252, 0.12);
+}
+
+.console-body dl div,
+.stats-build-card,
+.project-detail-data-v2 article,
+.about-profile-v2 article,
+.now-status-v2 article,
+.colophon-principles-v2 article {
+  border-color: rgba(125, 211, 252, 0.14);
+}
+
+/* 移动端不要让 HUD 太抢眼 */
+@media (max-width: 820px) {
+  .interface-fx__hud {
+    display: none;
+  }
+
+  .interface-fx__corner {
+    width: 24px;
+    height: 24px;
+    opacity: 0.34;
+  }
+
+  .interface-fx__corner--tl,
+  .interface-fx__corner--tr {
+    top: 12px;
+  }
+
+  .interface-fx__corner--bl,
+  .interface-fx__corner--br {
+    bottom: 12px;
+  }
+
+  .interface-fx__corner--tl,
+  .interface-fx__corner--bl {
+    left: 12px;
+  }
+
+  .interface-fx__corner--tr,
+  .interface-fx__corner--br {
+    right: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .interface-fx__corner {
+    display: none;
+  }
+
+  .section-v2::before {
+    width: min(240px, 70vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-reveal,
+  .fx-reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .interface-fx__progress span,
+  .project-detail-meta-v2 span::before,
+  .project-tags-v2 span::before,
+  .project-lab-tags li::before,
+  .resource-card-v2 li::before,
+  .ecosystem-grid span::before,
+  .now-work-list-v2 span::before,
+  .now-work-list-v2 small::before,
+  .draft-grid-v2 span::before,
+  .draft-grid-v2 small::before,
+  .blog-plan-v2 p::before,
+  .link-filter-pill::before,
+  .search-filter-v2 button::before {
+    transition: none !important;
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 8 Polish Guard ---------- */
+
+/*
+  第 8 步：液态玻璃精修 + 性能守卫 + 高级感校准。
+  目标：让 UI 更高级，但不让动效、blur、hover 和背景层过度影响性能。
+*/
+
+:root {
+  --polish-radius-liquid: 34px;
+  --polish-glass-alpha: 0.68;
+  --polish-edge-alpha: 0.2;
+  --polish-motion-fast: 160ms;
+  --polish-motion-mid: 260ms;
+  --polish-motion-slow: 520ms;
+}
+
+/* 滚动后 Header 更像压缩后的玻璃系统栏 */
+html.is-scrolled .site-header {
+  background:
+    linear-gradient(180deg, rgba(7, 11, 20, 0.9), rgba(7, 11, 20, 0.64)), rgba(7, 11, 20, 0.78);
+  box-shadow:
+    0 16px 54px rgba(0, 0, 0, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+html.is-scrolling-down .site-header {
+  transform: translateY(-2px);
+}
+
+.site-header {
+  transition:
+    transform var(--polish-motion-mid) ease,
+    background var(--polish-motion-mid) ease,
+    box-shadow var(--polish-motion-mid) ease,
+    border-color var(--polish-motion-mid) ease;
+}
+
+/* 页面首屏再加一个非常轻的“镜头聚焦” */
+.home-v2::before,
+.page-v2-hero::before,
+.project-detail-hero-v2::before {
+  filter: saturate(1.08);
+}
+
+/* 液态玻璃卡片的圆角统一校准，减少风格割裂 */
+.hero-copy,
+.hero-console,
+.page-v2-hero,
+.project-detail-hero-v2,
+.footer-shell,
+.nexus-card,
+.about-narrative-v2,
+.not-found-v2,
+.project-lab-card,
+.resource-group-v2,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.stats-grid-v2 article,
+.local-stats-v2,
+.uses-grid-v2 > article,
+.principle-grid-v2 article,
+.tool-grid-v2 article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.changelog-entry-v2,
+.project-story-v2,
+.project-tags-v2,
+.feature-grid-v2 article {
+  border-radius: min(var(--v2-radius-xl), var(--polish-radius-liquid));
+}
+
+/* 大卡片更圆，小卡片略克制 */
+.resource-card-v2,
+.quick-action-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.stats-grid-v2 article,
+.tool-grid-v2 article,
+.feature-grid-v2 article {
+  border-radius: var(--v2-radius-lg);
+}
+
+/* 高级感校准：把“亮”集中在边缘和 hover，不让默认状态过曝 */
+.hero-copy,
+.hero-console,
+.page-v2-hero,
+.project-detail-hero-v2,
+.footer-shell,
+.nexus-card,
+.project-lab-card,
+.resource-group-v2,
+.project-showcase-card,
+.about-narrative-v2 {
+  background:
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(255, 255, 255, 0.14),
+      transparent 15%
+    ),
+    radial-gradient(
+      circle at calc(var(--mx, 50%) + 92px) calc(var(--my, 0%) + 92px),
+      rgba(125, 211, 252, 0.105),
+      transparent 30%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.024)),
+    rgba(8, 13, 24, var(--polish-glass-alpha));
+}
+
+/* 给主要卡片补一个底部“厚玻璃边” */
+.hero-copy,
+.hero-console,
+.page-v2-hero,
+.project-detail-hero-v2,
+.footer-shell,
+.project-lab-card,
+.resource-group-v2,
+.project-showcase-card,
+.nexus-card {
+  box-shadow:
+    0 34px 120px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.045),
+    inset 0 -18px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* 让科技角标更细腻，不喧宾夺主 */
+.interface-fx__corner {
+  opacity: 0.42;
+}
+
+html.is-scrolled .interface-fx__corner {
+  opacity: 0.32;
+}
+
+/* HUD 更克制：默认半透明，hover 区域不挡内容 */
+.interface-fx__hud {
+  opacity: 0.74;
+  transform: translateZ(0);
+  transition:
+    opacity var(--polish-motion-mid) ease,
+    transform var(--polish-motion-mid) ease;
+}
+
+html.is-scrolling-down .interface-fx__hud {
+  opacity: 0.42;
+  transform: translateY(4px);
+}
+
+/* 顶部进度条更细、更高级 */
+.interface-fx__progress {
+  height: 1px;
+}
+
+.interface-fx__progress span {
+  box-shadow:
+    0 0 14px rgba(125, 211, 252, 0.46),
+    0 0 32px rgba(196, 181, 253, 0.2);
+}
+
+/* 动效节奏统一：减少“每个东西都很跳”的感觉 */
+.ui-button,
+.project-lab-card,
+.resource-card-v2,
+.quick-action-card,
+.project-showcase-card,
+.update-list-v2 a,
+.ecosystem-grid a,
+.stats-grid-v2 article,
+.uses-grid-v2 > article,
+.blog-plan-v2 article,
+.draft-grid-v2 article,
+.feature-grid-v2 article,
+.footer-nav a,
+.shortcut-trigger,
+.link-filter-pill,
+.search-filter-v2 button {
+  transition-duration: var(--polish-motion-mid);
+}
+
+/* hover 统一变成“浮起 + 轻微发光”，不再过强 */
+.project-lab-card:hover,
+.resource-card-v2:hover,
+.quick-action-card:hover,
+.project-showcase-card:hover,
+.update-list-v2 a:hover,
+.ecosystem-grid a:hover,
+.stats-grid-v2 article:hover,
+.uses-grid-v2 > article:hover,
+.blog-plan-v2 article:hover,
+.draft-grid-v2 article:hover,
+.feature-grid-v2 article:hover {
+  transform: translateY(-6px) scale(1.006);
+}
+
+/* 文本清晰度校准：防止背景太亮时正文发灰 */
+.hero-lead,
+.page-v2-hero p:not(.page-v2-kicker),
+.section-head-v2 span,
+.project-lab-desc,
+.resource-card-v2 span,
+.update-list-v2 span,
+.about-narrative-v2 p,
+.project-story-v2 div,
+.uses-grid-v2 li span,
+.now-work-list-v2 p,
+.draft-grid-v2 p {
+  color: rgba(219, 226, 238, 0.78);
+}
+
+.hero-copy h1,
+.page-v2-hero h1,
+.project-detail-hero-v2 h1,
+.not-found-v2 h1 {
+  color: #f8fbff;
+}
+
+/* 重要数字和状态更锐利 */
+.home-stats-v2 strong,
+.page-v2-stat-grid strong,
+.stats-overview-v2 strong,
+.local-stats-grid-v2 strong,
+.console-body h2 {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* 卡片里的芯片统一不刺眼 */
+.project-detail-meta-v2 span,
+.project-tags-v2 span,
+.project-lab-tags li,
+.resource-card-v2 li,
+.ecosystem-grid span,
+.now-work-list-v2 span,
+.now-work-list-v2 small,
+.draft-grid-v2 span,
+.draft-grid-v2 small,
+.blog-plan-v2 p,
+.link-filter-pill,
+.search-filter-v2 button {
+  color: rgba(226, 232, 240, 0.76);
+  border-color: rgba(226, 232, 240, 0.13);
+}
+
+/* 鼠标细腻设备才启用强 hover；触屏设备禁掉过度 hover 成本 */
+@media (hover: hover) and (pointer: fine) {
+  .ui-button:hover,
+  .footer-nav a:hover,
+  .shortcut-trigger:hover,
+  .link-filter-pill:hover,
+  .search-filter-v2 button:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (hover: none) {
+  .project-lab-card:hover,
+  .resource-card-v2:hover,
+  .quick-action-card:hover,
+  .project-showcase-card:hover,
+  .update-list-v2 a:hover,
+  .ecosystem-grid a:hover,
+  .stats-grid-v2 article:hover,
+  .uses-grid-v2 > article:hover,
+  .blog-plan-v2 article:hover,
+  .draft-grid-v2 article:hover,
+  .feature-grid-v2 article:hover,
+  .ui-button:hover,
+  .footer-nav a:hover,
+  .shortcut-trigger:hover,
+  .link-filter-pill:hover,
+  .search-filter-v2 button:hover {
+    transform: none;
+  }
+}
+
+/* 低带宽 / 低性能偏好：弱化背景动态和强 blur */
+@media (prefers-reduced-data: reduce) {
+  .visual-aura__liquid,
+  .visual-aura__ring,
+  .visual-aura__scanner,
+  .visual-aura__cursor {
+    display: none;
+  }
+
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2,
+  .footer-shell,
+  .nexus-card,
+  .about-narrative-v2,
+  .not-found-v2,
+  .project-lab-card,
+  .resource-group-v2,
+  .resource-card-v2,
+  .quick-action-card,
+  .project-showcase-card {
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+}
+
+/* 强制高对比模式：保证可读性，不追求玻璃效果 */
+@media (forced-colors: active) {
+  .visual-aura,
+  .interface-fx,
+  .visual-aura__orb,
+  .visual-aura__liquid,
+  .visual-aura__ring,
+  .visual-aura__scanner,
+  .visual-aura__noise,
+  .visual-aura__cursor {
+    display: none !important;
+  }
+
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2,
+  .footer-shell,
+  .nexus-card,
+  .about-narrative-v2,
+  .not-found-v2,
+  .project-lab-card,
+  .resource-group-v2,
+  .resource-card-v2,
+  .quick-action-card,
+  .project-showcase-card,
+  .update-list-v2 a,
+  .ecosystem-grid a,
+  .stats-grid-v2 article,
+  .local-stats-v2,
+  .uses-grid-v2 > article,
+  .principle-grid-v2 article,
+  .tool-grid-v2 article,
+  .blog-plan-v2 article,
+  .draft-grid-v2 article,
+  .changelog-entry-v2,
+  .project-story-v2,
+  .project-tags-v2,
+  .feature-grid-v2 article {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .ui-button,
+  .footer-nav a,
+  .shortcut-trigger,
+  .link-filter-pill,
+  .search-filter-v2 button {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+/* 打印模式：别把玻璃、背景、HUD 打进纸面 */
+@media print {
+  .visual-aura,
+  .interface-fx,
+  .site-header,
+  .site-footer,
+  .hero-actions,
+  .project-detail-actions-v2,
+  .shortcut-panel {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2,
+  .project-lab-card,
+  .resource-card-v2,
+  .quick-action-card,
+  .project-showcase-card,
+  .nexus-card,
+  .stats-grid-v2 article,
+  .uses-grid-v2 > article,
+  .blog-plan-v2 article,
+  .draft-grid-v2 article,
+  .feature-grid-v2 article {
+    break-inside: avoid;
+    border: 1px solid #ddd !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+}
+
+/* 移动端最后校准：高级但不压屏幕 */
+@media (max-width: 760px) {
+  :root {
+    --polish-radius-liquid: 26px;
+  }
+
+  .hero-copy,
+  .hero-console,
+  .page-v2-hero,
+  .project-detail-hero-v2 {
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .visual-aura__grid {
+    opacity: 0.16;
+  }
+
+  .visual-aura__noise {
+    opacity: 0.06;
+  }
+}

@@ -1,0 +1,562 @@
+/*
+  70-tokens-responsive-gitee.css
+  颜色、字体、间距、响应式系统，以及 GitHub / Gitee 镜像入口。
+
+  注意：此文件由第 29 步从旧 ui-system-v2.css 拆分而来。
+  后续可以继续人工精修，但不要随意改变导入顺序。
+*/
+
+/* ---------- Azek431 UI System V2 Step 25-28 Tokens Responsive Gitee ---------- */
+
+/*
+  第 25～28 步组合：
+  - 颜色系统收敛
+  - 字体系统收敛
+  - 间距系统收敛
+  - 响应式专项优化
+  - 主页 / 项目页补 GitHub + Gitee 镜像入口展示
+*/
+
+:root {
+  /* 第一代系统色彩角色 */
+  --az-color-bg-deep: #060914;
+  --az-color-bg-soft: #090f1f;
+  --az-color-surface: rgba(8, 13, 26, 0.56);
+  --az-color-surface-strong: rgba(9, 15, 29, 0.66);
+  --az-color-blue: #a8c8ff;
+  --az-color-violet: #c4b5fd;
+  --az-color-mint: #6ee7b7;
+  --az-color-amber: #fcd34d;
+  --az-color-text: rgba(248, 251, 255, 0.96);
+  --az-color-text-soft: rgba(226, 232, 240, 0.8);
+  --az-color-muted: rgba(203, 213, 225, 0.72);
+  --az-color-faint: rgba(148, 163, 184, 0.62);
+  --az-color-border: rgba(255, 255, 255, 0.12);
+  --az-color-border-hover: rgba(255, 255, 255, 0.2);
+
+  /* 字体系统 */
+  --az-font-hero: clamp(64px, 11vw, 148px);
+  --az-font-page-title: clamp(44px, 7vw, 88px);
+  --az-font-section-title: clamp(28px, 4vw, 48px);
+  --az-font-card-title: clamp(22px, 2.6vw, 32px);
+  --az-font-body: clamp(16px, 1.4vw, 18px);
+  --az-font-small: 13px;
+  --az-font-chip: 12px;
+  --az-font-button: 14px;
+
+  --az-leading-body: 1.78;
+  --az-leading-loose: 1.86;
+  --az-track-hero: -0.086em;
+  --az-track-title: -0.058em;
+  --az-track-card: -0.045em;
+
+  /* 间距系统 */
+  --az-page-gap: clamp(44px, 7vw, 88px);
+  --az-section-gap: clamp(36px, 6vw, 72px);
+  --az-card-gap: clamp(14px, 2vw, 18px);
+  --az-hero-padding: clamp(28px, 5vw, 58px);
+  --az-card-padding-lg: clamp(22px, 3vw, 34px);
+  --az-card-padding-md: clamp(18px, 2.4vw, 24px);
+  --az-chip-padding: 6px 10px;
+
+  --az-radius-sm: 16px;
+  --az-radius-md: 22px;
+  --az-radius-lg: 30px;
+  --az-radius-xl: 38px;
+  --az-radius-pill: 999px;
+
+  --az-shadow-card: 0 22px 78px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --az-shadow-card-hover:
+    0 32px 106px rgba(0, 0, 0, 0.36), 0 14px 52px rgba(168, 200, 255, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================================
+   第 25 步：颜色系统收敛
+   ============================================================ */
+
+body {
+  color: var(--az-color-text);
+  background:
+    radial-gradient(circle at 10% -8%, rgba(168, 200, 255, 0.15), transparent 34vw),
+    radial-gradient(circle at 92% 2%, rgba(196, 181, 253, 0.12), transparent 32vw),
+    radial-gradient(circle at 50% 118%, rgba(110, 231, 183, 0.08), transparent 42vw),
+    linear-gradient(
+      180deg,
+      var(--az-color-bg-deep) 0%,
+      var(--az-color-bg-soft) 46%,
+      var(--az-color-bg-deep) 100%
+    );
+}
+
+:where(
+  .page-hero-v3,
+  .page-v2-hero,
+  .home-v3-copy,
+  .home-v3-console,
+  .footer-shell,
+  .project-card-v3,
+  .project-lab-card,
+  .resource-card-v2,
+  .link-card-v2,
+  .search-results-v2 li,
+  .stats-dashboard-v3 article,
+  .about-now-grid-v3 article
+) {
+  border-color: var(--az-color-border);
+}
+
+:where(
+  .page-hero-v3:hover,
+  .home-v3-copy:hover,
+  .home-v3-console:hover,
+  .footer-shell:hover,
+  .project-card-v3:hover,
+  .project-lab-card:hover,
+  .resource-card-v2:hover,
+  .link-card-v2:hover,
+  .search-results-v2 li:hover
+) {
+  border-color: var(--az-color-border-hover);
+}
+
+/* 黄色只作为少量状态点缀，不再大面积铺背景 */
+[data-tone='amber'],
+.home-v3-stats article[data-tone='amber'],
+.stats-dashboard-v3 article[data-tone='amber'] {
+  --tone-color: var(--az-color-amber);
+}
+
+/* ============================================================
+   第 26 步：字体系统收敛
+   ============================================================ */
+
+.home-v3 h1 {
+  font-size: var(--az-font-hero);
+  letter-spacing: var(--az-track-hero);
+}
+
+:where(.page-hero-v3 h1, .page-v2-hero h1, .project-detail-hero-v2 h1, .not-found-v2 h1) {
+  font-size: var(--az-font-page-title);
+  letter-spacing: var(--az-track-title);
+}
+
+:where(
+  .section-head-v2 h2,
+  .stats-dashboard-v3__head h2,
+  .about-narrative-v3 h2,
+  .footer-brand-v3 h2
+) {
+  letter-spacing: var(--az-track-title);
+}
+
+:where(
+  .project-card-v3 h2,
+  .home-v3-project-main h3,
+  .home-v3-project-side h3,
+  .resource-card-v2 strong,
+  .link-card-v2 strong,
+  .project-lab-card h2
+) {
+  font-size: var(--az-font-card-title);
+  letter-spacing: var(--az-track-card);
+  text-wrap: balance;
+}
+
+:where(
+  p,
+  li,
+  .page-hero-v3__description,
+  .home-v3-lead,
+  .project-card-v3__body span,
+  .about-narrative-v3 p
+) {
+  line-height: var(--az-leading-body);
+}
+
+:where(
+  .home-v3-lead,
+  .page-hero-v3__description,
+  .about-narrative-v3 p,
+  .project-card-v3__body span
+) {
+  color: var(--az-color-text-soft);
+}
+
+:where(.section-head-v2 span, .project-card-v3__meta, .footer-brand-v3 span, .footer-bottom-v3 p) {
+  color: var(--az-color-muted);
+}
+
+:where(
+  .stats-dashboard-v3__value,
+  .stats-dashboard-v3__metrics dd,
+  .footer-runtime-counter,
+  .home-v3-stats strong,
+  .page-hero-v3__meta dd
+) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 按钮文字统一 */
+:where(
+  .ui-button,
+  .project-mirror-link,
+  .link-filter-pill,
+  .search-filter-v2 button,
+  .shortcut-trigger
+) {
+  font-size: var(--az-font-button);
+  font-weight: 760;
+}
+
+/* ============================================================
+   第 27 步：间距系统收敛
+   ============================================================ */
+
+:where(.home-v3, .projects-v3, .stats-v3, .about-v3) {
+  gap: var(--az-page-gap);
+}
+
+:where(.section-v2, .home-v3-projects, .about-now-v3, .about-skills-v3, .about-focus-v3) {
+  margin-block: var(--az-section-gap);
+}
+
+:where(
+  .project-showcase-v3,
+  .project-lab-grid,
+  .resource-grid-v2,
+  .stats-dashboard-v3,
+  .about-now-grid-v3,
+  .about-focus-grid-v3
+) {
+  gap: var(--az-card-gap);
+}
+
+:where(.page-hero-v3, .page-v2-hero, .home-v3-copy, .project-detail-hero-v2) {
+  padding: var(--az-hero-padding);
+}
+
+:where(
+  .project-card-v3,
+  .project-lab-card,
+  .resource-card-v2,
+  .link-card-v2,
+  .search-results-v2 li,
+  .about-now-grid-v3 article,
+  .stats-dashboard-v3 article
+) {
+  padding: var(--az-card-padding-md);
+}
+
+/* Footer 前留白统一 */
+.site-footer {
+  margin-top: clamp(76px, 10vw, 128px);
+}
+
+/* ============================================================
+   Gitee / GitHub 镜像入口：主页与项目页
+   ============================================================ */
+
+.home-v3-project-actions,
+.home-v3-project-side-actions,
+.project-card-v3__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+}
+
+.home-v3-project-actions {
+  margin-top: 24px;
+}
+
+.home-v3-project-side-actions {
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.home-v3-project-mirrors {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+}
+
+.project-mirror-link,
+.home-v3-project-mirrors a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: var(--az-radius-pill);
+  color: rgba(219, 234, 254, 0.78);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.012)),
+    rgba(255, 255, 255, 0.022);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.052);
+  font-size: 12px;
+  font-weight: 740;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.project-mirror-link--primary {
+  border-color: rgba(168, 200, 255, 0.24);
+  color: rgba(248, 251, 255, 0.92);
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.16), rgba(196, 181, 253, 0.08)),
+    rgba(255, 255, 255, 0.034);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-mirror-link:hover,
+  .home-v3-project-mirrors a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(168, 200, 255, 0.28);
+    color: #ffffff;
+    background:
+      linear-gradient(135deg, rgba(168, 200, 255, 0.18), rgba(196, 181, 253, 0.1)),
+      rgba(255, 255, 255, 0.04);
+    box-shadow:
+      0 12px 34px rgba(0, 0, 0, 0.2),
+      0 8px 28px rgba(168, 200, 255, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* 项目展示页 v3 */
+.projects-v3 {
+  display: grid;
+}
+
+.project-showcase-v3 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-card-v3 {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  min-height: 420px;
+  overflow: hidden;
+  border: 1px solid var(--az-color-border);
+  border-radius: var(--az-radius-lg);
+  background:
+    radial-gradient(
+      circle at 88% 0%,
+      color-mix(in srgb, var(--project-accent, #a8c8ff) 16%, transparent),
+      transparent 36%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.066), rgba(255, 255, 255, 0.017)),
+    rgba(8, 13, 26, 0.54);
+  box-shadow: var(--az-shadow-card);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+.project-card-v3::before {
+  content: '';
+  width: 46px;
+  height: 4px;
+  border-radius: var(--az-radius-pill);
+  background: var(--project-accent, var(--az-color-blue));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--project-accent, #a8c8ff) 28%, transparent);
+}
+
+.project-card-v3__top,
+.project-card-v3__actions,
+.project-card-v3__meta {
+  position: relative;
+  z-index: 1;
+}
+
+.project-card-v3__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.project-card-v3__top span,
+.project-card-v3__top strong,
+.project-card-v3__tags li {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 28px;
+  align-items: center;
+  padding: var(--az-chip-padding);
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: var(--az-radius-pill);
+  color: rgba(226, 232, 240, 0.76);
+  background: rgba(255, 255, 255, 0.026);
+  font-size: var(--az-font-chip);
+  font-weight: 720;
+  line-height: 1;
+}
+
+.project-card-v3__body p {
+  margin: 0 0 14px;
+  color: rgba(191, 226, 255, 0.72);
+  font-size: var(--az-font-chip);
+  font-weight: 820;
+  letter-spacing: 0.1em;
+}
+
+.project-card-v3__body h2 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--az-color-text);
+  font-size: clamp(34px, 4.5vw, 58px);
+  line-height: 0.96;
+  letter-spacing: -0.07em;
+}
+
+.project-card-v3__body span {
+  display: block;
+  max-width: 64ch;
+  margin-top: 16px;
+  color: var(--az-color-text-soft);
+}
+
+.project-card-v3__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.project-card-v3__meta {
+  color: var(--az-color-faint);
+  font-size: 13px;
+}
+
+.project-card-v3__actions {
+  align-self: end;
+}
+
+/* ============================================================
+   第 28 步：响应式专项优化
+   ============================================================ */
+
+@media (max-width: 1180px) {
+  .project-showcase-v3 {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-v3 {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 920px) {
+  :root {
+    --az-page-gap: clamp(38px, 6vw, 64px);
+    --az-section-gap: clamp(32px, 5vw, 58px);
+    --az-hero-padding: 30px;
+  }
+
+  .home-v3-project-side-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --az-font-hero: clamp(56px, 18vw, 86px);
+    --az-font-page-title: clamp(40px, 12vw, 62px);
+    --az-font-section-title: clamp(26px, 8vw, 38px);
+    --az-font-card-title: clamp(21px, 6vw, 28px);
+    --az-page-gap: 44px;
+    --az-section-gap: 38px;
+    --az-card-gap: 12px;
+    --az-hero-padding: 26px;
+    --az-card-padding-md: 18px;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 22% -8%, rgba(168, 200, 255, 0.12), transparent 62vw),
+      radial-gradient(circle at 88% 12%, rgba(196, 181, 253, 0.09), transparent 58vw),
+      linear-gradient(180deg, #060914 0%, #090f1f 50%, #060914 100%);
+  }
+
+  .home-v3-actions,
+  .home-v3-project-actions,
+  .project-card-v3__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-v3-actions .ui-button,
+  .home-v3-project-actions .ui-button,
+  .home-v3-project-actions .project-mirror-link,
+  .project-card-v3__actions .ui-button,
+  .project-card-v3__actions .project-mirror-link {
+    width: 100%;
+  }
+
+  .home-v3-project-mirrors {
+    width: 100%;
+  }
+
+  .home-v3-project-mirrors a {
+    flex: 1 1 auto;
+  }
+
+  .project-card-v3 {
+    min-height: auto;
+    border-radius: 24px;
+  }
+
+  .project-card-v3__top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .project-card-v3__body h2 {
+    max-width: 100%;
+    font-size: clamp(34px, 11vw, 48px);
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --az-card-padding-md: 16px;
+    --az-hero-padding: 22px;
+  }
+
+  .project-mirror-link,
+  .home-v3-project-mirrors a {
+    min-height: 36px;
+    font-size: 12px;
+  }
+}
+
+@media (hover: none) {
+  .project-card-v3:hover,
+  .project-mirror-link:hover,
+  .home-v3-project-mirrors a:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-v3,
+  .project-mirror-link,
+  .home-v3-project-mirrors a {
+    transition: none !important;
+  }
+}

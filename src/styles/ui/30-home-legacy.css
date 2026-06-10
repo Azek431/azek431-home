@@ -1,0 +1,1737 @@
+/*
+  30-home-legacy.css
+  首页 home-v3、首页信息架构、第一代主页氛围回调和 legacy skin。
+
+  注意：此文件由第 29 步从旧 ui-system-v2.css 拆分而来。
+  后续可以继续人工精修，但不要随意改变导入顺序。
+*/
+
+/* ---------- Azek431 UI System V2 Step 9 Home IA Polish ---------- */
+
+/*
+  第 9 步：首页信息架构重排 + 高级感收敛。
+  目标：解决首页内容重复、视觉主次不够强、Hero 文案解释感过重、
+  Roadmap 不够未来感、公开入口重复等问题。
+*/
+
+.home-v3 {
+  position: relative;
+  display: grid;
+  gap: clamp(46px, 7vw, 86px);
+}
+
+.home-v3-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(330px, 0.86fr);
+  gap: clamp(18px, 3vw, 28px);
+  align-items: stretch;
+  margin-top: clamp(22px, 5vw, 52px);
+}
+
+.home-v3-copy,
+.home-v3-console,
+.home-v3-command,
+.home-v3-project-main,
+.home-v3-project-side article,
+.home-v3-nav-grid a,
+.home-v3-timeline a,
+.home-v3-network,
+.home-v3-phase-grid article {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.18);
+  background:
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      rgba(255, 255, 255, 0.14),
+      transparent 17%
+    ),
+    radial-gradient(
+      circle at calc(var(--mx, 50%) + 90px) calc(var(--my, 0%) + 90px),
+      rgba(125, 211, 252, 0.11),
+      transparent 34%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.026)),
+    rgba(8, 13, 24, 0.68);
+  box-shadow:
+    0 34px 120px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(26px) saturate(172%);
+  -webkit-backdrop-filter: blur(26px) saturate(172%);
+}
+
+.home-v3-copy {
+  display: grid;
+  align-content: center;
+  min-height: clamp(560px, 72vh, 760px);
+  padding: clamp(28px, 5vw, 58px);
+  border-radius: clamp(28px, 4vw, 42px);
+}
+
+.home-v3-copy::after,
+.home-v3-console::after,
+.home-v3-command::after,
+.home-v3-project-main::after,
+.home-v3-network::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 18% 0%, rgba(125, 211, 252, 0.12), transparent 26%),
+    radial-gradient(circle at 82% 8%, rgba(196, 181, 253, 0.1), transparent 30%);
+  mask-image: linear-gradient(135deg, black 0%, transparent 46%);
+  opacity: 0.82;
+}
+
+.home-v3-copy > *,
+.home-v3-console > *,
+.home-v3-command > *,
+.home-v3-project-main > *,
+.home-v3-network > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-v3-kicker {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 12px;
+  margin: 0 0 22px;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 999px;
+  color: rgba(191, 226, 255, 0.86);
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+}
+
+.home-v3-kicker span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #6ee7b7;
+  box-shadow:
+    0 0 0 5px rgba(110, 231, 183, 0.08),
+    0 0 22px rgba(110, 231, 183, 0.64);
+}
+
+.home-v3 h1 {
+  max-width: 10ch;
+  margin: 0;
+  color: #f8fbff;
+  font-size: clamp(64px, 11vw, 148px);
+  line-height: 0.84;
+  letter-spacing: -0.105em;
+  text-shadow:
+    0 0 42px rgba(125, 211, 252, 0.16),
+    0 22px 80px rgba(0, 0, 0, 0.46);
+}
+
+.home-v3 h1 span {
+  display: block;
+}
+
+.home-v3 h1 span:last-child {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #dbeafe 16%,
+    #7dd3fc 34%,
+    #c4b5fd 66%,
+    #6ee7b7 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 24px rgba(125, 211, 252, 0.2))
+    drop-shadow(0 0 52px rgba(196, 181, 253, 0.1));
+}
+
+.home-v3-lead {
+  max-width: 58ch;
+  margin: 24px 0 0;
+  color: rgba(226, 232, 240, 0.78);
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.85;
+}
+
+.home-v3-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.home-v3-tracks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: clamp(28px, 5vw, 54px);
+}
+
+.home-v3-tracks article {
+  padding: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.home-v3-tracks strong {
+  display: block;
+  color: #f8fbff;
+  font-size: 18px;
+}
+
+.home-v3-tracks span {
+  display: block;
+  margin-top: 6px;
+  color: rgba(203, 213, 225, 0.72);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.home-v3-console {
+  display: grid;
+  align-content: center;
+  padding: clamp(22px, 3vw, 32px);
+  border-radius: clamp(26px, 3vw, 36px);
+}
+
+.home-v3-console-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+}
+
+.home-v3-console-head span,
+.home-v3-command p,
+.home-v3-project-main > div p,
+.home-v3-nav-grid span,
+.home-v3-timeline span,
+.home-v3-network .section-head-v2 p,
+.home-v3-phase-grid span {
+  margin: 0;
+  color: #bfe2ff;
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(125, 211, 252, 0.24);
+}
+
+.home-v3-console-head strong {
+  color: #6ee7b7;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+
+.home-v3-console dl {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+
+.home-v3-console dl div {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.1);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.home-v3-console dt {
+  color: rgba(148, 163, 184, 0.76);
+  font-size: 12px;
+}
+
+.home-v3-console dd {
+  margin: 0;
+  color: #f8fbff;
+  font-weight: 760;
+}
+
+.home-v3-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.home-v3-stats article {
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.14);
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      circle at 82% 0%,
+      color-mix(in srgb, var(--tone-color, #7dd3fc) 24%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.026)),
+    rgba(8, 13, 24, 0.56);
+}
+
+.home-v3-stats article[data-tone='blue'] {
+  --tone-color: #7dd3fc;
+}
+
+.home-v3-stats article[data-tone='violet'] {
+  --tone-color: #c4b5fd;
+}
+
+.home-v3-stats article[data-tone='green'] {
+  --tone-color: #6ee7b7;
+}
+
+.home-v3-stats article[data-tone='amber'] {
+  --tone-color: #fcd34d;
+}
+
+.home-v3-stats span {
+  color: rgba(203, 213, 225, 0.72);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-v3-stats strong {
+  display: block;
+  margin-top: 8px;
+  color: #f8fbff;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1;
+  letter-spacing: -0.08em;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--tone-color) 30%, transparent);
+}
+
+.home-v3-stats small {
+  display: block;
+  margin-top: 6px;
+  color: rgba(203, 213, 225, 0.72);
+}
+
+.home-v3-command {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
+  gap: 18px;
+  align-items: center;
+  padding: clamp(20px, 3vw, 28px);
+  border-radius: 30px;
+}
+
+.home-v3-command h2 {
+  margin: 8px 0;
+  color: #f8fbff;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.07em;
+}
+
+.home-v3-command span {
+  color: rgba(203, 213, 225, 0.74);
+}
+
+.home-v3-command a {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 68px;
+  padding: 12px 14px;
+  border: 1px solid rgba(125, 211, 252, 0.24);
+  border-radius: 22px;
+  color: inherit;
+  background:
+    linear-gradient(90deg, rgba(125, 211, 252, 0.075), transparent 38%), rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+.home-v3-command kbd {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(226, 232, 240, 0.18);
+  border-radius: 14px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  font: inherit;
+  font-weight: 820;
+}
+
+.home-v3-command a strong {
+  color: #7dd3fc;
+}
+
+.home-v3-project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: 16px;
+}
+
+.home-v3-project-main {
+  display: grid;
+  align-content: end;
+  min-height: 440px;
+  padding: clamp(24px, 4vw, 38px);
+  border-radius: 34px;
+  background:
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--project-accent) 32%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.026)),
+    rgba(8, 13, 24, 0.68);
+}
+
+.home-v3-project-main > div,
+.home-v3-project-side article > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.home-v3-project-main > div strong,
+.home-v3-project-side article > div strong {
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid rgba(226, 232, 240, 0.14);
+  border-radius: 999px;
+  color: #f8fbff;
+  background: rgba(255, 255, 255, 0.055);
+  font-size: 12px;
+}
+
+.home-v3-project-main h3 {
+  max-width: 11ch;
+  margin: 22px 0 0;
+  color: #f8fbff;
+  font-size: clamp(44px, 7vw, 86px);
+  line-height: 0.92;
+  letter-spacing: -0.085em;
+}
+
+.home-v3-project-main > p {
+  max-width: 62ch;
+  margin: 18px 0 0;
+  color: rgba(226, 232, 240, 0.76);
+  line-height: 1.8;
+}
+
+.home-v3-project-main ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 20px 0 24px;
+  list-style: none;
+}
+
+.home-v3-project-main li {
+  padding: 6px 10px;
+  border: 1px solid rgba(226, 232, 240, 0.12);
+  border-radius: 999px;
+  color: rgba(226, 232, 240, 0.76);
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 12px;
+}
+
+.home-v3-project-side {
+  display: grid;
+  gap: 14px;
+}
+
+.home-v3-project-side article {
+  display: grid;
+  align-content: space-between;
+  min-height: 213px;
+  padding: 22px;
+  border-radius: 28px;
+}
+
+.home-v3-project-side h3 {
+  margin: 18px 0 0;
+  color: #f8fbff;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -0.06em;
+}
+
+.home-v3-project-side p {
+  margin: 12px 0 18px;
+  color: rgba(203, 213, 225, 0.74);
+  line-height: 1.72;
+}
+
+.home-v3-project-side a,
+.home-v3-text-link {
+  width: fit-content;
+  color: #bfe2ff;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.home-v3-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.home-v3-nav-grid a {
+  display: grid;
+  gap: 10px;
+  min-height: 210px;
+  padding: 22px;
+  border-radius: 28px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-v3-nav-grid a[data-accent='blue'] {
+  --nav-accent: #7dd3fc;
+}
+
+.home-v3-nav-grid a[data-accent='violet'] {
+  --nav-accent: #c4b5fd;
+}
+
+.home-v3-nav-grid a[data-accent='green'] {
+  --nav-accent: #6ee7b7;
+}
+
+.home-v3-nav-grid a[data-accent='amber'] {
+  --nav-accent: #fcd34d;
+}
+
+.home-v3-nav-grid a::before {
+  content: '';
+  width: 38px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--nav-accent, #7dd3fc);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--nav-accent, #7dd3fc) 38%, transparent);
+}
+
+.home-v3-nav-grid strong {
+  color: #f8fbff;
+  font-size: 24px;
+  letter-spacing: -0.05em;
+}
+
+.home-v3-nav-grid small {
+  color: rgba(203, 213, 225, 0.72);
+  line-height: 1.72;
+}
+
+.home-v3-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(300px, 0.96fr);
+  gap: 18px;
+}
+
+.home-v3-timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.home-v3-timeline a {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 24px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-v3-timeline strong {
+  color: #f8fbff;
+  font-size: 20px;
+  letter-spacing: -0.04em;
+}
+
+.home-v3-timeline small {
+  color: rgba(203, 213, 225, 0.72);
+  line-height: 1.7;
+}
+
+.home-v3-text-link {
+  display: inline-flex;
+  margin-top: 16px;
+}
+
+.home-v3-network {
+  padding: 24px;
+  border-radius: 30px;
+}
+
+.home-v3-network > div:last-child {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.home-v3-network a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-v3-network a:last-child {
+  border-bottom: 0;
+}
+
+.home-v3-network strong {
+  color: #f8fbff;
+}
+
+.home-v3-network a span {
+  color: rgba(203, 213, 225, 0.62);
+  font-size: 12px;
+}
+
+.home-v3-phase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.home-v3-phase-grid article {
+  display: grid;
+  gap: 12px;
+  min-height: 250px;
+  padding: 24px;
+  border-radius: 30px;
+}
+
+.home-v3-phase-grid strong {
+  color: #f8fbff;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.home-v3-phase-grid p {
+  margin: 0;
+  color: rgba(203, 213, 225, 0.74);
+  line-height: 1.75;
+}
+
+.home-v3-phase-grid small {
+  width: fit-content;
+  align-self: end;
+  padding: 6px 10px;
+  border: 1px solid rgba(226, 232, 240, 0.13);
+  border-radius: 999px;
+  color: rgba(226, 232, 240, 0.76);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.home-v3-copy:hover,
+.home-v3-console:hover,
+.home-v3-command:hover,
+.home-v3-project-main:hover,
+.home-v3-project-side article:hover,
+.home-v3-nav-grid a:hover,
+.home-v3-timeline a:hover,
+.home-v3-network:hover,
+.home-v3-phase-grid article:hover {
+  border-color: rgba(125, 211, 252, 0.28);
+  box-shadow:
+    0 38px 130px rgba(0, 0, 0, 0.44),
+    0 18px 60px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 1120px) {
+  .home-v3-hero,
+  .home-v3-command,
+  .home-v3-project-layout,
+  .home-v3-split {
+    grid-template-columns: 1fr;
+  }
+
+  .home-v3-copy {
+    min-height: auto;
+  }
+
+  .home-v3-nav-grid,
+  .home-v3-phase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .home-v3 {
+    gap: 48px;
+  }
+
+  .home-v3-hero {
+    margin-top: 18px;
+  }
+
+  .home-v3-copy,
+  .home-v3-console,
+  .home-v3-command,
+  .home-v3-project-main,
+  .home-v3-network {
+    border-radius: 26px;
+  }
+
+  .home-v3 h1 {
+    font-size: clamp(54px, 18vw, 82px);
+    letter-spacing: -0.08em;
+  }
+
+  .home-v3-lead {
+    font-size: 16px;
+  }
+
+  .home-v3-actions,
+  .home-v3-command a {
+    display: grid;
+  }
+
+  .home-v3-tracks,
+  .home-v3-stats,
+  .home-v3-nav-grid,
+  .home-v3-phase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-v3-project-main {
+    min-height: 360px;
+  }
+
+  .home-v3-project-main h3 {
+    font-size: clamp(40px, 13vw, 58px);
+  }
+}
+
+@media (hover: none) {
+  .home-v3-copy:hover,
+  .home-v3-console:hover,
+  .home-v3-command:hover,
+  .home-v3-project-main:hover,
+  .home-v3-project-side article:hover,
+  .home-v3-nav-grid a:hover,
+  .home-v3-timeline a:hover,
+  .home-v3-network:hover,
+  .home-v3-phase-grid article:hover {
+    box-shadow:
+      0 28px 90px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-v3-copy,
+  .home-v3-console,
+  .home-v3-command,
+  .home-v3-project-main,
+  .home-v3-project-side article,
+  .home-v3-nav-grid a,
+  .home-v3-timeline a,
+  .home-v3-network,
+  .home-v3-phase-grid article {
+    transition: none !important;
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 11 Home Legacy Vibe ---------- */
+
+/*
+  第 11 步：主页第一代视觉氛围回调。
+  目标：让首页重新接近第一代 CSS 那种柔和、高级、梦幻、玻璃感更强的个人数字空间。
+  这不是回退旧结构，而是在新 home-v3 组件化基础上恢复第一代“感觉”。
+*/
+
+html.is-home-page {
+  --legacy-home-blue: rgba(168, 200, 255, 0.26);
+  --legacy-home-violet: rgba(196, 181, 253, 0.22);
+  --legacy-home-green: rgba(110, 231, 183, 0.14);
+  --legacy-home-glass: rgba(10, 16, 30, 0.62);
+  --legacy-home-glass-soft: rgba(255, 255, 255, 0.055);
+  --legacy-home-edge: rgba(255, 255, 255, 0.18);
+  --legacy-home-edge-strong: rgba(255, 255, 255, 0.26);
+  --legacy-home-shadow: 0 34px 120px rgba(0, 0, 0, 0.42);
+  --legacy-home-shadow-soft: 0 22px 80px rgba(0, 0, 0, 0.32);
+}
+
+/* 首页回到第一代那种更柔、更梦幻的背景，不让扫描线太抢 */
+html.is-home-page body {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(168, 200, 255, 0.2), transparent 34vw),
+    radial-gradient(circle at 88% 10%, rgba(196, 181, 253, 0.18), transparent 32vw),
+    radial-gradient(circle at 52% 105%, rgba(110, 231, 183, 0.12), transparent 38vw),
+    linear-gradient(180deg, #070b14 0%, #090f1d 45%, #070b14 100%);
+}
+
+html.is-home-page .visual-aura__scanner,
+html.is-home-page .visual-aura__ring {
+  opacity: 0.055;
+}
+
+html.is-home-page .visual-aura__grid {
+  opacity: 0.16;
+  background-size: 58px 58px;
+}
+
+html.is-home-page .visual-aura__noise {
+  opacity: 0.075;
+}
+
+html.is-home-page .visual-aura__orb {
+  opacity: 0.72;
+  filter: blur(42px);
+}
+
+html.is-home-page .visual-aura__liquid {
+  opacity: 0.22;
+  filter: blur(32px);
+}
+
+/* 首页 HUD 更克制：保留科技感，但把注意力还给主页本身 */
+html.is-home-page .interface-fx__hud {
+  opacity: 0.38;
+}
+
+html.is-home-page .interface-fx__corner {
+  opacity: 0.2;
+}
+
+html.is-home-page .interface-fx__progress {
+  height: 1px;
+}
+
+/* Hero 回到第一代那种大块、柔和、很有空间感的玻璃封面 */
+.home-v3 {
+  gap: clamp(54px, 8vw, 96px);
+}
+
+.home-v3-hero {
+  min-height: min(780px, calc(100vh - 110px));
+  align-items: stretch;
+}
+
+.home-v3-copy {
+  min-height: clamp(600px, 76vh, 820px);
+  border-color: var(--legacy-home-edge);
+  border-radius: clamp(34px, 5vw, 54px);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 86% 8%, rgba(168, 200, 255, 0.2), transparent 34%),
+    radial-gradient(circle at 50% 110%, rgba(110, 231, 183, 0.09), transparent 36%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.026)),
+    var(--legacy-home-glass);
+  box-shadow:
+    0 42px 150px rgba(0, 0, 0, 0.46),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -30px 80px rgba(0, 0, 0, 0.08);
+}
+
+.home-v3-copy::before {
+  content: '';
+  position: absolute;
+  inset: auto 8% -18% 8%;
+  height: 42%;
+  pointer-events: none;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(168, 200, 255, 0.16), transparent 64%),
+    radial-gradient(circle at 70% 50%, rgba(196, 181, 253, 0.14), transparent 62%);
+  filter: blur(26px);
+  opacity: 0.88;
+}
+
+.home-v3-copy::after {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 26%),
+    linear-gradient(315deg, rgba(168, 200, 255, 0.1), transparent 36%),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.16), transparent 26%);
+  opacity: 0.92;
+}
+
+/* 标题更像第一代首页：大、干净、柔和发光 */
+.home-v3 h1 {
+  max-width: 11ch;
+  font-size: clamp(68px, 11.8vw, 156px);
+  line-height: 0.86;
+  letter-spacing: -0.102em;
+  text-shadow:
+    0 0 36px rgba(168, 200, 255, 0.17),
+    0 22px 80px rgba(0, 0, 0, 0.48);
+}
+
+.home-v3 h1 span:first-child {
+  color: rgba(248, 251, 255, 0.96);
+}
+
+.home-v3 h1 span:last-child {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #dbeafe 18%,
+    #a8c8ff 42%,
+    #c4b5fd 72%,
+    #6ee7b7 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(168, 200, 255, 0.2))
+    drop-shadow(0 0 54px rgba(196, 181, 253, 0.12));
+}
+
+.home-v3-lead {
+  max-width: 54ch;
+  color: rgba(226, 232, 240, 0.82);
+  font-size: clamp(18px, 2.1vw, 22px);
+  line-height: 1.88;
+}
+
+/* 第一代感觉里的小胶囊：柔和、透明、像漂浮标签 */
+.home-v3-kicker,
+.home-v3-tracks article,
+.home-v3-console dl div,
+.home-v3-stats article,
+.home-v3-project-main li,
+.home-v3-project-main > div strong,
+.home-v3-project-side article > div strong,
+.home-v3-phase-grid small {
+  border-color: rgba(255, 255, 255, 0.135);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+
+.home-v3-kicker {
+  color: rgba(219, 234, 254, 0.86);
+  letter-spacing: 0.075em;
+}
+
+/* 右侧状态面板更像第一代 glass console，不像硬科技仪表 */
+.home-v3-console {
+  border-color: var(--legacy-home-edge);
+  border-radius: clamp(30px, 4vw, 44px);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.13), transparent 28%),
+    radial-gradient(circle at 90% 8%, rgba(196, 181, 253, 0.13), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.024)),
+    rgba(9, 15, 29, 0.58);
+  box-shadow:
+    var(--legacy-home-shadow-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.home-v3-console-head strong {
+  color: #b7f7dd;
+  text-shadow: 0 0 20px rgba(110, 231, 183, 0.28);
+}
+
+/* 数据区不要太硬，恢复第一代那种轻盈卡片 */
+.home-v3-stats article {
+  border-color: rgba(255, 255, 255, 0.14);
+  border-radius: 26px;
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      color-mix(in srgb, var(--tone-color, #a8c8ff) 18%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.022)),
+    rgba(10, 16, 30, 0.54);
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.home-v3-stats strong {
+  text-shadow: 0 0 22px color-mix(in srgb, var(--tone-color) 24%, transparent);
+}
+
+/* Command 搜索入口改回更柔和的主站入口感 */
+.home-v3-command {
+  border-color: var(--legacy-home-edge);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(168, 200, 255, 0.14), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.024)),
+    rgba(9, 15, 29, 0.58);
+}
+
+.home-v3-command a {
+  border-color: rgba(168, 200, 255, 0.2);
+  background:
+    linear-gradient(90deg, rgba(168, 200, 255, 0.08), transparent 40%), rgba(255, 255, 255, 0.045);
+}
+
+.home-v3-command kbd {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.055);
+}
+
+/* 项目精选回到第一代那种作品展示感：柔和大卡 + 漂浮小卡 */
+.home-v3-project-main {
+  min-height: 480px;
+  border-color: var(--legacy-home-edge);
+  border-radius: 40px;
+  background:
+    radial-gradient(
+      circle at 92% 4%,
+      color-mix(in srgb, var(--project-accent) 26%, transparent),
+      transparent 40%
+    ),
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.12), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.026)),
+    rgba(9, 15, 29, 0.62);
+  box-shadow:
+    0 38px 130px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.home-v3-project-main h3 {
+  max-width: 12ch;
+  text-shadow:
+    0 0 28px color-mix(in srgb, var(--project-accent) 18%, transparent),
+    0 18px 70px rgba(0, 0, 0, 0.38);
+}
+
+.home-v3-project-side article,
+.home-v3-nav-grid a,
+.home-v3-timeline a,
+.home-v3-phase-grid article {
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle at 84% 0%, rgba(168, 200, 255, 0.08), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.082), rgba(255, 255, 255, 0.022)),
+    rgba(10, 16, 30, 0.54);
+  box-shadow:
+    0 22px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+/* 主要入口不要太像硬矩阵，改成第一代那种高级导航卡 */
+.home-v3-nav-grid a {
+  min-height: 196px;
+  border-radius: 30px;
+}
+
+.home-v3-nav-grid a::before {
+  width: 46px;
+  height: 3px;
+  opacity: 0.9;
+}
+
+.home-v3-nav-grid strong {
+  font-size: 26px;
+}
+
+/* 最近更新和公开入口恢复柔和侧栏感 */
+.home-v3-network {
+  border-color: var(--legacy-home-edge);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(196, 181, 253, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.022)),
+    rgba(10, 16, 30, 0.58);
+}
+
+.home-v3-network a {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+/* Roadmap 更像第一代计划卡，不要太硬核 HUD */
+.home-v3-phase-grid article {
+  min-height: 235px;
+  border-radius: 32px;
+}
+
+.home-v3-phase-grid strong {
+  font-size: 30px;
+}
+
+/* 统一 hover：第一代感觉是轻轻浮起来，而不是强科技爆闪 */
+.home-v3-copy:hover,
+.home-v3-console:hover,
+.home-v3-command:hover,
+.home-v3-project-main:hover,
+.home-v3-project-side article:hover,
+.home-v3-nav-grid a:hover,
+.home-v3-timeline a:hover,
+.home-v3-network:hover,
+.home-v3-phase-grid article:hover {
+  transform: translateY(-5px);
+  border-color: var(--legacy-home-edge-strong);
+  box-shadow:
+    0 42px 140px rgba(0, 0, 0, 0.45),
+    0 18px 60px rgba(168, 200, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* 首页按钮更贴近第一代：柔和玻璃，不要过强赛博风 */
+.home-v3 .ui-button {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.026)),
+    rgba(255, 255, 255, 0.04);
+}
+
+.home-v3 .ui-button-primary {
+  border-color: rgba(168, 200, 255, 0.42);
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.34), rgba(196, 181, 253, 0.22)),
+    rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 18px 56px rgba(99, 102, 241, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 首页区块分割线弱化，避免第一代柔和感被科技线打断 */
+html.is-home-page .section-v2::before {
+  width: min(260px, 46vw);
+  opacity: 0.55;
+  background: linear-gradient(
+    90deg,
+    rgba(168, 200, 255, 0.26),
+    rgba(196, 181, 253, 0.12),
+    transparent
+  );
+}
+
+html.is-home-page .section-v2::after {
+  opacity: 0.6;
+  background: rgba(168, 200, 255, 0.85);
+}
+
+/* 移动端保持第一代柔和，不要太厚重 */
+@media (max-width: 760px) {
+  .home-v3-hero {
+    min-height: auto;
+  }
+
+  .home-v3-copy {
+    min-height: auto;
+    padding: 26px;
+    border-radius: 30px;
+  }
+
+  .home-v3 h1 {
+    font-size: clamp(56px, 18vw, 86px);
+    line-height: 0.9;
+    letter-spacing: -0.082em;
+  }
+
+  .home-v3-lead {
+    font-size: 16px;
+    line-height: 1.82;
+  }
+
+  .home-v3-console,
+  .home-v3-command,
+  .home-v3-project-main,
+  .home-v3-network {
+    border-radius: 28px;
+  }
+
+  html.is-home-page .interface-fx__hud,
+  html.is-home-page .interface-fx__corner {
+    display: none;
+  }
+
+  html.is-home-page .visual-aura__orb {
+    opacity: 0.46;
+  }
+
+  html.is-home-page .visual-aura__liquid {
+    opacity: 0.16;
+  }
+}
+
+@media (hover: none) {
+  .home-v3-copy:hover,
+  .home-v3-console:hover,
+  .home-v3-command:hover,
+  .home-v3-project-main:hover,
+  .home-v3-project-side article:hover,
+  .home-v3-nav-grid a:hover,
+  .home-v3-timeline a:hover,
+  .home-v3-network:hover,
+  .home-v3-phase-grid article:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-v3-copy:hover,
+  .home-v3-console:hover,
+  .home-v3-command:hover,
+  .home-v3-project-main:hover,
+  .home-v3-project-side article:hover,
+  .home-v3-nav-grid a:hover,
+  .home-v3-timeline a:hover,
+  .home-v3-network:hover,
+  .home-v3-phase-grid article:hover {
+    transform: none !important;
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 12 Home Legacy Fine Tune ---------- */
+
+/*
+  第 12 步：首页第一代氛围精修 + 工程收口。
+  目标：保留新版组件化首页，但让首页更接近第一代 CSS 的柔和、高级、梦幻玻璃感。
+*/
+
+html.is-home-page {
+  --home-legacy-focus: rgba(168, 200, 255, 0.22);
+  --home-legacy-focus-soft: rgba(196, 181, 253, 0.13);
+  --home-legacy-mint-soft: rgba(110, 231, 183, 0.09);
+  --home-legacy-panel: rgba(9, 15, 29, 0.6);
+  --home-legacy-panel-deep: rgba(6, 10, 20, 0.68);
+}
+
+/* 首页整体多一层第一代那种柔和空间光，不用硬扫描线抢注意力 */
+html.is-home-page .home-v3 {
+  isolation: isolate;
+}
+
+html.is-home-page .home-v3::before,
+html.is-home-page .home-v3::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(34px);
+}
+
+html.is-home-page .home-v3::before {
+  top: 8vh;
+  left: 50%;
+  width: min(820px, 86vw);
+  height: 280px;
+  background:
+    radial-gradient(circle at 30% 50%, rgba(168, 200, 255, 0.13), transparent 62%),
+    radial-gradient(circle at 72% 46%, rgba(196, 181, 253, 0.11), transparent 64%);
+  transform: translateX(-50%);
+}
+
+html.is-home-page .home-v3::after {
+  right: 8vw;
+  bottom: 12%;
+  width: min(520px, 62vw);
+  height: 260px;
+  background: radial-gradient(circle, rgba(110, 231, 183, 0.08), transparent 68%);
+}
+
+/* 第一代感的关键：Hero 更像一整块柔软玻璃，而不是硬科技面板 */
+html.is-home-page .home-v3-copy,
+html.is-home-page .home-v3-console {
+  transform: translateZ(0);
+}
+
+html.is-home-page .home-v3-copy {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.17), transparent 23%),
+    radial-gradient(circle at 86% 8%, var(--home-legacy-focus), transparent 36%),
+    radial-gradient(circle at 50% 108%, var(--home-legacy-mint-soft), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.112), rgba(255, 255, 255, 0.024)),
+    var(--home-legacy-panel);
+  box-shadow:
+    0 46px 150px rgba(0, 0, 0, 0.44),
+    0 20px 80px rgba(168, 200, 255, 0.065),
+    inset 0 1px 0 rgba(255, 255, 255, 0.165),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html.is-home-page .home-v3-console {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.13), transparent 28%),
+    radial-gradient(circle at 88% 12%, var(--home-legacy-focus-soft), transparent 36%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.096), rgba(255, 255, 255, 0.022)),
+    var(--home-legacy-panel-deep);
+}
+
+/* 标题：减少硬赛博感，增加第一代那种干净发光 */
+html.is-home-page .home-v3 h1 {
+  text-wrap: balance;
+}
+
+html.is-home-page .home-v3 h1 span:last-child {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #dbeafe 20%,
+    #a8c8ff 46%,
+    #c4b5fd 78%,
+    #d9f99d 110%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: none;
+}
+
+/* 副文案更柔和，但保证可读性 */
+html.is-home-page .home-v3-lead,
+html.is-home-page .home-v3-project-main > p,
+html.is-home-page .home-v3-project-side p,
+html.is-home-page .home-v3-nav-grid small,
+html.is-home-page .home-v3-timeline small,
+html.is-home-page .home-v3-phase-grid p {
+  color: rgba(226, 232, 240, 0.8);
+}
+
+/* 首页卡片统一第一代玻璃卡风格：更轻，更柔，不用太重的科技纹理 */
+html.is-home-page .home-v3-command,
+html.is-home-page .home-v3-project-main,
+html.is-home-page .home-v3-project-side article,
+html.is-home-page .home-v3-nav-grid a,
+html.is-home-page .home-v3-timeline a,
+html.is-home-page .home-v3-network,
+html.is-home-page .home-v3-phase-grid article {
+  background:
+    radial-gradient(circle at 86% 0%, rgba(168, 200, 255, 0.095), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.021)),
+    rgba(9, 15, 29, 0.56);
+  box-shadow:
+    0 24px 84px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 主项目可以更强，但还是第一代那种柔光，不是强 HUD */
+html.is-home-page .home-v3-project-main {
+  background:
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--project-accent) 24%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.12), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.106), rgba(255, 255, 255, 0.024)),
+    rgba(9, 15, 29, 0.62);
+}
+
+/* 让首页按钮回到更像第一代的玻璃按钮 */
+html.is-home-page .home-v3 .ui-button {
+  min-height: 44px;
+  border-radius: 999px;
+}
+
+html.is-home-page .home-v3 .ui-button-primary {
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.36), rgba(196, 181, 253, 0.24)),
+    rgba(255, 255, 255, 0.07);
+}
+
+/* Command Palette 不要太硬，像一条漂亮的入口 */
+html.is-home-page .home-v3-command a {
+  border-color: rgba(168, 200, 255, 0.18);
+  background:
+    linear-gradient(90deg, rgba(168, 200, 255, 0.07), transparent 42%), rgba(255, 255, 255, 0.038);
+}
+
+html.is-home-page .home-v3-command kbd {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* 导航矩阵彩条更柔和，减少模板感 */
+html.is-home-page .home-v3-nav-grid a::before {
+  opacity: 0.78;
+  filter: blur(0.2px);
+}
+
+/* Roadmap 更像规划卡，而不是硬科技面板 */
+html.is-home-page .home-v3-phase-grid article {
+  min-height: 228px;
+}
+
+html.is-home-page .home-v3-phase-grid small {
+  color: rgba(226, 232, 240, 0.78);
+}
+
+/* 首页 hover 更贴近第一代：轻浮起、软光，不爆闪 */
+@media (hover: hover) and (pointer: fine) {
+  html.is-home-page .home-v3-copy:hover,
+  html.is-home-page .home-v3-console:hover,
+  html.is-home-page .home-v3-command:hover,
+  html.is-home-page .home-v3-project-main:hover,
+  html.is-home-page .home-v3-project-side article:hover,
+  html.is-home-page .home-v3-nav-grid a:hover,
+  html.is-home-page .home-v3-timeline a:hover,
+  html.is-home-page .home-v3-network:hover,
+  html.is-home-page .home-v3-phase-grid article:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 40px 130px rgba(0, 0, 0, 0.42),
+      0 16px 60px rgba(168, 200, 255, 0.075),
+      inset 0 1px 0 rgba(255, 255, 255, 0.145);
+  }
+}
+
+/* 首页移动端：保留第一代氛围，但进一步减轻 */
+@media (max-width: 760px) {
+  html.is-home-page .home-v3 {
+    gap: 44px;
+  }
+
+  html.is-home-page .home-v3::before {
+    top: 4vh;
+    height: 220px;
+    opacity: 0.72;
+  }
+
+  html.is-home-page .home-v3-copy,
+  html.is-home-page .home-v3-console,
+  html.is-home-page .home-v3-command,
+  html.is-home-page .home-v3-project-main,
+  html.is-home-page .home-v3-network {
+    border-radius: 28px;
+  }
+
+  html.is-home-page .home-v3-copy {
+    box-shadow:
+      0 28px 90px rgba(0, 0, 0, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  }
+}
+
+/* 不支持 backdrop-filter 时，保持干净深色玻璃外观 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  html.is-home-page .home-v3-copy,
+  html.is-home-page .home-v3-console,
+  html.is-home-page .home-v3-command,
+  html.is-home-page .home-v3-project-main,
+  html.is-home-page .home-v3-project-side article,
+  html.is-home-page .home-v3-nav-grid a,
+  html.is-home-page .home-v3-timeline a,
+  html.is-home-page .home-v3-network,
+  html.is-home-page .home-v3-phase-grid article {
+    background: rgba(9, 15, 29, 0.92);
+  }
+}
+
+/* ---------- Azek431 UI System V2 Step 14 Legacy System Skin ---------- */
+
+/*
+  第 14 步：主页第一代系统皮肤加强。
+  目标：让首页更接近第一代 CSS 的“个人系统主页”感觉：
+  柔和、干净、玻璃、深色空间、大标题、弱 HUD、轻漂浮，而不是硬赛博仪表盘。
+*/
+
+html.is-home-page {
+  --legacy-system-bg-0: #060914;
+  --legacy-system-bg-1: #090f1f;
+  --legacy-system-bg-2: #0d1428;
+  --legacy-system-line: rgba(226, 232, 240, 0.12);
+  --legacy-system-line-strong: rgba(226, 232, 240, 0.2);
+  --legacy-system-text: rgba(248, 251, 255, 0.96);
+  --legacy-system-muted: rgba(203, 213, 225, 0.72);
+  --legacy-system-soft-blue: rgba(168, 200, 255, 0.22);
+  --legacy-system-soft-violet: rgba(196, 181, 253, 0.16);
+  --legacy-system-soft-mint: rgba(110, 231, 183, 0.1);
+}
+
+/* 首页整体更接近第一代：柔和空间背景，减少硬科技味 */
+html.is-home-page body {
+  background:
+    radial-gradient(circle at 12% -8%, rgba(168, 200, 255, 0.18), transparent 34vw),
+    radial-gradient(circle at 90% 4%, rgba(196, 181, 253, 0.15), transparent 32vw),
+    radial-gradient(circle at 50% 115%, rgba(110, 231, 183, 0.095), transparent 42vw),
+    linear-gradient(
+      180deg,
+      var(--legacy-system-bg-0) 0%,
+      var(--legacy-system-bg-1) 45%,
+      var(--legacy-system-bg-0) 100%
+    );
+}
+
+/* 第一代主页不需要 HUD 抢第一视觉，保留进度条即可 */
+html.is-home-page .interface-fx__hud {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+html.is-home-page .interface-fx__corner {
+  opacity: 0.12;
+}
+
+html.is-home-page .visual-aura__scanner,
+html.is-home-page .visual-aura__ring {
+  opacity: 0.035;
+}
+
+html.is-home-page .visual-aura__grid {
+  opacity: 0.12;
+  background-size: 64px 64px;
+}
+
+html.is-home-page .visual-aura__noise {
+  opacity: 0.06;
+}
+
+/* 顶部导航回到第一代那种轻玻璃悬浮感 */
+html.is-home-page .site-header {
+  border-color: rgba(226, 232, 240, 0.1);
+  background:
+    linear-gradient(180deg, rgba(9, 15, 29, 0.74), rgba(9, 15, 29, 0.44)), rgba(9, 15, 29, 0.38);
+  box-shadow:
+    0 18px 70px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+html.is-home-page.is-scrolled .site-header {
+  background:
+    linear-gradient(180deg, rgba(9, 15, 29, 0.86), rgba(9, 15, 29, 0.6)), rgba(9, 15, 29, 0.62);
+}
+
+/* Hero 视觉更接近第一代：像一张完整的玻璃封面 */
+html.is-home-page .home-v3-hero {
+  gap: clamp(18px, 3vw, 30px);
+}
+
+html.is-home-page .home-v3-copy {
+  min-height: clamp(620px, 78vh, 840px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 80% 8%, rgba(168, 200, 255, 0.2), transparent 36%),
+    radial-gradient(circle at 52% 112%, rgba(110, 231, 183, 0.08), transparent 42%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.108), rgba(255, 255, 255, 0.022)),
+    rgba(9, 15, 29, 0.6);
+  box-shadow:
+    0 52px 170px rgba(0, 0, 0, 0.46),
+    0 24px 86px rgba(168, 200, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.17),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.035);
+}
+
+/* 第一代系统感：Kicker 更像状态胶囊，不像硬标签 */
+html.is-home-page .home-v3-kicker {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(226, 232, 240, 0.82);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
+    rgba(255, 255, 255, 0.038);
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* 标题更像第一代：巨大、柔和、干净，不要过度赛博 */
+html.is-home-page .home-v3 h1 {
+  max-width: 10.6ch;
+  color: var(--legacy-system-text);
+  letter-spacing: -0.096em;
+  text-shadow:
+    0 0 34px rgba(168, 200, 255, 0.16),
+    0 24px 88px rgba(0, 0, 0, 0.48);
+}
+
+html.is-home-page .home-v3 h1 span:last-child {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e5edff 20%,
+    #a8c8ff 48%,
+    #c4b5fd 76%,
+    #e0f2fe 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 首屏说明更像个人主页，不像产品落地页 */
+html.is-home-page .home-v3-lead {
+  max-width: 52ch;
+  color: rgba(226, 232, 240, 0.78);
+  font-size: clamp(18px, 2vw, 21px);
+}
+
+/* AI / Web / Open 小卡更轻，减少模块感 */
+html.is-home-page .home-v3-tracks article {
+  border-color: rgba(255, 255, 255, 0.11);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.015)),
+    rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+html.is-home-page .home-v3-tracks strong {
+  color: rgba(248, 251, 255, 0.94);
+}
+
+html.is-home-page .home-v3-tracks span {
+  color: rgba(203, 213, 225, 0.68);
+}
+
+/* 状态面板弱化：像侧边玻璃卡，而不是第二个主角 */
+html.is-home-page .home-v3-console {
+  opacity: 0.94;
+  border-color: rgba(255, 255, 255, 0.13);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.1), transparent 28%),
+    radial-gradient(circle at 84% 10%, rgba(196, 181, 253, 0.1), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.02)),
+    rgba(7, 12, 24, 0.56);
+  box-shadow:
+    0 28px 96px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 数据卡片变成第一代那种轻量系统指标 */
+html.is-home-page .home-v3-stats article {
+  border-color: rgba(255, 255, 255, 0.105);
+  background:
+    radial-gradient(
+      circle at 86% 0%,
+      color-mix(in srgb, var(--tone-color, #a8c8ff) 14%, transparent),
+      transparent 34%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.016)),
+    rgba(8, 13, 26, 0.5);
+  box-shadow:
+    0 18px 56px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+
+/* 首页后续卡片整体降低硬边，第一代更柔和 */
+html.is-home-page .home-v3-command,
+html.is-home-page .home-v3-project-main,
+html.is-home-page .home-v3-project-side article,
+html.is-home-page .home-v3-nav-grid a,
+html.is-home-page .home-v3-timeline a,
+html.is-home-page .home-v3-network,
+html.is-home-page .home-v3-phase-grid article {
+  border-color: rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at 86% 0%, rgba(168, 200, 255, 0.075), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.064), rgba(255, 255, 255, 0.017)),
+    rgba(8, 13, 26, 0.52);
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.078);
+}
+
+/* 主项目保留更强一点的玻璃舞台感 */
+html.is-home-page .home-v3-project-main {
+  background:
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--project-accent) 20%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.105), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.02)),
+    rgba(8, 13, 26, 0.58);
+}
+
+/* 第一代按钮：圆润、软高光、轻反馈 */
+html.is-home-page .home-v3 .ui-button {
+  border-color: rgba(255, 255, 255, 0.135);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.082), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.085);
+}
+
+html.is-home-page .home-v3 .ui-button-primary {
+  border-color: rgba(168, 200, 255, 0.34);
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.32), rgba(196, 181, 253, 0.2)),
+    rgba(255, 255, 255, 0.058);
+}
+
+/* Command 入口更像第一代搜索胶囊 */
+html.is-home-page .home-v3-command a {
+  border-color: rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(90deg, rgba(168, 200, 255, 0.06), transparent 42%), rgba(255, 255, 255, 0.032);
+}
+
+html.is-home-page .home-v3-command a strong {
+  color: rgba(219, 234, 254, 0.92);
+}
+
+/* 区块标题更像第一代：少一点硬科技 uppercase 的尖锐感 */
+html.is-home-page .section-head-v2 p {
+  color: rgba(191, 226, 255, 0.72);
+  text-shadow: none;
+}
+
+html.is-home-page .section-head-v2 h2 {
+  color: rgba(248, 251, 255, 0.96);
+}
+
+html.is-home-page .section-head-v2 span {
+  color: rgba(203, 213, 225, 0.7);
+}
+
+/* hover 继续柔化：第一代不是剧烈上浮，而是轻轻亮一下 */
+@media (hover: hover) and (pointer: fine) {
+  html.is-home-page .home-v3-copy:hover,
+  html.is-home-page .home-v3-console:hover,
+  html.is-home-page .home-v3-command:hover,
+  html.is-home-page .home-v3-project-main:hover,
+  html.is-home-page .home-v3-project-side article:hover,
+  html.is-home-page .home-v3-nav-grid a:hover,
+  html.is-home-page .home-v3-timeline a:hover,
+  html.is-home-page .home-v3-network:hover,
+  html.is-home-page .home-v3-phase-grid article:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 32px 110px rgba(0, 0, 0, 0.36),
+      0 12px 44px rgba(168, 200, 255, 0.055),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* 移动端进一步靠近第一代：干净、轻、可读 */
+@media (max-width: 760px) {
+  html.is-home-page body {
+    background:
+      radial-gradient(circle at 22% -8%, rgba(168, 200, 255, 0.14), transparent 62vw),
+      radial-gradient(circle at 88% 12%, rgba(196, 181, 253, 0.11), transparent 58vw),
+      linear-gradient(180deg, #060914 0%, #090f1f 50%, #060914 100%);
+  }
+
+  html.is-home-page .home-v3-copy {
+    min-height: auto;
+  }
+
+  html.is-home-page .home-v3 h1 {
+    letter-spacing: -0.078em;
+  }
+
+  html.is-home-page .home-v3-console {
+    opacity: 1;
+  }
+}

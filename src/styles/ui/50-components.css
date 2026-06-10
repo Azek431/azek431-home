@@ -1,0 +1,648 @@
+/*
+  50-components.css
+  按钮、项目卡、Links、Search、核心交互组件视觉收敛。
+
+  注意：此文件由第 29 步从旧 ui-system-v2.css 拆分而来。
+  后续可以继续人工精修，但不要随意改变导入顺序。
+*/
+
+/* ---------- Azek431 UI System V2 Step 17-20 Components Consolidation ---------- */
+
+/*
+  第 17～20 步综合收敛：
+  - 第 17 步：统一按钮系统
+  - 第 18 步：项目卡片系统视觉统一
+  - 第 19 步：Links 页面信息层级视觉收敛
+  - 第 20 步：Search 页面命令中心视觉优化
+
+  这一步优先用兼容 CSS 收敛视觉，不重写业务数据，不破坏现有 Astro 页面。
+*/
+
+:root {
+  --ui-control-h-sm: 38px;
+  --ui-control-h-md: 44px;
+  --ui-control-h-lg: 50px;
+  --ui-control-radius: 999px;
+  --ui-control-text: rgba(248, 251, 255, 0.94);
+  --ui-control-muted: rgba(203, 213, 225, 0.74);
+  --ui-control-border: rgba(255, 255, 255, 0.13);
+  --ui-control-border-hover: rgba(255, 255, 255, 0.22);
+  --ui-control-glass:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.022)),
+    rgba(255, 255, 255, 0.038);
+  --ui-control-primary:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.34), rgba(196, 181, 253, 0.22)),
+    rgba(255, 255, 255, 0.06);
+
+  --ui-card-border: rgba(255, 255, 255, 0.12);
+  --ui-card-border-hover: rgba(255, 255, 255, 0.19);
+  --ui-card-bg:
+    radial-gradient(circle at 86% 0%, rgba(168, 200, 255, 0.075), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.064), rgba(255, 255, 255, 0.017)),
+    rgba(8, 13, 26, 0.52);
+  --ui-card-bg-strong:
+    radial-gradient(circle at 88% 0%, rgba(168, 200, 255, 0.12), transparent 36%),
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.09), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.02)),
+    rgba(8, 13, 26, 0.58);
+  --ui-card-shadow: 0 20px 70px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.078);
+  --ui-card-shadow-hover:
+    0 30px 100px rgba(0, 0, 0, 0.34), 0 12px 44px rgba(168, 200, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  --ui-title-tight: -0.055em;
+  --ui-title-strong: -0.07em;
+  --ui-body-line: 1.76;
+}
+
+/* ============================================================
+   第 17 步：统一按钮系统
+   ============================================================ */
+
+:where(
+  .ui-button,
+  .button,
+  .btn,
+  .footer-nav a,
+  .shortcut-trigger,
+  .theme-toggle,
+  .link-filter-pill,
+  .search-filter-v2 button
+) {
+  min-height: var(--ui-control-h-md);
+  border-radius: var(--ui-control-radius);
+  font-size: 14px;
+  font-weight: 760;
+  letter-spacing: -0.012em;
+  line-height: 1;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+:where(.ui-button, .button, .btn) {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0 16px;
+  border: 1px solid var(--ui-control-border);
+  color: var(--ui-control-text);
+  background: var(--ui-control-glass);
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.085);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+:where(.ui-button-primary, .button-primary, .btn-primary) {
+  min-height: var(--ui-control-h-lg);
+  padding-inline: 20px;
+  border-color: rgba(168, 200, 255, 0.36);
+  color: #ffffff;
+  background: var(--ui-control-primary);
+  box-shadow:
+    0 18px 56px rgba(99, 102, 241, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+:where(.ui-button-secondary, .button-secondary, .btn-secondary) {
+  border-color: rgba(255, 255, 255, 0.13);
+  color: rgba(226, 232, 240, 0.86);
+}
+
+:where(.ui-button-ghost, .button-ghost, .btn-ghost) {
+  border-color: rgba(255, 255, 255, 0.09);
+  color: rgba(203, 213, 225, 0.78);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.048), rgba(255, 255, 255, 0.012)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(
+    .ui-button,
+    .button,
+    .btn,
+    .footer-nav a,
+    .shortcut-trigger,
+    .theme-toggle,
+    .link-filter-pill,
+    .search-filter-v2 button
+  ):hover {
+    transform: translateY(-2px);
+    border-color: var(--ui-control-border-hover);
+    color: #ffffff;
+    box-shadow:
+      0 18px 52px rgba(0, 0, 0, 0.26),
+      0 8px 32px rgba(168, 200, 255, 0.055),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  :where(.ui-button-primary, .button-primary, .btn-primary):hover {
+    box-shadow:
+      0 22px 68px rgba(99, 102, 241, 0.22),
+      0 10px 36px rgba(168, 200, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+:where(.ui-button, .button, .btn, .link-filter-pill, .search-filter-v2 button):focus-visible {
+  outline: 2px solid rgba(168, 200, 255, 0.72);
+  outline-offset: 3px;
+}
+
+/* 首页按钮主次：复制链接是辅助，不要抢主 CTA */
+.home-v3-actions .ui-button-primary {
+  min-width: 132px;
+}
+
+.home-v3-actions .ui-button-secondary,
+.home-v3-actions .ui-button-ghost {
+  min-height: var(--ui-control-h-md);
+  opacity: 0.88;
+}
+
+.home-v3-actions .ui-button-ghost {
+  padding-inline: 14px;
+  color: rgba(203, 213, 225, 0.72);
+}
+
+/* 子页面常见 action 容器统一 */
+:where(
+  .page-actions,
+  .project-detail-actions-v2,
+  .project-lab-actions,
+  .resource-card-v2 footer,
+  .link-card-actions
+) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ============================================================
+   第 18 步：项目卡片系统视觉统一
+   ============================================================ */
+
+/* 首页主项目、项目列表、项目详情相关卡片收敛成同一套项目视觉 */
+:where(
+  .home-v3-project-main,
+  .home-v3-project-side article,
+  .project-lab-card,
+  .project-showcase-card,
+  .project-detail-hero-v2,
+  .project-story-v2,
+  .project-tags-v2,
+  .feature-grid-v2 article
+) {
+  border-color: var(--ui-card-border);
+  background: var(--ui-card-bg);
+  box-shadow: var(--ui-card-shadow);
+}
+
+.home-v3-project-main,
+.project-detail-hero-v2 {
+  background: var(--ui-card-bg-strong);
+}
+
+/* 项目卡标题统一：大卡有舞台感，小卡保持干净 */
+:where(
+  .home-v3-project-main h3,
+  .project-lab-card h2,
+  .project-showcase-card h3,
+  .project-detail-hero-v2 h1
+) {
+  color: rgba(248, 251, 255, 0.96);
+  letter-spacing: var(--ui-title-strong);
+  text-wrap: balance;
+}
+
+:where(.home-v3-project-side h3, .feature-grid-v2 h2, .project-story-v2 h2, .project-tags-v2 h2) {
+  color: rgba(248, 251, 255, 0.95);
+  letter-spacing: var(--ui-title-tight);
+  text-wrap: balance;
+}
+
+/* 项目描述控制行宽和颜色，避免卡片像文字墙 */
+:where(
+  .home-v3-project-main > p,
+  .home-v3-project-side p,
+  .project-lab-desc,
+  .project-showcase-card p,
+  .project-detail-hero-v2 p,
+  .project-story-v2 div,
+  .feature-grid-v2 p
+) {
+  max-width: 66ch;
+  color: rgba(226, 232, 240, 0.78);
+  line-height: var(--ui-body-line);
+}
+
+/* 项目状态、分类、标签统一成第一代轻胶囊 */
+:where(
+  .home-v3-project-main li,
+  .project-lab-tags li,
+  .project-detail-meta-v2 span,
+  .project-tags-v2 span,
+  .project-lab-card small,
+  .project-showcase-card small
+) {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  color: rgba(226, 232, 240, 0.76);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.056), rgba(255, 255, 255, 0.014)),
+    rgba(255, 255, 255, 0.026);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.052);
+}
+
+/* 项目页字母图标 / 首字母标识统一柔和 */
+:where(
+  .project-lab-card > span,
+  .project-showcase-card > span,
+  .resource-card-v2 > span,
+  .link-card-v2 > span
+) {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  color: rgba(248, 251, 255, 0.92);
+  background:
+    radial-gradient(circle at 30% 0%, rgba(255, 255, 255, 0.13), transparent 58%),
+    linear-gradient(145deg, rgba(168, 200, 255, 0.12), rgba(196, 181, 253, 0.055)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  font-weight: 820;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(
+    .home-v3-project-main,
+    .home-v3-project-side article,
+    .project-lab-card,
+    .project-showcase-card,
+    .project-story-v2,
+    .project-tags-v2,
+    .feature-grid-v2 article
+  ):hover {
+    transform: translateY(-3px);
+    border-color: var(--ui-card-border-hover);
+    box-shadow: var(--ui-card-shadow-hover);
+  }
+}
+
+/* 项目卡片网格节奏 */
+:where(.project-lab-grid, .project-showcase-grid, .feature-grid-v2) {
+  gap: clamp(14px, 2vw, 18px);
+}
+
+/* ============================================================
+   第 19 步：Links 页面信息层级视觉收敛
+   ============================================================ */
+
+/* Links 页外层分组：轻玻璃分区，不要像普通列表 */
+:where(.resource-group-v2, .links-group-v2, .link-section-v2) {
+  border-color: var(--ui-card-border);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(168, 200, 255, 0.08), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.014)),
+    rgba(8, 13, 26, 0.48);
+  box-shadow: var(--ui-card-shadow);
+}
+
+/* Links 卡片：标题更清楚，描述更轻，标签减少视觉负担 */
+:where(.resource-card-v2, .link-card-v2, .ecosystem-grid a) {
+  position: relative;
+  overflow: hidden;
+  border-color: var(--ui-card-border);
+  background: var(--ui-card-bg);
+  box-shadow: var(--ui-card-shadow);
+}
+
+:where(.resource-card-v2 strong, .link-card-v2 strong, .ecosystem-grid strong) {
+  color: rgba(248, 251, 255, 0.95);
+  font-size: clamp(19px, 2vw, 24px);
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+:where(.resource-card-v2 span, .link-card-v2 span, .ecosystem-grid span) {
+  color: rgba(203, 213, 225, 0.72);
+  line-height: 1.68;
+}
+
+/* Links 标签更弱，不要让标签抢标题 */
+:where(.resource-card-v2 li, .link-card-v2 li, .link-filter-pill) {
+  min-height: 28px;
+  padding: 5px 10px;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(203, 213, 225, 0.72);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.048), rgba(255, 255, 255, 0.012)),
+    rgba(255, 255, 255, 0.02);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Links filter：像第一代系统胶囊 */
+:where(.links-filter-v2, .link-filter-v2, .search-filter-v2) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.link-filter-pill,
+.search-filter-v2 button {
+  padding-inline: 13px;
+  cursor: pointer;
+}
+
+.link-filter-pill[aria-pressed='true'],
+.search-filter-v2 button[aria-pressed='true'],
+.link-filter-pill.is-active,
+.search-filter-v2 button.is-active {
+  border-color: rgba(168, 200, 255, 0.3);
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.18), rgba(196, 181, 253, 0.12)),
+    rgba(255, 255, 255, 0.045);
+  box-shadow:
+    0 14px 42px rgba(99, 102, 241, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 外链视觉统一：不要每个链接都像主按钮 */
+:where(.resource-card-v2 a, .link-card-v2 a, .ecosystem-grid a, .home-v3-network a) {
+  text-decoration: none;
+}
+
+:where(.resource-card-v2 footer a, .link-card-v2 footer a) {
+  color: rgba(219, 234, 254, 0.82);
+  font-weight: 760;
+}
+
+/* ============================================================
+   第 20 步：Search 页面命令中心视觉优化
+   ============================================================ */
+
+/* 搜索页整体容器兼容多种可能 class */
+:where(.search-panel-v2, .search-shell-v2, .search-box-v2, .search-form-v2) {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--ui-card-border);
+  border-radius: clamp(24px, 4vw, 34px);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(168, 200, 255, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.074), rgba(255, 255, 255, 0.018)),
+    rgba(8, 13, 26, 0.56);
+  box-shadow:
+    0 28px 96px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.095);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+/* 搜索输入：更像 Command Palette */
+:where(
+  .search-panel-v2 input,
+  .search-shell-v2 input,
+  .search-box-v2 input,
+  .search-form-v2 input,
+  input[type='search']
+) {
+  min-height: 58px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  color: rgba(248, 251, 255, 0.94);
+  background:
+    linear-gradient(90deg, rgba(168, 200, 255, 0.055), transparent 40%), rgba(255, 255, 255, 0.035);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 14px 46px rgba(0, 0, 0, 0.18);
+  font-size: 16px;
+}
+
+:where(
+  .search-panel-v2 input,
+  .search-shell-v2 input,
+  .search-box-v2 input,
+  .search-form-v2 input,
+  input[type='search']
+)::placeholder {
+  color: rgba(148, 163, 184, 0.74);
+}
+
+:where(
+  .search-panel-v2 input,
+  .search-shell-v2 input,
+  .search-box-v2 input,
+  .search-form-v2 input,
+  input[type='search']
+):focus {
+  border-color: rgba(168, 200, 255, 0.32);
+  box-shadow:
+    0 0 0 4px rgba(168, 200, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 58px rgba(0, 0, 0, 0.24);
+  outline: none;
+}
+
+/* 搜索结果列表：从 sitemap 感改成命令结果卡 */
+.search-results-v2 {
+  display: grid;
+  gap: 10px;
+}
+
+.search-results-v2 li {
+  position: relative;
+  overflow: hidden;
+  border-color: var(--ui-card-border);
+  border-radius: 22px;
+  background: var(--ui-card-bg);
+  box-shadow: var(--ui-card-shadow);
+}
+
+.search-results-v2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.search-results-v2 strong,
+.search-results-v2 h2,
+.search-results-v2 h3 {
+  color: rgba(248, 251, 255, 0.95);
+  letter-spacing: -0.04em;
+}
+
+.search-results-v2 p,
+.search-results-v2 span,
+.search-results-v2 small {
+  color: rgba(203, 213, 225, 0.72);
+  line-height: 1.68;
+}
+
+/* 搜索类型标签 */
+:where(.search-results-v2 mark, .search-results-v2 em, .search-result-type, .search-result-path) {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 24px;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: rgba(219, 234, 254, 0.78);
+  background: rgba(255, 255, 255, 0.026);
+  font-style: normal;
+  font-size: 12px;
+}
+
+/* Search 默认推荐区，如果已有 quick action / card，会统一成命令中心 */
+:where(.search-suggestions-v2, .search-empty-v2, .search-recommend-v2, .quick-action-card) {
+  border-color: var(--ui-card-border);
+  background: var(--ui-card-bg);
+  box-shadow: var(--ui-card-shadow);
+}
+
+/* ============================================================
+   全局字体、间距和响应式微调
+   ============================================================ */
+
+/* 中英文混排：不要让中文因为过度 letter-spacing 显得断裂 */
+:where(
+  .section-head-v2 h2,
+  .resource-card-v2 strong,
+  .project-lab-card h2,
+  .search-results-v2 strong,
+  .home-v3-nav-grid strong
+) {
+  letter-spacing: -0.045em;
+}
+
+/* 正文行宽：中文更舒服 */
+:where(
+  .about-narrative-v2 p,
+  .project-story-v2 div,
+  .resource-card-v2 span,
+  .search-results-v2 p,
+  .page-v2-hero p,
+  .page-hero-v3__description
+) {
+  max-width: 68ch;
+}
+
+/* 默认卡片网格间距 */
+:where(
+  .resource-grid-v2,
+  .project-lab-grid,
+  .stats-grid-v2,
+  .uses-grid-v2,
+  .tool-grid-v2,
+  .blog-plan-v2,
+  .draft-grid-v2,
+  .feature-grid-v2
+) {
+  gap: clamp(14px, 2vw, 18px);
+}
+
+/* 移动端按钮和卡片更干净 */
+@media (max-width: 760px) {
+  :where(.ui-button, .button, .btn) {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .home-v3-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .home-v3-actions .ui-button {
+    width: 100%;
+  }
+
+  :where(
+    .search-panel-v2 input,
+    .search-shell-v2 input,
+    .search-box-v2 input,
+    .search-form-v2 input,
+    input[type='search']
+  ) {
+    min-height: 52px;
+    border-radius: 18px;
+    font-size: 15px;
+  }
+
+  .search-results-v2 li,
+  :where(.resource-card-v2, .link-card-v2, .project-lab-card, .project-showcase-card) {
+    border-radius: 22px;
+  }
+
+  :where(
+    .resource-card-v2 strong,
+    .link-card-v2 strong,
+    .project-lab-card h2,
+    .project-showcase-card h3
+  ) {
+    font-size: clamp(20px, 6vw, 26px);
+  }
+}
+
+@media (hover: none) {
+  :where(
+    .ui-button,
+    .button,
+    .btn,
+    .project-lab-card,
+    .project-showcase-card,
+    .resource-card-v2,
+    .link-card-v2,
+    .search-results-v2 li
+  ):hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .ui-button,
+    .button,
+    .btn,
+    .project-lab-card,
+    .project-showcase-card,
+    .resource-card-v2,
+    .link-card-v2,
+    .search-results-v2 li,
+    .link-filter-pill,
+    .search-filter-v2 button
+  ) {
+    transition: none !important;
+  }
+}
+
+/* 防止某些旧按钮 / 链接因为全局 button 规则变形 */
+button:where([aria-label='Close'], .modal-close, .toast-close) {
+  min-height: auto;
+}
