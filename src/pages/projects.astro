@@ -1,93 +1,116 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { projects } from '../data/site';
+import PageHero from '../components/PageHero.astro';
+import { projectDetails, type ProjectDetail } from '../data/projects';
 
-const liveCount = projects.filter((p) => p.status === '已上线').length;
-const wipCount = projects.filter((p) => p.status === '维护中' || p.status === '计划中').length;
-const ideaCount = projects.filter((p) => p.status === '构想中').length;
+const liveCount = projectDetails.filter((p) => p.status === '已上线').length;
+const wipCount = projectDetails.filter(
+  (p) => p.status === '维护中' || p.status === '计划中',
+).length;
+const ideaCount = projectDetails.filter((p) => p.status === '构想中').length;
 
 const stats = [
-  { label: '已上线', value: liveCount, tone: 'green' },
-  { label: '进行中', value: wipCount, tone: 'blue' },
-  { label: '构想中', value: ideaCount, tone: 'violet' },
-  { label: '总项目', value: projects.length, tone: 'amber' },
+  { label: '已上线', value: liveCount },
+  { label: '进行中', value: wipCount },
+  { label: '构想中', value: ideaCount },
+  { label: '总项目', value: projectDetails.length },
 ];
 
-function projectHref(project: (typeof projects)[number]) {
+function projectHref(project: ProjectDetail) {
   return `/projects/${project.slug}/`;
+}
+
+function projectLinks(project: ProjectDetail) {
+  return [
+    project.websiteUrl && {
+      label: '访问网站',
+      href: project.websiteUrl,
+      primary: true,
+    },
+    project.githubUrl && {
+      label: 'GitHub',
+      href: project.githubUrl,
+    },
+    project.giteeUrl && {
+      label: 'Gitee 镜像',
+      href: project.giteeUrl,
+    },
+  ].filter(Boolean) as { label: string; href: string; primary?: boolean }[];
 }
 ---
 
-<BaseLayout title="项目 · Azek431" description="Azek431 的项目展示、网站入口、实验记录和后续计划。">
-  <Breadcrumb items={[{ label: '项目', href: '/projects/' }]} />
+<BaseLayout
+  title="项目展示台"
+  description="整理 Azek431 的个人主站、项目官网、资料库、博客计划、AI 实验和更多技术实践。"
+>
+  <main class="projects-v3">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '项目展示台' }]} />
 
-  <section class="page-v2-hero project-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Project Showcase</p>
-      <h1>项目展示台</h1>
-      <p>
-        这里集中整理我的个人主站、文档站、博客计划、AI 实验和后续技术实践。
-        已上线项目会提供访问入口，计划中项目会作为长期方向持续记录。
-      </p>
-    </div>
+    <PageHero
+      eyebrow="Project Showcase"
+      title="项目展示台"
+      description="这里集中整理我的个人主站、文档站、博客计划、AI 实验和后续技术实践。已上线项目会优先提供网站、GitHub 和 Gitee 镜像入口。"
+      meta={stats}
+    />
 
-    <div class="page-v2-stat-grid">
+    <section class="project-showcase-v3" aria-label="项目列表">
       {
-        stats.map((stat) => (
-          <article data-tone={stat.tone}>
-            <strong>{stat.value}</strong>
-            <span>{stat.label}</span>
-          </article>
-        ))
+        projectDetails.map((project, index) => {
+          const links = projectLinks(project);
+
+          return (
+            <article class="project-card-v3" style={`--project-accent: ${project.accent}`}>
+              <div class="project-card-v3__top">
+                <span>{project.category}</span>
+                <strong>{project.status}</strong>
+              </div>
+
+              <div class="project-card-v3__body">
+                <p>#{String(index + 1).padStart(2, '0')}</p>
+                <h2>{project.title}</h2>
+                <span>{project.description}</span>
+              </div>
+
+              <ul class="project-card-v3__tags">
+                {project.tags.slice(0, 6).map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+
+              <div class="project-card-v3__meta">
+                <span>更新于 {project.lastUpdated}</span>
+              </div>
+
+              <div class="project-card-v3__actions">
+                <a
+                  class="ui-button ui-button-primary"
+                  href={projectHref(project)}
+                  aria-label={`查看 ${project.title} 项目详情`}
+                >
+                  查看详情
+                </a>
+
+                {links.map((link) => (
+                  <a
+                    class={
+                      link.primary
+                        ? 'project-mirror-link project-mirror-link--primary'
+                        : 'project-mirror-link'
+                    }
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`在新窗口打开 ${project.title} 的 ${link.label}`}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </article>
+          );
+        })
       }
-    </div>
-  </section>
-
-  <section class="project-lab-v2" aria-label="项目列表">
-    {
-      projects.map((project, index) => (
-        <article
-          class="project-lab-card"
-          style={`--project-accent: ${project.accent}; --project-index: ${index + 1};`}
-        >
-          <div class="project-lab-card-head">
-            <p>{project.category}</p>
-            <span>{project.status}</span>
-          </div>
-
-          <h2>{project.name}</h2>
-          <p class="project-lab-desc">{project.description}</p>
-
-          <ul class="project-lab-tags">
-            {project.tags.slice(0, 6).map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
-
-          <div class="project-lab-meta">
-            <span>更新于 {project.lastUpdated}</span>
-            <span>#{String(index + 1).padStart(2, '0')}</span>
-          </div>
-
-          <div class="project-lab-actions">
-            <a class="ui-button ui-button-primary" href={projectHref(project)}>
-              查看详情
-            </a>
-
-            {project.links?.slice(0, 2).map((link) => (
-              <a
-                class="ui-button ui-button-ghost"
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-        </article>
-      ))
-    }
-  </section>
+    </section>
+  </main>
 </BaseLayout>
