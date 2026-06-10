@@ -6090,3 +6090,306 @@ html.is-home-page .home-v3-phase-grid small {
     background: rgba(9, 15, 29, 0.92);
   }
 }
+
+/* ---------- Azek431 UI System V2 Step 14 Legacy System Skin ---------- */
+
+/*
+  第 14 步：主页第一代系统皮肤加强。
+  目标：让首页更接近第一代 CSS 的“个人系统主页”感觉：
+  柔和、干净、玻璃、深色空间、大标题、弱 HUD、轻漂浮，而不是硬赛博仪表盘。
+*/
+
+html.is-home-page {
+  --legacy-system-bg-0: #060914;
+  --legacy-system-bg-1: #090f1f;
+  --legacy-system-bg-2: #0d1428;
+  --legacy-system-line: rgba(226, 232, 240, 0.12);
+  --legacy-system-line-strong: rgba(226, 232, 240, 0.2);
+  --legacy-system-text: rgba(248, 251, 255, 0.96);
+  --legacy-system-muted: rgba(203, 213, 225, 0.72);
+  --legacy-system-soft-blue: rgba(168, 200, 255, 0.22);
+  --legacy-system-soft-violet: rgba(196, 181, 253, 0.16);
+  --legacy-system-soft-mint: rgba(110, 231, 183, 0.1);
+}
+
+/* 首页整体更接近第一代：柔和空间背景，减少硬科技味 */
+html.is-home-page body {
+  background:
+    radial-gradient(circle at 12% -8%, rgba(168, 200, 255, 0.18), transparent 34vw),
+    radial-gradient(circle at 90% 4%, rgba(196, 181, 253, 0.15), transparent 32vw),
+    radial-gradient(circle at 50% 115%, rgba(110, 231, 183, 0.095), transparent 42vw),
+    linear-gradient(
+      180deg,
+      var(--legacy-system-bg-0) 0%,
+      var(--legacy-system-bg-1) 45%,
+      var(--legacy-system-bg-0) 100%
+    );
+}
+
+/* 第一代主页不需要 HUD 抢第一视觉，保留进度条即可 */
+html.is-home-page .interface-fx__hud {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+html.is-home-page .interface-fx__corner {
+  opacity: 0.12;
+}
+
+html.is-home-page .visual-aura__scanner,
+html.is-home-page .visual-aura__ring {
+  opacity: 0.035;
+}
+
+html.is-home-page .visual-aura__grid {
+  opacity: 0.12;
+  background-size: 64px 64px;
+}
+
+html.is-home-page .visual-aura__noise {
+  opacity: 0.06;
+}
+
+/* 顶部导航回到第一代那种轻玻璃悬浮感 */
+html.is-home-page .site-header {
+  border-color: rgba(226, 232, 240, 0.1);
+  background:
+    linear-gradient(180deg, rgba(9, 15, 29, 0.74), rgba(9, 15, 29, 0.44)), rgba(9, 15, 29, 0.38);
+  box-shadow:
+    0 18px 70px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+html.is-home-page.is-scrolled .site-header {
+  background:
+    linear-gradient(180deg, rgba(9, 15, 29, 0.86), rgba(9, 15, 29, 0.6)), rgba(9, 15, 29, 0.62);
+}
+
+/* Hero 视觉更接近第一代：像一张完整的玻璃封面 */
+html.is-home-page .home-v3-hero {
+  gap: clamp(18px, 3vw, 30px);
+}
+
+html.is-home-page .home-v3-copy {
+  min-height: clamp(620px, 78vh, 840px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 80% 8%, rgba(168, 200, 255, 0.2), transparent 36%),
+    radial-gradient(circle at 52% 112%, rgba(110, 231, 183, 0.08), transparent 42%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.108), rgba(255, 255, 255, 0.022)),
+    rgba(9, 15, 29, 0.6);
+  box-shadow:
+    0 52px 170px rgba(0, 0, 0, 0.46),
+    0 24px 86px rgba(168, 200, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.17),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.035);
+}
+
+/* 第一代系统感：Kicker 更像状态胶囊，不像硬标签 */
+html.is-home-page .home-v3-kicker {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(226, 232, 240, 0.82);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
+    rgba(255, 255, 255, 0.038);
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* 标题更像第一代：巨大、柔和、干净，不要过度赛博 */
+html.is-home-page .home-v3 h1 {
+  max-width: 10.6ch;
+  color: var(--legacy-system-text);
+  letter-spacing: -0.096em;
+  text-shadow:
+    0 0 34px rgba(168, 200, 255, 0.16),
+    0 24px 88px rgba(0, 0, 0, 0.48);
+}
+
+html.is-home-page .home-v3 h1 span:last-child {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e5edff 20%,
+    #a8c8ff 48%,
+    #c4b5fd 76%,
+    #e0f2fe 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 首屏说明更像个人主页，不像产品落地页 */
+html.is-home-page .home-v3-lead {
+  max-width: 52ch;
+  color: rgba(226, 232, 240, 0.78);
+  font-size: clamp(18px, 2vw, 21px);
+}
+
+/* AI / Web / Open 小卡更轻，减少模块感 */
+html.is-home-page .home-v3-tracks article {
+  border-color: rgba(255, 255, 255, 0.11);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.015)),
+    rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+html.is-home-page .home-v3-tracks strong {
+  color: rgba(248, 251, 255, 0.94);
+}
+
+html.is-home-page .home-v3-tracks span {
+  color: rgba(203, 213, 225, 0.68);
+}
+
+/* 状态面板弱化：像侧边玻璃卡，而不是第二个主角 */
+html.is-home-page .home-v3-console {
+  opacity: 0.94;
+  border-color: rgba(255, 255, 255, 0.13);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.1), transparent 28%),
+    radial-gradient(circle at 84% 10%, rgba(196, 181, 253, 0.1), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.02)),
+    rgba(7, 12, 24, 0.56);
+  box-shadow:
+    0 28px 96px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 数据卡片变成第一代那种轻量系统指标 */
+html.is-home-page .home-v3-stats article {
+  border-color: rgba(255, 255, 255, 0.105);
+  background:
+    radial-gradient(
+      circle at 86% 0%,
+      color-mix(in srgb, var(--tone-color, #a8c8ff) 14%, transparent),
+      transparent 34%
+    ),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.016)),
+    rgba(8, 13, 26, 0.5);
+  box-shadow:
+    0 18px 56px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+
+/* 首页后续卡片整体降低硬边，第一代更柔和 */
+html.is-home-page .home-v3-command,
+html.is-home-page .home-v3-project-main,
+html.is-home-page .home-v3-project-side article,
+html.is-home-page .home-v3-nav-grid a,
+html.is-home-page .home-v3-timeline a,
+html.is-home-page .home-v3-network,
+html.is-home-page .home-v3-phase-grid article {
+  border-color: rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at 86% 0%, rgba(168, 200, 255, 0.075), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.064), rgba(255, 255, 255, 0.017)),
+    rgba(8, 13, 26, 0.52);
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.078);
+}
+
+/* 主项目保留更强一点的玻璃舞台感 */
+html.is-home-page .home-v3-project-main {
+  background:
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--project-accent) 20%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.105), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.02)),
+    rgba(8, 13, 26, 0.58);
+}
+
+/* 第一代按钮：圆润、软高光、轻反馈 */
+html.is-home-page .home-v3 .ui-button {
+  border-color: rgba(255, 255, 255, 0.135);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.082), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.085);
+}
+
+html.is-home-page .home-v3 .ui-button-primary {
+  border-color: rgba(168, 200, 255, 0.34);
+  background:
+    linear-gradient(135deg, rgba(168, 200, 255, 0.32), rgba(196, 181, 253, 0.2)),
+    rgba(255, 255, 255, 0.058);
+}
+
+/* Command 入口更像第一代搜索胶囊 */
+html.is-home-page .home-v3-command a {
+  border-color: rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(90deg, rgba(168, 200, 255, 0.06), transparent 42%), rgba(255, 255, 255, 0.032);
+}
+
+html.is-home-page .home-v3-command a strong {
+  color: rgba(219, 234, 254, 0.92);
+}
+
+/* 区块标题更像第一代：少一点硬科技 uppercase 的尖锐感 */
+html.is-home-page .section-head-v2 p {
+  color: rgba(191, 226, 255, 0.72);
+  text-shadow: none;
+}
+
+html.is-home-page .section-head-v2 h2 {
+  color: rgba(248, 251, 255, 0.96);
+}
+
+html.is-home-page .section-head-v2 span {
+  color: rgba(203, 213, 225, 0.7);
+}
+
+/* hover 继续柔化：第一代不是剧烈上浮，而是轻轻亮一下 */
+@media (hover: hover) and (pointer: fine) {
+  html.is-home-page .home-v3-copy:hover,
+  html.is-home-page .home-v3-console:hover,
+  html.is-home-page .home-v3-command:hover,
+  html.is-home-page .home-v3-project-main:hover,
+  html.is-home-page .home-v3-project-side article:hover,
+  html.is-home-page .home-v3-nav-grid a:hover,
+  html.is-home-page .home-v3-timeline a:hover,
+  html.is-home-page .home-v3-network:hover,
+  html.is-home-page .home-v3-phase-grid article:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 32px 110px rgba(0, 0, 0, 0.36),
+      0 12px 44px rgba(168, 200, 255, 0.055),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* 移动端进一步靠近第一代：干净、轻、可读 */
+@media (max-width: 760px) {
+  html.is-home-page body {
+    background:
+      radial-gradient(circle at 22% -8%, rgba(168, 200, 255, 0.14), transparent 62vw),
+      radial-gradient(circle at 88% 12%, rgba(196, 181, 253, 0.11), transparent 58vw),
+      linear-gradient(180deg, #060914 0%, #090f1f 50%, #060914 100%);
+  }
+
+  html.is-home-page .home-v3-copy {
+    min-height: auto;
+  }
+
+  html.is-home-page .home-v3 h1 {
+    letter-spacing: -0.078em;
+  }
+
+  html.is-home-page .home-v3-console {
+    opacity: 1;
+  }
+}
