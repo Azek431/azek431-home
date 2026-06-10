@@ -5546,12 +5546,17 @@ html.is-home-page .interface-fx__progress {
 }
 
 .home-v3 h1 span:last-child {
-  background:
-    linear-gradient(90deg, #ffffff 0%, #dbeafe 18%, #a8c8ff 42%, #c4b5fd 72%, #6ee7b7 100%);
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #dbeafe 18%,
+    #a8c8ff 42%,
+    #c4b5fd 72%,
+    #6ee7b7 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
-  filter:
-    drop-shadow(0 0 20px rgba(168, 200, 255, 0.2))
+  filter: drop-shadow(0 0 20px rgba(168, 200, 255, 0.2))
     drop-shadow(0 0 54px rgba(196, 181, 253, 0.12));
 }
 
@@ -5607,7 +5612,11 @@ html.is-home-page .interface-fx__progress {
   border-color: rgba(255, 255, 255, 0.14);
   border-radius: 26px;
   background:
-    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--tone-color, #a8c8ff) 18%, transparent), transparent 38%),
+    radial-gradient(
+      circle at 80% 0%,
+      color-mix(in srgb, var(--tone-color, #a8c8ff) 18%, transparent),
+      transparent 38%
+    ),
     linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.022)),
     rgba(10, 16, 30, 0.54);
   box-shadow:
@@ -5632,8 +5641,7 @@ html.is-home-page .interface-fx__progress {
 .home-v3-command a {
   border-color: rgba(168, 200, 255, 0.2);
   background:
-    linear-gradient(90deg, rgba(168, 200, 255, 0.08), transparent 40%),
-    rgba(255, 255, 255, 0.045);
+    linear-gradient(90deg, rgba(168, 200, 255, 0.08), transparent 40%), rgba(255, 255, 255, 0.045);
 }
 
 .home-v3-command kbd {
@@ -5648,7 +5656,11 @@ html.is-home-page .interface-fx__progress {
   border-color: var(--legacy-home-edge);
   border-radius: 40px;
   background:
-    radial-gradient(circle at 92% 4%, color-mix(in srgb, var(--project-accent) 26%, transparent), transparent 40%),
+    radial-gradient(
+      circle at 92% 4%,
+      color-mix(in srgb, var(--project-accent) 26%, transparent),
+      transparent 40%
+    ),
     radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.12), transparent 28%),
     linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.026)),
     rgba(9, 15, 29, 0.62);
@@ -5758,8 +5770,12 @@ html.is-home-page .interface-fx__progress {
 html.is-home-page .section-v2::before {
   width: min(260px, 46vw);
   opacity: 0.55;
-  background:
-    linear-gradient(90deg, rgba(168, 200, 255, 0.26), rgba(196, 181, 253, 0.12), transparent);
+  background: linear-gradient(
+    90deg,
+    rgba(168, 200, 255, 0.26),
+    rgba(196, 181, 253, 0.12),
+    transparent
+  );
 }
 
 html.is-home-page .section-v2::after {
