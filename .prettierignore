@@ -3,13 +3,10 @@ dist
 .astro
 .cache
 .vite
-pnpm-lock.yaml
-
+.vitepress/cache
+.vitepress/dist
 .tmp-ui-backup
 .vercel
 .wrangler
 coverage
-
-# Local generated files
-# Dependencies
-# Lockfile
+pnpm-lock.yaml

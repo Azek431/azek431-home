@@ -336,3 +336,8 @@ coverage/
 .vercel/
 
 # Local generated files
+
+# VitePress generated cache
+.vitepress/cache/
+.vitepress/dist/
+# Local UI backup files
