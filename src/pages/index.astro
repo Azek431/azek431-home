@@ -8,13 +8,11 @@ import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeRoadmap from '../components/home/HomeRoadmap.astro';
 import HomeStatusConsole from '../components/home/HomeStatusConsole.astro';
 import { links, recentUpdates, siteConfig } from '../data/site';
+import { sitePages } from '../data/site';
 import { projectDetails } from '../data/projects';
-import { relativeDate, siteUpdatedDate } from '../data/time';
+import { todayDate } from '../data/time';
 
-const liveProjects = projectDetails.filter((project) => project.status === '已上线').length;
 const pageCount = sitePages.length + projectDetails.length + 1;
-const plannedProjects = projectDetails.length - liveProjects;
-const externalLinks = links.filter((link) => link.href.startsWith('http')).length;
 
 const focusItems = [
   {

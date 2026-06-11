@@ -1,8 +1,10 @@
 ---
 type Focus = {
-  num: string;
+  num?: string;
+  step?: string;
   title: string;
   desc: string;
+  status?: string;
 };
 
 type Props = {
@@ -23,7 +25,7 @@ const { focuses } = Astro.props as Props;
     {
       focuses.map((focus) => (
         <article>
-          <span>{focus.num}</span>
+          <span>{focus.num ?? focus.step ?? '—'}</span>
           <h3>{focus.title}</h3>
           <p>{focus.desc}</p>
         </article>
