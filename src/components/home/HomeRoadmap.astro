@@ -19,12 +19,12 @@ const { focuses } = Astro.props as Props;
     <span>主站之外，我也会持续投入在这些方向上。</span>
   </div>
 
-  <div class="home-v3-phase-grid">
+  <div class="home-v3-roadmap-grid">
     {
       focuses.map((focus) => (
         <article>
           <span>{focus.num}</span>
-          <strong>{focus.title}</strong>
+          <h3>{focus.title}</h3>
           <p>{focus.desc}</p>
         </article>
       ))
