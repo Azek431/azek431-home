@@ -12,6 +12,7 @@ import { projectDetails } from '../data/projects';
 import { relativeDate, siteUpdatedDate } from '../data/time';
 
 const liveProjects = projectDetails.filter((project) => project.status === '已上线').length;
+const pageCount = sitePages.length + projectDetails.length + 1;
 const plannedProjects = projectDetails.length - liveProjects;
 const externalLinks = links.filter((link) => link.href.startsWith('http')).length;
 
@@ -71,7 +72,7 @@ const networkLinks = links.filter((link) =>
 
 const featuredUpdates = recentUpdates.slice(0, 3);
 
-const phases = [
+const focuses = [
   {
     step: 'Phase 01',
     title: 'Home System',
@@ -98,13 +99,13 @@ const phases = [
   description="Azek431 的个人数字中枢，用于连接项目、AI 实验、学习记录、公开入口和长期内容。"
 >
   <main class="home-v3">
-    <HomeHero siteConfig={siteConfig} focusItems={focusItems}>
-      <HomeStatusConsole
-        siteUpdatedRelative={relativeDate(siteUpdatedDate)}
-        liveProjects={liveProjects}
-        plannedProjects={plannedProjects}
-        externalLinks={externalLinks}
-      />
+    <HomeHero
+      siteConfig={siteConfig}
+      focusItems={focusItems}
+      todayDate={todayDate}
+      pageCount={pageCount}
+    >
+      <HomeStatusConsole />
     </HomeHero>
     <HomeCommand />
     <HomeProjects mainProject={mainProject} sideProjects={sideProjects} />
