@@ -838,3 +838,204 @@ html.is-home-page .interface-fx__hud {
 html.is-home-page .interface-fx__progress {
   height: 1px;
 }
+
+/* ---------- Azek431 UI System V2 Step 32 Header Gitee Entry ---------- */
+
+/*
+  第 32 步：Header 右上角增加 Gitee 入口。
+  GitHub / Gitee 作为个人公开主页入口并排展示，和首页 Hero 的“本站源码 / Gitee 镜像”区分开。
+*/
+
+.site-header {
+  display: flex;
+  gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+}
+
+.site-header__brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 40px;
+  color: rgba(248, 251, 255, 0.94);
+  text-decoration: none;
+}
+
+.site-header__brand span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(168, 200, 255, 0.18);
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(168, 200, 255, 0.24), transparent 44%),
+    rgba(255, 255, 255, 0.035);
+  color: rgba(248, 251, 255, 0.94);
+  font-size: 14px;
+  font-weight: 860;
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.site-header__brand strong {
+  font-size: 15px;
+  font-weight: 820;
+  letter-spacing: -0.04em;
+}
+
+.site-header__nav {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.site-header__nav-link {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: rgba(226, 232, 240, 0.72);
+  font-size: 14px;
+  font-weight: 720;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.site-header__nav-link kbd {
+  color: rgba(148, 163, 184, 0.74);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.site-header__nav-link.is-active {
+  border-color: rgba(168, 200, 255, 0.18);
+  color: rgba(248, 251, 255, 0.92);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.site-header__actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.site-header__network {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.095);
+  border-radius: 999px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.012)),
+    rgba(255, 255, 255, 0.022);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.052);
+}
+
+.site-header__network-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: rgba(219, 234, 254, 0.74);
+  font-size: 12px;
+  font-weight: 780;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.site-header__network-link--gitee {
+  color: rgba(209, 250, 229, 0.78);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header__brand:hover,
+  .site-header__nav-link:hover,
+  .site-header__network-link:hover {
+    transform: translateY(-1px);
+  }
+
+  .site-header__nav-link:hover,
+  .site-header__network-link:hover {
+    border-color: rgba(168, 200, 255, 0.18);
+    color: rgba(248, 251, 255, 0.94);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .site-header__network-link--gitee:hover {
+    border-color: rgba(110, 231, 183, 0.18);
+    box-shadow: 0 8px 24px rgba(110, 231, 183, 0.055);
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    flex-wrap: wrap;
+  }
+
+  .site-header__nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .site-header__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-header__actions {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header__brand strong {
+    display: none;
+  }
+
+  .site-header__network-link {
+    min-height: 28px;
+    padding-inline: 8px;
+    font-size: 11px;
+  }
+
+  .site-header__nav-link kbd {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__brand,
+  .site-header__nav-link,
+  .site-header__network-link {
+    transition: none !important;
+  }
+}
