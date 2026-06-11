@@ -1,33 +1,33 @@
 ---
 type Focus = {
- num: string;
- title: string;
- desc: string;
+  num: string;
+  title: string;
+  desc: string;
 };
 
 type Props = {
- focuses: Focus[];
+  focuses: Focus[];
 };
 
 const { focuses } = Astro.props as Props;
 ---
 
 <section class="section-v2 home-v3-roadmap" aria-labelledby="home-roadmap-title">
- <div class="section-head-v2">
- <p>Focus</p>
- <h2 id="home-roadmap-title">长期关注的方向</h2>
- <span>主站之外，我也会持续投入在这些方向上。</span>
- </div>
+  <div class="section-head-v2">
+    <p>Focus</p>
+    <h2 id="home-roadmap-title">长期关注的方向</h2>
+    <span>主站之外，我也会持续投入在这些方向上。</span>
+  </div>
 
- <div class="home-v3-phase-grid">
- {
- focuses.map((focus) => (
- <article>
- <span>{focus.num}</span>
- <strong>{focus.title}</strong>
- <p>{focus.desc}</p>
- </article>
- ))
- }
- </div>
+  <div class="home-v3-phase-grid">
+    {
+      focuses.map((focus) => (
+        <article>
+          <span>{focus.num}</span>
+          <strong>{focus.title}</strong>
+          <p>{focus.desc}</p>
+        </article>
+      ))
+    }
+  </div>
 </section>
