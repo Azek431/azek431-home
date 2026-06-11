@@ -1,35 +1,33 @@
 ---
-type Phase = {
-  step: string;
-  title: string;
-  desc: string;
-  status: string;
+type Focus = {
+ num: string;
+ title: string;
+ desc: string;
 };
 
 type Props = {
-  phases: Phase[];
+ focuses: Focus[];
 };
 
-const { phases } = Astro.props as Props;
+const { focuses } = Astro.props as Props;
 ---
 
 <section class="section-v2 home-v3-roadmap" aria-labelledby="home-roadmap-title">
-  <div class="section-head-v2">
-    <p>Roadmap</p>
-    <h2 id="home-roadmap-title">下一步会继续扩展</h2>
-    <span>从主站，到内容层，再到 AI 工具与自动化实验。</span>
-  </div>
+ <div class="section-head-v2">
+ <p>Focus</p>
+ <h2 id="home-roadmap-title">长期关注的方向</h2>
+ <span>主站之外，我也会持续投入在这些方向上。</span>
+ </div>
 
-  <div class="home-v3-phase-grid">
-    {
-      phases.map((phase) => (
-        <article>
-          <span>{phase.step}</span>
-          <strong>{phase.title}</strong>
-          <p>{phase.desc}</p>
-          <small>{phase.status}</small>
-        </article>
-      ))
-    }
-  </div>
+ <div class="home-v3-phase-grid">
+ {
+ focuses.map((focus) => (
+ <article>
+ <span>{focus.num}</span>
+ <strong>{focus.title}</strong>
+ <p>{focus.desc}</p>
+ </article>
+ ))
+ }
+ </div>
 </section>
