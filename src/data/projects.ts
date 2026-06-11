@@ -59,7 +59,7 @@ export const projectDetails: ProjectDetail[] = [
     features: [
       '资料分类展示 + 全文搜索',
       '响应式资料页 + 移动端优化',
-      'GitHub Actions 自动部署',
+      'GitHub / Gitee 镜像 自动部署',
       'Gitee 镜像同步提升国内访问速度',
     ],
     highlights: [

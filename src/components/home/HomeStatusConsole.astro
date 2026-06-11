@@ -1,24 +1,82 @@
 ---
+import { projectDetails } from '../../data/projects';
+import { relativeDate, siteUpdatedDate } from '../../data/time';
+
 type Props = {
-  siteUpdatedRelative: string;
-  liveProjects: number;
-  plannedProjects: number;
-  externalLinks: number;
+  updatedLabel?: string;
+  liveProjects?: number;
+  publicLinks?: number;
+  stack?: string;
 };
 
-const { siteUpdatedRelative, liveProjects, plannedProjects, externalLinks } = Astro.props as Props;
+const { stack = 'Astro / Cloudflare' } = Astro.props as Props;
+
+const homeProject =
+  projectDetails.find((project) => project.slug === 'azek431-home') ?? projectDetails[0];
+
+const projectLinks = [
+  homeProject.websiteUrl && {
+    label: '访问网站',
+    href: homeProject.websiteUrl,
+    primary: true,
+  },
+  homeProject.githubUrl && {
+    label: 'GitHub 仓库',
+    href: homeProject.githubUrl,
+  },
+  homeProject.giteeUrl && {
+    label: 'Gitee 镜像',
+    href: homeProject.giteeUrl,
+  },
+].filter(Boolean) as { label: string; href: string; primary?: boolean }[];
+
+const projectFacts = [
+  { label: 'Status', value: homeProject.status },
+  { label: 'Stack', value: stack },
+  { label: 'Updated', value: relativeDate(siteUpdatedDate) },
+  { label: 'Type', value: homeProject.category },
+];
 ---
 
-<aside class="home-v3-console" aria-label="站点运行状态">
-  <div class="home-v3-console-head">
-    <span>site.status</span>
-    <strong>Running</strong>
+<aside class="home-v3-console home-project-card-v4" aria-label="当前主项目">
+  <div class="home-project-card-v4__head">
+    <p>Current Project</p>
+    <strong>{homeProject.title}</strong>
+    <span>{homeProject.description}</span>
   </div>
 
-  <ul class="home-v3-console-strip" aria-label="核心指标">
-    <li><strong>{liveProjects}</strong><span>已上线</span></li>
-    <li><strong>{plannedProjects}</strong><span>计划中</span></li>
-    <li><strong>{externalLinks}</strong><span>公开入口</span></li>
-    <li><strong>{siteUpdatedRelative}</strong><span>最近更新</span></li>
+  <dl class="home-project-card-v4__facts">
+    {
+      projectFacts.map((fact) => (
+        <div>
+          <dt>{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <ul class="home-project-card-v4__tags" aria-label={`${homeProject.title} 技术标签`}>
+    {homeProject.tags.slice(0, 5).map((tag) => <li>{tag}</li>)}
   </ul>
+
+  <div class="home-project-card-v4__actions" aria-label={`${homeProject.title} 项目入口`}>
+    {
+      projectLinks.map((link) => (
+        <a
+          class={
+            link.primary
+              ? 'project-mirror-link project-mirror-link--primary'
+              : 'project-mirror-link'
+          }
+          href={link.href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`在新窗口打开 ${homeProject.title} 的 ${link.label}`}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
 </aside>

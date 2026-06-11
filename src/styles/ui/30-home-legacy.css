@@ -1782,3 +1782,369 @@ html.is-home-page .section-head-v2 span {
     opacity: 1;
   }
 }
+
+/* ---------- Azek431 UI System V2 Step 31 Home Hero Project Card ---------- */
+
+/*
+  第 31 步：重构首页首屏 Hero 与当前主项目卡。
+  目标：把首屏从“系统监控面板”改成“高级个人主站封面 + 当前主项目入口”。
+*/
+
+.home-hero-v4 {
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.72fr);
+  gap: clamp(20px, 4vw, 42px);
+  align-items: stretch;
+}
+
+.home-hero-v4__copy {
+  display: grid;
+  align-content: center;
+  min-height: min(720px, calc(100svh - 176px));
+  padding-block: clamp(34px, 6vw, 72px);
+}
+
+.home-hero-v4__kicker {
+  width: fit-content;
+  margin-bottom: clamp(22px, 4vw, 34px);
+}
+
+.home-hero-v4__title {
+  display: grid;
+  gap: 0.02em;
+  max-width: 11ch;
+  margin: 0;
+  color: rgba(248, 251, 255, 0.98);
+  line-height: 0.82;
+  letter-spacing: -0.09em;
+  text-wrap: balance;
+}
+
+.home-hero-v4__title span {
+  display: block;
+  font-size: clamp(76px, 13vw, 168px);
+  font-weight: 900;
+  text-shadow:
+    0 0 42px rgba(168, 200, 255, 0.16),
+    0 28px 92px rgba(0, 0, 0, 0.46);
+}
+
+.home-hero-v4__title em {
+  display: block;
+  width: fit-content;
+  margin-top: clamp(10px, 1.4vw, 16px);
+  color: transparent;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(168, 200, 255, 0.98),
+      rgba(196, 181, 253, 0.88),
+      rgba(110, 231, 183, 0.76)
+    ),
+    #ffffff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  font-size: clamp(34px, 5.8vw, 76px);
+  font-style: normal;
+  font-weight: 820;
+  letter-spacing: -0.068em;
+  line-height: 0.95;
+  opacity: 0.96;
+  filter: drop-shadow(0 0 24px rgba(168, 200, 255, 0.14));
+}
+
+.home-hero-v4__lead {
+  max-width: 58ch;
+  margin-top: clamp(22px, 3vw, 30px);
+  color: rgba(226, 232, 240, 0.8);
+  font-size: clamp(17px, 1.75vw, 20px);
+  line-height: 1.86;
+}
+
+.home-hero-v4__actions {
+  margin-top: clamp(22px, 3vw, 32px);
+}
+
+.home-hero-v4__actions .ui-button-primary {
+  min-width: 138px;
+}
+
+.home-hero-v4__actions .ui-button-secondary {
+  border-color: rgba(168, 200, 255, 0.22);
+}
+
+.home-hero-v4__actions .ui-button-ghost {
+  color: rgba(219, 234, 254, 0.76);
+}
+
+.home-hero-v4__focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: clamp(24px, 4vw, 38px);
+}
+
+.home-hero-v4__focus li {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  width: fit-content;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: 999px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.012)),
+    rgba(255, 255, 255, 0.022);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.052);
+}
+
+.home-hero-v4__focus strong {
+  color: rgba(248, 251, 255, 0.9);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.home-hero-v4__focus span {
+  max-width: 24ch;
+  color: rgba(203, 213, 225, 0.66);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.home-hero-v4__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: clamp(22px, 3vw, 30px) 0 0;
+  color: rgba(148, 163, 184, 0.68);
+  font-size: 12px;
+}
+
+.home-hero-v4__meta span {
+  position: relative;
+}
+
+.home-hero-v4__meta span + span::before {
+  content: '·';
+  position: absolute;
+  left: -9px;
+  color: rgba(148, 163, 184, 0.42);
+}
+
+/* 右侧当前项目卡：替代旧 site.status 监控面板 */
+.home-project-card-v4 {
+  display: grid;
+  align-content: space-between;
+  gap: clamp(18px, 2.4vw, 24px);
+  min-height: min(720px, calc(100svh - 176px));
+  padding: clamp(24px, 4vw, 36px);
+  border-radius: clamp(28px, 4vw, 42px);
+}
+
+.home-project-card-v4::before {
+  content: '';
+  width: 54px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(168, 200, 255, 0.92), rgba(110, 231, 183, 0.58));
+  box-shadow:
+    0 0 24px rgba(168, 200, 255, 0.28),
+    0 0 42px rgba(110, 231, 183, 0.12);
+}
+
+.home-project-card-v4__head p {
+  margin: 0;
+  color: rgba(191, 226, 255, 0.74);
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.home-project-card-v4__head strong {
+  display: block;
+  max-width: 12ch;
+  margin-top: 14px;
+  color: rgba(248, 251, 255, 0.96);
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 0.95;
+  letter-spacing: -0.072em;
+  text-wrap: balance;
+}
+
+.home-project-card-v4__head span {
+  display: block;
+  max-width: 52ch;
+  margin-top: 14px;
+  color: rgba(226, 232, 240, 0.76);
+  line-height: 1.78;
+}
+
+.home-project-card-v4__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.home-project-card-v4__facts div {
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.095);
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(168, 200, 255, 0.07), transparent 40%),
+    rgba(255, 255, 255, 0.026);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.052);
+}
+
+.home-project-card-v4__facts dt {
+  color: rgba(148, 163, 184, 0.72);
+  font-size: 12px;
+}
+
+.home-project-card-v4__facts dd {
+  margin: 6px 0 0;
+  color: rgba(248, 251, 255, 0.92);
+  font-size: 14px;
+  font-weight: 780;
+  letter-spacing: -0.022em;
+}
+
+.home-project-card-v4__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.home-project-card-v4__tags li {
+  min-height: 28px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: rgba(219, 234, 254, 0.74);
+  background: rgba(255, 255, 255, 0.026);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1;
+}
+
+.home-project-card-v4__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.home-project-card-v4__actions .project-mirror-link {
+  min-height: 38px;
+  padding-inline: 13px;
+}
+
+/* 弱化旧首屏系统感元素 */
+html.is-home-page .interface-fx__hud {
+  display: none !important;
+}
+
+html.is-home-page .interface-fx__corner {
+  opacity: 0.055;
+}
+
+html.is-home-page .visual-aura__scanner,
+html.is-home-page .visual-aura__ring {
+  opacity: 0.024;
+}
+
+/* 让首页统计区不要紧贴 Hero，避免第一眼 dashboard 感过重 */
+.home-v3-stats {
+  margin-top: clamp(10px, 2vw, 18px);
+}
+
+/* 移动端：首屏回到品牌优先，不要左右卡挤压 */
+@media (max-width: 1040px) {
+  .home-hero-v4 {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-v4__copy,
+  .home-project-card-v4 {
+    min-height: auto;
+  }
+
+  .home-project-card-v4 {
+    align-content: start;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-hero-v4__copy {
+    padding-block: 28px;
+  }
+
+  .home-hero-v4__title {
+    max-width: 100%;
+  }
+
+  .home-hero-v4__title span {
+    font-size: clamp(64px, 19vw, 92px);
+    letter-spacing: -0.082em;
+  }
+
+  .home-hero-v4__title em {
+    font-size: clamp(32px, 10vw, 48px);
+    letter-spacing: -0.058em;
+  }
+
+  .home-hero-v4__lead {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .home-hero-v4__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-v4__actions .ui-button {
+    width: 100%;
+  }
+
+  .home-hero-v4__focus {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-v4__focus li {
+    width: 100%;
+  }
+
+  .home-project-card-v4__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .home-project-card-v4__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-project-card-v4__actions .project-mirror-link {
+    width: 100%;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-project-card-v4__actions .project-mirror-link:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-project-card-v4,
+  .home-project-card-v4 *,
+  .home-hero-v4 *,
+  .home-hero-v4__actions .ui-button {
+    transition: none !important;
+  }
+}

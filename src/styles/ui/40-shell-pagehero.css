@@ -829,3 +829,12 @@ input[type='submit'] {
     background: rgba(9, 15, 29, 0.92);
   }
 }
+/* ---------- Azek431 UI System V2 Step 31 HUD Cleanup ---------- */
+
+html.is-home-page .interface-fx__hud {
+  display: none !important;
+}
+
+html.is-home-page .interface-fx__progress {
+  height: 1px;
+}

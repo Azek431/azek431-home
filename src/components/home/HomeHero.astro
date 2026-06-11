@@ -1,98 +1,94 @@
 ---
+import { projectDetails } from '../../data/projects';
+
 type FocusItem = {
   title: string;
   desc: string;
 };
 
 type SiteConfig = {
-  github: string;
+  name: string;
+  description?: string;
+  github?: string;
+  url?: string;
 };
 
 type Props = {
+  todayDate: string;
+  pageCount: number;
   siteConfig: SiteConfig;
   focusItems: FocusItem[];
 };
-const { siteConfig, focusItems } = Astro.props as Props;
+
+const { todayDate, pageCount, siteConfig, focusItems } = Astro.props as Props;
+
+const homeProject = projectDetails.find((project) => project.slug === 'azek431-home');
+const sourceUrl = homeProject?.githubUrl ?? siteConfig.github;
+const mirrorUrl = homeProject?.giteeUrl;
 ---
 
-<section class="home-v3-hero" aria-labelledby="home-v3-title">
-  <div class="home-v3-copy">
-    <p class="home-v3-kicker">
-      <span></span>
-      一个持续进化的个人数字中枢
+<section class="home-v3-hero home-hero-v4" aria-labelledby="home-title">
+  <div class="home-v3-copy home-hero-v4__copy">
+    <p class="home-v3-kicker home-hero-v4__kicker">
+      <span aria-hidden="true"></span>
+      Azek431 Home · Personal Digital Space
     </p>
 
-    <h1 id="home-v3-title">
+    <h1 id="home-title" class="home-hero-v4__title">
       <span>Azek431</span>
-      <span>Digital Nexus</span>
+      <em>Digital Nexus</em>
     </h1>
 
-    <p class="home-v3-lead">
-      一个持续进化的个人数字中枢。用于连接项目、AI 实验、学习记录与公开入口。
+    <p class="home-v3-lead home-hero-v4__lead">
+      一个用于整理项目、AI
+      实验、学习记录和公开入口的个人数字空间。这里会持续沉淀我的网站、资料库、工具实验和长期维护记录。
     </p>
 
-    <div class="home-v3-actions" aria-label="首页主要操作">
-      <a class="ui-button ui-button-primary" href="/projects/" aria-label="查看 Azek431 的项目列表">
-        查看项目
-      </a>
+    <div class="home-v3-actions home-hero-v4__actions" aria-label="首页主要操作">
+      <a class="ui-button ui-button-primary" href="/projects/">查看项目</a>
+
       <a
         class="ui-button ui-button-secondary"
-        href={siteConfig.github}
+        href={sourceUrl}
         target="_blank"
         rel="noreferrer"
-        aria-label="在新窗口打开 Azek431 的 GitHub 主页"
+        aria-label="在新窗口打开本站源码仓库"
       >
-        GitHub
+        本站源码
       </a>
-      <button class="ui-button ui-button-ghost" type="button" data-copy-url> 复制主页链接 </button>
-    </div>
 
-    <div class="home-v3-tracks" aria-label="站点关注方向">
       {
-        focusItems.map((item) => (
-          <article>
-            <strong>{item.title}</strong>
-            <span>{item.desc}</span>
-          </article>
-        ))
+        mirrorUrl && (
+          <a
+            class="ui-button ui-button-ghost"
+            href={mirrorUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="在新窗口打开本站 Gitee 镜像"
+          >
+            Gitee 镜像
+          </a>
+        )
       }
     </div>
+
+    <ul class="home-v3-focus home-hero-v4__focus" aria-label="当前关注方向">
+      {
+        focusItems.slice(0, 3).map((item) => (
+          <li>
+            <strong>{item.title}</strong>
+            <span>{item.desc}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="home-hero-v4__meta">
+      <span>Updated {todayDate}</span>
+      <span>{pageCount} pages</span>
+      <span>Astro / Cloudflare</span>
+    </p>
   </div>
 
   <slot />
 </section>
-
-<script is:inline>
-  (function () {
-    var button = document.querySelector('[data-copy-url]');
-    if (!button) return;
-
-    var defaultText = button.textContent || '复制主页链接';
-
-    button.addEventListener('click', function () {
-      var url = window.location.href;
-
-      if (!navigator.clipboard) {
-        button.textContent = url;
-        window.setTimeout(function () {
-          button.textContent = defaultText;
-        }, 1600);
-        return;
-      }
-
-      navigator.clipboard
-        .writeText(url)
-        .then(function () {
-          button.textContent = '已复制 ✓';
-        })
-        .catch(function () {
-          button.textContent = '复制失败';
-        })
-        .finally(function () {
-          window.setTimeout(function () {
-            button.textContent = defaultText;
-          }, 1400);
-        });
-    });
-  })();
-</script>
