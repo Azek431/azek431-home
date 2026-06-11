@@ -9,20 +9,17 @@ type SiteConfig = {
 };
 
 type Props = {
-  todayDate: string;
-  pageCount: number;
   siteConfig: SiteConfig;
   focusItems: FocusItem[];
 };
-
-const { todayDate, pageCount, siteConfig, focusItems } = Astro.props as Props;
+const { siteConfig, focusItems } = Astro.props as Props;
 ---
 
 <section class="home-v3-hero" aria-labelledby="home-v3-title">
   <div class="home-v3-copy">
     <p class="home-v3-kicker">
       <span></span>
-      Build {todayDate} · {pageCount} pages · Astro / Cloudflare
+      一个持续进化的个人数字中枢
     </p>
 
     <h1 id="home-v3-title">

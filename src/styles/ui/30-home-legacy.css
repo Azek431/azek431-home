@@ -213,6 +213,53 @@
   padding-bottom: 18px;
   border-bottom: 1px solid rgba(226, 232, 240, 0.1);
 }
+.home-v3-console-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(226, 232, 240, 0.12);
+}
+
+.home-v3-console-strip li {
+  display: grid;
+  gap: 4px;
+  padding: 14px18px;
+  border-right: 1px solid rgba(226, 232, 240, 0.08);
+}
+
+.home-v3-console-strip li:last-child {
+  border-right: 0;
+}
+
+.home-v3-console-strip strong {
+  font-size: 20px;
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  color: rgba(248, 251, 255, 0.96);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-v3-console-strip span {
+  font-size: 11px;
+  color: rgba(203, 213, 225, 0.7);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .home-v3-console-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-v3-console-strip li:nth-child(2n) {
+    border-right: 0;
+  }
+  .home-v3-console-strip li:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(226, 232, 240, 0.08);
+  }
+}
 
 .home-v3-console-head span,
 .home-v3-command p,

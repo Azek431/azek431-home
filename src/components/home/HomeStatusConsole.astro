@@ -1,14 +1,12 @@
 ---
 type Props = {
-  siteUpdatedDate: string;
   siteUpdatedRelative: string;
   liveProjects: number;
   plannedProjects: number;
   externalLinks: number;
 };
 
-const { siteUpdatedDate, siteUpdatedRelative, liveProjects, plannedProjects, externalLinks } =
-  Astro.props as Props;
+const { siteUpdatedRelative, liveProjects, plannedProjects, externalLinks } = Astro.props as Props;
 ---
 
 <aside class="home-v3-console" aria-label="站点运行状态">
@@ -17,22 +15,10 @@ const { siteUpdatedDate, siteUpdatedRelative, liveProjects, plannedProjects, ext
     <strong>Running</strong>
   </div>
 
-  <dl>
-    <div>
-      <dt>Last update</dt>
-      <dd>{siteUpdatedDate} · {siteUpdatedRelative}</dd>
-    </div>
-    <div>
-      <dt>Live projects</dt>
-      <dd>{liveProjects} online / {plannedProjects} planned</dd>
-    </div>
-    <div>
-      <dt>External links</dt>
-      <dd>{externalLinks} public entries</dd>
-    </div>
-    <div>
-      <dt>Stack</dt>
-      <dd>Astro · TypeScript · CSS</dd>
-    </div>
-  </dl>
+  <ul class="home-v3-console-strip" aria-label="核心指标">
+    <li><strong>{liveProjects}</strong><span>已上线</span></li>
+    <li><strong>{plannedProjects}</strong><span>计划中</span></li>
+    <li><strong>{externalLinks}</strong><span>公开入口</span></li>
+    <li><strong>{siteUpdatedRelative}</strong><span>最近更新</span></li>
+  </ul>
 </aside>

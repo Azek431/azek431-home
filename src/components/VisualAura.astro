@@ -22,8 +22,12 @@
     if (!canHover || reduceMotion) return;
 
     var raf = 0;
+    var raf2 = 0;
     var nextX = 0;
     var nextY = 0;
+    var pendingX = 0;
+    var pendingY = 0;
+    var pendingGlassNodes = [];
 
     var updateRootPointer = function () {
       raf = 0;
@@ -31,7 +35,7 @@
       root.style.setProperty('--aura-y', nextY + 'px');
 
       if (cursor) {
-        cursor.style.transform = 'translate3d(' + nextX + 'px, ' + nextY + 'px, 0)';
+        cursor.style.transform = 'translate3d(' + nextX + 'px, ' + nextY + 'px,0)';
       }
     };
 
@@ -40,9 +44,22 @@
       function (event) {
         nextX = event.clientX;
         nextY = event.clientY;
+        pendingX = event.clientX;
+        pendingY = event.clientY;
 
         if (!raf) {
           raf = window.requestAnimationFrame(updateRootPointer);
+        }
+
+        if (!raf2) {
+          raf2 = window.requestAnimationFrame(function () {
+            raf2 = 0;
+            pendingGlassNodes.forEach(function (node) {
+              var rect = node.getBoundingClientRect();
+              node.style.setProperty('--mx', pendingX - rect.left + 'px');
+              node.style.setProperty('--my', pendingY - rect.top + 'px');
+            });
+          });
         }
       },
       { passive: true },
@@ -107,9 +124,27 @@
       '.footer-shell',
     ].join(',');
 
-    var glassNodes = Array.prototype.slice.call(document.querySelectorAll(glassSelector));
+    var allGlassNodes = Array.prototype.slice.call(document.querySelectorAll(glassSelector));
 
-    glassNodes.forEach(function (node) {
+    if ('IntersectionObserver' in window) {
+      var glassObs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && pendingGlassNodes.indexOf(entry.target) === -1) {
+              pendingGlassNodes.push(entry.target);
+            }
+          });
+        },
+        { rootMargin: '120px' },
+      );
+      allGlassNodes.forEach(function (node) {
+        glassObs.observe(node);
+      });
+    } else {
+      pendingGlassNodes = allGlassNodes;
+    }
+
+    pendingGlassNodes.forEach(function (node) {
       node.addEventListener(
         'pointermove',
         function (event) {

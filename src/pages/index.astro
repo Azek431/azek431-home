@@ -6,43 +6,14 @@ import HomeHero from '../components/home/HomeHero.astro';
 import HomeNavigation from '../components/home/HomeNavigation.astro';
 import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeRoadmap from '../components/home/HomeRoadmap.astro';
-import HomeStats from '../components/home/HomeStats.astro';
 import HomeStatusConsole from '../components/home/HomeStatusConsole.astro';
-import { links, recentUpdates, siteConfig, sitePages } from '../data/site';
+import { links, recentUpdates, siteConfig } from '../data/site';
 import { projectDetails } from '../data/projects';
-import { relativeDate, siteUpdatedDate, todayDate } from '../data/time';
+import { relativeDate, siteUpdatedDate } from '../data/time';
 
-const pageCount = sitePages.length + projectDetails.length + 1;
 const liveProjects = projectDetails.filter((project) => project.status === '已上线').length;
 const plannedProjects = projectDetails.length - liveProjects;
 const externalLinks = links.filter((link) => link.href.startsWith('http')).length;
-
-const quickStats = [
-  {
-    value: pageCount,
-    label: 'Pages',
-    caption: '静态页面',
-    tone: 'blue',
-  },
-  {
-    value: projectDetails.length,
-    label: 'Projects',
-    caption: '项目记录',
-    tone: 'violet',
-  },
-  {
-    value: liveProjects,
-    label: 'Live',
-    caption: `${plannedProjects} 个规划中`,
-    tone: 'green',
-  },
-  {
-    value: recentUpdates.length,
-    label: 'Updates',
-    caption: '近期更新',
-    tone: 'amber',
-  },
-];
 
 const focusItems = [
   {
@@ -127,22 +98,14 @@ const phases = [
   description="Azek431 的个人数字中枢，用于连接项目、AI 实验、学习记录、公开入口和长期内容。"
 >
   <main class="home-v3">
-    <HomeHero
-      todayDate={todayDate}
-      pageCount={pageCount}
-      siteConfig={siteConfig}
-      focusItems={focusItems}
-    >
+    <HomeHero siteConfig={siteConfig} focusItems={focusItems}>
       <HomeStatusConsole
-        siteUpdatedDate={siteUpdatedDate}
         siteUpdatedRelative={relativeDate(siteUpdatedDate)}
         liveProjects={liveProjects}
         plannedProjects={plannedProjects}
         externalLinks={externalLinks}
       />
     </HomeHero>
-
-    <HomeStats stats={quickStats} />
     <HomeCommand />
     <HomeProjects mainProject={mainProject} sideProjects={sideProjects} />
     <HomeNavigation items={navigationMatrix} />
