@@ -1,8 +1,8 @@
 ---
-import { navItems, siteConfig } from '../data/site';
+import { navItems, secondaryNavItems, siteConfig } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
 
-const kbdMap: Record<string, string> = {
+const shortcutMap: Record<string, string> = {
   '/': 'g h',
   '/about/': 'g a',
   '/projects/': 'g p',
@@ -16,49 +16,93 @@ const kbdMap: Record<string, string> = {
   '/search/': '/',
 };
 
+const primaryOrder = new Map([
+  ['/', 0],
+  ['/projects/', 1],
+  ['/about/', 2],
+  ['/links/', 3],
+]);
+
+const primaryNavItems = [...navItems].sort(
+  (left, right) => (primaryOrder.get(left.href) ?? 99) - (primaryOrder.get(right.href) ?? 99),
+);
+
+const moreNavItems = secondaryNavItems.filter((item) => item.href !== '/search/');
+
 const currentPath = Astro.url.pathname;
+
 const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<header class="site-header" aria-label="站点顶部导航">
-  <a class="site-header__brand" href="/" aria-label={`返回 ${siteConfig.name} 首页`}>
-    <span aria-hidden="true">A</span>
-    <strong>{siteConfig.name}</strong>
+<header class="site-header site-header-v3" aria-label="站点顶部导航" data-site-header>
+  <a class="site-header-v3__brand" href="/" aria-label={`返回 ${siteConfig.name} 首页`}>
+    <span class="site-header-v3__brand-mark" aria-hidden="true">A</span>
+
+    <span class="site-header-v3__brand-copy">
+      <strong>{siteConfig.name}</strong>
+      <small>Digital Nexus</small>
+    </span>
   </a>
 
-  <nav class="site-header__nav" aria-label="主导航">
+  <nav class="site-header-v3__primary" aria-label="主要导航">
     {
-      navItems.map((item) => (
+      primaryNavItems.map((item) => (
         <a
-          class:list={['site-header__nav-link', isActive(item.href) && 'is-active']}
+          class:list={['site-header-v3__nav-link', isActive(item.href) && 'is-active']}
           href={item.href}
           aria-current={isActive(item.href) ? 'page' : undefined}
         >
           <span>{item.label}</span>
-          {kbdMap[item.href] && <kbd>{kbdMap[item.href]}</kbd>}
+
+          {shortcutMap[item.href] && <kbd aria-hidden="true">{shortcutMap[item.href]}</kbd>}
         </a>
       ))
     }
   </nav>
 
-  <div class="site-header__actions">
-    <div class="site-header__network" aria-label="公开代码主页入口">
+  <div class="site-header-v3__actions">
+    <a
+      class:list={[
+        'site-header-v3__action',
+        'site-header-v3__search',
+        isActive('/search/') && 'is-active',
+      ]}
+      href="/search/"
+      aria-label="搜索站内内容"
+      title="搜索站内内容 (/)"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-3.8-3.8"></path>
+      </svg>
+
+      <span>搜索</span>
+      <kbd aria-hidden="true">/</kbd>
+    </a>
+
+    <div class="site-header-v3__network" aria-label="公开代码主页">
       <a
-        class="site-header__network-link"
         href={siteConfig.github}
         target="_blank"
-        rel="noreferrer"
+        rel="noreferrer noopener"
         aria-label="在新窗口打开 Azek431 的 GitHub 主页"
       >
         GitHub
       </a>
 
       <a
-        class="site-header__network-link site-header__network-link--gitee"
+        class="is-gitee"
         href={siteConfig.gitee}
         target="_blank"
-        rel="noreferrer"
+        rel="noreferrer noopener"
         aria-label="在新窗口打开 Azek431 的 Gitee 主页"
       >
         Gitee
@@ -66,5 +110,254 @@ const isActive = (href: string) =>
     </div>
 
     <ThemeToggle />
+
+    <button
+      class="site-header-v3__menu-toggle"
+      type="button"
+      aria-label="打开完整导航"
+      aria-expanded="false"
+      aria-controls="site-header-navigation-panel"
+      data-header-menu-toggle
+    >
+      <span class="site-header-v3__menu-label">更多</span>
+
+      <span class="site-header-v3__menu-icon" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+    </button>
   </div>
+
+  <div class="site-header-v3__scrim" aria-hidden="true" hidden data-header-scrim></div>
+
+  <aside
+    id="site-header-navigation-panel"
+    class="site-header-v3__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="site-header-panel-title"
+    aria-hidden="true"
+    hidden
+    data-header-panel
+  >
+    <div class="site-header-v3__panel-head">
+      <div>
+        <p>Navigation</p>
+        <h2 id="site-header-panel-title">探索 Azek431</h2>
+      </div>
+
+      <button
+        class="site-header-v3__panel-close"
+        type="button"
+        aria-label="关闭完整导航"
+        data-header-menu-close
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <div class="site-header-v3__panel-groups">
+      <section class="site-header-v3__panel-group">
+        <header>
+          <span>01</span>
+          <h3>主要页面</h3>
+        </header>
+
+        <nav aria-label="完整主要导航">
+          {
+            primaryNavItems.map((item) => (
+              <a
+                class:list={['site-header-v3__panel-link', isActive(item.href) && 'is-active']}
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                <span>{item.label}</span>
+                <small>{shortcutMap[item.href] ?? 'Open'}</small>
+              </a>
+            ))
+          }
+        </nav>
+      </section>
+
+      <section class="site-header-v3__panel-group">
+        <header>
+          <span>02</span>
+          <h3>更多内容</h3>
+        </header>
+
+        <nav aria-label="更多站内页面">
+          {
+            moreNavItems.map((item) => (
+              <a
+                class:list={['site-header-v3__panel-link', isActive(item.href) && 'is-active']}
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                <span>{item.label}</span>
+                <small>{shortcutMap[item.href] ?? 'Explore'}</small>
+              </a>
+            ))
+          }
+        </nav>
+      </section>
+    </div>
+
+    <div class="site-header-v3__panel-tools">
+      <a href="/search/">
+        <span>站内搜索</span>
+        <small>页面、项目、链接和更新</small>
+      </a>
+
+      <a href={siteConfig.github} target="_blank" rel="noreferrer noopener">
+        <span>GitHub</span>
+        <small>开源项目与代码记录</small>
+      </a>
+
+      <a href={siteConfig.gitee} target="_blank" rel="noreferrer noopener">
+        <span>Gitee</span>
+        <small>国内镜像与同步入口</small>
+      </a>
+    </div>
+  </aside>
 </header>
+
+<script is:inline>
+  (function () {
+    var header = document.querySelector('[data-site-header]');
+
+    if (!header) return;
+
+    var toggle = header.querySelector('[data-header-menu-toggle]');
+    var closeButton = header.querySelector('[data-header-menu-close]');
+    var panel = header.querySelector('[data-header-panel]');
+    var scrim = header.querySelector('[data-header-scrim]');
+
+    if (!toggle || !closeButton || !panel || !scrim) return;
+
+    var lastFocused = null;
+    var closeTimer = null;
+
+    function isOpen() {
+      return toggle.getAttribute('aria-expanded') === 'true';
+    }
+
+    function getFocusableElements() {
+      return Array.prototype.slice.call(
+        panel.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      );
+    }
+
+    function openPanel() {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+
+      lastFocused = document.activeElement;
+
+      panel.hidden = false;
+      scrim.hidden = false;
+
+      panel.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', '关闭完整导航');
+
+      document.documentElement.classList.add('has-site-nav-open');
+
+      window.requestAnimationFrame(function () {
+        header.classList.add('is-menu-open');
+
+        var focusable = getFocusableElements();
+
+        if (focusable.length > 0) {
+          focusable[0].focus();
+        }
+      });
+    }
+
+    function closePanel(restoreFocus) {
+      if (!isOpen()) return;
+
+      header.classList.remove('is-menu-open');
+
+      panel.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', '打开完整导航');
+
+      document.documentElement.classList.remove('has-site-nav-open');
+
+      closeTimer = window.setTimeout(function () {
+        if (!isOpen()) {
+          panel.hidden = true;
+          scrim.hidden = true;
+        }
+
+        closeTimer = null;
+      }, 190);
+
+      if (restoreFocus !== false && lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+    }
+
+    function togglePanel() {
+      if (isOpen()) {
+        closePanel(true);
+      } else {
+        openPanel();
+      }
+    }
+
+    toggle.addEventListener('click', togglePanel);
+
+    closeButton.addEventListener('click', function () {
+      closePanel(true);
+    });
+
+    scrim.addEventListener('click', function () {
+      closePanel(true);
+    });
+
+    panel.addEventListener('click', function (event) {
+      var link = event.target.closest && event.target.closest('a');
+
+      if (link) {
+        closePanel(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (!isOpen()) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closePanel(true);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      var focusable = getFocusableElements();
+
+      if (focusable.length === 0) return;
+
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (isOpen()) {
+        closePanel(false);
+      }
+    });
+  })();
+</script>
