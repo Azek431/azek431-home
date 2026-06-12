@@ -715,3 +715,75 @@
     transition: none !important;
   }
 }
+
+/* ---------- Azek431 UI System V2 Step 34 Shortcut Groups ---------- */
+
+/*
+  快捷键内容统一由 navigation.ts 生成。
+  面板按“页面导航”和“全局操作”分组，减少长列表的阅读压力。
+*/
+
+.shortcut-panel__head > div > span {
+  display: block;
+  max-width: 34ch;
+  margin-top: 7px;
+  color: rgba(148, 163, 184, 0.68);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.shortcut-panel__groups {
+  display: grid;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.shortcut-panel__group {
+  min-width: 0;
+}
+
+.shortcut-panel__group + .shortcut-panel__group {
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shortcut-panel__group-head {
+  display: grid;
+  gap: 4px;
+  padding-inline: 3px;
+}
+
+.shortcut-panel__group-head h3,
+.shortcut-panel__group-head p {
+  margin: 0;
+}
+
+.shortcut-panel__group-head h3 {
+  color: rgba(248, 251, 255, 0.88);
+  font-size: 13px;
+  font-weight: 790;
+  letter-spacing: -0.018em;
+}
+
+.shortcut-panel__group-head p {
+  color: rgba(148, 163, 184, 0.62);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.shortcut-panel__group .shortcut-panel__list {
+  margin-top: 10px;
+}
+
+html[data-theme='light'] .shortcut-panel__head > div > span,
+html[data-theme='light'] .shortcut-panel__group-head p {
+  color: rgba(71, 85, 105, 0.72);
+}
+
+html[data-theme='light'] .shortcut-panel__group-head h3 {
+  color: rgba(15, 23, 42, 0.88);
+}
+
+html[data-theme='light'] .shortcut-panel__group + .shortcut-panel__group {
+  border-top-color: rgba(15, 23, 42, 0.09);
+}

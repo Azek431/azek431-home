@@ -1,20 +1,19 @@
 ---
-const shortcuts = [
-  { keys: ['g', 'h'], label: '首页' },
-  { keys: ['g', 'a'], label: '关于' },
-  { keys: ['g', 'p'], label: '项目' },
-  { keys: ['g', 'l'], label: '链接' },
-  { keys: ['g', 'n'], label: 'Now' },
-  { keys: ['g', 'u'], label: 'Uses' },
-  { keys: ['g', 'c'], label: 'Colophon' },
-  { keys: ['g', 'k'], label: 'Changelog' },
-  { keys: ['g', 's'], label: 'Stats' },
-  { keys: ['g', 'b'], label: 'Blog' },
-  { keys: ['/'], label: '站内搜索' },
-  { keys: ['t'], label: '切换明 / 暗主题' },
-  { keys: ['r'], label: '随机打开一个项目' },
-  { keys: ['Esc'], label: '关闭这个面板' },
-  { keys: ['?'], label: '显示 / 隐藏这个面板' },
+import { actionShortcutItems, navigationShortcutItems } from '../data/navigation';
+
+const shortcutGroups = [
+  {
+    id: 'navigation',
+    title: '页面导航',
+    description: '先按 g，再按对应字母即可跳转。',
+    items: navigationShortcutItems,
+  },
+  {
+    id: 'actions',
+    title: '全局操作',
+    description: '在未输入文字时可以直接使用。',
+    items: actionShortcutItems,
+  },
 ];
 ---
 
@@ -24,6 +23,8 @@ const shortcuts = [
     type="button"
     aria-expanded="false"
     aria-controls="shortcut-panel"
+    aria-label="打开快捷键面板"
+    title="查看快捷键 (?)"
     data-shortcut-trigger
   >
     <span aria-hidden="true">?</span>
@@ -36,6 +37,7 @@ const shortcuts = [
     role="dialog"
     aria-modal="false"
     aria-labelledby="shortcut-panel-title"
+    aria-describedby="shortcut-panel-description"
     aria-hidden="true"
     hidden
     data-shortcut-panel
@@ -44,6 +46,7 @@ const shortcuts = [
       <div>
         <p>Keyboard</p>
         <h2 id="shortcut-panel-title">快捷键</h2>
+        <span id="shortcut-panel-description"> 使用键盘快速浏览页面和执行常用操作。 </span>
       </div>
 
       <button
@@ -52,97 +55,120 @@ const shortcuts = [
         aria-label="关闭快捷键面板"
         data-shortcut-close
       >
-        ×
+        <span aria-hidden="true">×</span>
       </button>
     </div>
 
-    <ul class="shortcut-panel__list">
+    <div class="shortcut-panel__groups">
       {
-        shortcuts.map((shortcut) => (
-          <li>
-            <span class="shortcut-panel__keys">
-              {shortcut.keys.map((key) => (
-                <kbd>{key}</kbd>
+        shortcutGroups.map((group) => (
+          <section class="shortcut-panel__group" aria-labelledby={`shortcut-group-${group.id}`}>
+            <header class="shortcut-panel__group-head">
+              <h3 id={`shortcut-group-${group.id}`}>{group.title}</h3>
+
+              <p>{group.description}</p>
+            </header>
+
+            <ul class="shortcut-panel__list">
+              {group.items.map((shortcut) => (
+                <li>
+                  <span class="shortcut-panel__keys">
+                    {shortcut.keys.map((key) => (
+                      <kbd>{key}</kbd>
+                    ))}
+                  </span>
+
+                  <span>{shortcut.label}</span>
+                </li>
               ))}
-            </span>
-            <span>{shortcut.label}</span>
-          </li>
+            </ul>
+          </section>
         ))
       }
-    </ul>
+    </div>
   </div>
 </div>
 
 <script is:inline>
   (function () {
     var system = document.querySelector('[data-shortcut-system]');
+
     if (!system) return;
 
     var trigger = system.querySelector('[data-shortcut-trigger]');
     var panel = system.querySelector('[data-shortcut-panel]');
     var closeButton = system.querySelector('[data-shortcut-close]');
-    var lastFocused = null;
 
     if (!trigger || !panel || !closeButton) return;
+
+    var lastFocused = null;
 
     function isOpen() {
       return trigger.getAttribute('aria-expanded') === 'true';
     }
 
     function openPanel() {
+      if (isOpen()) return;
+
       lastFocused = document.activeElement;
-      trigger.setAttribute('aria-expanded', 'true');
+
       panel.hidden = false;
       panel.setAttribute('aria-hidden', 'false');
-      window.setTimeout(function () {
-        closeButton.focus();
-      }, 0);
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.setAttribute('aria-label', '关闭快捷键面板');
+
+      document.documentElement.classList.add('has-shortcut-panel-open');
+
+      closeButton.focus();
     }
 
-    function closePanel() {
-      trigger.setAttribute('aria-expanded', 'false');
+    function closePanel(restoreFocus) {
+      if (!isOpen()) return;
+
       panel.setAttribute('aria-hidden', 'true');
       panel.hidden = true;
 
-      if (lastFocused && typeof lastFocused.focus === 'function') {
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-label', '打开快捷键面板');
+
+      document.documentElement.classList.remove('has-shortcut-panel-open');
+
+      if (restoreFocus !== false && lastFocused && typeof lastFocused.focus === 'function') {
         lastFocused.focus();
       }
     }
 
     function togglePanel() {
       if (isOpen()) {
-        closePanel();
+        closePanel(true);
       } else {
         openPanel();
       }
     }
 
     trigger.addEventListener('click', togglePanel);
-    closeButton.addEventListener('click', closePanel);
+
+    closeButton.addEventListener('click', function () {
+      closePanel(true);
+    });
+
+    document.addEventListener('pointerdown', function (event) {
+      if (!isOpen()) return;
+
+      if (!system.contains(event.target)) {
+        closePanel(false);
+      }
+    });
 
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && isOpen()) {
         event.preventDefault();
-        closePanel();
-        return;
-      }
-
-      if (event.key === '?' && !event.ctrlKey && !event.metaKey && !event.altKey) {
-        var target = event.target;
-        var tagName = target && target.tagName ? target.tagName.toLowerCase() : '';
-        var isTyping = tagName === 'input' || tagName === 'textarea' || target.isContentEditable;
-
-        if (!isTyping) {
-          event.preventDefault();
-          togglePanel();
-        }
+        closePanel(true);
       }
     });
 
-    document.addEventListener('click', function (event) {
-      if (!isOpen()) return;
-      if (system.contains(event.target)) return;
-      closePanel();
+    window.addEventListener('pagehide', function () {
+      closePanel(false);
     });
   })();
 </script>

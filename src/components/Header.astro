@@ -1,20 +1,7 @@
 ---
 import { navItems, secondaryNavItems, siteConfig } from '../data/site';
+import { shortcutLabelByHref } from '../data/navigation';
 import ThemeToggle from './ThemeToggle.astro';
-
-const shortcutMap: Record<string, string> = {
-  '/': 'g h',
-  '/about/': 'g a',
-  '/projects/': 'g p',
-  '/links/': 'g l',
-  '/now/': 'g n',
-  '/uses/': 'g u',
-  '/blog/': 'g b',
-  '/colophon/': 'g c',
-  '/changelog/': 'g k',
-  '/stats/': 'g s',
-  '/search/': '/',
-};
 
 const primaryOrder = new Map([
   ['/', 0],
@@ -55,7 +42,9 @@ const isActive = (href: string) =>
         >
           <span>{item.label}</span>
 
-          {shortcutMap[item.href] && <kbd aria-hidden="true">{shortcutMap[item.href]}</kbd>}
+          {shortcutLabelByHref[item.href] && (
+            <kbd aria-hidden="true">{shortcutLabelByHref[item.href]}</kbd>
+          )}
         </a>
       ))
     }
@@ -173,7 +162,7 @@ const isActive = (href: string) =>
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
                 <span>{item.label}</span>
-                <small>{shortcutMap[item.href] ?? 'Open'}</small>
+                <small>{shortcutLabelByHref[item.href] ?? 'Open'}</small>
               </a>
             ))
           }
@@ -195,7 +184,7 @@ const isActive = (href: string) =>
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
                 <span>{item.label}</span>
-                <small>{shortcutMap[item.href] ?? 'Explore'}</small>
+                <small>{shortcutLabelByHref[item.href] ?? 'Explore'}</small>
               </a>
             ))
           }
