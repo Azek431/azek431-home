@@ -4,22 +4,24 @@ import { actionShortcutItems, navigationShortcutItems } from '../data/navigation
 const shortcutGroups = [
   {
     id: 'navigation',
+    number: '01',
     title: '页面导航',
     description: '先按 g，再按对应字母即可跳转。',
     items: navigationShortcutItems,
   },
   {
     id: 'actions',
+    number: '02',
     title: '全局操作',
-    description: '在未输入文字时可以直接使用。',
+    description: '未输入文字时可以直接使用。',
     items: actionShortcutItems,
   },
 ];
 ---
 
-<div class="shortcut-system" data-shortcut-system>
+<div class="shortcut-system shortcut-system-v2" data-shortcut-system>
   <button
-    class="shortcut-trigger"
+    class="shortcut-trigger shortcut-trigger-v2"
     type="button"
     aria-expanded="false"
     aria-controls="shortcut-panel"
@@ -28,12 +30,12 @@ const shortcutGroups = [
     data-shortcut-trigger
   >
     <span aria-hidden="true">?</span>
-    快捷键
+    <strong>快捷键</strong>
   </button>
 
   <div
     id="shortcut-panel"
-    class="shortcut-panel"
+    class="shortcut-panel shortcut-panel-v2"
     role="dialog"
     aria-modal="false"
     aria-labelledby="shortcut-panel-title"
@@ -42,15 +44,17 @@ const shortcutGroups = [
     hidden
     data-shortcut-panel
   >
-    <div class="shortcut-panel__head">
+    <div class="shortcut-panel-v2__head">
       <div>
         <p>Keyboard</p>
+
         <h2 id="shortcut-panel-title">快捷键</h2>
+
         <span id="shortcut-panel-description"> 使用键盘快速浏览页面和执行常用操作。 </span>
       </div>
 
       <button
-        class="shortcut-panel__close"
+        class="shortcut-panel-v2__close"
         type="button"
         aria-label="关闭快捷键面板"
         data-shortcut-close
@@ -59,20 +63,24 @@ const shortcutGroups = [
       </button>
     </div>
 
-    <div class="shortcut-panel__groups">
+    <div class="shortcut-panel-v2__groups">
       {
         shortcutGroups.map((group) => (
-          <section class="shortcut-panel__group" aria-labelledby={`shortcut-group-${group.id}`}>
-            <header class="shortcut-panel__group-head">
-              <h3 id={`shortcut-group-${group.id}`}>{group.title}</h3>
+          <section class="shortcut-panel-v2__group" aria-labelledby={`shortcut-group-${group.id}`}>
+            <header>
+              <span>{group.number}</span>
 
-              <p>{group.description}</p>
+              <div>
+                <h3 id={`shortcut-group-${group.id}`}>{group.title}</h3>
+
+                <p>{group.description}</p>
+              </div>
             </header>
 
-            <ul class="shortcut-panel__list">
+            <ul class="shortcut-panel-v2__list">
               {group.items.map((shortcut) => (
                 <li>
-                  <span class="shortcut-panel__keys">
+                  <span class="shortcut-panel-v2__keys">
                     {shortcut.keys.map((key) => (
                       <kbd>{key}</kbd>
                     ))}
@@ -95,11 +103,21 @@ const shortcutGroups = [
 
     if (!system) return;
 
+    if (system.getAttribute('data-shortcut-ready') === 'true') {
+      return;
+    }
+
+    system.setAttribute('data-shortcut-ready', 'true');
+
     var trigger = system.querySelector('[data-shortcut-trigger]');
+
     var panel = system.querySelector('[data-shortcut-panel]');
+
     var closeButton = system.querySelector('[data-shortcut-close]');
 
-    if (!trigger || !panel || !closeButton) return;
+    if (!trigger || !panel || !closeButton) {
+      return;
+    }
 
     var lastFocused = null;
 
@@ -107,7 +125,15 @@ const shortcutGroups = [
       return trigger.getAttribute('aria-expanded') === 'true';
     }
 
+    function getFocusableElements() {
+      return Array.prototype.slice.call(
+        panel.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      );
+    }
+
     function openPanel() {
+      if (isOpen()) return;
+
       document.dispatchEvent(
         new CustomEvent('site:overlay-open', {
           detail: {
@@ -116,12 +142,11 @@ const shortcutGroups = [
         }),
       );
 
-      if (isOpen()) return;
-
       lastFocused = document.activeElement;
 
       panel.hidden = false;
       panel.setAttribute('aria-hidden', 'false');
+
       trigger.setAttribute('aria-expanded', 'true');
       trigger.setAttribute('aria-label', '关闭快捷键面板');
 
@@ -168,17 +193,42 @@ const shortcutGroups = [
       }
     });
 
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && isOpen()) {
-        event.preventDefault();
-        closePanel(true);
-      }
-    });
     document.addEventListener('site:overlay-open', function (event) {
       var detail = event.detail || {};
 
       if (detail.source !== 'shortcut-panel') {
         closePanel(false);
+      }
+    });
+
+    document.addEventListener('site:overlay-close-all', function () {
+      closePanel(false);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (!isOpen()) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closePanel(true);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      var focusable = getFocusableElements();
+
+      if (focusable.length === 0) return;
+
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     });
 

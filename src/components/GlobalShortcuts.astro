@@ -14,7 +14,10 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
 >
   (function () {
     if (typeof window === 'undefined') return;
-    if (window.__azekGlobalShortcutsReady) return;
+
+    if (window.__azekGlobalShortcutsReady) {
+      return;
+    }
 
     window.__azekGlobalShortcutsReady = true;
 
@@ -36,7 +39,7 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
       return event.metaKey || event.ctrlKey || event.altKey;
     }
 
-    function resetPendingPrefix() {
+    function resetPrefix() {
       pendingPrefix = null;
 
       if (pendingTimer) {
@@ -51,8 +54,14 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
       }
     }
 
+    function closeAllOverlays() {
+      document.dispatchEvent(new CustomEvent('site:overlay-close-all'));
+    }
+
     function navigateTo(path) {
       if (!path) return;
+
+      closeAllOverlays();
 
       if (window.location.pathname === path) {
         announce('已经在当前页面', 'info');
@@ -62,24 +71,16 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
       window.location.href = path;
     }
 
-    function notifyOverlayOpen(source) {
-      document.dispatchEvent(
-        new CustomEvent('site:overlay-open', {
-          detail: {
-            source: source,
-          },
-        }),
-      );
-    }
-
     function openSearch() {
-      var searchInput = document.getElementById('searchInput');
+      var input = document.getElementById('searchInput');
 
-      if (searchInput) {
-        searchInput.focus();
+      closeAllOverlays();
 
-        if (typeof searchInput.select === 'function') {
-          searchInput.select();
+      if (input) {
+        input.focus();
+
+        if (typeof input.select === 'function') {
+          input.select();
         }
 
         return;
@@ -89,10 +90,10 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
     }
 
     function toggleTheme() {
-      var themeButton = document.querySelector('[data-theme-toggle]');
+      var button = document.querySelector('[data-theme-toggle]');
 
-      if (themeButton) {
-        themeButton.click();
+      if (button) {
+        button.click();
       }
     }
 
@@ -120,7 +121,6 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
 
       if (!trigger) return;
 
-      notifyOverlayOpen('shortcut-panel');
       trigger.click();
     }
 
@@ -131,39 +131,40 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
       var key = event.key.toLowerCase();
 
       if (event.key === 'Escape') {
-        resetPendingPrefix();
+        resetPrefix();
+        closeAllOverlays();
         return;
       }
 
       if (hasCommandModifier(event)) {
-        resetPendingPrefix();
+        resetPrefix();
         return;
       }
 
-      if (event.key === '?' || (event.shiftKey && key === '/')) {
+      if (event.key === '?') {
         event.preventDefault();
-        resetPendingPrefix();
+        resetPrefix();
         toggleShortcutPanel();
         return;
       }
 
       if (key === '/') {
         event.preventDefault();
-        resetPendingPrefix();
+        resetPrefix();
         openSearch();
         return;
       }
 
       if (key === 't') {
         event.preventDefault();
-        resetPendingPrefix();
+        resetPrefix();
         toggleTheme();
         return;
       }
 
       if (key === 'r') {
         event.preventDefault();
-        resetPendingPrefix();
+        resetPrefix();
         openRandomProject();
         return;
       }
@@ -173,7 +174,7 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
 
         var targetPath = routeShortcutMap[key];
 
-        resetPendingPrefix();
+        resetPrefix();
 
         if (targetPath) {
           navigateTo(targetPath);
@@ -192,11 +193,11 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
         }
 
         pendingTimer = window.setTimeout(function () {
-          resetPendingPrefix();
+          resetPrefix();
         }, 1500);
       }
     });
 
-    window.addEventListener('pagehide', resetPendingPrefix);
+    window.addEventListener('pagehide', resetPrefix);
   })();
 </script>

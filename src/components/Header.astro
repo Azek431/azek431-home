@@ -1,44 +1,39 @@
 ---
-import { navItems, secondaryNavItems, siteConfig } from '../data/site';
-import { shortcutLabelByHref } from '../data/navigation';
 import ThemeToggle from './ThemeToggle.astro';
-
-const primaryOrder = new Map([
-  ['/', 0],
-  ['/projects/', 1],
-  ['/about/', 2],
-  ['/links/', 3],
-]);
-
-const primaryNavItems = [...navItems].sort(
-  (left, right) => (primaryOrder.get(left.href) ?? 99) - (primaryOrder.get(right.href) ?? 99),
-);
-
-const moreNavItems = secondaryNavItems.filter((item) => item.href !== '/search/');
+import {
+  moreNavigationItems,
+  primaryNavigationItems,
+  searchNavigationItem,
+  shortcutLabelByHref,
+} from '../data/navigation';
+import { siteConfig } from '../data/site';
 
 const currentPath = Astro.url.pathname;
 
 const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+
+const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
 ---
 
-<header class="site-header site-header-v3" aria-label="站点顶部导航" data-site-header>
-  <a class="site-header-v3__brand" href="/" aria-label={`返回 ${siteConfig.name} 首页`}>
-    <span class="site-header-v3__brand-mark" aria-hidden="true">A</span>
+<header class="site-header site-header-v4" aria-label="站点顶部导航" data-site-header>
+  <a class="site-header-v4__brand" href="/" aria-label={`返回 ${siteConfig.name} 首页`}>
+    <span class="site-header-v4__brand-mark" aria-hidden="true"> A </span>
 
-    <span class="site-header-v3__brand-copy">
+    <span class="site-header-v4__brand-copy">
       <strong>{siteConfig.name}</strong>
       <small>Digital Nexus</small>
     </span>
   </a>
 
-  <nav class="site-header-v3__primary" aria-label="主要导航">
+  <nav class="site-header-v4__primary" aria-label="主要导航">
     {
-      primaryNavItems.map((item) => (
+      primaryNavigationItems.map((item) => (
         <a
-          class:list={['site-header-v3__nav-link', isActive(item.href) && 'is-active']}
+          class:list={['site-header-v4__nav-link', isActive(item.href) && 'is-active']}
           href={item.href}
           aria-current={isActive(item.href) ? 'page' : undefined}
+          title={item.description}
         >
           <span>{item.label}</span>
 
@@ -50,16 +45,16 @@ const isActive = (href: string) =>
     }
   </nav>
 
-  <div class="site-header-v3__actions">
+  <div class="site-header-v4__actions">
     <a
       class:list={[
-        'site-header-v3__action',
-        'site-header-v3__search',
-        isActive('/search/') && 'is-active',
+        'site-header-v4__action',
+        'site-header-v4__search',
+        isActive(searchNavigationItem.href) && 'is-active',
       ]}
-      href="/search/"
-      aria-label="搜索站内内容"
-      title="搜索站内内容 (/)"
+      href={searchNavigationItem.href}
+      aria-label={searchNavigationItem.description}
+      title={`${searchNavigationItem.description} (/)`}
     >
       <svg
         viewBox="0 0 24 24"
@@ -77,7 +72,7 @@ const isActive = (href: string) =>
       <kbd aria-hidden="true">/</kbd>
     </a>
 
-    <div class="site-header-v3__network" aria-label="公开代码主页">
+    <div class="site-header-v4__network" aria-label="公开代码主页">
       <a
         href={siteConfig.github}
         target="_blank"
@@ -101,16 +96,18 @@ const isActive = (href: string) =>
     <ThemeToggle />
 
     <button
-      class="site-header-v3__menu-toggle"
+      class:list={['site-header-v4__menu-toggle', isMoreActive && 'has-active-page']}
       type="button"
       aria-label="打开完整导航"
       aria-expanded="false"
       aria-controls="site-header-navigation-panel"
       data-header-menu-toggle
     >
-      <span class="site-header-v3__menu-label">更多</span>
+      <span class="site-header-v4__menu-label"> 更多 </span>
 
-      <span class="site-header-v3__menu-icon" aria-hidden="true">
+      {isMoreActive && <span class="site-header-v4__active-dot" aria-hidden="true" />}
+
+      <span class="site-header-v4__menu-icon" aria-hidden="true">
         <i></i>
         <i></i>
         <i></i>
@@ -118,26 +115,30 @@ const isActive = (href: string) =>
     </button>
   </div>
 
-  <div class="site-header-v3__scrim" aria-hidden="true" hidden data-header-scrim></div>
+  <div class="site-header-v4__scrim" aria-hidden="true" hidden data-header-scrim></div>
 
   <aside
     id="site-header-navigation-panel"
-    class="site-header-v3__panel"
+    class="site-header-v4__panel"
     role="dialog"
     aria-modal="true"
     aria-labelledby="site-header-panel-title"
+    aria-describedby="site-header-panel-description"
     aria-hidden="true"
     hidden
     data-header-panel
   >
-    <div class="site-header-v3__panel-head">
+    <div class="site-header-v4__panel-head">
       <div>
         <p>Navigation</p>
+
         <h2 id="site-header-panel-title">探索 Azek431</h2>
+
+        <span id="site-header-panel-description"> 浏览主要页面、长期记录和公开代码入口。 </span>
       </div>
 
       <button
-        class="site-header-v3__panel-close"
+        class="site-header-v4__panel-close"
         type="button"
         aria-label="关闭完整导航"
         data-header-menu-close
@@ -146,45 +147,61 @@ const isActive = (href: string) =>
       </button>
     </div>
 
-    <div class="site-header-v3__panel-groups">
-      <section class="site-header-v3__panel-group">
+    <div class="site-header-v4__panel-groups">
+      <section class="site-header-v4__panel-group">
         <header>
           <span>01</span>
-          <h3>主要页面</h3>
+
+          <div>
+            <h3>主要页面</h3>
+            <p>网站最常用的核心入口。</p>
+          </div>
         </header>
 
         <nav aria-label="完整主要导航">
           {
-            primaryNavItems.map((item) => (
+            primaryNavigationItems.map((item) => (
               <a
-                class:list={['site-header-v3__panel-link', isActive(item.href) && 'is-active']}
+                class:list={['site-header-v4__panel-link', isActive(item.href) && 'is-active']}
                 href={item.href}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
-                <span>{item.label}</span>
-                <small>{shortcutLabelByHref[item.href] ?? 'Open'}</small>
+                <span>
+                  <strong>{item.label}</strong>
+                  <small>{item.description}</small>
+                </span>
+
+                <kbd aria-hidden="true">{shortcutLabelByHref[item.href] ?? 'Open'}</kbd>
               </a>
             ))
           }
         </nav>
       </section>
 
-      <section class="site-header-v3__panel-group">
+      <section class="site-header-v4__panel-group">
         <header>
           <span>02</span>
-          <h3>更多内容</h3>
+
+          <div>
+            <h3>更多内容</h3>
+            <p>记录、统计和技术说明。</p>
+          </div>
         </header>
 
         <nav aria-label="更多站内页面">
           {
-            moreNavItems.map((item) => (
+            moreNavigationItems.map((item) => (
               <a
-                class:list={['site-header-v3__panel-link', isActive(item.href) && 'is-active']}
+                class:list={['site-header-v4__panel-link', isActive(item.href) && 'is-active']}
                 href={item.href}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
-                <span>{item.label}</span>
-                <small>{shortcutLabelByHref[item.href] ?? 'Explore'}</small>
+                <span>
+                  <strong>{item.label}</strong>
+                  <small>{item.description}</small>
+                </span>
+
+                <kbd aria-hidden="true">{shortcutLabelByHref[item.href] ?? 'Open'}</kbd>
               </a>
             ))
           }
@@ -192,20 +209,32 @@ const isActive = (href: string) =>
       </section>
     </div>
 
-    <div class="site-header-v3__panel-tools">
-      <a href="/search/">
-        <span>站内搜索</span>
-        <small>页面、项目、链接和更新</small>
+    <div class="site-header-v4__panel-tools">
+      <a href={searchNavigationItem.href}>
+        <span>
+          <strong>站内搜索</strong>
+          <small> 页面、项目、链接和更新记录 </small>
+        </span>
+
+        <kbd aria-hidden="true">/</kbd>
       </a>
 
       <a href={siteConfig.github} target="_blank" rel="noreferrer noopener">
-        <span>GitHub</span>
-        <small>开源项目与代码记录</small>
+        <span>
+          <strong>GitHub</strong>
+          <small>主仓库和开源项目</small>
+        </span>
+
+        <small aria-hidden="true">↗</small>
       </a>
 
       <a href={siteConfig.gitee} target="_blank" rel="noreferrer noopener">
-        <span>Gitee</span>
-        <small>国内镜像与同步入口</small>
+        <span>
+          <strong>Gitee</strong>
+          <small>国内镜像与同步入口</small>
+        </span>
+
+        <small aria-hidden="true">↗</small>
       </a>
     </div>
   </aside>
@@ -217,12 +246,23 @@ const isActive = (href: string) =>
 
     if (!header) return;
 
+    if (header.getAttribute('data-navigation-ready') === 'true') {
+      return;
+    }
+
+    header.setAttribute('data-navigation-ready', 'true');
+
     var toggle = header.querySelector('[data-header-menu-toggle]');
+
     var closeButton = header.querySelector('[data-header-menu-close]');
+
     var panel = header.querySelector('[data-header-panel]');
+
     var scrim = header.querySelector('[data-header-scrim]');
 
-    if (!toggle || !closeButton || !panel || !scrim) return;
+    if (!toggle || !closeButton || !panel || !scrim) {
+      return;
+    }
 
     var lastFocused = null;
     var closeTimer = null;
@@ -233,11 +273,13 @@ const isActive = (href: string) =>
 
     function getFocusableElements() {
       return Array.prototype.slice.call(
-        panel.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+        panel.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
       );
     }
 
-    function openPanel() {
+    function dispatchOverlayOpen() {
       document.dispatchEvent(
         new CustomEvent('site:overlay-open', {
           detail: {
@@ -245,11 +287,17 @@ const isActive = (href: string) =>
           },
         }),
       );
+    }
+
+    function openPanel() {
+      if (isOpen()) return;
 
       if (closeTimer) {
         window.clearTimeout(closeTimer);
         closeTimer = null;
       }
+
+      dispatchOverlayOpen();
 
       lastFocused = document.activeElement;
 
@@ -317,11 +365,23 @@ const isActive = (href: string) =>
     });
 
     panel.addEventListener('click', function (event) {
-      var link = event.target.closest && event.target.closest('a');
+      var target = event.target;
 
-      if (link) {
+      if (target && target.closest && target.closest('a')) {
         closePanel(false);
       }
+    });
+
+    document.addEventListener('site:overlay-open', function (event) {
+      var detail = event.detail || {};
+
+      if (detail.source !== 'header-navigation') {
+        closePanel(false);
+      }
+    });
+
+    document.addEventListener('site:overlay-close-all', function () {
+      closePanel(false);
     });
 
     document.addEventListener('keydown', function (event) {
@@ -350,18 +410,9 @@ const isActive = (href: string) =>
         first.focus();
       }
     });
-    document.addEventListener('site:overlay-open', function (event) {
-      var detail = event.detail || {};
 
-      if (detail.source !== 'header-navigation') {
-        closePanel(false);
-      }
-    });
-
-    window.addEventListener('resize', function () {
-      if (isOpen()) {
-        closePanel(false);
-      }
+    window.addEventListener('pagehide', function () {
+      closePanel(false);
     });
   })();
 </script>
