@@ -1,0 +1,202 @@
+---
+import { routeShortcutMap } from '../data/navigation';
+import { projectDetails } from '../data/projects';
+
+const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/`);
+---
+
+<script
+  is:inline
+  define:vars={{
+    routeShortcutMap,
+    projectPaths,
+  }}
+>
+  (function () {
+    if (typeof window === 'undefined') return;
+    if (window.__azekGlobalShortcutsReady) return;
+
+    window.__azekGlobalShortcutsReady = true;
+
+    var pendingPrefix = null;
+    var pendingTimer = null;
+
+    function isTypingTarget(target) {
+      if (!target) return false;
+
+      return (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.isContentEditable
+      );
+    }
+
+    function hasCommandModifier(event) {
+      return event.metaKey || event.ctrlKey || event.altKey;
+    }
+
+    function resetPendingPrefix() {
+      pendingPrefix = null;
+
+      if (pendingTimer) {
+        window.clearTimeout(pendingTimer);
+        pendingTimer = null;
+      }
+    }
+
+    function announce(message, type) {
+      if (window.__toast) {
+        window.__toast(message, type || 'info');
+      }
+    }
+
+    function navigateTo(path) {
+      if (!path) return;
+
+      if (window.location.pathname === path) {
+        announce('已经在当前页面', 'info');
+        return;
+      }
+
+      window.location.href = path;
+    }
+
+    function notifyOverlayOpen(source) {
+      document.dispatchEvent(
+        new CustomEvent('site:overlay-open', {
+          detail: {
+            source: source,
+          },
+        }),
+      );
+    }
+
+    function openSearch() {
+      var searchInput = document.getElementById('searchInput');
+
+      if (searchInput) {
+        searchInput.focus();
+
+        if (typeof searchInput.select === 'function') {
+          searchInput.select();
+        }
+
+        return;
+      }
+
+      navigateTo('/search/');
+    }
+
+    function toggleTheme() {
+      var themeButton = document.querySelector('[data-theme-toggle]');
+
+      if (themeButton) {
+        themeButton.click();
+      }
+    }
+
+    function openRandomProject() {
+      if (!Array.isArray(projectPaths) || projectPaths.length === 0) {
+        announce('暂时没有可打开的项目', 'error');
+        return;
+      }
+
+      var candidates = projectPaths.filter(function (path) {
+        return path !== window.location.pathname;
+      });
+
+      if (candidates.length === 0) {
+        candidates = projectPaths.slice();
+      }
+
+      var target = candidates[Math.floor(Math.random() * candidates.length)];
+
+      navigateTo(target);
+    }
+
+    function toggleShortcutPanel() {
+      var trigger = document.querySelector('[data-shortcut-trigger]');
+
+      if (!trigger) return;
+
+      notifyOverlayOpen('shortcut-panel');
+      trigger.click();
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.defaultPrevented) return;
+      if (isTypingTarget(event.target)) return;
+
+      var key = event.key.toLowerCase();
+
+      if (event.key === 'Escape') {
+        resetPendingPrefix();
+        return;
+      }
+
+      if (hasCommandModifier(event)) {
+        resetPendingPrefix();
+        return;
+      }
+
+      if (event.key === '?' || (event.shiftKey && key === '/')) {
+        event.preventDefault();
+        resetPendingPrefix();
+        toggleShortcutPanel();
+        return;
+      }
+
+      if (key === '/') {
+        event.preventDefault();
+        resetPendingPrefix();
+        openSearch();
+        return;
+      }
+
+      if (key === 't') {
+        event.preventDefault();
+        resetPendingPrefix();
+        toggleTheme();
+        return;
+      }
+
+      if (key === 'r') {
+        event.preventDefault();
+        resetPendingPrefix();
+        openRandomProject();
+        return;
+      }
+
+      if (pendingPrefix === 'g') {
+        event.preventDefault();
+
+        var targetPath = routeShortcutMap[key];
+
+        resetPendingPrefix();
+
+        if (targetPath) {
+          navigateTo(targetPath);
+        } else {
+          announce('没有对应的导航快捷键', 'info');
+        }
+
+        return;
+      }
+
+      if (key === 'g') {
+        pendingPrefix = 'g';
+
+        if (pendingTimer) {
+          window.clearTimeout(pendingTimer);
+        }
+
+        pendingTimer = window.setTimeout(function () {
+          resetPendingPrefix();
+        }, 1500);
+      }
+    });
+
+    window.addEventListener('pagehide', resetPendingPrefix);
+  })();
+</script>

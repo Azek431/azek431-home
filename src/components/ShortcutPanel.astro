@@ -108,6 +108,14 @@ const shortcutGroups = [
     }
 
     function openPanel() {
+      document.dispatchEvent(
+        new CustomEvent('site:overlay-open', {
+          detail: {
+            source: 'shortcut-panel',
+          },
+        }),
+      );
+
       if (isOpen()) return;
 
       lastFocused = document.activeElement;
@@ -164,6 +172,13 @@ const shortcutGroups = [
       if (event.key === 'Escape' && isOpen()) {
         event.preventDefault();
         closePanel(true);
+      }
+    });
+    document.addEventListener('site:overlay-open', function (event) {
+      var detail = event.detail || {};
+
+      if (detail.source !== 'shortcut-panel') {
+        closePanel(false);
       }
     });
 

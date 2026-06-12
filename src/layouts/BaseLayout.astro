@@ -4,6 +4,7 @@ import VisualAura from '../components/VisualAura.astro';
 import InterfaceFX from '../components/InterfaceFX.astro';
 import Footer from '../components/Footer.astro';
 import Toast from '../components/Toast.astro';
+import GlobalShortcuts from '../components/GlobalShortcuts.astro';
 import { siteConfig } from '../data/site';
 import '../styles/global.css';
 import '../styles/ui-system-v2.css';
@@ -103,50 +104,6 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
       (function () {
         if (typeof window === 'undefined') return;
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // Global shortcuts for search, theme, random project, and dismissing overlays.
-        try {
-          document.addEventListener('keydown', function (e) {
-            var active = document.activeElement;
-            if (
-              active &&
-              (active.tagName === 'INPUT' ||
-                active.tagName === 'TEXTAREA' ||
-                active.isContentEditable)
-            )
-              return;
-            var k = e.key.toLowerCase();
-            if (k === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
-              e.preventDefault();
-              var searchInput = document.getElementById('searchInput');
-              if (searchInput) searchInput.focus();
-              else window.location.href = '/search/';
-              return;
-            }
-            if (k === 't' && !e.metaKey && !e.ctrlKey && !e.altKey) {
-              e.preventDefault();
-              var globalThemeBtn = document.querySelector('[data-theme-toggle]');
-              if (globalThemeBtn) globalThemeBtn.click();
-              return;
-            }
-            if (k === 'r' && !e.metaKey && !e.ctrlKey && !e.altKey) {
-              e.preventDefault();
-              var links = [
-                '/projects/azek431-home/',
-                '/projects/cysj-data/',
-                '/projects/azek431-blog/',
-                '/projects/ai-experiments/',
-              ];
-              var pick = links[Math.floor(Math.random() * links.length)];
-              window.location.href = pick;
-            }
-            if (e.key === 'Escape') {
-              var hint = document.querySelector('.shortcut-hint');
-              if (hint && hint.classList.contains('visible')) hint.classList.remove('visible');
-            }
-          });
-        } catch (err) {}
-
         // Theme toggle
         try {
           var root = document.documentElement;
@@ -412,62 +369,6 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
             el.classList.add('visible');
           });
         }
-
-        // Keyboard shortcuts: g then h/p/a/l to navigate, ? for help
-        var pending = null;
-        var pendingTimer = null;
-        document.addEventListener('keydown', function (e) {
-          if (
-            e.target &&
-            (e.target.tagName === 'INPUT' ||
-              e.target.tagName === 'TEXTAREA' ||
-              e.target.isContentEditable)
-          )
-            return;
-          var k = e.key.toLowerCase();
-
-          // ? -> show hint
-          if (e.key === '?' || (e.shiftKey && k === '/')) {
-            e.preventDefault();
-            var hint = document.querySelector('.shortcut-hint');
-            if (hint) hint.classList.toggle('visible');
-            return;
-          }
-
-          // First key 'g'
-          if (pending === null) {
-            if (k === 'g') {
-              pending = 'g';
-              clearTimeout(pendingTimer);
-              pendingTimer = setTimeout(function () {
-                pending = null;
-              }, 1500);
-            }
-            return;
-          }
-
-          // Second key
-          if (pending === 'g') {
-            var map = {
-              h: '/',
-              a: '/about/',
-              p: '/projects/',
-              l: '/links/',
-              n: '/now/',
-              u: '/uses/',
-              b: '/blog/',
-              c: '/colophon/',
-              k: '/changelog/',
-              s: '/stats/',
-            };
-            if (map[k]) {
-              e.preventDefault();
-              window.location.href = map[k];
-            }
-            pending = null;
-          }
-        });
-
         // Clickable card tags -> navigate to links page with filter
         document.addEventListener('click', function (e) {
           var tag = e.target.closest && e.target.closest('.card-tag');
@@ -538,6 +439,7 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
         }
       })();
     </script>
+    <GlobalShortcuts />
     <Toast />
   </body>
 </html>

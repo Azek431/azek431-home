@@ -238,6 +238,14 @@ const isActive = (href: string) =>
     }
 
     function openPanel() {
+      document.dispatchEvent(
+        new CustomEvent('site:overlay-open', {
+          detail: {
+            source: 'header-navigation',
+          },
+        }),
+      );
+
       if (closeTimer) {
         window.clearTimeout(closeTimer);
         closeTimer = null;
@@ -340,6 +348,13 @@ const isActive = (href: string) =>
       } else if (!event.shiftKey && document.activeElement === last) {
         event.preventDefault();
         first.focus();
+      }
+    });
+    document.addEventListener('site:overlay-open', function (event) {
+      var detail = event.detail || {};
+
+      if (detail.source !== 'header-navigation') {
+        closePanel(false);
       }
     });
 
