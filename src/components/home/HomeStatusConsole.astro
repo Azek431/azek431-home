@@ -1,18 +1,30 @@
 ---
-import { projectDetails } from '../../data/projects';
+type NexusProject = {
+  slug: string;
+  title: string;
+  category: string;
+  status: string;
+  accent: string;
+};
 
-const preferredSlugs = ['cysj-data', 'azek431-blog', 'ai-experiments'];
+type Props = {
+  projects: readonly NexusProject[];
+  projectCount: number;
+};
 
-const nexusNodes = preferredSlugs
-  .map((slug) => projectDetails.find((project) => project.slug === slug))
-  .filter(Boolean);
+const { projects, projectCount } = Astro.props as Props;
 
 function projectHref(slug: string) {
   return `/projects/${slug}/`;
 }
 ---
 
-<aside class="home-v5-nexus" aria-label="Azek431 Digital Nexus 项目地图">
+<aside
+  class="home-v5-nexus"
+  aria-label="Azek431 Digital Nexus 项目地图"
+  data-nexus-map
+  data-active="false"
+>
   <header class="home-v5-nexus__header">
     <div>
       <span>LIVE MAP</span>
@@ -39,19 +51,27 @@ function projectHref(slug: string) {
       <small>Creator node</small>
     </a>
 
-    {
-      nexusNodes.map((project, index) => (
-        <a
-          class={`home-v5-nexus__node home-v5-nexus__node--${index + 1}`}
-          href={projectHref(project!.slug)}
-          style={`--node-accent: ${project!.accent};`}
-        >
-          <span>0{index + 1}</span>
-          <strong>{project!.title}</strong>
-          <small>{project!.status}</small>
-        </a>
-      ))
-    }
+    <div class="home-v5-nexus__nodes">
+      {
+        projects.map((project, index) => (
+          <a
+            class={`home-v5-nexus__node home-v5-nexus__node--${index + 1}`}
+            href={projectHref(project.slug)}
+            style={`--node-accent: ${project.accent};`}
+            data-status={project.status}
+          >
+            <span>0{index + 1}</span>
+
+            <div>
+              <strong>{project.title}</strong>
+              <small>{project.category}</small>
+            </div>
+
+            <b>{project.status}</b>
+          </a>
+        ))
+      }
+    </div>
 
     <span class="home-v5-nexus__pulse home-v5-nexus__pulse--one" aria-hidden="true"> </span>
     <span class="home-v5-nexus__pulse home-v5-nexus__pulse--two" aria-hidden="true"> </span>
@@ -59,7 +79,7 @@ function projectHref(slug: string) {
 
   <footer class="home-v5-nexus__footer">
     <span>
-      <strong>{projectDetails.length}</strong>
+      <strong>{projectCount}</strong>
       connected project spaces
     </span>
 
@@ -69,3 +89,29 @@ function projectHref(slug: string) {
     </a>
   </footer>
 </aside>
+
+<script>
+  const nexusMaps = document.querySelectorAll<HTMLElement>('[data-nexus-map]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    nexusMaps.forEach((map) => {
+      map.dataset.active = reducedMotion ? 'false' : 'true';
+    });
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const map = entry.target as HTMLElement;
+          map.dataset.active = entry.isIntersecting ? 'true' : 'false';
+        });
+      },
+      {
+        rootMargin: '120px 0px',
+        threshold: 0.08,
+      },
+    );
+
+    nexusMaps.forEach((map) => observer.observe(map));
+  }
+</script>

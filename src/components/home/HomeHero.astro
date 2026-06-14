@@ -9,41 +9,54 @@ type SiteConfig = {
   url?: string;
 };
 
+type Signal = {
+  label: string;
+  value: string;
+};
+
+type Release = {
+  label: string;
+  status: string;
+  href: string;
+};
+
 type Props = {
   todayDate: string;
   pageCount: number;
   siteConfig: SiteConfig;
+  signals: readonly Signal[];
+  release: Release;
 };
 
-const { todayDate, pageCount, siteConfig } = Astro.props as Props;
+const { todayDate, pageCount, siteConfig, signals, release } = Astro.props as Props;
 
 const homeProject = projectDetails.find((project) => project.slug === 'azek431-home');
 
 const sourceUrl = homeProject?.githubUrl ?? siteConfig.github;
 const mirrorUrl = homeProject?.giteeUrl ?? siteConfig.gitee;
-
-const signals = [
-  {
-    label: 'AI & Automation',
-    value: '工具、模型与工作流实验',
-  },
-  {
-    label: 'Web Engineering',
-    value: 'Astro、前端与长期维护',
-  },
-  {
-    label: 'Open Source',
-    value: 'GitHub 主仓库与 Gitee 镜像',
-  },
-];
 ---
 
 <section class="home-v5-hero" aria-labelledby="home-title">
   <div class="home-v5-hero__copy">
-    <p class="home-v5-eyebrow">
-      <span aria-hidden="true"></span>
-      Azek431 · Personal Digital Space
-    </p>
+    <div class="home-v5-hero__kicker">
+      <p class="home-v5-eyebrow">
+        <span aria-hidden="true"></span>
+        Azek431 · Personal Digital Space
+      </p>
+
+      <a
+        class="home-v5-release-pill"
+        href={release.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`查看 ${release.label} ${release.status}`}
+      >
+        <i aria-hidden="true"></i>
+        <strong>{release.label}</strong>
+        <span>{release.status}</span>
+        <b aria-hidden="true">↗</b>
+      </a>
+    </div>
 
     <h1 id="home-title" class="home-v5-hero__title">
       <span>把想法写进代码，</span>
@@ -56,9 +69,9 @@ const signals = [
     </p>
 
     <div class="home-v5-hero__actions" aria-label="首页主要操作">
-      <a class="home-v5-button home-v5-button--primary" href="/projects/">
+      <a class="home-v5-button home-v5-button--primary" href="#featured-work">
         <span>查看代表项目</span>
-        <span aria-hidden="true">↗</span>
+        <span aria-hidden="true">↓</span>
       </a>
 
       <a class="home-v5-button home-v5-button--secondary" href="/about/">

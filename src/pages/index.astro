@@ -9,70 +9,20 @@ import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeRoadmap from '../components/home/HomeRoadmap.astro';
 import HomeStatusConsole from '../components/home/HomeStatusConsole.astro';
 
-import { links, recentUpdates, siteConfig, sitePages } from '../data/site';
+import {
+  featuredProjectPreview,
+  homeFocusItems,
+  homeNavigationItems,
+  homeNexusSlugs,
+  homeRecentUpdates,
+  homeRelease,
+  homeSignals,
+} from '../data/home';
 import { projectDetails } from '../data/projects';
+import { links, recentUpdates, siteConfig, sitePages } from '../data/site';
 import { todayDate } from '../data/time';
 
 const pageCount = sitePages.length + projectDetails.length + 1;
-
-const navigationMatrix = [
-  {
-    label: 'Featured Work',
-    title: '探索全部项目',
-    href: '/projects/',
-    desc: '查看正在维护的网站、资料库、实验项目和后续计划。',
-    accent: 'blue',
-    size: 'wide',
-  },
-  {
-    label: 'Now',
-    title: '现在正在做',
-    href: '/now/',
-    desc: '最近的开发重点、学习方向与工具工作流。',
-    accent: 'green',
-    size: 'medium',
-  },
-  {
-    label: 'About',
-    title: '认识 Azek431',
-    href: '/about/',
-    desc: '了解我的兴趣、项目方向和这个数字空间的定位。',
-    accent: 'violet',
-    size: 'medium',
-  },
-  {
-    label: 'Blog',
-    title: '文章与记录',
-    href: '/blog/',
-    desc: '后续用于沉淀技术文章、笔记和长期思考。',
-    accent: 'rose',
-    size: 'small',
-  },
-  {
-    label: 'Uses',
-    title: '开发装备',
-    href: '/uses/',
-    desc: '查看日常开发、自动化和内容维护所用的工具。',
-    accent: 'cyan',
-    size: 'small',
-  },
-  {
-    label: 'Search',
-    title: '站内搜索',
-    href: '/search/',
-    desc: '跨页面、项目、链接和更新记录快速检索。',
-    accent: 'amber',
-    size: 'small',
-  },
-  {
-    label: 'Stats',
-    title: '站点数据',
-    href: '/stats/',
-    desc: '查看主站规模、维护状态和内容统计。',
-    accent: 'slate',
-    size: 'small',
-  },
-] as const;
 
 const mainProject =
   projectDetails.find((project) => project.slug === 'cysj-data') ??
@@ -83,50 +33,22 @@ const sideProjects = projectDetails
   .filter((project) => project.slug !== mainProject?.slug && project.slug !== 'azek431-home')
   .slice(0, 2);
 
+const nexusProjects = homeNexusSlugs
+  .map((slug) => projectDetails.find((project) => project.slug === slug))
+  .filter((project): project is NonNullable<typeof project> => Boolean(project));
+
 const networkLinks = links.filter((link) => ['GitHub', 'Gitee'].includes(link.name));
 
 const homepageUpdates = [
-  {
-    title: '发布 Azek431 Home v0.1.0',
-    desc: '完成首个公开发行版本，并建立 GitHub 与 Gitee 的双平台发行同步流程。',
-    date: '2026-06-14',
-    href: 'https://github.com/Azek431/azek431-home/releases/tag/v0.1.0',
-  },
-  {
-    title: '完成 Navigation System V4',
-    desc: '统一桌面端与移动端导航、全局快捷键、焦点管理和浮层互斥逻辑。',
-    date: '2026-06-12',
-    href: '/changelog/',
-  },
-  {
-    title: '重构首页与 UI System V2',
-    desc: '重新整理首页信息架构、视觉层级、组件职责与分层样式入口。',
-    date: '2026-06-10',
-    href: '/changelog/',
-  },
-  ...recentUpdates,
+  ...homeRecentUpdates,
+  ...recentUpdates.filter(
+    (update) =>
+      !homeRecentUpdates.some(
+        (featuredUpdate) =>
+          featuredUpdate.title === update.title && featuredUpdate.date === update.date,
+      ),
+  ),
 ].slice(0, 3);
-
-const currentFocus = [
-  {
-    step: 'NOW',
-    title: '首页体验重构',
-    desc: '减少重复入口，强化代表作品和个人表达，让第一屏更有记忆点。',
-    status: '进行中',
-  },
-  {
-    step: 'LATEST',
-    title: 'v0.1.0 正式发布',
-    desc: '首个公开版本已经发布，并完成 GitHub / Gitee 发行版自动同步。',
-    status: '已完成',
-  },
-  {
-    step: 'NEXT',
-    title: '内容与案例完善',
-    desc: '继续补充项目截图、案例说明、Blog 内容和更准确的站点数据。',
-    status: '下一步',
-  },
-];
 ---
 
 <BaseLayout
@@ -134,17 +56,27 @@ const currentFocus = [
   description="Azek431 的个人数字空间：连接项目、AI 实验、学习记录、开源实践和长期维护内容。"
 >
   <main class="home-v5">
-    <HomeHero siteConfig={siteConfig} todayDate={todayDate} pageCount={pageCount}>
-      <HomeStatusConsole />
+    <HomeHero
+      siteConfig={siteConfig}
+      todayDate={todayDate}
+      pageCount={pageCount}
+      signals={homeSignals}
+      release={homeRelease}
+    >
+      <HomeStatusConsole projects={nexusProjects} projectCount={projectDetails.length} />
     </HomeHero>
 
     <HomeCommand />
 
-    <HomeProjects mainProject={mainProject} sideProjects={sideProjects} />
+    <HomeProjects
+      mainProject={mainProject}
+      sideProjects={sideProjects}
+      preview={featuredProjectPreview}
+    />
 
-    <HomeRoadmap focuses={currentFocus} />
+    <HomeRoadmap focuses={homeFocusItems} />
 
-    <HomeNavigation items={navigationMatrix} />
+    <HomeNavigation items={homeNavigationItems} />
 
     <HomeActivityNetwork updates={homepageUpdates} networkLinks={networkLinks} />
   </main>

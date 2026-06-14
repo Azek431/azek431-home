@@ -19,19 +19,35 @@ type ProjectItem = {
   giteeUrl?: string;
 };
 
+type ProjectPreview = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  navigation: {
+    label: string;
+    count: string;
+    active?: boolean;
+  }[];
+  records: {
+    title: string;
+    type: string;
+    status: string;
+  }[];
+};
+
 type Props = {
   mainProject?: ProjectItem;
   sideProjects: ProjectItem[];
+  preview: ProjectPreview;
 };
 
-const { mainProject, sideProjects } = Astro.props as Props;
+const { mainProject, sideProjects, preview } = Astro.props as Props;
 
 function externalProjectLinks(project: ProjectItem) {
   return [
     project.websiteUrl && {
       label: '访问项目',
       href: project.websiteUrl,
-      primary: true,
     },
     project.githubUrl && {
       label: 'GitHub',
@@ -44,12 +60,11 @@ function externalProjectLinks(project: ProjectItem) {
   ].filter(Boolean) as {
     label: string;
     href: string;
-    primary?: boolean;
   }[];
 }
 ---
 
-<section class="home-v5-projects" aria-labelledby="home-projects-title">
+<section id="featured-work" class="home-v5-projects" aria-labelledby="home-projects-title">
   <header class="home-v5-section-head">
     <div>
       <p>FEATURED WORK</p>
@@ -65,41 +80,92 @@ function externalProjectLinks(project: ProjectItem) {
   {
     mainProject && (
       <article class="home-v5-project-feature" style={`--project-accent: ${mainProject.accent};`}>
-        <div class="home-v5-project-feature__preview" aria-hidden="true">
-          <div class="home-v5-project-window">
-            <div class="home-v5-project-window__bar">
-              <span />
-              <span />
-              <span />
-              <small>{mainProject.websiteUrl ?? mainProject.slug}</small>
-            </div>
+        <div class="home-v5-project-feature__preview">
+          <div class="home-v5-workspace" aria-label={`${mainProject.title} 项目预览`}>
+            <header class="home-v5-workspace__bar">
+              <div aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </div>
 
-            <div class="home-v5-project-window__body">
-              <aside>
-                <strong>INDEX</strong>
-                <span class="is-active" />
-                <span />
-                <span />
-                <span />
+              <span>{mainProject.websiteUrl ?? mainProject.slug}</span>
+
+              <b>LIVE</b>
+            </header>
+
+            <div class="home-v5-workspace__layout">
+              <aside class="home-v5-workspace__sidebar">
+                <div class="home-v5-workspace__brand">
+                  <span>AZ</span>
+
+                  <div>
+                    <strong>资料库</strong>
+                    <small>Knowledge base</small>
+                  </div>
+                </div>
+
+                <nav aria-label="资料库预览目录">
+                  {preview.navigation.map((item) => (
+                    <span class:list={{ 'is-active': item.active }}>
+                      <i aria-hidden="true" />
+                      <strong>{item.label}</strong>
+                      <small>{item.count}</small>
+                    </span>
+                  ))}
+                </nav>
+
+                <div class="home-v5-workspace__sync">
+                  <i aria-hidden="true" />
+                  GitHub / Gitee 已同步
+                </div>
               </aside>
 
-              <div>
-                <span class="home-v5-project-window__badge">{mainProject.category}</span>
-                <strong>{mainProject.title}</strong>
-                <i />
-                <i />
-                <i class="is-short" />
+              <main class="home-v5-workspace__content">
+                <div class="home-v5-workspace__heading">
+                  <div>
+                    <small>{preview.eyebrow}</small>
+                    <strong>{preview.title}</strong>
+                  </div>
 
-                <div class="home-v5-project-window__cards">
-                  <span />
-                  <span />
-                  <span />
+                  <span>{mainProject.status}</span>
                 </div>
-              </div>
+
+                <p>{preview.description}</p>
+
+                <div class="home-v5-workspace__summary">
+                  {mainProject.highlights.slice(0, 3).map((highlight) => (
+                    <span>
+                      <small>{highlight.label}</small>
+                      <strong>{highlight.value}</strong>
+                    </span>
+                  ))}
+                </div>
+
+                <div class="home-v5-workspace__records">
+                  <header>
+                    <span>最近整理的内容</span>
+                    <small>{preview.records.length} records</small>
+                  </header>
+
+                  {preview.records.map((record, index) => (
+                    <div>
+                      <span>0{index + 1}</span>
+
+                      <div>
+                        <strong>{record.title}</strong>
+                        <small>{record.type}</small>
+                      </div>
+
+                      <b>{record.status}</b>
+                    </div>
+                  ))}
+                </div>
+              </main>
             </div>
           </div>
 
-          <span class="home-v5-project-feature__glow" />
+          <span class="home-v5-project-feature__glow" aria-hidden="true" />
         </div>
 
         <div class="home-v5-project-feature__content">
@@ -159,6 +225,7 @@ function externalProjectLinks(project: ProjectItem) {
         <article class="home-v5-project-card" style={`--project-accent: ${project.accent};`}>
           <div class="home-v5-project-card__top">
             <span>0{index + 2}</span>
+
             <div>
               <small>{project.category}</small>
               <strong>{project.status}</strong>

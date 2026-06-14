@@ -5,10 +5,11 @@ type Focus = {
   title: string;
   desc: string;
   status?: string;
+  tone?: 'active' | 'complete' | 'planned';
 };
 
 type Props = {
-  focuses: Focus[];
+  focuses: readonly Focus[];
 };
 
 const { focuses } = Astro.props as Props;
@@ -30,7 +31,7 @@ const { focuses } = Astro.props as Props;
   <div class="home-v5-now__grid">
     {
       focuses.map((focus, index) => (
-        <article>
+        <article data-tone={focus.tone ?? 'planned'}>
           <div class="home-v5-now__top">
             <span>{focus.num ?? focus.step ?? `0${index + 1}`}</span>
             {focus.status && <small>{focus.status}</small>}

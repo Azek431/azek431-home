@@ -23,6 +23,12 @@ type Props = {
 const { updates, networkLinks } = Astro.props as Props;
 
 const isExternal = (href: string) => href.startsWith('http');
+
+function networkCode(name: string) {
+  if (name === 'GitHub') return 'GH';
+  if (name === 'Gitee') return 'GE';
+  return name.slice(0, 2).toUpperCase();
+}
 ---
 
 <section class="home-v5-activity" aria-label="最近动态与公开身份">
@@ -47,6 +53,7 @@ const isExternal = (href: string) => href.startsWith('http');
             href={update.href}
             target={isExternal(update.href) ? '_blank' : undefined}
             rel={isExternal(update.href) ? 'noopener noreferrer' : undefined}
+            aria-label={`${update.title}，${update.date}`}
           >
             <span class="home-v5-timeline__marker" aria-hidden="true">
               <i />
@@ -81,8 +88,13 @@ const isExternal = (href: string) => href.startsWith('http');
     <div class="home-v5-identity__links">
       {
         networkLinks.map((link) => (
-          <a href={link.href} target="_blank" rel="noopener noreferrer">
-            <span>{link.name.slice(0, 2).toUpperCase()}</span>
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`打开 Azek431 的 ${link.name}`}
+          >
+            <span>{networkCode(link.name)}</span>
 
             <div>
               <strong>{link.name}</strong>
