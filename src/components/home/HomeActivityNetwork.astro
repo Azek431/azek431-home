@@ -12,6 +12,7 @@ type NetworkLink = {
   name: string;
   category: string;
   href: string;
+  description?: string;
 };
 
 type Props = {
@@ -24,57 +25,79 @@ const { updates, networkLinks } = Astro.props as Props;
 const isExternal = (href: string) => href.startsWith('http');
 ---
 
-<section class="section-v2 home-v3-split" aria-label="最近更新和公开入口">
-  <div class="home-v3-updates">
-    <div class="section-head-v2">
-      <p>Activity Timeline</p>
-      <h2>最近更新</h2>
-      <span>首页只保留最新 3 条，完整记录放到 Changelog。</span>
-    </div>
+<section class="home-v5-activity" aria-label="最近动态与公开身份">
+  <div class="home-v5-activity__timeline">
+    <header class="home-v5-section-head home-v5-section-head--compact">
+      <div>
+        <p>LATEST</p>
+        <h2>最近发生的事情</h2>
+      </div>
 
-    <div class="home-v3-timeline">
+      <a href="/changelog/">
+        完整记录
+        <span aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <div class="home-v5-timeline">
       {
-        updates.map((update) => (
+        updates.map((update, index) => (
           <a
+            class="home-v5-timeline__item"
             href={update.href}
             target={isExternal(update.href) ? '_blank' : undefined}
-            rel={isExternal(update.href) ? 'noreferrer' : undefined}
-            aria-label={`查看更新：${update.title}`}
+            rel={isExternal(update.href) ? 'noopener noreferrer' : undefined}
           >
-            <span>
-              {update.date} · {relativeDate(update.date)}
+            <span class="home-v5-timeline__marker" aria-hidden="true">
+              <i />
             </span>
-            <strong>{update.title}</strong>
-            <small>{update.desc}</small>
+
+            <time datetime={update.date}>
+              {update.date}
+              <small>{relativeDate(update.date)}</small>
+            </time>
+
+            <div>
+              <strong>{update.title}</strong>
+              <p>{update.desc}</p>
+            </div>
+
+            <span class="home-v5-timeline__arrow" aria-hidden="true">
+              {index === 0 ? '↗' : '→'}
+            </span>
           </a>
         ))
       }
     </div>
-
-    <a class="home-v3-text-link" href="/changelog/">查看全部更新 →</a>
   </div>
 
-  <aside class="home-v3-network">
-    <div class="section-head-v2">
-      <p>Public Network</p>
-      <h2>公开入口</h2>
-      <span>这里只保留真正的公开网络入口，避免和站内导航重复。</span>
-    </div>
+  <aside class="home-v5-identity" aria-labelledby="home-identity-title">
+    <header>
+      <p>PUBLIC IDENTITY</p>
+      <h2 id="home-identity-title">在公开网络上找到我</h2>
+      <span> GitHub 是主要代码来源，Gitee 提供同步镜像与另一条访问路径。 </span>
+    </header>
 
-    <div>
+    <div class="home-v5-identity__links">
       {
         networkLinks.map((link) => (
-          <a
-            href={link.href}
-            target={isExternal(link.href) ? '_blank' : undefined}
-            rel={isExternal(link.href) ? 'noreferrer' : undefined}
-            aria-label={`打开 ${link.name}`}
-          >
-            <strong>{link.name}</strong>
-            <span>{link.category}</span>
+          <a href={link.href} target="_blank" rel="noopener noreferrer">
+            <span>{link.name.slice(0, 2).toUpperCase()}</span>
+
+            <div>
+              <strong>{link.name}</strong>
+              <small>{link.category}</small>
+            </div>
+
+            <i aria-hidden="true">↗</i>
           </a>
         ))
       }
     </div>
+
+    <a class="home-v5-identity__more" href="/links/">
+      查看全部公开入口
+      <span aria-hidden="true">→</span>
+    </a>
   </aside>
 </section>

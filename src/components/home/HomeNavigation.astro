@@ -5,29 +5,46 @@ type NavigationItem = {
   href: string;
   desc: string;
   accent: string;
+  size: 'wide' | 'medium' | 'small';
 };
 
 type Props = {
-  items: NavigationItem[];
+  items: readonly NavigationItem[];
 };
 
 const { items } = Astro.props as Props;
 ---
 
-<section class="section-v2" aria-labelledby="home-navigation-title">
-  <div class="section-head-v2">
-    <p>Navigation Matrix</p>
-    <h2 id="home-navigation-title">主要入口</h2>
-    <span>把站内入口整理成更清晰的控制台矩阵。</span>
-  </div>
+<section class="home-v5-navigation" aria-labelledby="home-navigation-title">
+  <header class="home-v5-section-head">
+    <div>
+      <p>EXPLORE</p>
+      <h2 id="home-navigation-title">按你的兴趣，进入这个数字空间。</h2>
+    </div>
 
-  <div class="home-v3-nav-grid">
+    <span>不同大小代表不同的访问优先级。</span>
+  </header>
+
+  <div class="home-v5-navigation__grid">
     {
-      items.map((item) => (
-        <a href={item.href} data-accent={item.accent} aria-label={item.title}>
-          <span>{item.label}</span>
-          <strong>{item.title}</strong>
-          <small>{item.desc}</small>
+      items.map((item, index) => (
+        <a
+          class="home-v5-navigation__item"
+          href={item.href}
+          data-accent={item.accent}
+          data-size={item.size}
+        >
+          <span class="home-v5-navigation__index">0{index + 1}</span>
+
+          <div>
+            <small>{item.label}</small>
+            <strong>{item.title}</strong>
+            <p>{item.desc}</p>
+          </div>
+
+          <span class="home-v5-navigation__arrow" aria-hidden="true">
+            ↗
+          </span>
         </a>
       ))
     }

@@ -1,12 +1,19 @@
 ---
+type ProjectHighlight = {
+  label: string;
+  value: string;
+};
+
 type ProjectItem = {
   slug: string;
   title: string;
   description: string;
+  longDescription: string;
   category: string;
   status: string;
   accent: string;
   tags: string[];
+  highlights: ProjectHighlight[];
   websiteUrl?: string;
   githubUrl?: string;
   giteeUrl?: string;
@@ -22,7 +29,7 @@ const { mainProject, sideProjects } = Astro.props as Props;
 function externalProjectLinks(project: ProjectItem) {
   return [
     project.websiteUrl && {
-      label: 'Website',
+      label: '访问项目',
       href: project.websiteUrl,
       primary: true,
     },
@@ -31,102 +38,176 @@ function externalProjectLinks(project: ProjectItem) {
       href: project.githubUrl,
     },
     project.giteeUrl && {
-      label: 'Gitee 镜像',
+      label: 'Gitee',
       href: project.giteeUrl,
     },
-  ].filter(Boolean) as { label: string; href: string; primary?: boolean }[];
+  ].filter(Boolean) as {
+    label: string;
+    href: string;
+    primary?: boolean;
+  }[];
 }
 ---
 
-<section class="section-v2 home-v3-projects" aria-labelledby="home-projects-title">
-  <div class="section-head-v2">
-    <p>Featured Projects</p>
-    <h2 id="home-projects-title">项目精选</h2>
-    <span>先展示最重要的作品，再展开 GitHub、Gitee 镜像和更多项目实验。</span>
-  </div>
+<section class="home-v5-projects" aria-labelledby="home-projects-title">
+  <header class="home-v5-section-head">
+    <div>
+      <p>FEATURED WORK</p>
+      <h2 id="home-projects-title">不只展示技术栈，更展示正在生长的作品。</h2>
+    </div>
 
-  <div class="home-v3-project-layout">
-    {
-      mainProject && (
-        <article class="home-v3-project-main" style={`--project-accent: ${mainProject.accent}`}>
-          <div>
-            <p>{mainProject.category}</p>
-            <strong>{mainProject.status}</strong>
+    <a href="/projects/">
+      查看全部项目
+      <span aria-hidden="true">→</span>
+    </a>
+  </header>
+
+  {
+    mainProject && (
+      <article class="home-v5-project-feature" style={`--project-accent: ${mainProject.accent};`}>
+        <div class="home-v5-project-feature__preview" aria-hidden="true">
+          <div class="home-v5-project-window">
+            <div class="home-v5-project-window__bar">
+              <span />
+              <span />
+              <span />
+              <small>{mainProject.websiteUrl ?? mainProject.slug}</small>
+            </div>
+
+            <div class="home-v5-project-window__body">
+              <aside>
+                <strong>INDEX</strong>
+                <span class="is-active" />
+                <span />
+                <span />
+                <span />
+              </aside>
+
+              <div>
+                <span class="home-v5-project-window__badge">{mainProject.category}</span>
+                <strong>{mainProject.title}</strong>
+                <i />
+                <i />
+                <i class="is-short" />
+
+                <div class="home-v5-project-window__cards">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <span class="home-v5-project-feature__glow" />
+        </div>
+
+        <div class="home-v5-project-feature__content">
+          <div class="home-v5-project-feature__meta">
+            <span>{mainProject.category}</span>
+            <span>{mainProject.status}</span>
           </div>
 
           <h3>{mainProject.title}</h3>
-          <p>{mainProject.description}</p>
 
-          <ul>
+          <p>{mainProject.longDescription || mainProject.description}</p>
+
+          <dl class="home-v5-project-feature__stats">
+            {mainProject.highlights.slice(0, 3).map((highlight) => (
+              <div>
+                <dt>{highlight.label}</dt>
+                <dd>{highlight.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <ul class="home-v5-project-feature__tags" aria-label="项目技术标签">
             {mainProject.tags.slice(0, 4).map((tag) => (
               <li>{tag}</li>
             ))}
           </ul>
 
-          <div class="home-v3-project-actions">
+          <div class="home-v5-project-feature__actions">
             <a
-              class="ui-button ui-button-primary"
+              class="home-v5-button home-v5-button--primary"
               href={`/projects/${mainProject.slug}/`}
-              aria-label={`查看 ${mainProject.title} 项目详情`}
             >
-              查看主项目
+              项目详情
+              <span aria-hidden="true">→</span>
             </a>
 
             {externalProjectLinks(mainProject).map((link) => (
               <a
-                class={
-                  link.primary
-                    ? 'project-mirror-link project-mirror-link--primary'
-                    : 'project-mirror-link'
-                }
+                class="home-v5-project-feature__external"
                 href={link.href}
                 target="_blank"
-                rel="noreferrer"
-                aria-label={`在新窗口打开 ${mainProject.title} 的 ${link.label}`}
+                rel="noopener noreferrer"
               >
                 {link.label}
+                <span aria-hidden="true">↗</span>
               </a>
             ))}
           </div>
-        </article>
-      )
-    }
+        </div>
+      </article>
+    )
+  }
 
-    <div class="home-v3-project-side">
-      {
-        sideProjects.map((project) => (
-          <article style={`--project-accent: ${project.accent}`}>
+  <div class="home-v5-projects__secondary">
+    {
+      sideProjects.map((project, index) => (
+        <article class="home-v5-project-card" style={`--project-accent: ${project.accent};`}>
+          <div class="home-v5-project-card__top">
+            <span>0{index + 2}</span>
             <div>
-              <span>{project.category}</span>
+              <small>{project.category}</small>
               <strong>{project.status}</strong>
             </div>
+          </div>
 
+          <div class="home-v5-project-card__body">
             <h3>{project.title}</h3>
             <p>{project.description}</p>
+          </div>
 
-            <div class="home-v3-project-side-actions">
-              <a href={`/projects/${project.slug}/`} aria-label={`查看 ${project.title} 项目详情`}>
-                查看详情 →
-              </a>
+          <ul class="home-v5-project-card__tags" aria-label="项目标签">
+            {project.tags.slice(0, 3).map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
 
-              <span class="home-v3-project-mirrors" aria-label={`${project.title} 镜像入口`}>
-                {externalProjectLinks(project)
-                  .filter((link) => link.label !== 'Website')
-                  .map((link) => (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`在新窗口打开 ${project.title} 的 ${link.label}`}
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-              </span>
+          <div class="home-v5-project-card__footer">
+            <a href={`/projects/${project.slug}/`}>
+              查看详情
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <div>
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.title} GitHub 仓库`}
+                >
+                  GH
+                </a>
+              )}
+
+              {project.giteeUrl && (
+                <a
+                  href={project.giteeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.title} Gitee 镜像`}
+                >
+                  GE
+                </a>
+              )}
             </div>
-          </article>
-        ))
-      }
-    </div>
+          </div>
+        </article>
+      ))
+    }
   </div>
 </section>

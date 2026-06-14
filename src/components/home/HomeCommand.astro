@@ -1,13 +1,23 @@
-<section class="home-v3-command" aria-labelledby="home-command-title">
-  <div>
-    <p>Command Palette</p>
-    <h2 id="home-command-title">从搜索开始探索整个主站</h2>
-    <span>搜索项目、链接、页面、更新记录和后续内容入口。</span>
-  </div>
+<section class="home-v5-command" aria-labelledby="home-command-title">
+  <a class="home-v5-command__search" href="/search/" aria-label="打开站内搜索">
+    <span class="home-v5-command__icon" aria-hidden="true">
+      <i></i>
+    </span>
 
-  <a href="/search/" aria-label="打开站内搜索页面">
-    <kbd>/</kbd>
-    <span>搜索项目、页面、链接、更新...</span>
-    <strong>Open</strong>
+    <span class="home-v5-command__copy">
+      <small>QUICK SEARCH</small>
+      <strong id="home-command-title">搜索项目、页面、链接与更新记录</strong>
+    </span>
+
+    <span class="home-v5-command__hint">
+      <kbd>/</kbd>
+      <span>打开</span>
+    </span>
   </a>
+
+  <nav class="home-v5-command__links" aria-label="常用入口">
+    <a href="/projects/">Projects</a>
+    <a href="/changelog/">Changelog</a>
+    <a href="/links/">Links</a>
+  </nav>
 </section>

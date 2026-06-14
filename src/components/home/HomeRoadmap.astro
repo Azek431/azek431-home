@@ -14,20 +14,32 @@ type Props = {
 const { focuses } = Astro.props as Props;
 ---
 
-<section class="section-v2 home-v3-roadmap" aria-labelledby="home-roadmap-title">
-  <div class="section-head-v2">
-    <p>Focus</p>
-    <h2 id="home-roadmap-title">长期关注的方向</h2>
-    <span>主站之外，我也会持续投入在这些方向上。</span>
-  </div>
+<section class="home-v5-now" aria-labelledby="home-now-title">
+  <header class="home-v5-section-head">
+    <div>
+      <p>NOW / LATEST / NEXT</p>
+      <h2 id="home-now-title">不是静态介绍，而是持续更新的工作现场。</h2>
+    </div>
 
-  <div class="home-v3-roadmap-grid">
+    <a href="/now/">
+      查看 Now 页面
+      <span aria-hidden="true">→</span>
+    </a>
+  </header>
+
+  <div class="home-v5-now__grid">
     {
-      focuses.map((focus) => (
+      focuses.map((focus, index) => (
         <article>
-          <span>{focus.num ?? focus.step ?? '—'}</span>
+          <div class="home-v5-now__top">
+            <span>{focus.num ?? focus.step ?? `0${index + 1}`}</span>
+            {focus.status && <small>{focus.status}</small>}
+          </div>
+
           <h3>{focus.title}</h3>
           <p>{focus.desc}</p>
+
+          <span class="home-v5-now__line" aria-hidden="true" />
         </article>
       ))
     }

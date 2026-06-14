@@ -1,15 +1,11 @@
 ---
 import { projectDetails } from '../../data/projects';
 
-type FocusItem = {
-  title: string;
-  desc: string;
-};
-
 type SiteConfig = {
   name: string;
   description?: string;
   github?: string;
+  gitee?: string;
   url?: string;
 };
 
@@ -17,78 +13,103 @@ type Props = {
   todayDate: string;
   pageCount: number;
   siteConfig: SiteConfig;
-  focusItems: FocusItem[];
 };
 
-const { todayDate, pageCount, siteConfig, focusItems } = Astro.props as Props;
+const { todayDate, pageCount, siteConfig } = Astro.props as Props;
 
 const homeProject = projectDetails.find((project) => project.slug === 'azek431-home');
+
 const sourceUrl = homeProject?.githubUrl ?? siteConfig.github;
-const mirrorUrl = homeProject?.giteeUrl;
+const mirrorUrl = homeProject?.giteeUrl ?? siteConfig.gitee;
+
+const signals = [
+  {
+    label: 'AI & Automation',
+    value: '工具、模型与工作流实验',
+  },
+  {
+    label: 'Web Engineering',
+    value: 'Astro、前端与长期维护',
+  },
+  {
+    label: 'Open Source',
+    value: 'GitHub 主仓库与 Gitee 镜像',
+  },
+];
 ---
 
-<section class="home-v3-hero home-hero-v4" aria-labelledby="home-title">
-  <div class="home-v3-copy home-hero-v4__copy">
-    <p class="home-v3-kicker home-hero-v4__kicker">
+<section class="home-v5-hero" aria-labelledby="home-title">
+  <div class="home-v5-hero__copy">
+    <p class="home-v5-eyebrow">
       <span aria-hidden="true"></span>
-      Azek431 Home · Personal Digital Space
+      Azek431 · Personal Digital Space
     </p>
 
-    <h1 id="home-title" class="home-hero-v4__title">
-      <span>Azek431</span>
-      <em>Digital Nexus</em>
+    <h1 id="home-title" class="home-v5-hero__title">
+      <span>把想法写进代码，</span>
+      <em>让项目持续生长。</em>
     </h1>
 
-    <p class="home-v3-lead home-hero-v4__lead">
-      一个用于整理项目、AI
-      实验、学习记录和公开入口的个人数字空间。这里会持续沉淀我的网站、资料库、工具实验和长期维护记录。
+    <p class="home-v5-hero__lead">
+      我是 Azek431。这里连接我正在维护的网站、资料库、AI
+      实验与长期学习记录，也记录它们从构想到发布的完整过程。
     </p>
 
-    <div class="home-v3-actions home-hero-v4__actions" aria-label="首页主要操作">
-      <a class="ui-button ui-button-primary" href="/projects/">查看项目</a>
-
-      <a
-        class="ui-button ui-button-secondary"
-        href={sourceUrl}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="在新窗口打开本站源码仓库"
-      >
-        本站源码
+    <div class="home-v5-hero__actions" aria-label="首页主要操作">
+      <a class="home-v5-button home-v5-button--primary" href="/projects/">
+        <span>查看代表项目</span>
+        <span aria-hidden="true">↗</span>
       </a>
+
+      <a class="home-v5-button home-v5-button--secondary" href="/about/">
+        <span>了解我与本站</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="home-v5-hero__signals" aria-label="主要关注方向">
+      {
+        signals.map((signal, index) => (
+          <article>
+            <span>0{index + 1}</span>
+            <div>
+              <strong>{signal.label}</strong>
+              <small>{signal.value}</small>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="home-v5-hero__meta" aria-label="站点状态">
+      <span>
+        <i aria-hidden="true"></i>
+        Updated {todayDate}
+      </span>
+
+      <span>{pageCount} public pages</span>
+
+      {
+        sourceUrl && (
+          <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+            GitHub
+            <span aria-hidden="true">↗</span>
+          </a>
+        )
+      }
 
       {
         mirrorUrl && (
-          <a
-            class="ui-button ui-button-ghost"
-            href={mirrorUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="在新窗口打开本站 Gitee 镜像"
-          >
-            Gitee 镜像
+          <a href={mirrorUrl} target="_blank" rel="noopener noreferrer">
+            Gitee
+            <span aria-hidden="true">↗</span>
           </a>
         )
       }
     </div>
-
-    <ul class="home-v3-focus home-hero-v4__focus" aria-label="当前关注方向">
-      {
-        focusItems.slice(0, 3).map((item) => (
-          <li>
-            <strong>{item.title}</strong>
-            <span>{item.desc}</span>
-          </li>
-        ))
-      }
-    </ul>
-
-    <p class="home-hero-v4__meta">
-      <span>Updated {todayDate}</span>
-      <span>{pageCount} pages</span>
-      <span>Astro / Cloudflare</span>
-    </p>
   </div>
 
-  <slot />
+  <div class="home-v5-hero__visual">
+    <slot />
+  </div>
 </section>
