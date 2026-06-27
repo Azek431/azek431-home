@@ -6,7 +6,6 @@
   回归干净的结构化样式。
 */
 
-@import './ui/00-foundation.css';
 @import './ui/10-shell-header-footer.css';
 @import './ui/20-home.css';
 @import './ui/30-pages.css';
