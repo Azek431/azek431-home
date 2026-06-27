@@ -1,0 +1,97 @@
+/*
+  Responsiveness — 响应式适配
+  只在必要处覆盖，不做过度适配。
+*/
+
+@media (max-width: 760px) {
+  .home-hero {
+    padding: var(--space-10) 0 var(--space-8);
+  }
+
+  .home-projects__featured {
+    grid-template-columns: 1fr;
+  }
+
+  .home-command {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-command__links {
+    padding: 0 var(--space-3) var(--space-2);
+  }
+
+  .home-navigation__item[data-size="wide"],
+  .home-navigation__item[data-size="medium"] {
+    grid-column: span 12;
+  }
+
+  .home-navigation__item[data-size="small"] {
+    grid-column: span 6;
+  }
+
+  .home-activity {
+    grid-template-columns: 1fr;
+  }
+
+  .home-activity__identity {
+    position: relative;
+  }
+
+  .projects-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .home-navigation__item[data-size="small"] {
+    grid-column: span 12;
+  }
+
+  .projects-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero__signals {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Touch devices ---------- */
+@media (pointer: coarse) {
+  .card:hover,
+  .home-navigation__item:hover,
+  .home-now__card:hover,
+  .now-item:hover,
+  .link-card:hover {
+    transform: none;
+  }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .site-header,
+  .site-footer,
+  .home-command,
+  .home-hero__actions,
+  .links-filter {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .card,
+  .home-navigation__item,
+  .about-dashboard__card {
+    break-inside: avoid;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+}

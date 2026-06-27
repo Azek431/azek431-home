@@ -1,7 +1,5 @@
 ---
 import Header from '../components/Header.astro';
-import VisualAura from '../components/VisualAura.astro';
-import InterfaceFX from '../components/InterfaceFX.astro';
 import Footer from '../components/Footer.astro';
 import Toast from '../components/Toast.astro';
 import GlobalShortcuts from '../components/GlobalShortcuts.astro';
@@ -54,40 +52,12 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#050714" />
+    <meta name="theme-color" content="#09090b" />
     <link rel="alternate" type="application/rss+xml" title="Azek431 RSS" href={rssUrl} />
     <meta name="color-scheme" content="dark light" />
-    <style is:inline>
-      html {
-        min-height: 100%;
-        background: #050714;
-        color-scheme: dark;
-      }
-      body {
-        min-height: 100%;
-        background-color: #050714;
-      }
-    </style>
   </head>
 
   <body>
-    <VisualAura />
-    <InterfaceFX />
-    <div class="route-veil" id="routeVeil" aria-hidden="true"></div>
-    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-    <button class="to-top" id="toTopBtn" type="button" aria-label="返回顶部" title="返回顶部">
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg
-      >
-    </button>
-
     <a class="skip-link" href="#main-content">跳到主要内容</a>
 
     <div class="site-shell">
@@ -104,6 +74,7 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
       (function () {
         if (typeof window === 'undefined') return;
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // Theme toggle
         try {
           var root = document.documentElement;
@@ -142,282 +113,29 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
           }
         });
 
-        // Internal link route veil
-        try {
-          var veil = document.getElementById('routeVeil');
-          if (veil) {
-            document.addEventListener('click', function (e) {
-              var a = e.target.closest && e.target.closest('a[href]');
-              if (!a) return;
-              var href = a.getAttribute('href') || '';
-              if (
-                !href ||
-                href.startsWith('http') ||
-                href.startsWith('mailto:') ||
-                href.startsWith('#') ||
-                a.target === '_blank'
-              )
-                return;
-              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-              veil.classList.add('flash');
-              setTimeout(function () {
-                veil.classList.remove('flash');
-              }, 200);
-            });
-          }
-        } catch (err) {}
-        var isCoarse = window.matchMedia('(pointer: coarse)').matches;
-
-        // Mouse-tracking aurora on body
-        if (!isCoarse && !reduce) {
-          var raf = null;
-          var tx = 0,
-            ty = 0,
-            cx = 0,
-            cy = 0;
-          window.addEventListener('mousemove', function (e) {
-            tx = (e.clientX / window.innerWidth) * 100;
-            ty = (e.clientY / window.innerHeight) * 100;
-            if (!raf)
-              raf = requestAnimationFrame(function () {
-                cx += (tx - cx) * 0.15;
-                cy += (ty - cy) * 0.15;
-                document.body.style.setProperty('--mx', cx + '%');
-                document.body.style.setProperty('--my', cy + '%');
-                raf = null;
-              });
-          });
-        }
-
-        // Header shrink on scroll
-        var header = document.querySelector('.site-header');
-        if (header) {
-          var update = function () {
-            if (window.scrollY > 12) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-          };
-          update();
-          window.addEventListener('scroll', update, { passive: true });
-        }
-
-        // Card and button pointer glow tracking
-        if (!isCoarse && !reduce) {
-          var cards = document.querySelectorAll('.card');
-          cards.forEach(function (card) {
-            card.addEventListener('mousemove', function (e) {
-              var r = card.getBoundingClientRect();
-              card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
-              card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
-            });
-          });
-
-          var buttons = document.querySelectorAll('.button, .card-link');
-          buttons.forEach(function (btn) {
-            btn.addEventListener('mousemove', function (e) {
-              var r = btn.getBoundingClientRect();
-              btn.style.setProperty('--rx', ((e.clientX - r.left) / r.width) * 100 + '%');
-              btn.style.setProperty('--ry', ((e.clientY - r.top) / r.height) * 100 + '%');
-            });
-          });
-        }
-
-        // Click particle burst
-        if (
-          !window.matchMedia('(pointer: coarse)').matches &&
-          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ) {
-          document.addEventListener('click', function (e) {
-            var target = e.target;
-            // Don't spawn on links/buttons (they have their own feedback)
-            if (target.closest && target.closest('a, button')) return;
-            var n = 8;
-            for (var i = 0; i < n; i++) {
-              var p = document.createElement('span');
-              p.className = 'click-particle';
-              var ang = (i / n) * Math.PI * 2 + Math.random() * 0.4;
-              var dist = 24 + Math.random() * 24;
-              var tx = Math.cos(ang) * dist;
-              var ty = Math.sin(ang) * dist;
-              p.style.setProperty('--tx', tx + 'px');
-              p.style.setProperty('--ty', ty + 'px');
-              p.style.left = e.clientX + 'px';
-              p.style.top = e.clientY + 'px';
-              p.style.background = ['#a8c8ff', '#c4b5fd', '#6ee7b7', '#fcd34d'][i % 4];
-              document.body.appendChild(p);
-              (function (node) {
-                setTimeout(function () {
-                  node.remove();
-                }, 700);
-              })(p);
-            }
-          });
-        }
-
-        // 3D tilt on all cards (excluding disabled placeholders)
-        if (
-          !window.matchMedia('(pointer: coarse)').matches &&
-          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ) {
-          var tiltTargets = document.querySelectorAll(
-            '.card:not(.card-disabled):not(.card-static)',
-          );
-          tiltTargets.forEach(function (el) {
-            var r = null;
-            el.addEventListener('mouseenter', function () {
-              r = el.getBoundingClientRect();
-            });
-            el.addEventListener('mousemove', function (e) {
-              if (!r) r = el.getBoundingClientRect();
-              var x = (e.clientX - r.left) / r.width;
-              var y = (e.clientY - r.top) / r.height;
-              var rx = (0.5 - y) * 3.5;
-              var ry = (x - 0.5) * 3.5;
-              el.style.transform =
-                'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(0)';
-            });
-            el.addEventListener('mouseleave', function () {
-              r = null;
-              el.style.transform = '';
-            });
-          });
-
-          // also apply to now-cards
-          var nowCards = document.querySelectorAll('.now-card, .hero-side[data-tilt]');
-          nowCards.forEach(function (el) {
-            var r2 = null;
-            el.addEventListener('mouseenter', function () {
-              r2 = el.getBoundingClientRect();
-            });
-            el.addEventListener('mousemove', function (e) {
-              if (!r2) r2 = el.getBoundingClientRect();
-              var x = (e.clientX - r2.left) / r2.width;
-              var y = (e.clientY - r2.top) / r2.height;
-              var rx = (0.5 - y) * 5;
-              var ry = (x - 0.5) * 5;
-              el.style.transform =
-                'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(0)';
-            });
-            el.addEventListener('mouseleave', function () {
-              r2 = null;
-              el.style.transform = '';
-            });
-          });
-        }
-
-        // Typing effect on [data-typed] elements
-        var typed = document.querySelectorAll('[data-typed]');
-        if (typed.length && !reduce) {
-          typed.forEach(function (el) {
-            var text = el.getAttribute('data-text') || el.textContent || '';
-            if (!text) {
-              text =
-                '# 写一个个人主页大概需要多久？\n\n' +
-                '一开始以为只是写点 HTML 和 CSS，\n' +
-                '后来发现设计系统、动效、构建、部署\n' +
-                '都是需要打磨的环节。\n\n' +
-                '但也正因如此，\n' +
-                '主站能成为一段长期维护的记录。\n\n' +
-                '> 不断更新，比一步到位更重要。';
-            }
-            el.textContent = '';
-            var i = 0;
-            var cursor = document.createElement('span');
-            cursor.className = 'typed-cursor';
-            el.appendChild(cursor);
-            var step = function () {
-              if (i <= text.length) {
-                el.textContent = text.substring(0, i);
-                el.appendChild(cursor);
-                i++;
-                setTimeout(step, 12 + Math.random() * 30);
-              } else {
-                // Pause then restart
-                setTimeout(function () {
-                  i = 0;
-                  step();
-                }, 4000);
-              }
-            };
-            step();
-          });
-        }
-
-        // Stagger reveal for timeline items + filter chips
-        var staggerTargets = document.querySelectorAll('.timeline-item, .now-card, .filter-chip');
-        staggerTargets.forEach(function (el, i) {
-          el.classList.add('reveal');
-          var mod = i % 8;
-          if (mod) el.classList.add('reveal-delay-' + mod);
-        });
-        if ('IntersectionObserver' in window) {
-          var io2 = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('visible');
-                  io2.unobserve(entry.target);
-                }
-              });
-            },
-            { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
-          );
-          staggerTargets.forEach(function (el) {
-            io2.observe(el);
-          });
-        } else {
-          staggerTargets.forEach(function (el) {
-            el.classList.add('visible');
-          });
-        }
-        // Clickable card tags -> navigate to links page with filter
-        document.addEventListener('click', function (e) {
-          var tag = e.target.closest && e.target.closest('.card-tag');
-          if (!tag) return;
-          e.preventDefault();
-          e.stopPropagation();
-          var t = tag.getAttribute('data-tag');
-          if (t) window.location.href = '/links/?tag=' + encodeURIComponent(t);
-        });
-
-        // Scroll progress + back to top
-        var prog = document.getElementById('scrollProgress');
+        // Back to top button
         var toTop = document.getElementById('toTopBtn');
-        var ticking = false;
-        function onScroll() {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(function () {
-            var h = document.documentElement;
-            var max = h.scrollHeight - h.clientHeight;
-            var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-            if (prog) prog.style.width = pct + '%';
-            if (toTop) {
+        if (toTop) {
+          var ticking = false;
+          function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
               if (window.scrollY > 480) toTop.classList.add('visible');
               else toTop.classList.remove('visible');
-            }
-            ticking = false;
-          });
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        if (toTop)
+              ticking = false;
+            });
+          }
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
           toTop.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
           });
+        }
 
-        if (reduce) return;
-
-        // Reveal on scroll
-        var revealTargets = document.querySelectorAll(
-          '.hero-main, .hero-side, .section-heading, .card, .content-block, .about-preview, .not-found, .page-hero, .focus-list li',
-        );
-        revealTargets.forEach(function (el, i) {
-          el.classList.add('reveal');
-          var mod = i % 8;
-          if (mod) el.classList.add('reveal-delay-' + mod);
-        });
-
-        if ('IntersectionObserver' in window) {
+        // Stagger reveal
+        var staggerTargets = document.querySelectorAll('.reveal');
+        if (!reduce && 'IntersectionObserver' in window) {
           var io = new IntersectionObserver(
             function (entries) {
               entries.forEach(function (entry) {
@@ -427,18 +145,19 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
                 }
               });
             },
-            { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+            { threshold: 0.1, rootMargin: '0px 0px -5% 0px' }
           );
-          revealTargets.forEach(function (el) {
-            io.observe(el);
-          });
+          staggerTargets.forEach(function (el) { io.observe(el); });
         } else {
-          revealTargets.forEach(function (el) {
-            el.classList.add('visible');
-          });
+          staggerTargets.forEach(function (el) { el.classList.add('visible'); });
         }
       })();
     </script>
+
+    <button class="to-top" id="toTopBtn" type="button" aria-label="返回顶部" title="返回顶部">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+
     <GlobalShortcuts />
     <Toast />
   </body>

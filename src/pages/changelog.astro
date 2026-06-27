@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { changelog } from '../data/changelog';
 
 const totalChanges = changelog.reduce((acc, item) => acc + item.changes.length, 0);
@@ -31,49 +30,41 @@ const counts = [
   title="更新日志 · Azek431"
   description="Azek431 个人主站的版本更新、功能变化和维护记录。"
 >
-  <Breadcrumb items={[{ label: '更新日志', href: '/changelog/' }]} />
-
-  <section class="page-v2-hero changelog-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Changelog</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Changelog</p>
       <h1>更新日志</h1>
       <p>这里记录主站每一次重要调整：页面结构、视觉系统、SEO、数据、交互和工程化流程。</p>
     </div>
 
-    <div class="page-v2-stat-grid">
+    <!-- Stats -->
+    <div class="projects-summary">
       {
         counts.map((item) => (
-          <article data-tone={item.tone}>
+          <div class="projects-summary__item">
             <strong>{item.value}</strong>
             <span>{item.label}</span>
-          </article>
+          </div>
         ))
       }
     </div>
-  </section>
 
-  <section class="changelog-timeline-v2">
-    {
-      changelog.map((entry, index) => (
-        <article data-tone={entry.tone || 'minor'}>
-          <div class="changelog-index-v2">{String(index + 1).padStart(2, '0')}</div>
-
-          <div class="changelog-entry-v2">
-            <div>
-              <p>
-                {entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}
-              </p>
-              <h2>{entry.title}</h2>
-            </div>
-
-            <ul>
+    <!-- Timeline -->
+    <div class="changelog-list">
+      {
+        changelog.map((entry, index) => (
+          <div class="changelog-item">
+            <div class="changelog-item__date">{entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}</div>
+            <h3>{entry.title}</h3>
+            <div class="changelog-item__changes">
               {entry.changes.map((change) => (
-                <li>{change}</li>
+                <div class="changelog-item__change">{change}</div>
               ))}
-            </ul>
+            </div>
           </div>
-        </article>
-      ))
-    }
+        ))
+      }
+    </div>
   </section>
 </BaseLayout>

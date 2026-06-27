@@ -15,36 +15,29 @@ type Props = {
 const { items } = Astro.props as Props;
 ---
 
-<section class="home-v5-navigation" aria-labelledby="home-navigation-title">
-  <header class="home-v5-section-head">
+<section class="home-navigation" aria-labelledby="home-navigation-title">
+  <div class="home-section-head">
     <div>
       <p>EXPLORE</p>
-      <h2 id="home-navigation-title">按你的兴趣，进入这个数字空间。</h2>
+      <h2 id="home-navigation-title">探索更多</h2>
     </div>
-
     <span>不同大小代表不同的访问优先级。</span>
-  </header>
+  </div>
 
-  <div class="home-v5-navigation__grid">
+  <div class="home-navigation__grid">
     {
       items.map((item, index) => (
         <a
-          class="home-v5-navigation__item"
+          class="home-navigation__item"
           href={item.href}
-          data-accent={item.accent}
           data-size={item.size}
         >
-          <span class="home-v5-navigation__index">0{index + 1}</span>
-
+          <span class="home-navigation__item-index">0{index + 1}</span>
           <div>
-            <small>{item.label}</small>
-            <strong>{item.title}</strong>
+            <h3>{item.title}</h3>
             <p>{item.desc}</p>
           </div>
-
-          <span class="home-v5-navigation__arrow" aria-hidden="true">
-            ↗
-          </span>
+          <span class="home-navigation__item-arrow" aria-hidden="true">↗</span>
         </a>
       ))
     }

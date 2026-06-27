@@ -7,19 +7,17 @@ import HomeHero from '../components/home/HomeHero.astro';
 import HomeNavigation from '../components/home/HomeNavigation.astro';
 import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeRoadmap from '../components/home/HomeRoadmap.astro';
-import HomeStatusConsole from '../components/home/HomeStatusConsole.astro';
 
 import {
   featuredProjectPreview,
   homeFocusItems,
   homeNavigationItems,
-  homeNexusSlugs,
   homeRecentUpdates,
   homeRelease,
   homeSignals,
 } from '../data/home';
 import { projectDetails } from '../data/projects';
-import { links, recentUpdates, siteConfig, sitePages } from '../data/site';
+import { links, sitePages } from '../data/site';
 import { todayDate } from '../data/time';
 
 const pageCount = sitePages.length + projectDetails.length + 1;
@@ -33,38 +31,22 @@ const sideProjects = projectDetails
   .filter((project) => project.slug !== mainProject?.slug && project.slug !== 'azek431-home')
   .slice(0, 2);
 
-const nexusProjects = homeNexusSlugs
-  .map((slug) => projectDetails.find((project) => project.slug === slug))
-  .filter((project): project is NonNullable<typeof project> => Boolean(project));
-
 const networkLinks = links.filter((link) => ['GitHub', 'Gitee'].includes(link.name));
 
-const homepageUpdates = [
-  ...homeRecentUpdates,
-  ...recentUpdates.filter(
-    (update) =>
-      !homeRecentUpdates.some(
-        (featuredUpdate) =>
-          featuredUpdate.title === update.title && featuredUpdate.date === update.date,
-      ),
-  ),
-].slice(0, 3);
+const homepageUpdates: typeof homeRecentUpdates = homeRecentUpdates.slice(0, 3);
 ---
 
 <BaseLayout
   title="Azek431 Digital Nexus"
   description="Azek431 的个人数字空间：连接项目、AI 实验、学习记录、开源实践和长期维护内容。"
 >
-  <main class="home-v5">
+  <main class="home-page">
     <HomeHero
-      siteConfig={siteConfig}
       todayDate={todayDate}
       pageCount={pageCount}
       signals={homeSignals}
       release={homeRelease}
-    >
-      <HomeStatusConsole projects={nexusProjects} projectCount={projectDetails.length} />
-    </HomeHero>
+    />
 
     <HomeCommand />
 
@@ -80,8 +62,4 @@ const homepageUpdates = [
 
     <HomeActivityNetwork updates={homepageUpdates} networkLinks={networkLinks} />
   </main>
-
-  <script is:inline>
-    document.documentElement.classList.add('is-home-page');
-  </script>
 </BaseLayout>

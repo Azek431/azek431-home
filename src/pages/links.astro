@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { links } from '../data/site';
 import { siteUpdatedDate } from '../data/time';
 
@@ -44,93 +43,83 @@ const internalCount = links.length - externalCount;
 ---
 
 <BaseLayout title="链接 · Azek431" description="Azek431 的公开入口、站内导航、项目链接和订阅资源。">
-  <Breadcrumb items={[{ label: '链接', href: '/links/' }]} />
-
-  <section class="page-v2-hero links-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Resource Hub</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Resource Hub</p>
       <h1>公开入口</h1>
-      <p>
-        这里把主站、代码平台、项目入口、订阅源和站内页面集中整理起来，
-        方便快速找到不同内容，也方便后续扩展更多公开链接。
-      </p>
+      <p>这里把主站、代码平台、项目入口、订阅源和站内页面集中整理起来，方便快速找到不同内容，也方便后续扩展更多公开链接。</p>
     </div>
 
-    <div class="page-v2-stat-grid">
-      <article data-tone="green">
+    <!-- Stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
         <strong>{links.length}</strong>
         <span>全部链接</span>
-      </article>
-      <article data-tone="blue">
+      </div>
+      <div class="projects-summary__item">
         <strong>{internalCount}</strong>
         <span>站内入口</span>
-      </article>
-      <article data-tone="violet">
+      </div>
+      <div class="projects-summary__item">
         <strong>{externalCount}</strong>
         <span>外部入口</span>
-      </article>
-      <article data-tone="amber">
+      </div>
+      <div class="projects-summary__item">
         <strong>{siteUpdatedDate}</strong>
         <span>最近构建</span>
-      </article>
+      </div>
     </div>
-  </section>
 
-  <section class="link-filter-v2" aria-label="链接筛选">
-    {
-      categories.map((category, index) => (
-        <button
-          type="button"
-          class="link-filter-pill"
-          data-link-filter={category}
-          aria-pressed={index === 0 ? 'true' : 'false'}
-        >
-          {category}
-        </button>
-      ))
-    }
-  </section>
+    <!-- Filter -->
+    <div class="links-filter">
+      {
+        categories.map((category, index) => (
+          <button
+            type="button"
+            class="links-filter__chip"
+            data-link-filter={category}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            {category}
+          </button>
+        ))
+      }
+    </div>
 
-  <section class="resource-groups-v2" aria-label="链接分组">
+    <!-- Groups -->
     {
       groups.map((group) => (
-        <article class="resource-group-v2" data-group={group.category} data-tone={group.tone}>
-          <div class="resource-group-head">
-            <div>
-              <h2>{group.title}</h2>
-              <span>{group.desc}</span>
-            </div>
-            <strong>{group.items.length}</strong>
-          </div>
-
-          <div class="resource-card-grid">
+        <div class="links-group" data-group={group.category} hidden>
+          <h2>{group.title}</h2>
+          <p>{group.desc}</p>
+          <div class="links-grid">
             {group.items.map((link) => (
               <a
-                class="resource-card-v2"
+                class="link-card"
                 href={link.href}
                 data-link-card
                 data-category={link.category}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
               >
-                <div>
-                  <strong>{link.name}</strong>
-                  <span>{link.description}</span>
-                </div>
-
-                <ul>
-                  {link.tags.slice(0, 3).map((tag) => (
-                    <li>{tag}</li>
-                  ))}
-                </ul>
+                <strong>{link.name}</strong>
+                <p>{link.description}</p>
+                {link.tags.length > 0 && (
+                  <div style="display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-2);">
+                    {link.tags.slice(0, 3).map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
               </a>
             ))}
           </div>
-        </article>
+        </div>
       ))
     }
 
-    <p class="resource-empty-v2" data-link-empty hidden aria-live="polite">
+    <p data-link-empty hidden aria-live="polite" style="font-size: var(--text-sm); color: var(--color-text-muted); text-align: center; padding: var(--space-6);">
       这个分类下暂时没有链接。
     </p>
   </section>

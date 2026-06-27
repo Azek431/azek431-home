@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import PageHero from '../components/PageHero.astro';
 import { todayDate, todayWeekday } from '../data/time';
 
 const profileItems = [
@@ -70,128 +68,125 @@ const focusItems = [
   title="关于我"
   description="了解 Azek431 的个人方向、当前状态、技术栈、项目维护和未来计划。"
 >
-  <main class="about-v3">
-    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于我' }]} />
+  <section class="section">
+    <div class="about-narrative">
+      <h1>关于我</h1>
+      <p>你好，我是 Azek431。我喜欢研究 AI、网站搭建、GitHub 项目部署和软件开发，也在把这个主站打磨成一个长期维护的个人数字空间。</p>
+    </div>
 
-    <PageHero
-      eyebrow="About"
-      title="关于我"
-      description="你好，我是 Azek431。我喜欢研究 AI、网站搭建、GitHub 项目部署和软件开发，也在把这个主站打磨成一个长期维护的个人数字空间。"
-      meta={profileItems}
-    />
+    <!-- Profile / Meta -->
+    <div class="projects-summary">
+      {
+        profileItems.map((item) => (
+          <div class="projects-summary__item">
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </div>
+        ))
+      }
+    </div>
 
-    <section class="about-narrative-v3" aria-labelledby="about-narrative-title">
-      <p>Profile</p>
-      <h2 id="about-narrative-title">一个持续生长的个人数字空间</h2>
+    <!-- Narrative -->
+    <div class="about-narrative">
+      <p>这个主站是我整理项目、学习记录、AI 实验和公开入口的起点。它不会只是一个堆链接的导航页，而会逐步变成一个有结构、有审美、有维护记录的个人系统。</p>
+      <p>我更喜欢长期打磨：从一个小入口开始，慢慢整理组件、页面、设计系统、文档、部署流程和开源记录。每一次优化都应该留下清晰的痕迹，也让下一次维护更轻松。</p>
+    </div>
 
-      <div>
-        <p>
-          这个主站是我整理项目、学习记录、AI
-          实验和公开入口的起点。它不会只是一个堆链接的导航页，而会逐步变成一个有结构、有审美、有维护记录的个人系统。
-        </p>
-        <p>
-          我更喜欢长期打磨：从一个小入口开始，慢慢整理组件、页面、设计系统、文档、部署流程和开源记录。每一次优化都应该留下清晰的痕迹，也让下一次维护更轻松。
-        </p>
+    <!-- Now -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Now</p>
+      <h2>现在在做的事</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">当前阶段关注方向、正在探索的工具和接下来想继续打磨的事。</p>
+    </div>
+
+    <div class="card-grid">
+      {
+        nowItems.map((item) => (
+          <div class="card">
+            <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <span class="tag tag-accent">{item.status}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Today Status -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Today</p>
+      <h2>今日状态</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">正在细节里反复打磨 · {todayDate} · {todayWeekday}</p>
+    </div>
+
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <span>Energy</span>
+        <strong>72%</strong>
       </div>
-    </section>
-
-    <section class="about-now-v3" aria-labelledby="about-now-title">
-      <div class="section-head-v2">
-        <p>Now</p>
-        <h2 id="about-now-title">现在在做的事</h2>
-        <span>当前阶段关注方向、正在探索的工具和接下来想继续打磨的事。</span>
+      <div class="projects-summary__item">
+        <span>Focus</span>
+        <strong>86%</strong>
       </div>
-
-      <div class="about-now-grid-v3">
-        {
-          nowItems.map((item) => (
-            <article>
-              <span>{item.status}</span>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-            </article>
-          ))
-        }
+      <div class="projects-summary__item">
+        <span>Mode</span>
+        <strong>Build</strong>
       </div>
-    </section>
+    </div>
 
-    <section class="about-status-v3" aria-labelledby="about-status-title">
-      <div>
-        <p>Today</p>
-        <h2 id="about-status-title">今日状态</h2>
-        <span>正在细节里反复打磨 · {todayDate} · {todayWeekday}</span>
-      </div>
+    <!-- Skills -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Skills</p>
+      <h2>技术 / 熟练度</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">这些不是最终标签，只是当前阶段比较常用和正在成长的方向。</p>
+    </div>
 
-      <dl>
-        <div>
-          <dt>Energy</dt>
-          <dd>72%</dd>
-        </div>
-        <div>
-          <dt>Focus</dt>
-          <dd>86%</dd>
-        </div>
-        <div>
-          <dt>Mode</dt>
-          <dd>Build</dd>
-        </div>
-      </dl>
-    </section>
-
-    <section class="about-skills-v3" aria-labelledby="about-skills-title">
-      <div class="section-head-v2">
-        <p>Skills</p>
-        <h2 id="about-skills-title">技术 / 熟练度</h2>
-        <span>这些不是最终标签，只是当前阶段比较常用和正在成长的方向。</span>
-      </div>
-
-      <div class="about-skill-list-v3">
-        {
-          skills.map((skill) => (
-            <article>
-              <div>
-                <strong>{skill.name}</strong>
-                <span>{skill.level}</span>
+    <div class="about-dashboard">
+      <div class="about-dashboard__card">
+        <h3>Skill Levels</h3>
+        <div class="skill-list">
+          {
+            skills.map((skill) => (
+              <div class="skill-list__item">
+                <div class="skill-list__meta">
+                  <span class="skill-list__name">{skill.name}</span>
+                  <span class="skill-list__level">{skill.level}</span>
+                </div>
+                <div class="skill-bar">
+                  <span class="skill-bar__fill" style={`width: ${skill.pct}%`} />
+                </div>
               </div>
-              <div class="about-skill-meter-v3" aria-hidden="true">
-                <span style={`--skill-value: ${skill.pct}%`} />
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="about-dashboard__card">
+        <h3>Focus Areas</h3>
+        <div class="card-grid" style="grid-template-columns: 1fr;">
+          {
+            focusItems.map((item) => (
+              <div class="card" style="padding: var(--space-4);">
+                <span style="font-size: var(--text-xs); font-family: ui-monospace, monospace; color: var(--color-text-faint);">{item.num}</span>
+                <h3 style="font-size: var(--text-base); margin-top: var(--space-1);">{item.title}</h3>
+                <p style="font-size: var(--text-sm); color: var(--color-text-muted);">{item.desc}</p>
               </div>
-            </article>
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="about-focus-v3" aria-labelledby="about-focus-title">
-      <div class="section-head-v2">
-        <p>Focus</p>
-        <h2 id="about-focus-title">关注方向</h2>
-        <span>这些是我长期感兴趣、愿意持续投入时间的方向。</span>
-      </div>
+    <!-- Next -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Next</p>
+      <h2>后续计划</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">继续让主站更稳定、更漂亮、更有结构，然后逐步扩展博客、项目官网、AI 实验和更多公开内容。</p>
+    </div>
 
-      <div class="about-focus-grid-v3">
-        {
-          focusItems.map((item) => (
-            <article>
-              <span>{item.num}</span>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="about-next-v3" aria-labelledby="about-next-title">
-      <div>
-        <p>Next</p>
-        <h2 id="about-next-title">后续计划</h2>
-        <span>
-          继续让主站更稳定、更漂亮、更有结构，然后逐步扩展博客、项目官网、AI 实验和更多公开内容。
-        </span>
-      </div>
-
-      <a class="ui-button ui-button-primary" href="/now/">查看 Now 页面</a>
-    </section>
-  </main>
+    <div style="display: flex; gap: var(--space-3);">
+      <a class="button button-primary" href="/now/">查看 Now 页面</a>
+    </div>
+  </section>
 </BaseLayout>

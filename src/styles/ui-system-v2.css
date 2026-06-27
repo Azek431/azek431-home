@@ -1,18 +1,13 @@
 /*
-  Azek431 UI System V2
+  Azek431 UI System V2 — Minimal Edition
 
-  入口文件只负责按顺序导入分层样式。
-  注意：导入顺序本身就是 cascade 顺序，不要随意调换。
+  极简重构版。所有样式按组件/页面分层导入。
+  移除了所有历史遗留的毛玻璃叠加层、极光粒子、HUD 等装饰，
+  回归干净的结构化样式。
 */
 
 @import './ui/00-foundation.css';
-@import './ui/10-early-pages.css';
-@import './ui/20-aura-premium.css';
-@import './ui/30-home-legacy.css';
-@import './ui/35-home-v5.css';
-@import './ui/40-shell-pagehero.css';
-@import './ui/45-navigation.css';
-@import './ui/50-components.css';
-@import './ui/60-dashboard-about-footer.css';
-@import './ui/70-tokens-responsive-gitee.css';
-@import './ui/90-overrides.css';
+@import './ui/10-shell-header-footer.css';
+@import './ui/20-home.css';
+@import './ui/30-pages.css';
+@import './ui/40-responsiveness.css';

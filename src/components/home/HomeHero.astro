@@ -1,14 +1,6 @@
 ---
 import { projectDetails } from '../../data/projects';
 
-type SiteConfig = {
-  name: string;
-  description?: string;
-  github?: string;
-  gitee?: string;
-  url?: string;
-};
-
 type Signal = {
   label: string;
   value: string;
@@ -23,106 +15,52 @@ type Release = {
 type Props = {
   todayDate: string;
   pageCount: number;
-  siteConfig: SiteConfig;
   signals: readonly Signal[];
   release: Release;
 };
 
-const { todayDate, pageCount, siteConfig, signals, release } = Astro.props as Props;
+const { todayDate, pageCount, signals, release } = Astro.props as Props;
 
 const homeProject = projectDetails.find((project) => project.slug === 'azek431-home');
-
-const sourceUrl = homeProject?.githubUrl ?? siteConfig.github;
-const mirrorUrl = homeProject?.giteeUrl ?? siteConfig.gitee;
 ---
 
-<section class="home-v5-hero" aria-labelledby="home-title">
-  <div class="home-v5-hero__copy">
-    <div class="home-v5-hero__kicker">
-      <p class="home-v5-eyebrow">
-        <span aria-hidden="true"></span>
-        Azek431 · Personal Digital Space
-      </p>
+<section class="home-hero" aria-labelledby="home-title">
+  <p class="home-hero__eyebrow">Azek431 · Digital Space</p>
 
-      <a
-        class="home-v5-release-pill"
-        href={release.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`查看 ${release.label} ${release.status}`}
-      >
-        <i aria-hidden="true"></i>
-        <strong>{release.label}</strong>
-        <span>{release.status}</span>
-        <b aria-hidden="true">↗</b>
-      </a>
-    </div>
+  <h1 id="home-title">
+    把想法写进代码，<br />
+    让项目持续生长。
+  </h1>
 
-    <h1 id="home-title" class="home-v5-hero__title">
-      <span>把想法写进代码，</span>
-      <em>让项目持续生长。</em>
-    </h1>
+  <p class="home-hero__lead">
+    我是 Azek431。这里连接我正在维护的网站、资料库、AI 实验与长期学习记录。
+  </p>
 
-    <p class="home-v5-hero__lead">
-      我是 Azek431。这里连接我正在维护的网站、资料库、AI
-      实验与长期学习记录，也记录它们从构想到发布的完整过程。
-    </p>
-
-    <div class="home-v5-hero__actions" aria-label="首页主要操作">
-      <a class="home-v5-button home-v5-button--primary" href="#featured-work">
-        <span>查看代表项目</span>
-        <span aria-hidden="true">↓</span>
-      </a>
-
-      <a class="home-v5-button home-v5-button--secondary" href="/about/">
-        <span>了解我与本站</span>
-        <span aria-hidden="true">→</span>
-      </a>
-    </div>
-
-    <div class="home-v5-hero__signals" aria-label="主要关注方向">
-      {
-        signals.map((signal, index) => (
-          <article>
-            <span>0{index + 1}</span>
-            <div>
-              <strong>{signal.label}</strong>
-              <small>{signal.value}</small>
-            </div>
-          </article>
-        ))
-      }
-    </div>
-
-    <div class="home-v5-hero__meta" aria-label="站点状态">
-      <span>
-        <i aria-hidden="true"></i>
-        Updated {todayDate}
-      </span>
-
-      <span>{pageCount} public pages</span>
-
-      {
-        sourceUrl && (
-          <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
-            GitHub
-            <span aria-hidden="true">↗</span>
-          </a>
-        )
-      }
-
-      {
-        mirrorUrl && (
-          <a href={mirrorUrl} target="_blank" rel="noopener noreferrer">
-            Gitee
-            <span aria-hidden="true">↗</span>
-          </a>
-        )
-      }
-    </div>
+  <div class="home-hero__actions">
+    <a class="button button-primary" href="#featured-work">
+      <span>查看项目</span>
+      <span aria-hidden="true">↓</span>
+    </a>
+    <a class="button button-secondary" href="/about/">
+      <span>了解我</span>
+    </a>
   </div>
 
-  <div class="home-v5-hero__visual">
-    <slot />
+  <div class="home-hero__signals" aria-label="主要关注方向">
+    {
+      signals.map((signal, index) => (
+        <div class="home-hero__signal">
+          <span class="home-hero__signal-label">0{index + 1}</span>
+          <span class="home-hero__signal-value">{signal.label}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div style="display:flex; gap:16px; margin-top:24px; flex-wrap:wrap; font-size:0.75rem; color:var(--color-text-faint); font-family:ui-monospace,monospace;">
+    <span>Updated {todayDate}</span>
+    <span>{pageCount} pages</span>
+    {homeProject?.githubUrl && <a href={homeProject.githubUrl} target="_blank" rel="noopener">GitHub ↗</a>}
+    {homeProject?.giteeUrl && <a href={homeProject.giteeUrl} target="_blank" rel="noopener">Gitee ↗</a>}
   </div>
 </section>

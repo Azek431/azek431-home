@@ -1,6 +1,5 @@
 ---
 import RuntimeCounter from './RuntimeCounter.astro';
-import ShortcutPanel from './ShortcutPanel.astro';
 import { siteConfig } from '../data/site';
 import { getSiteAge, siteStartedAtIso, siteStartedDateTime } from '../data/time';
 
@@ -17,75 +16,66 @@ const primaryLinks = [
 const secondaryLinks = [
   { label: 'About', href: '/about/' },
   { label: 'Now', href: '/now/' },
-  { label: 'Stats', href: '/stats/' },
+  { label: 'Uses', href: '/uses/' },
   { label: 'Changelog', href: '/changelog/' },
 ];
 
 const publicLinks = [
   { label: 'GitHub', href: siteConfig.github },
+  { label: 'Gitee', href: siteConfig.gitee },
   { label: 'RSS', href: '/rss.xml' },
-  { label: 'Sitemap', href: '/sitemap.xml' },
 ];
 
 const isExternal = (href: string) => href.startsWith('http');
 ---
 
 <footer class="site-footer" aria-label="站点页脚">
-  <div class="footer-shell footer-shell-v3">
-    <section class="footer-brand-v3" aria-labelledby="footer-brand-title">
-      <p>Azek431 Digital Nexus</p>
-      <h2 id="footer-brand-title">{siteConfig.name}</h2>
-      <span> 一个持续打磨的个人数字空间，用来连接项目、学习记录、AI 实验和公开入口。 </span>
-    </section>
+  <div class="footer-inner">
+    <div class="footer__brand">
+      <h3>{siteConfig.name}</h3>
+      <p>个人数字空间 — 连接项目、学习记录、AI 实验与公开入口。</p>
+    </div>
 
-    <nav class="footer-nav-v3" aria-label="页脚主要导航">
-      <div>
-        <h3>Navigate</h3>
-        {primaryLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+    <nav class="footer__nav" aria-label="页脚导航">
+      <div class="footer__column">
+        <h4>导航</h4>
+        <ul>
+          {primaryLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        </ul>
       </div>
 
-      <div>
-        <h3>System</h3>
-        {secondaryLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      <div class="footer__column">
+        <h4>记录</h4>
+        <ul>
+          {secondaryLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        </ul>
       </div>
 
-      <div>
-        <h3>Public</h3>
-        {
-          publicLinks.map((link) => (
-            <a
-              href={link.href}
-              target={isExternal(link.href) ? '_blank' : undefined}
-              rel={isExternal(link.href) ? 'noreferrer' : undefined}
-            >
-              {link.label}
-            </a>
-          ))
-        }
+      <div class="footer__column">
+        <h4>公开</h4>
+        <ul>
+          {
+            publicLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target={isExternal(link.href) ? '_blank' : undefined}
+                  rel={isExternal(link.href) ? 'noreferrer' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </nav>
+  </div>
 
-    <section class="footer-runtime-v3" aria-label="站点运行时间">
-      <div>
-        <span>Created</span>
-        <strong>{siteStartedDateTime}</strong>
-      </div>
-
-      <div>
-        <span>Running</span>
-        <strong>
-          <RuntimeCounter
-            startedAt={siteStartedAtIso}
-            fallback={siteAge.preciseLabel}
-            className="footer-runtime-counter"
-          />
-        </strong>
-      </div>
-    </section>
-
-    <div class="footer-bottom-v3">
-      <p>© {year} {siteConfig.name}. Built with Astro & deployed on Cloudflare Pages.</p>
-      <ShortcutPanel />
-    </div>
+  <div class="footer__bottom">
+    <span>© {year} {siteConfig.name}</span>
+    <span>
+      Started {siteStartedDateTime} · Running <RuntimeCounter startedAt={siteStartedAtIso} fallback={siteAge.preciseLabel} className="" />
+    </span>
   </div>
 </footer>

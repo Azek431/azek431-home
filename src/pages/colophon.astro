@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteUpdatedDate } from '../data/time';
 
 const stack = [
@@ -69,49 +68,44 @@ const principles = [
   title="Colophon · Azek431"
   description="Azek431 主站的技术栈、设计系统、部署方式和维护原则。"
 >
-  <Breadcrumb items={[{ label: 'Colophon', href: '/colophon/' }]} />
-
-  <section class="page-v2-hero colophon-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Colophon</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Colophon</p>
       <h1>这个网站如何构建</h1>
-      <p>
-        这里记录主站背后的技术栈、设计系统、部署方式和维护原则。 最近一次构建记录：{
-          siteUpdatedDate
-        }。
-      </p>
+      <p>这里记录主站背后的技术栈、设计系统、部署方式和维护原则。最近一次构建记录：{siteUpdatedDate}。</p>
     </div>
 
-    <div class="colophon-principles-v2">
+    <!-- Principles -->
+    <div class="projects-summary">
       {
         principles.map((item, index) => (
-          <article>
-            <strong>{String(index + 1).padStart(2, '0')}</strong>
+          <div class="projects-summary__item">
+            <strong style="font-size: var(--text-2xl); color: var(--color-accent);">{String(index + 1).padStart(2, '0')}</strong>
             <span>{item}</span>
-          </article>
+          </div>
         ))
       }
     </div>
-  </section>
 
-  <section class="uses-grid-v2 colophon-stack-v2">
+    <!-- Stack -->
     {
       stack.map((group) => (
-        <article>
-          <div>
-            <p>{group.group}</p>
+        <div style="margin-bottom: var(--space-10);">
+          <div class="section-heading">
+            <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">{group.group}</p>
             <h2>长期维护的一部分</h2>
           </div>
 
-          <ul>
+          <div class="card-grid">
             {group.items.map((item) => (
-              <li>
-                <strong>{item.name}</strong>
-                <span>{item.detail}</span>
-              </li>
+              <div class="card">
+                <strong style="font-size: var(--text-base);">{item.name}</strong>
+                <p>{item.detail}</p>
+              </div>
             ))}
-          </ul>
-        </article>
+          </div>
+        </div>
       ))
     }
   </section>

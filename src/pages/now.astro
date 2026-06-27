@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteUpdatedDate } from '../data/time';
 
 const workingOn = [
@@ -48,90 +47,84 @@ const stack = [
 ---
 
 <BaseLayout title="Now · Azek431" description="Azek431 最近正在做的事情、关注方向和日常工具。">
-  <Breadcrumb items={[{ label: 'Now', href: '/now/' }]} />
-
-  <section class="page-v2-hero now-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Now</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Now</p>
       <h1>现在在做的事</h1>
-      <p>
-        这一页记录我最近关注的方向、正在做的项目、最近读到的内容和日常使用的工具。 它比 About
-        更具体，比 Blog 更轻量。
-      </p>
+      <p>这一页记录我最近关注的方向、正在做的项目、最近读到的内容和日常使用的工具。它比 About 更具体，比 Blog 更轻量。</p>
     </div>
 
-    <div class="now-status-v2">
-      <article>
+    <!-- Status -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
         <span>最近更新</span>
         <strong>{siteUpdatedDate}</strong>
-      </article>
-      <article>
+      </div>
+      <div class="projects-summary__item">
         <span>地点</span>
         <strong>线上 / GitHub</strong>
-      </article>
-      <article>
+      </div>
+      <div class="projects-summary__item">
         <span>方向</span>
         <strong>Web · AI · Open</strong>
-      </article>
-    </div>
-  </section>
-
-  <section class="section-v2 split-v2">
-    <div>
-      <div class="section-head-v2">
-        <p>Working On</p>
-        <h2>正在推进</h2>
-        <span>这几条是当前优先级最高的方向。</span>
-      </div>
-
-      <div class="now-work-list-v2">
-        {
-          workingOn.map((item) => (
-            <article>
-              <div>
-                <span>{item.tag}</span>
-                <small>{item.status}</small>
-              </div>
-              <h3>{item.title}</h3>
-              <p>{item.detail}</p>
-            </article>
-          ))
-        }
       </div>
     </div>
 
-    <aside class="nexus-card now-side-v2">
-      <p>Reading</p>
+    <!-- Working On -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Working On</p>
+      <h2>正在推进</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">这几条是当前优先级最高的方向。</p>
+    </div>
+
+    <div class="now-list">
+      {
+        workingOn.map((item) => (
+          <div class="now-item">
+            <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <span class="tag">{item.tag}</span>
+              <span class="tag tag-accent">{item.status}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Reading -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Reading</p>
       <h2>最近关注</h2>
-      <span>不一定都是技术，也可能是设计、产品、开发流程或项目维护方法。</span>
-
-      <div>
-        {
-          reading.map((item) => (
-            <a href="/search/">
-              <strong>{item.title}</strong>
-              <small>{item.kind}</small>
-            </a>
-          ))
-        }
-      </div>
-    </aside>
-  </section>
-
-  <section class="section-v2">
-    <div class="section-head-v2">
-      <p>Stack</p>
-      <h2>日常工具</h2>
-      <span>稳定、长期、可维护优先。</span>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">不一定都是技术，也可能是设计、产品、开发流程或项目维护方法。</p>
     </div>
 
-    <div class="tool-grid-v2">
+    <div class="card-grid">
+      {
+        reading.map((item) => (
+          <a class="card" href="/search/" style="text-decoration: none;">
+            <h3>{item.title}</h3>
+            <span class="tag tag-accent">{item.kind}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Stack -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Stack</p>
+      <h2>日常工具</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">稳定、长期、可维护优先。</p>
+    </div>
+
+    <div class="card-grid">
       {
         stack.map((item) => (
-          <article>
-            <strong>{item.name}</strong>
-            <span>{item.role}</span>
-          </article>
+          <div class="card">
+            <strong style="font-size: var(--text-base);">{item.name}</strong>
+            <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{item.role}</span>
+          </div>
         ))
       }
     </div>

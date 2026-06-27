@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 
 const plans = [
   {
@@ -56,89 +55,85 @@ const drafts = [
 ---
 
 <BaseLayout title="Blog · Azek431" description="Azek431 的博客计划、写作方向和草稿列表。">
-  <Breadcrumb items={[{ label: 'Blog', href: '/blog/' }]} />
-
-  <section class="page-v2-hero blog-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Blog</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Blog</p>
       <h1>博客筹备中</h1>
-      <p>
-        我想认真写一些东西：技术随笔、设计笔记、项目复盘和长期思考。
-        当前先把写作计划、草稿方向和订阅入口整理好。
-      </p>
+      <p>我想认真写一些东西：技术随笔、设计笔记、项目复盘和长期思考。当前先把写作计划、草稿方向和订阅入口整理好。</p>
     </div>
 
-    <div class="page-v2-stat-grid">
-      <article data-tone="blue">
+    <!-- Stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
         <strong>{plans.length}</strong>
         <span>建设步骤</span>
-      </article>
-      <article data-tone="green">
+      </div>
+      <div class="projects-summary__item">
         <strong>{drafts.length}</strong>
         <span>草稿方向</span>
-      </article>
-      <article data-tone="violet">
+      </div>
+      <div class="projects-summary__item">
         <strong>RSS</strong>
         <span>订阅支持</span>
-      </article>
-      <article data-tone="amber">
+      </div>
+      <div class="projects-summary__item">
         <strong>Q3</strong>
         <span>预计上线</span>
-      </article>
+      </div>
     </div>
-  </section>
 
-  <section class="section-v2">
-    <div class="section-head-v2">
-      <p>Plan</p>
+    <!-- Plans -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Plan</p>
       <h2>写作系统会分阶段搭起来</h2>
-      <span>先保证好写、好维护，再慢慢补齐阅读体验和订阅分发。</span>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">先保证好写、好维护，再慢慢补齐阅读体验和订阅分发。</p>
     </div>
 
-    <div class="blog-plan-v2">
+    <div class="card-grid">
       {
         plans.map((plan) => (
-          <article>
-            <span>{String(plan.num).padStart(2, '0')}</span>
-            <p>
-              {plan.tag} · {plan.state}
-            </p>
+          <div class="card">
+            <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <span class="tag">{plan.tag}</span>
+              <span class="tag tag-accent">{plan.state}</span>
+            </div>
             <h3>{plan.title}</h3>
-            <small>{plan.desc}</small>
-          </article>
+            <p>{plan.desc}</p>
+          </div>
         ))
       }
     </div>
-  </section>
 
-  <section class="section-v2">
-    <div class="section-head-v2">
-      <p>Drafts</p>
+    <!-- Drafts -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Drafts</p>
       <h2>草稿方向</h2>
-      <span>这些内容会先作为方向记录，后续再逐步写成正式文章。</span>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">这些内容会先作为方向记录，后续再逐步写成正式文章。</p>
     </div>
 
-    <div class="draft-grid-v2">
+    <div class="card-grid">
       {
         drafts.map((draft) => (
-          <article>
-            <div>
-              <span>{draft.tag}</span>
-              <small>{draft.est}</small>
+          <div class="card">
+            <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <span class="tag">{draft.tag}</span>
+              <span style="font-size: var(--text-xs); color: var(--color-text-faint);">{draft.est}</span>
             </div>
             <h3>{draft.title}</h3>
             <p>{draft.desc}</p>
-          </article>
+          </div>
         ))
       }
     </div>
-  </section>
 
-  <section class="about-narrative-v2">
-    <p>博客上线前，RSS 会先同步现有项目、Now 和更新记录。</p>
-    <div>
-      <a class="ui-button ui-button-primary" href="/rss.xml">订阅 RSS</a>
-      <a class="ui-button ui-button-secondary" href="/changelog/">查看更新</a>
+    <!-- Footer note -->
+    <div class="about-narrative">
+      <p>博客上线前，RSS 会先同步现有项目、Now 和更新记录。</p>
+      <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+        <a class="button button-primary" href="/rss.xml">订阅 RSS</a>
+        <a class="button button-secondary" href="/changelog/">查看更新</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

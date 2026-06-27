@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { searchItems } from '../data/search';
 
 const counts = {
@@ -17,21 +16,18 @@ const serialized = JSON.stringify(searchItems);
 ---
 
 <BaseLayout title="搜索 · Azek431" description="跨页面、项目、链接、更新日志的站内搜索。">
-  <Breadcrumb items={[{ label: '搜索', href: '/search/' }]} />
-
-  <section class="page-v2-hero search-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Command Search</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Command Search</p>
       <h1>站内搜索</h1>
-      <p>
-        跨 {counts.total} 条内容索引搜索页面、项目、链接和更新记录。 输入关键词即可实时筛选，按回车可以打开第一条结果。
-      </p>
+      <p>跨 {counts.total} 条内容索引搜索页面、项目、链接和更新记录。输入关键词即可实时筛选，按回车可以打开第一条结果。</p>
     </div>
 
-    <div class="search-console-v2" role="search">
-      <label for="site-search">搜索关键词</label>
-      <div>
-        <span>/</span>
+    <!-- Search Console -->
+    <div class="search-console" role="search">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span style="font-size: var(--text-lg); color: var(--color-text-faint);">/</span>
         <input
           id="site-search"
           type="search"
@@ -41,49 +37,52 @@ const serialized = JSON.stringify(searchItems);
         />
       </div>
     </div>
-  </section>
 
-  <section class="search-filter-v2" aria-label="搜索分类">
-    {
-      categories.map((category, index) => (
-        <button
-          type="button"
-          data-search-category={category}
-          aria-pressed={index === 0 ? 'true' : 'false'}
-        >
-          <span>{category}</span>
-          <strong>
-            {category === '全部' ? counts.total : counts[category as keyof typeof counts]}
-          </strong>
-        </button>
-      ))
-    }
-  </section>
-
-  <section class="search-results-v2" aria-live="polite">
-    <p class="search-hint-v2" data-search-hint>输入关键词开始搜索，也可以直接点击分类查看索引。</p>
-
-    <ol data-search-results>
+    <!-- Filter -->
+    <div class="links-filter" style="margin-top: var(--space-4);">
       {
-        searchItems.slice(0, 30).map((item) => (
-          <li data-search-static>
-            <a href={item.href}>
-              <span>{item.category}</span>
-              <strong>{item.title}</strong>
-              <small>{item.desc}</small>
-            </a>
-          </li>
+        categories.map((category, index) => (
+          <button
+            type="button"
+            class="links-filter__chip"
+            data-search-category={category}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            <span>{category}</span>
+            <span style="margin-left: var(--space-1); opacity: 0.6;">
+              {category === '全部' ? counts.total : counts[category as keyof typeof counts]}
+            </span>
+          </button>
         ))
       }
-    </ol>
+    </div>
 
-    <div class="search-empty-v2" data-search-empty hidden>
-      <h2>没有匹配的结果</h2>
-      <p>试试换一个关键词，或直接查看项目、链接和更新日志。</p>
-      <div>
-        <a class="ui-button ui-button-secondary" href="/projects/">所有项目</a>
-        <a class="ui-button ui-button-secondary" href="/links/">链接集合</a>
-        <a class="ui-button ui-button-secondary" href="/changelog/">更新日志</a>
+    <!-- Results -->
+    <div class="search-results" style="margin-top: var(--space-6);" aria-live="polite">
+      <p data-search-hint style="font-size: var(--text-sm); color: var(--color-text-muted);">输入关键词开始搜索，也可以直接点击分类查看索引。</p>
+
+      <ol data-search-results>
+        {
+          searchItems.slice(0, 30).map((item) => (
+            <li data-search-static>
+              <a class="search-result" href={item.href}>
+                <span>{item.category}</span>
+                <strong>{item.title}</strong>
+                <small>{item.desc}</small>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div data-search-empty hidden style="text-align: center; padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg-raised);">
+        <h2>没有匹配的结果</h2>
+        <p>试试换一个关键词，或直接查看项目、链接和更新日志。</p>
+        <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+          <a class="button button-secondary" href="/projects/">所有项目</a>
+          <a class="button button-secondary" href="/links/">链接集合</a>
+          <a class="button button-secondary" href="/changelog/">更新日志</a>
+        </div>
       </div>
     </div>
   </section>

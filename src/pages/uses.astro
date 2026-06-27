@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteUpdatedDate } from '../data/time';
 
 const categories = [
@@ -40,68 +39,62 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
   title="Uses · Azek431"
   description="Azek431 日常使用的硬件、软件、开发工具和网站技术栈。"
 >
-  <Breadcrumb items={[{ label: 'Uses', href: '/uses/' }]} />
-
-  <section class="page-v2-hero uses-hero-v2">
-    <div>
-      <p class="page-v2-kicker">Uses</p>
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Uses</p>
       <h1>我在用什么</h1>
-      <p>
-        这里记录我搭建主站、写代码、托管内容和整理项目时常用的工具。
-        工具会变化，但原则是长期、稳定、清晰和可维护。
-      </p>
+      <p>这里记录我搭建主站、写代码、托管内容和整理项目时常用的工具。工具会变化，但原则是长期、稳定、清晰和可维护。</p>
     </div>
 
-    <div class="page-v2-stat-grid">
-      <article data-tone="blue">
+    <!-- Stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
         <strong>{categories.length}</strong>
         <span>工具分类</span>
-      </article>
-      <article data-tone="green">
+      </div>
+      <div class="projects-summary__item">
         <strong>{totalItems}</strong>
         <span>常用工具</span>
-      </article>
-      <article data-tone="violet">
+      </div>
+      <div class="projects-summary__item">
         <strong>{siteUpdatedDate}</strong>
         <span>最近更新</span>
-      </article>
-      <article data-tone="amber">
+      </div>
+      <div class="projects-summary__item">
         <strong>Stable</strong>
         <span>使用原则</span>
-      </article>
+      </div>
     </div>
-  </section>
 
-  <section class="uses-grid-v2">
+    <!-- Categories -->
     {
       categories.map((category) => (
-        <article>
-          <div>
-            <p>{category.title}</p>
+        <div style="margin-bottom: var(--space-10);">
+          <div class="section-heading">
+            <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">{category.title}</p>
             <h2>{category.desc}</h2>
           </div>
 
-          <ul>
+          <div class="card-grid">
             {category.items.map((item) => (
-              <li>
-                <strong>{item.name}</strong>
-                <span>{item.detail}</span>
-              </li>
+              <div class="card">
+                <strong style="font-size: var(--text-base);">{item.name}</strong>
+                <p>{item.detail}</p>
+              </div>
             ))}
-          </ul>
-        </article>
+          </div>
+        </div>
       ))
     }
-  </section>
 
-  <section class="about-narrative-v2">
-    <p>
-      装备会变，原则不变。我更在意一套工具能不能长期稳定地服务项目，而不是追求看起来很复杂的配置。
-    </p>
-
-    <div>
-      <a class="ui-button ui-button-primary" href="/colophon/">查看设计说明</a>
-      <a class="ui-button ui-button-secondary" href="/now/">回到 Now</a>
+    <!-- Footer note -->
+    <div class="about-narrative">
+      <p>装备会变，原则不变。我更在意一套工具能不能长期稳定地服务项目，而不是追求看起来很复杂的配置。</p>
+      <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+        <a class="button button-primary" href="/colophon/">查看设计说明</a>
+        <a class="button button-secondary" href="/now/">回到 Now</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

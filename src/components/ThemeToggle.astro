@@ -1,5 +1,4 @@
 ---
-
 ---
 
 <button
@@ -20,9 +19,7 @@
     aria-hidden="true"
   >
     <circle cx="12" cy="12" r="4"></circle>
-    <path
-      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-    ></path>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
   </svg>
   <svg
     class="icon-moon"
@@ -37,3 +34,42 @@
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
   </svg>
 </button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      color var(--duration-fast) var(--ease),
+      border-color var(--duration-fast) var(--ease),
+      background var(--duration-fast) var(--ease);
+    padding: 0;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+    background: var(--color-bg-subtle);
+  }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Show sun by default (light theme), hide moon */
+  .icon-sun { display: block; }
+  .icon-moon { display: none; }
+
+  /* Dark theme: show moon, hide sun */
+  html[data-theme="dark"] .icon-sun { display: none; }
+  html[data-theme="dark"] .icon-moon { display: block; }
+</style>

@@ -15,32 +15,25 @@ type Props = {
 const { focuses } = Astro.props as Props;
 ---
 
-<section class="home-v5-now" aria-labelledby="home-now-title">
-  <header class="home-v5-section-head">
+<section class="home-now" aria-labelledby="home-now-title">
+  <div class="home-section-head">
     <div>
-      <p>NOW / LATEST / NEXT</p>
-      <h2 id="home-now-title">不是静态介绍，而是持续更新的工作现场。</h2>
+      <p>FOCUS</p>
+      <h2 id="home-now-title">当前状态</h2>
     </div>
+    <a href="/now/">查看全部 →</a>
+  </div>
 
-    <a href="/now/">
-      查看 Now 页面
-      <span aria-hidden="true">→</span>
-    </a>
-  </header>
-
-  <div class="home-v5-now__grid">
+  <div class="home-now__grid">
     {
       focuses.map((focus, index) => (
-        <article data-tone={focus.tone ?? 'planned'}>
-          <div class="home-v5-now__top">
-            <span>{focus.num ?? focus.step ?? `0${index + 1}`}</span>
-            {focus.status && <small>{focus.status}</small>}
-          </div>
-
+        <article class="home-now__card">
+          <span class="home-now__card-label">
+            {index === 0 ? 'NOW' : index === 1 ? 'LATEST' : 'NEXT'}
+          </span>
           <h3>{focus.title}</h3>
           <p>{focus.desc}</p>
-
-          <span class="home-v5-now__line" aria-hidden="true" />
+          <span class="home-now__card-line"></span>
         </article>
       ))
     }

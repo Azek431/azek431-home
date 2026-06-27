@@ -31,85 +31,69 @@ function networkCode(name: string) {
 }
 ---
 
-<section class="home-v5-activity" aria-label="最近动态与公开身份">
-  <div class="home-v5-activity__timeline">
-    <header class="home-v5-section-head home-v5-section-head--compact">
+<section class="home-activity" aria-label="最近动态与公开身份">
+  <div class="home-activity__timeline">
+    <div class="home-section-head home-section-head--compact">
       <div>
         <p>LATEST</p>
         <h2>最近发生的事情</h2>
       </div>
+      <a href="/changelog/">完整记录 →</a>
+    </div>
 
-      <a href="/changelog/">
-        完整记录
-        <span aria-hidden="true">→</span>
-      </a>
-    </header>
-
-    <div class="home-v5-timeline">
+    <div class="home-activity__timeline">
       {
         updates.map((update, index) => (
           <a
-            class="home-v5-timeline__item"
+            class="home-activity__timeline-item"
             href={update.href}
             target={isExternal(update.href) ? '_blank' : undefined}
             rel={isExternal(update.href) ? 'noopener noreferrer' : undefined}
             aria-label={`${update.title}，${update.date}`}
           >
-            <span class="home-v5-timeline__marker" aria-hidden="true">
-              <i />
-            </span>
-
-            <time datetime={update.date}>
-              {update.date}
-              <small>{relativeDate(update.date)}</small>
-            </time>
-
+            <span class="home-activity__timeline-marker" aria-hidden="true"></span>
             <div>
-              <strong>{update.title}</strong>
-              <p>{update.desc}</p>
+              <time class="home-activity__timeline-time" datetime={update.date}>
+                {update.date}
+                <small> · {relativeDate(update.date)}</small>
+              </time>
+              <div class="home-activity__timeline-title">{update.title}</div>
+              <p class="home-activity__timeline-desc">{update.desc}</p>
             </div>
-
-            <span class="home-v5-timeline__arrow" aria-hidden="true">
-              {index === 0 ? '↗' : '→'}
-            </span>
           </a>
         ))
       }
     </div>
   </div>
 
-  <aside class="home-v5-identity" aria-labelledby="home-identity-title">
-    <header>
-      <p>PUBLIC IDENTITY</p>
-      <h2 id="home-identity-title">在公开网络上找到我</h2>
-      <span> GitHub 是主要代码来源，Gitee 提供同步镜像与另一条访问路径。 </span>
-    </header>
+  <aside class="home-activity__identity" aria-labelledby="home-identity-title">
+    <h3 id="home-identity-title">Public Identity</h3>
+    <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4); line-height:1.6;">
+      GitHub 是主要代码来源，Gitee 提供同步镜像。
+    </p>
 
-    <div class="home-v5-identity__links">
+    <div class="home-activity__identity-links">
       {
         networkLinks.map((link) => (
           <a
+            class="home-activity__identity-link"
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`打开 Azek431 的 ${link.name}`}
           >
             <span>{networkCode(link.name)}</span>
-
             <div>
               <strong>{link.name}</strong>
               <small>{link.category}</small>
             </div>
-
-            <i aria-hidden="true">↗</i>
           </a>
         ))
       }
     </div>
 
-    <a class="home-v5-identity__more" href="/links/">
-      查看全部公开入口
-      <span aria-hidden="true">→</span>
+    <a class="button button-secondary" href="/links/" style="margin-top:var(--space-4); width:100%; justify-content:center;">
+      查看全部公开入口 →
     </a>
   </aside>
 </section>

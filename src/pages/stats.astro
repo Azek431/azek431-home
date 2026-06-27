@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import PageHero from '../components/PageHero.astro';
 import RuntimeCounter from '../components/RuntimeCounter.astro';
 import { changelog } from '../data/changelog';
 import { projectDetails } from '../data/projects';
@@ -110,37 +108,51 @@ const dashboardSections: DashboardSection[] = [
   title="主站数据"
   description="查看 Azek431 主站的项目、迭代、运行时间、内容入口和本地访问统计。"
 >
-  <main class="stats-v3">
-    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '主站数据' }]} />
+  <section class="section">
+    <!-- Hero -->
+    <div class="section-heading">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Stats Dashboard</p>
+      <h1>主站数据</h1>
+      <p>把项目、迭代、运行时间和内容入口整理成一组更清晰的数据面板。</p>
+    </div>
 
-    <PageHero
-      eyebrow="Stats Dashboard"
-      title="主站数据"
-      description="把项目、迭代、运行时间和内容入口整理成一组更清晰的第一代玻璃仪表盘。"
-      meta={[
-        { label: '页面', value: pageCount },
-        { label: '项目', value: projectDetails.length },
-        { label: '更新', value: changelog.length },
-        { label: '公开链接', value: publicLinks },
-      ]}
-    />
+    <!-- Top-level stats -->
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <span>页面</span>
+        <strong>{pageCount}</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>项目</span>
+        <strong>{projectDetails.length}</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>更新</span>
+        <strong>{changelog.length}</strong>
+      </div>
+      <div class="projects-summary__item">
+        <span>公开链接</span>
+        <strong>{publicLinks}</strong>
+      </div>
+    </div>
 
-    <section class="stats-dashboard-v3" aria-label="主站数据仪表盘">
+    <!-- Dashboard Sections -->
+    <div class="card-grid">
       {
         dashboardSections.map((section) => (
-          <article data-tone={section.tone}>
-            <div class="stats-dashboard-v3__head">
-              <p>{section.kicker}</p>
-              <h2>{section.title}</h2>
-              <span>{section.desc}</span>
+          <div class="card">
+            <div>
+              <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">{section.kicker}</p>
+              <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-1);">{section.title}</h2>
+              <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{section.desc}</span>
             </div>
 
-            <strong class="stats-dashboard-v3__value">
+            <strong style="font-size: var(--text-3xl); color: var(--color-accent); display: block; margin: var(--space-4) 0;">
               {section.value}
-              {section.suffix && <small>{section.suffix}</small>}
+              {section.suffix && <small style="font-size: var(--text-sm); font-weight: 400;">{section.suffix}</small>}
             </strong>
 
-            <dl class="stats-dashboard-v3__metrics">
+            <dl>
               {section.metrics.map((metric) => (
                 <div>
                   <dt>{metric.label}</dt>
@@ -151,48 +163,47 @@ const dashboardSections: DashboardSection[] = [
                 </div>
               ))}
             </dl>
-          </article>
+          </div>
         ))
       }
-    </section>
+    </div>
 
-    <section class="stats-runtime-v3" aria-labelledby="stats-runtime-title">
-      <div>
-        <p>Live Runtime</p>
-        <h2 id="stats-runtime-title">实时运行中</h2>
-        <span>这部分由浏览器实时计算，和 Footer 使用同一个建站时间。</span>
-      </div>
+    <!-- Runtime -->
+    <div class="section-heading" style="margin-top: var(--space-10);">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Live Runtime</p>
+      <h2>实时运行中</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">这部分由浏览器实时计算，和 Footer 使用同一个建站时间。</p>
+    </div>
 
+    <div class="card" style="text-align: center;">
       <strong>
         <RuntimeCounter startedAt={siteStartedAtIso} fallback={siteAge.preciseLabel} />
       </strong>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2);">最近构建时间：{siteUpdatedDateTime}</p>
+    </div>
 
-      <small>最近构建时间：{siteUpdatedDateTime}</small>
-    </section>
+    <!-- Local Stats -->
+    <div class="section-heading" style="margin-top: var(--space-10);">
+      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Local</p>
+      <h2>本地访问统计</h2>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">这些数据只保存在你的浏览器 localStorage 中，不会上传。</p>
+    </div>
 
-    <section class="local-stats-v3" aria-labelledby="local-stats-title">
-      <div>
-        <p>Local</p>
-        <h2 id="local-stats-title">本地访问统计</h2>
-        <span>这些数据只保存在你的浏览器 localStorage 中，不会上传。</span>
+    <div class="projects-summary">
+      <div class="projects-summary__item">
+        <span>本次会话</span>
+        <dd data-local-stat="session">—</dd>
       </div>
-
-      <dl>
-        <div>
-          <dt>本次会话</dt>
-          <dd data-local-stat="session">—</dd>
-        </div>
-        <div>
-          <dt>累计访问</dt>
-          <dd data-local-stat="total">—</dd>
-        </div>
-        <div>
-          <dt>首次访问</dt>
-          <dd data-local-stat="first">—</dd>
-        </div>
-      </dl>
-    </section>
-  </main>
+      <div class="projects-summary__item">
+        <span>累计访问</span>
+        <dd data-local-stat="total">—</dd>
+      </div>
+      <div class="projects-summary__item">
+        <span>首次访问</span>
+        <dd data-local-stat="first">—</dd>
+      </div>
+    </div>
+  </section>
 
   <script is:inline>
     (function () {
