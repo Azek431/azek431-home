@@ -43,7 +43,7 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
         class="site-header__icon-btn"
         href={searchNavigationItem.href}
         aria-label={searchNavigationItem.description}
-        title={`${searchNavigationItem.description} (${"/"})`}
+        title={[searchNavigationItem.description, '(/)'].join(' ')}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <circle cx="11" cy="11" r="7"></circle>
