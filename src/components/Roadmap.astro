@@ -43,7 +43,7 @@ const milestones = [
   <ol class="roadmap" aria-label="2026 路线图">
     {
       milestones.map((m, i) => (
-        <li class:list={['roadmap-item', 'tone-' + m.tone]}>
+        <li class={'roadmap-item tone-' + m.tone}>
           <div class="roadmap-rail" aria-hidden="true">
             <span class="roadmap-dot" />
             {i < milestones.length - 1 && <span class="roadmap-line" />}
