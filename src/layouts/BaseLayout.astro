@@ -28,7 +28,8 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
       (function () {
         try {
           var t = localStorage.getItem('azek431-theme');
-          if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+          if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+          else if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
         } catch (e) {}
       })();
     </script>
@@ -81,10 +82,10 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
           var themeBtns = document.querySelectorAll('[data-theme-toggle]');
           themeBtns.forEach(function (btn) {
             btn.addEventListener('click', function () {
-              var cur = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+              var cur = localStorage.getItem('azek431-theme') || 'light';
               var next = cur === 'light' ? 'dark' : 'light';
-              if (next === 'light') root.setAttribute('data-theme', 'light');
-              else root.removeAttribute('data-theme');
+              if (next === 'dark') root.setAttribute('data-theme', 'dark');
+              else root.setAttribute('data-theme', 'light');
               try {
                 localStorage.setItem('azek431-theme', next);
               } catch (e) {}
