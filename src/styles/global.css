@@ -337,7 +337,8 @@ html[data-theme="dark"] .card:hover {
 }
 
 .button-primary:hover {
-  filter: brightness(1.1);
+  background: color-mix(in srgb, var(--color-accent) 85%, white);
+  border-color: color-mix(in srgb, var(--color-accent) 85%, white);
 }
 
 .button-secondary {
