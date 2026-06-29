@@ -19,7 +19,7 @@ type Props = {
   release: Release;
 };
 
-const { todayDate, pageCount, signals, release } = Astro.props as Props;
+const { todayDate, pageCount, signals } = Astro.props as Props;
 
 const homeProject = projectDetails.find((project) => project.slug === 'azek431-home');
 ---

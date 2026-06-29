@@ -1,5 +1,4 @@
 ---
-import { projectDetails } from '../../data/projects';
 
 type ProjectHighlight = {
   label: string;
@@ -131,7 +130,7 @@ function externalProjectLinks(project: ProjectItem) {
   {
     sideProjects.length > 0 && (
       <div class="home-projects__secondary">
-        {sideProjects.map((project, index) => (
+        {sideProjects.map((project) => (
           <article class="card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <span class="tag">{project.category}</span>

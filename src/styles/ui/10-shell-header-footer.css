@@ -233,6 +233,11 @@ html[data-theme='dark'] .site-header {
 
 .footer__brand {
   max-width: 340px;
+  transition: opacity var(--duration-fast) var(--ease);
+}
+
+.footer__brand:hover {
+  opacity: 0.85;
 }
 
 .footer__brand h3 {

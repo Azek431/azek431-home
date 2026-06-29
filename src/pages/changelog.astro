@@ -53,7 +53,7 @@ const counts = [
     <!-- Timeline -->
     <div class="changelog-list">
       {
-        changelog.map((entry, index) => (
+        changelog.map((entry) => (
           <div class="changelog-item">
             <div class="changelog-item__date">
               {entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}

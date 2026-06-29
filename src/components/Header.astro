@@ -4,7 +4,6 @@ import {
   moreNavigationItems,
   primaryNavigationItems,
   searchNavigationItem,
-  shortcutLabelByHref,
 } from '../data/navigation';
 import { siteConfig } from '../data/site';
 
@@ -12,8 +11,6 @@ const currentPath = Astro.url.pathname;
 
 const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
-
-const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
 ---
 
 <header class="site-header" aria-label="站点顶部导航" data-site-header>

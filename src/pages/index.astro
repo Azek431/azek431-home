@@ -33,7 +33,7 @@ const sideProjects = projectDetails
 
 const networkLinks = links.filter((link) => ['GitHub', 'Gitee'].includes(link.name));
 
-const homepageUpdates: typeof homeRecentUpdates = homeRecentUpdates.slice(0, 3);
+const homepageUpdates = homeRecentUpdates.slice(0, 3) as typeof homeRecentUpdates;
 ---
 
 <BaseLayout

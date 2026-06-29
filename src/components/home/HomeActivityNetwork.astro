@@ -16,8 +16,8 @@ type NetworkLink = {
 };
 
 type Props = {
-  updates: UpdateItem[];
-  networkLinks: NetworkLink[];
+  updates: readonly UpdateItem[];
+  networkLinks: readonly NetworkLink[];
 };
 
 const { updates, networkLinks } = Astro.props as Props;
@@ -43,7 +43,7 @@ function networkCode(name: string) {
 
     <div class="home-activity__timeline">
       {
-        updates.map((update, index) => (
+        updates.map((update) => (
           <a
             class="home-activity__timeline-item"
             href={update.href}
