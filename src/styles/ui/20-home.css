@@ -772,9 +772,8 @@
   .home-section-head > a {
     align-self: flex-start;
   }
-}
 
-@media (max-width: 640px) {
+  /* Compact home layouts */
   .home-command {
     flex-direction: column;
     align-items: stretch;
