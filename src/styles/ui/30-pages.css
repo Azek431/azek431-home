@@ -12,6 +12,7 @@
 
 .about-narrative h1 {
   margin-bottom: var(--space-6);
+  font-size: var(--text-4xl);
 }
 
 .about-narrative p {
@@ -93,7 +94,7 @@
 }
 
 .skill-bar__fill::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -212,7 +213,7 @@
 }
 
 .detail-features li::before {
-  content: "✓";
+  content: '✓';
   color: #22c55e;
   font-weight: 700;
   flex-shrink: 0;
@@ -334,14 +335,16 @@
 .links-filter__chip:hover {
   border-color: var(--color-border-strong);
   color: var(--color-text);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .links-filter__chip.is-active {
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: #fff;
-  box-shadow: var(--shadow-md), 0 0 0 3px var(--color-accent-soft);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 3px var(--color-accent-soft);
 }
 
 .links-group {
@@ -401,13 +404,13 @@
 /* ---------- Now page ---------- */
 .now-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: var(--space-5);
   margin-bottom: var(--space-12);
 }
 
 .now-item {
-  padding: var(--space-6);
+  padding: var(--space-7);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   background: var(--color-bg-raised);
@@ -419,7 +422,7 @@
 
 .now-item:hover {
   border-color: var(--color-border-strong);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
 }
 
@@ -449,7 +452,7 @@
 }
 
 .changelog-list::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 8px;
   top: 0;
@@ -465,7 +468,7 @@
 }
 
 .changelog-item::before {
-  content: "";
+  content: '';
   position: absolute;
   left: -28px;
   top: var(--space-7);
@@ -559,7 +562,7 @@
 .search-result:hover {
   border-color: var(--color-border-strong);
   background: var(--color-bg-subtle);
-  transform: translateX(4px);
+  transform: translateX(3px);
   color: var(--color-text);
 }
 
@@ -600,7 +603,12 @@
   font-weight: 900;
   letter-spacing: -0.08em;
   line-height: 1;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover), var(--color-text-faint));
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-accent-hover),
+    var(--color-text-faint)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -621,12 +629,12 @@
 /* ---------- Colophon / Uses ---------- */
 .colo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: var(--space-5);
 }
 
 .colo-card {
-  padding: var(--space-6);
+  padding: var(--space-7);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   background: var(--color-bg-raised);
@@ -660,12 +668,12 @@
 /* ---------- Stats page ---------- */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
   gap: var(--space-5);
 }
 
 .stat-card {
-  padding: var(--space-6);
+  padding: var(--space-7);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   background: var(--color-bg-raised);
@@ -677,7 +685,7 @@
 
 .stat-card:hover {
   border-color: var(--color-border-strong);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
 .stat-card strong {

@@ -33,7 +33,11 @@ const counts = [
   <section class="section">
     <!-- Hero -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Changelog</p>
+      <p
+        style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);"
+      >
+        Changelog
+      </p>
       <h1>更新日志</h1>
       <p>这里记录主站每一次重要调整：页面结构、视觉系统、SEO、数据、交互和工程化流程。</p>
     </div>
@@ -55,7 +59,9 @@ const counts = [
       {
         changelog.map((entry, index) => (
           <div class="changelog-item">
-            <div class="changelog-item__date">{entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}</div>
+            <div class="changelog-item__date">
+              {entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}
+            </div>
             <h3>{entry.title}</h3>
             <div class="changelog-item__changes">
               {entry.changes.map((change) => (

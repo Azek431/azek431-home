@@ -50,9 +50,16 @@ const stack = [
   <section class="section">
     <!-- Hero -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Now</p>
+      <p
+        style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);"
+      >
+        Now
+      </p>
       <h1>现在在做的事</h1>
-      <p>这一页记录我最近关注的方向、正在做的项目、最近读到的内容和日常使用的工具。它比 About 更具体，比 Blog 更轻量。</p>
+      <p>
+        这一页记录我最近关注的方向、正在做的项目、最近读到的内容和日常使用的工具。它比 About
+        更具体，比 Blog 更轻量。
+      </p>
     </div>
 
     <!-- Status -->
@@ -73,9 +80,15 @@ const stack = [
 
     <!-- Working On -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Working On</p>
+      <p
+        style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);"
+      >
+        Working On
+      </p>
       <h2>正在推进</h2>
-      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">这几条是当前优先级最高的方向。</p>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        这几条是当前优先级最高的方向。
+      </p>
     </div>
 
     <div class="now-list">
@@ -95,9 +108,15 @@ const stack = [
 
     <!-- Reading -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Reading</p>
+      <p
+        style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);"
+      >
+        Reading
+      </p>
       <h2>最近关注</h2>
-      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">不一定都是技术，也可能是设计、产品、开发流程或项目维护方法。</p>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        不一定都是技术，也可能是设计、产品、开发流程或项目维护方法。
+      </p>
     </div>
 
     <div class="card-grid">
@@ -113,9 +132,15 @@ const stack = [
 
     <!-- Stack -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Stack</p>
+      <p
+        style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);"
+      >
+        Stack
+      </p>
       <h2>日常工具</h2>
-      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">稳定、长期、可维护优先。</p>
+      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+        稳定、长期、可维护优先。
+      </p>
     </div>
 
     <div class="card-grid">
@@ -123,7 +148,9 @@ const stack = [
         stack.map((item) => (
           <div class="card">
             <strong style="font-size: var(--text-base);">{item.name}</strong>
-            <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{item.role}</span>
+            <span style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              {item.role}
+            </span>
           </div>
         ))
       }

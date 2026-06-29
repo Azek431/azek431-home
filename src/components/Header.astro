@@ -45,15 +45,26 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
         aria-label={searchNavigationItem.description}
         title={[searchNavigationItem.description, '(Slash)'].join(' ')}
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
           <circle cx="11" cy="11" r="7"></circle>
           <path d="m20 20-3.8-3.8"></path>
         </svg>
       </a>
 
       <div class="site-header__socials">
-        <a href={siteConfig.github} target="_blank" rel="noreferrer noopener" aria-label="GitHub">GH</a>
-        <a href={siteConfig.gitee} target="_blank" rel="noreferrer noopener" aria-label="Gitee">GE</a>
+        <a href={siteConfig.github} target="_blank" rel="noreferrer noopener" aria-label="GitHub"
+          >GH</a
+        >
+        <a href={siteConfig.gitee} target="_blank" rel="noreferrer noopener" aria-label="Gitee"
+          >GE</a
+        >
       </div>
 
       <ThemeToggle />
@@ -94,7 +105,12 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
         <h2 id="site-header-panel-title">探索 Azek431</h2>
         <span>浏览主要页面、长期记录和公开代码入口。</span>
       </div>
-      <button class="site-header__panel-close" type="button" aria-label="关闭完整导航" data-header-menu-close>
+      <button
+        class="site-header__panel-close"
+        type="button"
+        aria-label="关闭完整导航"
+        data-header-menu-close
+      >
         <span aria-hidden="true">×</span>
       </button>
     </div>
@@ -218,7 +234,9 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
       if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
     }
 
-    toggle.addEventListener('click', function () { isOpen() ? closePanel() : openPanel(); });
+    toggle.addEventListener('click', function () {
+      isOpen() ? closePanel() : openPanel();
+    });
     closeButton.addEventListener('click', closePanel);
     scrim.addEventListener('click', closePanel);
     panel.addEventListener('click', function (e) {
@@ -227,14 +245,23 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
 
     document.addEventListener('keydown', function (e) {
       if (!isOpen()) return;
-      if (e.key === 'Escape') { e.preventDefault(); closePanel(); return; }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closePanel();
+        return;
+      }
       if (e.key !== 'Tab') return;
       var focusable = getFocusable();
       if (focusable.length === 0) return;
       var first = focusable[0];
       var last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
   })();
 </script>
@@ -266,7 +293,7 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
     transition: opacity var(--duration-normal) var(--ease);
   }
 
-  .site-header__panel[aria-hidden="false"],
+  .site-header__panel[aria-hidden='false'],
   .has-site-nav-open .site-header__panel {
     opacity: 1;
     pointer-events: auto;
@@ -438,18 +465,20 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
     width: 100%;
     background: currentColor;
     border-radius: 1px;
-    transition: transform var(--duration-fast) var(--ease), opacity var(--duration-fast) var(--ease);
+    transition:
+      transform var(--duration-fast) var(--ease),
+      opacity var(--duration-fast) var(--ease);
   }
 
-  .site-header__menu-toggle[aria-expanded="true"] .site-header__menu-icon span:first-child {
+  .site-header__menu-toggle[aria-expanded='true'] .site-header__menu-icon span:first-child {
     transform: translateY(4.5px) rotate(45deg);
   }
 
-  .site-header__menu-toggle[aria-expanded="true"] .site-header__menu-icon span:nth-child(2) {
+  .site-header__menu-toggle[aria-expanded='true'] .site-header__menu-icon span:nth-child(2) {
     opacity: 0;
   }
 
-  .site-header__menu-toggle[aria-expanded="true"] .site-header__menu-icon span:last-child {
+  .site-header__menu-toggle[aria-expanded='true'] .site-header__menu-icon span:last-child {
     transform: translateY(-4.5px) rotate(-45deg);
   }
 
@@ -471,7 +500,10 @@ const isMoreActive = moreNavigationItems.some((item) => isActive(item.href));
     opacity: 0;
     transform: translateY(8px);
     pointer-events: none;
-    transition: opacity var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease), background var(--duration-fast) var(--ease);
+    transition:
+      opacity var(--duration-normal) var(--ease),
+      transform var(--duration-normal) var(--ease),
+      background var(--duration-fast) var(--ease);
     z-index: 40;
   }
 

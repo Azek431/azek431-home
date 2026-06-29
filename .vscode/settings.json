@@ -1,0 +1,24 @@
+{
+  "files.watcherPolling": "threshold",
+  "files.watcherPollingDelay": 2000,
+  "files.exclude": {
+    "**/node_modules/**": true,
+    "**/.git/**": true,
+    "**/dist/**": true,
+    "**/.astro/**": true,
+    "**/.cache/**": true,
+    "**/build/**": true
+  },
+  "search.followSymlinks": false,
+  "search.maxResults": 10000,
+  "cSpell.enabled": false,
+  "workbench.animations.enabled": false,
+  "editor.minimap.enabled": false,
+  "editor.smoothScrolling": false,
+  "workbench.list.smoothScrolling": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.codeLens.enabled": false,
+  "gitlens.statusBar.enabled": false,
+  "code-runner.showExecutionMessage": false,
+  "code-runner.saveAllFilesBeforeRun": false
+}

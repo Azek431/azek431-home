@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <button
@@ -19,7 +20,9 @@
     aria-hidden="true"
   >
     <circle cx="12" cy="12" r="4"></circle>
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+    <path
+      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+    ></path>
   </svg>
   <svg
     class="icon-moon"
@@ -66,10 +69,18 @@
   }
 
   /* Show sun by default (light theme), hide moon */
-  .icon-sun { display: block; }
-  .icon-moon { display: none; }
+  .icon-sun {
+    display: block;
+  }
+  .icon-moon {
+    display: none;
+  }
 
   /* Dark theme: show moon, hide sun */
-  html[data-theme="dark"] .icon-sun { display: none; }
-  html[data-theme="dark"] .icon-moon { display: block; }
+  html[data-theme='dark'] .icon-sun {
+    display: none;
+  }
+  html[data-theme='dark'] .icon-moon {
+    display: block;
+  }
 </style>

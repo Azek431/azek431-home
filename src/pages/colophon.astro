@@ -71,9 +71,17 @@ const principles = [
   <section class="section">
     <!-- Hero -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Colophon</p>
+      <p
+        style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);"
+      >
+        Colophon
+      </p>
       <h1>这个网站如何构建</h1>
-      <p>这里记录主站背后的技术栈、设计系统、部署方式和维护原则。最近一次构建记录：{siteUpdatedDate}。</p>
+      <p>
+        这里记录主站背后的技术栈、设计系统、部署方式和维护原则。最近一次构建记录：{
+          siteUpdatedDate
+        }。
+      </p>
     </div>
 
     <!-- Principles -->
@@ -81,7 +89,9 @@ const principles = [
       {
         principles.map((item, index) => (
           <div class="projects-summary__item">
-            <strong style="font-size: var(--text-2xl); color: var(--color-accent);">{String(index + 1).padStart(2, '0')}</strong>
+            <strong style="font-size: var(--text-2xl); color: var(--color-accent);">
+              {String(index + 1).padStart(2, '0')}
+            </strong>
             <span>{item}</span>
           </div>
         ))
@@ -93,7 +103,9 @@ const principles = [
       stack.map((group) => (
         <div style="margin-bottom: var(--space-10);">
           <div class="section-heading">
-            <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">{group.group}</p>
+            <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">
+              {group.group}
+            </p>
             <h2>长期维护的一部分</h2>
           </div>
 

@@ -57,10 +57,24 @@ const homeProject = projectDetails.find((project) => project.slug === 'azek431-h
     }
   </div>
 
-  <div style="display:flex; gap:16px; margin-top:24px; flex-wrap:wrap; font-size:0.75rem; color:var(--color-text-faint); font-family:ui-monospace,monospace;">
+  <div
+    style="display:flex; gap:16px; margin-top:24px; flex-wrap:wrap; font-size:0.75rem; color:var(--color-text-faint); font-family:ui-monospace,monospace;"
+  >
     <span>Updated {todayDate}</span>
     <span>{pageCount} pages</span>
-    {homeProject?.githubUrl && <a href={homeProject.githubUrl} target="_blank" rel="noopener">GitHub ↗</a>}
-    {homeProject?.giteeUrl && <a href={homeProject.giteeUrl} target="_blank" rel="noopener">Gitee ↗</a>}
+    {
+      homeProject?.githubUrl && (
+        <a href={homeProject.githubUrl} target="_blank" rel="noopener">
+          GitHub ↗
+        </a>
+      )
+    }
+    {
+      homeProject?.giteeUrl && (
+        <a href={homeProject.giteeUrl} target="_blank" rel="noopener">
+          Gitee ↗
+        </a>
+      )
+    }
   </div>
 </section>

@@ -27,17 +27,15 @@ const { items } = Astro.props as Props;
   <div class="home-navigation__grid">
     {
       items.map((item, index) => (
-        <a
-          class="home-navigation__item"
-          href={item.href}
-          data-size={item.size}
-        >
+        <a class="home-navigation__item" href={item.href} data-size={item.size}>
           <span class="home-navigation__item-index">0{index + 1}</span>
           <div>
             <h3>{item.title}</h3>
             <p>{item.desc}</p>
           </div>
-          <span class="home-navigation__item-arrow" aria-hidden="true">↗</span>
+          <span class="home-navigation__item-arrow" aria-hidden="true">
+            ↗
+          </span>
         </a>
       ))
     }

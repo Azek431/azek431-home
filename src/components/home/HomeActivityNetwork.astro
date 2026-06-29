@@ -51,7 +51,7 @@ function networkCode(name: string) {
             rel={isExternal(update.href) ? 'noopener noreferrer' : undefined}
             aria-label={`${update.title}，${update.date}`}
           >
-            <span class="home-activity__timeline-marker" aria-hidden="true"></span>
+            <span class="home-activity__timeline-marker" aria-hidden="true" />
             <div>
               <time class="home-activity__timeline-time" datetime={update.date}>
                 {update.date}
@@ -68,7 +68,9 @@ function networkCode(name: string) {
 
   <aside class="home-activity__identity" aria-labelledby="home-identity-title">
     <h3 id="home-identity-title">Public Identity</h3>
-    <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4); line-height:1.6;">
+    <p
+      style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4); line-height:1.6;"
+    >
       GitHub 是主要代码来源，Gitee 提供同步镜像。
     </p>
 
@@ -92,7 +94,11 @@ function networkCode(name: string) {
       }
     </div>
 
-    <a class="button button-secondary" href="/links/" style="margin-top:var(--space-4); width:100%; justify-content:center;">
+    <a
+      class="button button-secondary"
+      href="/links/"
+      style="margin-top:var(--space-4); width:100%; justify-content:center;"
+    >
       查看全部公开入口 →
     </a>
   </aside>

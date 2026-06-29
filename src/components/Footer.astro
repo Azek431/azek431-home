@@ -40,14 +40,26 @@ const isExternal = (href: string) => href.startsWith('http');
       <div class="footer__column">
         <h4>导航</h4>
         <ul>
-          {primaryLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          {
+            primaryLinks.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
       <div class="footer__column">
         <h4>记录</h4>
         <ul>
-          {secondaryLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          {
+            secondaryLinks.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
@@ -75,7 +87,11 @@ const isExternal = (href: string) => href.startsWith('http');
   <div class="footer__bottom">
     <span>© {year} {siteConfig.name}</span>
     <span>
-      Started {siteStartedDateTime} · Running <RuntimeCounter startedAt={siteStartedAtIso} fallback={siteAge.preciseLabel} className="" />
+      Started {siteStartedDateTime} · Running <RuntimeCounter
+        startedAt={siteStartedAtIso}
+        fallback={siteAge.preciseLabel}
+        className=""
+      />
     </span>
   </div>
 </footer>
