@@ -38,10 +38,6 @@
 }
 
 .home-hero h1 {
-  font-size: var(--text-5xl);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
   margin-bottom: var(--space-6);
   color: var(--color-text);
 }
