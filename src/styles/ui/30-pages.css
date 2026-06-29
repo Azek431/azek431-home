@@ -4,6 +4,43 @@
   专业设计师视角：清晰的信息架构、舒适的阅读体验。
 */
 
+/* ---------- Eyebrow / Section Kicker ---------- */
+/* 统一所有页面的 section heading 样式，消除内联 style 重复 */
+
+.section-heading {
+  margin-bottom: var(--space-10);
+}
+
+.section-heading h2 {
+  margin-bottom: var(--space-3);
+}
+
+.section-heading p {
+  font-size: var(--text-sm);
+  max-width: 65ch;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+}
+
+.eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: var(--space-2);
+}
+
+/* Compact variant for tighter layouts (e.g. home activity) */
+.home-section-head--compact .eyebrow {
+  margin-bottom: var(--space-2);
+}
+
 /* ---------- About page ---------- */
 .about-narrative {
   max-width: 720px;

@@ -42,7 +42,7 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
   <section class="section">
     <!-- Hero -->
     <div class="section-heading">
-      <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">Uses</p>
+      <p class="eyebrow">Uses</p>
       <h1>我在用什么</h1>
       <p>这里记录我搭建主站、写代码、托管内容和整理项目时常用的工具。工具会变化，但原则是长期、稳定、清晰和可维护。</p>
     </div>
@@ -72,7 +72,7 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
       categories.map((category) => (
         <div style="margin-bottom: var(--space-10);">
           <div class="section-heading">
-            <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-faint); margin-bottom: var(--space-2);">{category.title}</p>
+            <p class="eyebrow">{category.title}</p>
             <h2>{category.desc}</h2>
           </div>
 
