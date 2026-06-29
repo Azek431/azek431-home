@@ -27,13 +27,15 @@ const serialized = JSON.stringify(searchItems);
     <!-- Search Console -->
     <div class="search-console" role="search">
       <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <span style="font-size: var(--text-lg); color: var(--color-text-faint);">/</span>
+        <span style="font-size: var(--text-lg); color: var(--color-text-faint);" aria-hidden="true">/</span>
+        <label for="site-search" class="sr-only">站内搜索</label>
         <input
           id="site-search"
           type="search"
           placeholder="搜索项目、链接、页面、更新..."
           autocomplete="off"
           data-search-input
+          aria-label="站内搜索"
         />
       </div>
     </div>
