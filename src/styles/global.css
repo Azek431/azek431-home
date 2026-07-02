@@ -769,8 +769,34 @@ select:focus {
   }
 }
 
+/* ---------- Scroll Reveal Animation ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 交错延迟 — 首页连续区块依次入场 */
+.home-command { transition-delay: 0ms; }
+.home-projects { transition-delay: 100ms; }
+.home-now { transition-delay: 200ms; }
+.home-navigation { transition-delay: 300ms; }
+.home-activity { transition-delay: 400ms; }
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
   *,
   *::before,
   *::after {

@@ -146,7 +146,7 @@ const rssUrl = new URL('/rss.xml', siteConfig.url).toString();
                 }
               });
             },
-            { threshold: 0.1, rootMargin: '0px 0px -5% 0px' },
+            { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
           );
           staggerTargets.forEach(function (el) {
             io.observe(el);
