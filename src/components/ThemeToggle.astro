@@ -66,6 +66,13 @@
   .theme-toggle svg {
     width: 16px;
     height: 16px;
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .theme-toggle:hover svg {
+    transform: scale(1.1);
   }
 
   /* Show sun by default (light theme), hide moon */

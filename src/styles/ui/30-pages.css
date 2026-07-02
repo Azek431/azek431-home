@@ -124,7 +124,7 @@
 .skill-bar__fill {
   height: 100%;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  background: var(--gradient-accent);
   transition: width 0.8s var(--ease-out);
   position: relative;
 }
@@ -408,8 +408,8 @@ html[data-theme='dark'] .detail-features li:hover::before {
 }
 
 .links-filter__chip.is-active {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--gradient-accent);
+  border-color: transparent;
   color: #fff;
   box-shadow:
     var(--shadow-md),
@@ -417,8 +417,8 @@ html[data-theme='dark'] .detail-features li:hover::before {
 }
 
 .links-filter__chip.is-active:hover {
-  background: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
+  background: var(--gradient-accent-hover);
+  border-color: transparent;
   box-shadow:
     var(--shadow-lg),
     0 0 0 3px var(--color-accent-soft);
@@ -537,8 +537,9 @@ html[data-theme='dark'] .detail-features li:hover::before {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, var(--color-accent), var(--color-border));
+  background: var(--gradient-accent);
   border-radius: 1px;
+  opacity: 0.6;
 }
 
 .changelog-item {
@@ -655,7 +656,7 @@ html[data-theme='dark'] .detail-features li:hover::before {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--color-accent);
+  background: var(--gradient-accent);
   transform: scaleY(0);
   transition: transform var(--duration-fast) var(--ease-out);
   border-radius: 0 2px 2px 0;

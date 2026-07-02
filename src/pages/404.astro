@@ -8,7 +8,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <section class="section">
     <div class="not-found">
-      <h1>404</h1>
+      <h1 style="position: relative;">
+        404
+        <span
+          style="
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: blur(20px);
+            opacity: 0.4;
+            z-index: -1;
+          "
+        ></span>
+      </h1>
       <p>
         你访问的页面可能已经移动、删除，或者暂时还没有创建。可以返回首页继续浏览 Azek431
         的个人主站。

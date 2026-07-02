@@ -39,7 +39,25 @@
 
 .home-hero h1 {
   margin-bottom: var(--space-6);
-  color: var(--color-text);
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+html[data-theme='light'] .home-hero h1 {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html[data-theme='dark'] .home-hero h1 {
+  background: var(--gradient-accent-hover);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .home-hero__lead {
@@ -71,12 +89,33 @@
   transition:
     border-color var(--duration-fast) var(--ease-out),
     translate var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 信号卡片顶部 accent 线 */
+.home-hero__signal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.home-hero__signal:hover::before {
+  opacity: 1;
 }
 
 .home-hero__signal:hover {
   border-color: var(--color-border-strong);
   translate: 0 -2px;
+  box-shadow: var(--shadow-md);
 }
 
 .home-hero__signal-label {
@@ -106,12 +145,28 @@
   margin-bottom: var(--space-18);
   transition:
     border-color var(--duration-fast) var(--ease-out),
-    box-shadow var(--duration-fast) var(--ease-out);
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 命令栏左侧渐变装饰条 */
+.home-command::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gradient-accent);
+  border-radius: 0 2px 2px 0;
 }
 
 .home-command:hover {
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .home-command__search {
@@ -251,12 +306,13 @@
   margin-bottom: var(--space-8);
   transition:
     border-color var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out);
+    box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
   position: relative;
   overflow: hidden;
 }
 
-/* 顶部 accent 色彩条 */
+/* 顶部 accent 色彩条 — 渐变 */
 .home-projects__featured::before {
   content: '';
   position: absolute;
@@ -264,13 +320,28 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  background: var(--gradient-accent);
   opacity: 0.8;
+}
+
+/* 背景光晕 */
+.home-projects__featured::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-glow);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .home-projects__featured:hover {
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
 }
 
 .home-projects__preview {
@@ -461,7 +532,26 @@
   overflow: hidden;
 }
 
-/* 导航卡片顶部彩色指示线 */
+/* 导航卡片背景光晕 */
+.home-navigation__item::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200px;
+  height: 200px;
+  background: var(--gradient-glow);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.home-navigation__item:hover::after {
+  opacity: 1;
+}
+
+/* 导航卡片顶部彩色指示线 — 支持 accent 颜色 */
 .home-navigation__item::before {
   content: '';
   position: absolute;
@@ -477,6 +567,26 @@
 
 .home-navigation__item:hover::before {
   transform: scaleX(1);
+}
+
+/* 根据 accent 属性设置不同颜色 */
+.home-navigation__item[data-accent='green']::before {
+  background: #22c55e;
+}
+.home-navigation__item[data-accent='violet']::before {
+  background: #7c3aed;
+}
+.home-navigation__item[data-accent='rose']::before {
+  background: #e11d48;
+}
+.home-navigation__item[data-accent='cyan']::before {
+  background: #0891b2;
+}
+.home-navigation__item[data-accent='amber']::before {
+  background: #d97706;
+}
+.home-navigation__item[data-accent='slate']::before {
+  background: #64748b;
 }
 
 .home-navigation__item:hover {
@@ -596,7 +706,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: var(--gradient-accent);
   border: 2px solid var(--color-bg);
   box-shadow: 0 0 0 2px var(--color-accent-soft);
   transition:
@@ -605,8 +715,8 @@
 }
 
 .home-activity__timeline-item:hover .home-activity__timeline-marker::after {
-  transform: translateX(-50%) scale(1.3);
-  box-shadow: 0 0 0 4px var(--color-accent-soft);
+  transform: translateX(-50%) scale(1.4);
+  box-shadow: 0 0 0 5px var(--color-accent-soft);
 }
 
 .home-activity__timeline-time {

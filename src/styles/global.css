@@ -61,6 +61,16 @@ body {
   --color-accent-soft: #eff6ff;
   --color-accent-text: #1d4ed8;
 
+  /* 新增渐变强调色 — 为各页面/项目提供视觉多样性 */
+  --gradient-accent: linear-gradient(135deg, #2563eb, #7c3aed);
+  --gradient-accent-hover: linear-gradient(135deg, #1d4ed8, #6d28d9);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.15), transparent 70%);
+
+  /* 新增渐变强调色 — 为各页面/项目提供视觉多样性 */
+  --gradient-accent: linear-gradient(135deg, #2563eb, #7c3aed);
+  --gradient-accent-hover: linear-gradient(135deg, #1d4ed8, #6d28d9);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.15), transparent 70%);
+
   /* Typography scale — refined for stronger visual hierarchy */
   --text-xs: clamp(0.6875rem, 0.65rem + 0.15vw, 0.75rem);
   --text-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
@@ -149,6 +159,12 @@ html[data-theme='dark'] {
   --color-accent-hover: #60a5fa;
   --color-accent-soft: rgba(59, 130, 246, 0.12);
   --color-accent-text: #93c5fd;
+
+  /* 暗色模式渐变 */
+  --gradient-accent: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --gradient-accent-hover: linear-gradient(135deg, #60a5fa, #a78bfa);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1), transparent 70%);
+
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 2px 8px -1px rgba(0, 0, 0, 0.35), 0 1px 3px -1px rgba(0, 0, 0, 0.25);
   --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.3), 0 2px 8px -3px rgba(0, 0, 0, 0.2);
@@ -383,6 +399,28 @@ button:focus-visible {
   box-shadow: var(--shadow-lg);
 }
 
+/* 卡片光泽扫过效果 */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.03) 55%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  transform: translateX(100%);
+}
+
 .card h3 {
   margin-bottom: var(--space-2);
   font-size: var(--text-xl);
@@ -459,14 +497,14 @@ button:focus-visible {
 }
 
 .button-primary {
-  background: var(--color-accent);
+  background: var(--gradient-accent);
   color: #fff;
-  border-color: var(--color-accent);
+  border-color: transparent;
 }
 
 .button-primary:hover {
-  background: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
+  background: var(--gradient-accent-hover);
+  border-color: transparent;
   color: #fff;
   box-shadow:
     var(--shadow-lg),
@@ -544,6 +582,68 @@ button:focus-visible {
   color: var(--color-accent-text);
   border-color: var(--color-accent);
   background: var(--color-accent-soft);
+}
+
+/* 项目专属 accent 标签变体 */
+.tag-blue {
+  color: #2563eb;
+  border-color: #60a5fa;
+  background: #eff6ff;
+}
+html[data-theme='dark'] .tag-blue {
+  color: #93c5fd;
+  border-color: #2563eb;
+  background: rgba(37, 99, 235, 0.15);
+}
+
+.tag-violet {
+  color: #7c3aed;
+  border-color: #a78bfa;
+  background: #f5f3ff;
+}
+html[data-theme='dark'] .tag-violet {
+  color: #c4b5fd;
+  border-color: #7c3aed;
+  background: rgba(124, 58, 237, 0.15);
+}
+
+.tag-green {
+  color: #059669;
+  border-color: #34d399;
+  background: #ecfdf5;
+}
+
+.tag-amber {
+  color: #d97706;
+  border-color: #fbbf24;
+  background: #fffbeb;
+}
+html[data-theme='dark'] .tag-amber {
+  color: #fcd34d;
+  border-color: #d97706;
+  background: rgba(217, 119, 6, 0.15);
+}
+
+.tag-rose {
+  color: #e11d48;
+  border-color: #fb7185;
+  background: #fff1f2;
+}
+html[data-theme='dark'] .tag-rose {
+  color: #fda4af;
+  border-color: #e11d48;
+  background: rgba(225, 29, 72, 0.15);
+}
+
+.tag-cyan {
+  color: #0891b2;
+  border-color: #22d3ee;
+  background: #ecfeff;
+}
+html[data-theme='dark'] .tag-cyan {
+  color: #67e8f9;
+  border-color: #0891b2;
+  background: rgba(8, 145, 178, 0.15);
 }
 
 .tag-success {
