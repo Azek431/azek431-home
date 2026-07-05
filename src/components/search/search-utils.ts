@@ -10,7 +10,7 @@ export function scoreItem(item: Record<string, string | string[]>, query: string
   const title = normalize(String(item.title || ''));
   const desc = normalize(String(item.desc || ''));
   const href = normalize(String(item.href || ''));
-  const tags = normalize(String((item.tags || []).join(' ')));
+  const tags = normalize(String(Array.isArray(item.tags) ? item.tags.join(' ') : item.tags || ''));
 
   if (title === query) return 100;
   if (title.indexOf(query) >= 0) return 80;
@@ -45,7 +45,7 @@ export function renderResults(
   const html = matched
     .map(function (entry) {
       const item = entry.item;
-      const tags = (item.tags || [])
+      const tags = (Array.isArray(item.tags) ? item.tags : [])
         .slice(0, 4)
         .map(function (tag) {
           return '<em>#' + tag + '</em>';
