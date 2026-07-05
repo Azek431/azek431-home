@@ -65,6 +65,13 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__eyebrow::after,
+  .home-hero__status {
+    animation: none;
+  }
+}
+
 .home-hero h1 {
   margin-bottom: var(--space-6);
   background: var(--gradient-accent);
