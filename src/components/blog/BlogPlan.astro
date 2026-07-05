@@ -18,7 +18,7 @@ const { items } = Astro.props;
   {
     items.map((plan) => (
       <div class="card">
-        <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+        <div class="card-tags-row">
           <span class="tag">{plan.tag}</span>
           <span class="tag tag-accent">{plan.state}</span>
         </div>
