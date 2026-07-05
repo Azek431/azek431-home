@@ -171,7 +171,7 @@
 .home-activity__identity-link > div small {
   font-size: var(--text-xs);
   color: var(--color-text-faint);
-  font-weight: 400;
+  line-height: 1.5;
 }
 
 .home-activity__identity-link > small {

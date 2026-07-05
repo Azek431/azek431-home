@@ -604,6 +604,10 @@ html[data-theme='dark'] .button-primary::after {
   box-shadow: none;
 }
 
+html[data-theme='dark'] .button-ghost:hover {
+  background: var(--surface-bg-subtle);
+}
+
 /* Button sizes */
 .button-sm {
   min-height: 34px;
@@ -639,6 +643,11 @@ html[data-theme='dark'] .button-primary::after {
 
 .tag:hover {
   border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+html[data-theme='dark'] .tag:hover {
+  border-color: var(--surface-card-border-hover);
   color: var(--color-text);
 }
 
@@ -809,48 +818,6 @@ select:focus {
   box-shadow: 0 0 0 3px var(--color-accent-soft);
 }
 
-/* ---------- Responsive base ---------- */
-@media (max-width: 768px) {
-  :root {
-    --header-height: 56px;
-  }
-
-  .site-shell {
-    width: calc(100% - var(--space-6));
-  }
-
-  .section {
-    padding: var(--space-12) 0;
-  }
-
-  .card {
-    padding: var(--space-5);
-  }
-
-  .card-grid {
-    gap: var(--space-3);
-  }
-
-  .button {
-    min-height: 48px;
-    padding: var(--space-3) var(--space-5);
-  }
-}
-
-@media (max-width: 480px) {
-  .site-shell {
-    width: calc(100% - var(--space-4));
-  }
-
-  .card {
-    padding: var(--space-4);
-  }
-
-  .button {
-    width: 100%;
-  }
-}
-
 /* ---------- Scroll Reveal Animation ---------- */
 .reveal {
   opacity: 0;
@@ -912,11 +879,25 @@ select:focus {
   :root {
     --color-border: #000;
     --color-border-strong: #000;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 2px 8px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 16px 40px -6px rgba(0, 0, 0, 0.1);
   }
 
   html[data-theme='dark'] {
     --color-border: #fff;
     --color-border-strong: #fff;
+    --shadow-sm: 0 1px 2px rgba(255, 255, 255, 0.1);
+    --shadow-md: 0 2px 8px -1px rgba(255, 255, 255, 0.1);
+    --shadow-lg: 0 8px 24px -4px rgba(255, 255, 255, 0.1);
+    --shadow-xl: 0 16px 40px -6px rgba(255, 255, 255, 0.1);
+  }
+
+  .card,
+  .button,
+  .tag {
+    border-width: 2px;
   }
 }
 
