@@ -151,6 +151,11 @@
   .home-section-head {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .home-section-head > a {
+    padding: var(--space-2) var(--space-3);
   }
 
   /* 详情页 */

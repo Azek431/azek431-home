@@ -40,3 +40,9 @@
 .colo-card li:hover {
   border-color: var(--color-accent);
 }
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .colo-card {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}

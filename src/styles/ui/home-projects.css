@@ -201,3 +201,14 @@
     padding: var(--space-4);
   }
 }
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .home-projects__featured {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .home-projects__featured:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-xl);
+}

@@ -38,9 +38,11 @@ const isActive = (href: string) =>
     <div class="site-header__actions">
       <a
         class="site-header__icon-btn"
-        href={searchNavigationItem.href}
+        href="javascript:void(0)"
         aria-label={searchNavigationItem.description}
         title={[searchNavigationItem.description, '(Slash)'].join(' ')}
+        data-spotlight-open
+        onclick="if(window.__spotlightOpen){window.__spotlightOpen();return false;}window.location.href='/search/'"
       >
         <svg
           viewBox="0 0 24 24"
@@ -97,87 +99,89 @@ const isActive = (href: string) =>
     hidden
     data-header-panel
   >
-    <div class="site-header__panel-head">
-      <div>
-        <p>Navigation</p>
-        <h2 id="site-header-panel-title">探索 Azek431</h2>
-        <span>浏览主要页面、长期记录和公开代码入口。</span>
+    <div class="site-header__panel-inner">
+      <div class="site-header__panel-head">
+        <div>
+          <p>Navigation</p>
+          <h2 id="site-header-panel-title">探索 Azek431</h2>
+          <span>浏览主要页面、长期记录和公开代码入口。</span>
+        </div>
+        <button
+          class="site-header__panel-close"
+          type="button"
+          aria-label="关闭完整导航"
+          data-header-menu-close
+        >
+          <span aria-hidden="true">×</span>
+        </button>
       </div>
-      <button
-        class="site-header__panel-close"
-        type="button"
-        aria-label="关闭完整导航"
-        data-header-menu-close
-      >
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
 
-    <div class="site-header__panel-groups">
-      <section class="site-header__panel-group">
-        <header>
-          <span>01</span>
-          <div>
-            <h3>主要页面</h3>
-            <p>网站最常用的核心入口。</p>
-          </div>
-        </header>
-        <nav aria-label="完整主要导航">
-          {
-            primaryNavigationItems.map((item) => (
-              <a
-                class={isActive(item.href) ? 'is-active' : ''}
-                href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-              >
-                <span>
-                  <strong>{item.label}</strong>
-                  <small>{item.description}</small>
-                </span>
-              </a>
-            ))
-          }
-        </nav>
-      </section>
+      <div class="site-header__panel-groups">
+        <section class="site-header__panel-group">
+          <header>
+            <span>01</span>
+            <div>
+              <h3>主要页面</h3>
+              <p>网站最常用的核心入口。</p>
+            </div>
+          </header>
+          <nav aria-label="完整主要导航">
+            {
+              primaryNavigationItems.map((item) => (
+                <a
+                  class={isActive(item.href) ? 'is-active' : ''}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.description}</small>
+                  </span>
+                </a>
+              ))
+            }
+          </nav>
+        </section>
 
-      <section class="site-header__panel-group">
-        <header>
-          <span>02</span>
-          <div>
-            <h3>更多内容</h3>
-            <p>记录、统计和技术说明。</p>
-          </div>
-        </header>
-        <nav aria-label="更多站内页面">
-          {
-            moreNavigationItems.map((item) => (
-              <a
-                class={isActive(item.href) ? 'is-active' : ''}
-                href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-              >
-                <span>
-                  <strong>{item.label}</strong>
-                  <small>{item.description}</small>
-                </span>
-              </a>
-            ))
-          }
-        </nav>
-      </section>
-    </div>
+        <section class="site-header__panel-group">
+          <header>
+            <span>02</span>
+            <div>
+              <h3>更多内容</h3>
+              <p>记录、统计和技术说明。</p>
+            </div>
+          </header>
+          <nav aria-label="更多站内页面">
+            {
+              moreNavigationItems.map((item) => (
+                <a
+                  class={isActive(item.href) ? 'is-active' : ''}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.description}</small>
+                  </span>
+                </a>
+              ))
+            }
+          </nav>
+        </section>
+      </div>
 
-    <div class="site-header__panel-tools">
-      <a href={searchNavigationItem.href}>
-        <span><strong>站内搜索</strong><small> 页面、项目、链接和更新记录</small></span>
-      </a>
-      <a href={siteConfig.github} target="_blank" rel="noreferrer noopener">
-        <span><strong>GitHub</strong><small>主仓库和开源项目</small></span>
-      </a>
-      <a href={siteConfig.gitee} target="_blank" rel="noreferrer noopener">
-        <span><strong>Gitee</strong><small>国内镜像与同步入口</small></span>
-      </a>
-    </div>
+      <div class="site-header__panel-tools">
+        <a href="javascript:void(0)" data-spotlight-panel-open>
+          <span><strong>站内搜索</strong><small> 页面、项目、链接和更新记录</small></span>
+        </a>
+        <a href={siteConfig.github} target="_blank" rel="noreferrer noopener">
+          <span><strong>GitHub</strong><small>主仓库和开源项目</small></span>
+        </a>
+        <a href={siteConfig.gitee} target="_blank" rel="noreferrer noopener">
+          <span><strong>Gitee</strong><small>国内镜像与同步入口</small></span>
+        </a>
+      </div>
+    </div><!-- /.site-header__panel-inner -->
   </aside>
 </header>
 
@@ -238,7 +242,15 @@ const isActive = (href: string) =>
     closeButton.addEventListener('click', closePanel);
     scrim.addEventListener('click', closePanel);
     panel.addEventListener('click', function (e) {
-      if (e.target.closest && e.target.closest('a')) closePanel(false);
+      if (e.target.closest && e.target.closest('a')) {
+        var panelSpotlight = e.target.closest('[data-spotlight-panel-open]');
+        if (panelSpotlight) {
+          if (window.__spotlightOpen) window.__spotlightOpen();
+          closePanel();
+          return;
+        }
+        closePanel();
+      }
     });
 
     document.addEventListener('keydown', function (e) {
@@ -301,7 +313,7 @@ const isActive = (href: string) =>
       pointer-events: auto;
     }
 
-    .site-header__panel-inner {
+    .site-header__panel > .site-header__panel-inner {
       width: 100%;
       max-height: calc(100vh - var(--header-height) - var(--space-8));
       border-radius: 0;
@@ -368,6 +380,12 @@ const isActive = (href: string) =>
     border-radius: var(--radius-lg);
     background: var(--color-bg-raised);
     border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-xl);
+  }
+
+  html[data-theme='dark'] .site-header__panel-inner {
+    border-color: var(--surface-card-border);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
   }
 
   .site-header__panel-head {

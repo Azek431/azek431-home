@@ -123,3 +123,18 @@
     font-size: var(--text-xs);
   }
 }
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .link-card {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .link-card:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-hover);
+}
+
+html[data-theme='dark'] .links-filter__chip {
+  border-color: var(--surface-card-border);
+}

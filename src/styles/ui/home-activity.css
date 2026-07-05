@@ -8,6 +8,7 @@
   grid-template-columns: 1.5fr 1fr;
   gap: var(--space-14);
   align-items: start;
+  margin-bottom: var(--space-18);
 }
 
 .home-activity__timeline {
@@ -196,4 +197,20 @@
     grid-template-columns: 20px 1fr;
     gap: var(--space-3);
   }
+}
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .home-activity__identity {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .home-activity__identity-link {
+  border-color: var(--surface-card-border);
+  background: var(--surface-bg-subtle);
+}
+
+html[data-theme='dark'] .home-activity__identity-link:hover {
+  border-color: var(--surface-card-border-hover);
+  background: var(--surface-bg-raised);
 }
