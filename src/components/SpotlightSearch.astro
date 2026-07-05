@@ -1,0 +1,125 @@
+---
+type SearchResultItem = {
+  category: string;
+  title: string;
+  desc: string;
+  href: string;
+  tags?: string[];
+};
+
+type Props = {
+  items: SearchResultItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="spotlight-dropdown" role="listbox" aria-label="搜索结果" data-spotlight-results>
+  {
+    items.slice(0, 12).map((item) => (
+      <a class="spotlight-item" href={item.href} role="option" data-spotlight-link>
+        <span class="spotlight-item__category">{item.category}</span>
+        <span class="spotlight-item__content">
+          <span class="spotlight-item__title">{item.title}</span>
+          <span class="spotlight-item__desc">{item.desc}</span>
+        </span>
+        <span class="spotlight-item__arrow" aria-hidden="true">
+          ↗
+        </span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .spotlight-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding: var(--space-2);
+    border-radius: var(--radius-lg);
+  }
+
+  .spotlight-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+    position: relative;
+  }
+
+  .spotlight-item:hover,
+  .spotlight-item[data-active='true'] {
+    background: var(--color-bg-subtle);
+  }
+
+  .spotlight-item__category {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--color-bg-raised);
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+    font-family: ui-monospace, monospace;
+  }
+
+  .spotlight-item__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .spotlight-item__title {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .spotlight-item__desc {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .spotlight-item__arrow {
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+    flex-shrink: 0;
+  }
+
+  .spotlight-item:hover .spotlight-item__arrow,
+  .spotlight-item[data-active='true'] .spotlight-item__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* 暗色模式类别标签增强 */
+  html[data-theme='dark'] .spotlight-item__category {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+  }
+</style>
