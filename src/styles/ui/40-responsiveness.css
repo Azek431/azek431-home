@@ -58,35 +58,7 @@
     width: auto;
   }
 
-  /* 头部 */
-  .site-header-inner {
-    padding: var(--space-2) var(--space-1);
-  }
-
-  .site-header__nav {
-    display: none;
-  }
-
-  .site-header__menu-toggle {
-    display: inline-flex;
-  }
-
-  /* 页脚 */
-  .footer-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-
-  .footer__nav {
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  .footer__bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
-  }
+  /* 头部样式已移至 10-shell-header-footer.css */
 
   /* 首页 */
   .home-hero h1 {
@@ -254,18 +226,8 @@
   }
 }
 
-/* ========== 减少动画 ========== */
+/* ========== 减少动画 — 补充 global.css 未覆盖的组件 ========== */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .card:hover,
-  .button:hover,
   .home-navigation__item:hover {
     transform: none !important;
   }

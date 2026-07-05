@@ -99,6 +99,11 @@
   bottom: 0;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   animation: shimmer 2.5s infinite;
+  animation-play-state: paused;
+}
+
+.skill-bar__fill.animated::after {
+  animation-play-state: running;
 }
 
 html[data-theme='dark'] .skill-bar__fill::after {

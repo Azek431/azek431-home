@@ -304,34 +304,31 @@ html[data-theme='dark'] .site-header__nav a.is-active {
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: var(--gradient-accent);
-  opacity: 0.35;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 5%, var(--gradient-accent) 50%, transparent 95%);
+  opacity: 0.5;
 }
 
 .footer-inner {
   display: grid;
   grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
-  gap: var(--space-12);
+  gap: var(--space-14);
   align-items: start;
 }
 
 .footer__brand {
   max-width: 340px;
-  transition: opacity var(--duration-fast) var(--ease);
-}
-
-.footer__brand:hover {
-  opacity: 0.85;
 }
 
 .footer__brand h3 {
   font-size: var(--text-xl);
   margin-bottom: var(--space-3);
-  background: var(--gradient-accent);
+  background: linear-gradient(135deg, var(--color-accent), #7c3aed);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .footer__brand p {
@@ -352,26 +349,37 @@ html[data-theme='dark'] .site-header__nav a.is-active {
   letter-spacing: 0.1em;
   color: var(--color-text-faint);
   margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .footer__column ul {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .footer__column a {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
-  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-1);
-  transition: color var(--duration-fast) var(--ease-out);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-xs);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
 }
 
+.footer__column a:hover {
+  color: var(--color-text);
+  background: var(--color-bg-raised);
+}
+
+/* 外部链接箭头指示 */
 .footer__column a::after {
-  content: '→';
+  content: '↗';
   font-size: var(--text-xs);
   opacity: 0;
   transform: translateX(-4px);
@@ -381,8 +389,27 @@ html[data-theme='dark'] .site-header__nav a.is-active {
 }
 
 .footer__column a:hover::after {
-  opacity: 1;
+  opacity: 0.5;
   transform: translateX(0);
+}
+
+/* 外部链接图标 */
+.footer__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.footer__column a:hover .footer__icon {
+  opacity: 0.8;
+}
+
+/* 运行时计数器样式 */
+.footer__runtime {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .footer__bottom {
@@ -390,7 +417,7 @@ html[data-theme='dark'] .site-header__nav a.is-active {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  margin-top: var(--space-10);
+  margin-top: var(--space-12);
   padding-top: var(--space-6);
   border-top: 1px solid var(--color-border);
   font-size: var(--text-xs);
@@ -418,11 +445,12 @@ html[data-theme='dark'] .site-header__nav a.is-active {
 
   .footer-inner {
     grid-template-columns: 1fr;
-    gap: var(--space-8);
+    gap: var(--space-10);
   }
 
   .footer__nav {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6);
   }
 
@@ -441,6 +469,15 @@ html[data-theme='dark'] .site-header__nav a.is-active {
   .site-header__brand span:last-child {
     display: none;
   }
+
+  /* 超小屏恢复单列 */
+  .footer__nav {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__bottom {
+    font-size: var(--text-xs);
+  }
 }
 
 /* 暗色模式 Header 社交按钮增强 */
@@ -458,6 +495,19 @@ html[data-theme='dark'] .site-footer {
   background: var(--surface-bg-glass);
 }
 
+html[data-theme='dark'] .site-footer::before {
+  opacity: 0.6;
+}
+
 html[data-theme='dark'] .footer__column a:hover {
   color: rgba(255, 255, 255, 0.9);
+  background: var(--surface-bg-subtle);
+}
+
+html[data-theme='dark'] .footer__column h4 {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme='dark'] .footer__bottom {
+  border-top-color: rgba(255, 255, 255, 0.06);
 }
