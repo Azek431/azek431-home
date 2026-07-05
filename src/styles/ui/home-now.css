@@ -30,6 +30,17 @@
   box-shadow: var(--shadow-lg);
 }
 
+/* 暗色模式增强 */
+html[data-theme='dark'] .home-now__card {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .home-now__card:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-lg);
+}
+
 .home-now__card-label {
   font-size: var(--text-xs);
   font-weight: 700;
@@ -82,15 +93,4 @@
   .home-now__grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* 暗色模式增强 */
-html[data-theme='dark'] .home-now__card {
-  border-color: var(--surface-card-border);
-  box-shadow: var(--surface-card-shadow);
-}
-
-html[data-theme='dark'] .home-now__card:hover {
-  border-color: var(--surface-card-border-hover);
-  box-shadow: var(--surface-card-shadow-lg);
 }

@@ -150,3 +150,7 @@ html[data-theme='dark'] .home-command:hover {
   border-color: var(--surface-card-border-hover);
   box-shadow: var(--surface-card-shadow-lg);
 }
+
+html[data-theme='dark'] .home-command::before {
+  background: var(--gradient-accent-hover);
+}

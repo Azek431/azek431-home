@@ -16,7 +16,7 @@ const { items } = Astro.props as Props;
   {
     items.map((item) => (
       <div class="card">
-        <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-2);">
+        <div class="card-tags-row">
           <span class="tag tag-accent">{item.status}</span>
         </div>
         <h3>{item.title}</h3>
