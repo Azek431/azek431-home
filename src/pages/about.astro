@@ -4,7 +4,6 @@ import ProfileSummary from '../components/about/ProfileSummary.astro';
 import NowCards from '../components/about/NowCards.astro';
 import SkillBar from '../components/about/SkillBar.astro';
 import FocusAreas from '../components/about/FocusAreas.astro';
-import { todayDate, todayWeekday } from '../data/time';
 
 const profileItems = [
   { label: '方向', value: 'Web · AI · Open Source' },
@@ -106,30 +105,6 @@ const focusItems = [
 
     <NowCards items={nowItems} />
 
-    <!-- Today Status -->
-    <div class="section-heading">
-      <p class="eyebrow">Today</p>
-      <h2>今日状态</h2>
-      <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
-        正在细节里反复打磨 · {todayDate} · {todayWeekday}
-      </p>
-    </div>
-
-    <div class="projects-summary">
-      <div class="projects-summary__item">
-        <span>Energy</span>
-        <strong>72%</strong>
-      </div>
-      <div class="projects-summary__item">
-        <span>Focus</span>
-        <strong>86%</strong>
-      </div>
-      <div class="projects-summary__item">
-        <span>Mode</span>
-        <strong>Build</strong>
-      </div>
-    </div>
-
     <!-- Skills -->
     <div class="section-heading">
       <p class="eyebrow">Skills</p>
@@ -157,4 +132,25 @@ const focusItems = [
       <a class="button button-primary" href="/now/">查看 Now 页面</a>
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animated');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      document.querySelectorAll('.skill-bar__fill').forEach(function (el) {
+        io.observe(el);
+      });
+    })();
+  </script>
 </BaseLayout>
