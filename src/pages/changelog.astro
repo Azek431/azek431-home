@@ -51,10 +51,10 @@ const counts = [
     </div>
 
     <!-- Timeline -->
-    <div class="changelog-list">
+    <ol class="changelog-list" role="list">
       {
         changelog.map((entry) => (
-          <div class="changelog-item">
+          <li class="changelog-item">
             <div class="changelog-item__date">
               {entry.version} · {entry.date} · {toneLabel[entry.tone || 'minor']}
             </div>
@@ -64,9 +64,9 @@ const counts = [
                 <div class="changelog-item__change">{change}</div>
               ))}
             </div>
-          </div>
+          </li>
         ))
       }
-    </div>
+    </ol>
   </section>
 </BaseLayout>
