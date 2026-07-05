@@ -273,6 +273,11 @@ const isActive = (href: string) =>
         first.focus();
       }
     });
+
+    // Listen for global overlay-close event (dispatched by GlobalShortcuts on Escape)
+    document.addEventListener('site:overlay-close-all', function () {
+      if (isOpen()) closePanel();
+    });
   })();
 </script>
 

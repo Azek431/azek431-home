@@ -1,7 +1,6 @@
 ---
 import SpotlightDropdown from './SpotlightSearch.astro';
 import { searchItems } from '../data/search';
-import { normalize, scoreItem } from './search/search-utils.ts';
 
 const serialized = JSON.stringify(searchItems);
 ---
@@ -76,6 +75,7 @@ const serialized = JSON.stringify(searchItems);
 </div>
 
 <script is:inline define:vars={{ serialized }}>
+  import { normalize, scoreItem } from './search/search-utils.ts';
   (function () {
     if (typeof window === 'undefined') return;
     if (window.__spotlightReady) return;
@@ -209,6 +209,11 @@ const serialized = JSON.stringify(searchItems);
       if (e.target === overlay) close();
     });
 
+    // Listen for global overlay-close event (dispatched by GlobalShortcuts on Escape)
+    document.addEventListener('site:overlay-close-all', function () {
+      if (!overlay.hidden) close();
+    });
+
     // Input search
     input.addEventListener('input', function () {
       activeIndex = -1;
@@ -243,6 +248,7 @@ const serialized = JSON.stringify(searchItems);
       var link = e.target.closest('[data-spotlight-link]');
       if (link) {
         close();
+        link.click();
       }
     });
   })();
@@ -255,6 +261,10 @@ const serialized = JSON.stringify(searchItems);
     height: 0;
     opacity: 0;
     pointer-events: none;
+  }
+
+  .spotlight-overlay[hidden] {
+    display: none !important;
   }
 
   .spotlight-overlay {

@@ -1,6 +1,6 @@
 ---
 import ProjectCard from './ProjectCard.astro';
-import { projectDetails, type ProjectDetail } from '../../data/projects';
+import { projectDetails } from '../../data/projects';
 
 const liveCount = projectDetails.filter((p) => p.status === '已上线').length;
 const wipCount = projectDetails.filter(
