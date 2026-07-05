@@ -9,6 +9,16 @@
   border-radius: var(--radius-xl);
   background: var(--color-bg-raised);
   margin-bottom: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.search-console:focus-within {
+  border-color: var(--color-border-strong);
   box-shadow: var(--shadow-md);
 }
 
@@ -73,7 +83,7 @@
 .search-result:hover {
   border-color: var(--color-border-strong);
   background: var(--color-bg-subtle);
-  transform: translateX(3px);
+  transform: translateX(2px);
   box-shadow: var(--shadow-sm);
   color: var(--color-text);
 }
