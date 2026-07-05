@@ -39,7 +39,7 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
   title="Uses · Azek431"
   description="Azek431 日常使用的硬件、软件、开发工具和网站技术栈。"
 >
-  <section class="section">
+  <section class="section uses-page">
     <!-- Hero -->
     <div class="section-heading">
       <p class="eyebrow">Uses</p>
@@ -50,20 +50,20 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
     </div>
 
     <!-- Stats -->
-    <div class="projects-summary">
-      <div class="projects-summary__item">
+    <div class="uses-stats">
+      <div class="uses-stats__item">
         <strong>{categories.length}</strong>
         <span>工具分类</span>
       </div>
-      <div class="projects-summary__item">
+      <div class="uses-stats__item">
         <strong>{totalItems}</strong>
         <span>常用工具</span>
       </div>
-      <div class="projects-summary__item">
+      <div class="uses-stats__item">
         <strong>{siteUpdatedDate}</strong>
         <span>最近更新</span>
       </div>
-      <div class="projects-summary__item">
+      <div class="uses-stats__item">
         <strong>Stable</strong>
         <span>使用原则</span>
       </div>
@@ -72,7 +72,7 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
     <!-- Categories -->
     {
       categories.map((category) => (
-        <div style="margin-bottom: var(--space-10);">
+        <div class="category-section">
           <div class="section-heading">
             <p class="eyebrow">{category.title}</p>
             <h2>{category.desc}</h2>
@@ -81,7 +81,7 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
           <div class="card-grid">
             {category.items.map((item) => (
               <div class="card">
-                <strong style="font-size: var(--text-base);">{item.name}</strong>
+                <strong>{item.name}</strong>
                 <p>{item.detail}</p>
               </div>
             ))}
@@ -91,11 +91,11 @@ const totalItems = categories.reduce((sum, category) => sum + category.items.len
     }
 
     <!-- Footer note -->
-    <div class="about-narrative">
+    <div class="uses-narrative">
       <p>
         装备会变，原则不变。我更在意一套工具能不能长期稳定地服务项目，而不是追求看起来很复杂的配置。
       </p>
-      <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+      <div class="uses-narrative__actions">
         <a class="button button-primary" href="/colophon/">查看设计说明</a>
         <a class="button button-secondary" href="/now/">回到 Now</a>
       </div>
