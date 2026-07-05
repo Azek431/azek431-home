@@ -89,7 +89,7 @@
 
 .home-navigation__item:hover {
   border-color: var(--color-border-strong);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
 }
 

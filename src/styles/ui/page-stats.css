@@ -22,7 +22,7 @@
 
 .stat-card:hover {
   border-color: var(--color-border-strong);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .stat-card strong {

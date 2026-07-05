@@ -78,15 +78,24 @@
   color: var(--color-text);
 }
 
-.search-result h3 {
+.search-result span {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.search-result strong {
   font-size: var(--text-lg);
+  display: block;
   margin-bottom: var(--space-2);
 }
 
-.search-result p {
+.search-result small {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   line-height: 1.6;
+  display: block;
 }
 
 .search-result__meta {

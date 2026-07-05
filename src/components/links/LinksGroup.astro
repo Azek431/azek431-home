@@ -26,7 +26,7 @@ const { groups } = Astro.props;
 {
   groups.map((group) => (
     <div class="links-group" data-group={group.category} hidden>
-      <h2>{group.title}</h2>
+      <h3>{group.title}</h3>
       <p>{group.desc}</p>
       <div class="links-grid">
         {group.items.map((link) => (
