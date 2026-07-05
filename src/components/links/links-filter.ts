@@ -25,5 +25,5 @@ export function applyLinkFilter(category: string): void {
     group.hidden = !match;
   });
 
-  if (empty) empty.hidden = shown !== 0;
+  if (empty) (empty as HTMLElement).hidden = shown !== 0;
 }
