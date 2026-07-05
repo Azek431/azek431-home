@@ -194,6 +194,7 @@ const serialized = JSON.stringify(searchItems);
     function updateActive() {
       visibleLinks.forEach(function (link, i) {
         link.setAttribute('data-active', i === activeIndex ? 'true' : 'false');
+        link.setAttribute('aria-selected', i === activeIndex ? 'true' : 'false');
       });
     }
 

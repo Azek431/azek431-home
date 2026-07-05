@@ -67,14 +67,14 @@ const homeProject = projectDetails.find((project) => project.slug === 'azek431-h
     <span>{pageCount} pages</span>
     {
       homeProject?.githubUrl && (
-        <a href={homeProject.githubUrl} target="_blank" rel="noopener">
+        <a href={homeProject.githubUrl} target="_blank" rel="noopener noreferrer">
           GitHub ↗
         </a>
       )
     }
     {
       homeProject?.giteeUrl && (
-        <a href={homeProject.giteeUrl} target="_blank" rel="noopener">
+        <a href={homeProject.giteeUrl} target="_blank" rel="noopener noreferrer">
           Gitee ↗
         </a>
       )
