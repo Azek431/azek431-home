@@ -12,6 +12,13 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   background: var(--color-bg-raised);
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.projects-summary:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .projects-summary__item {
@@ -155,6 +162,17 @@ html[data-theme='dark'] .detail-features li:hover::before {
 
 .detail-sidebar__card:hover {
   box-shadow: var(--shadow-md);
+}
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .detail-sidebar__card {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .detail-sidebar__card:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-hover);
 }
 
 .detail-sidebar__card h3 {

@@ -138,3 +138,9 @@ html[data-theme='dark'] .link-card:hover {
 html[data-theme='dark'] .links-filter__chip {
   border-color: var(--surface-card-border);
 }
+
+/* Chip count badge */
+.chip-count {
+  margin-left: var(--space-1);
+  opacity: 0.6;
+}
