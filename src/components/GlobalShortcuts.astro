@@ -57,6 +57,10 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
     }
 
     function openSearch() {
+      if (window.__spotlightOpen) {
+        window.__spotlightOpen();
+        return;
+      }
       var input = document.getElementById('site-search');
       closeAllOverlays();
       if (input) {

@@ -112,6 +112,10 @@ html[data-theme='dark'] .site-header {
   font-weight: 600;
 }
 
+html[data-theme='dark'] .site-header__nav a.is-active {
+  background: var(--surface-bg-subtle);
+}
+
 .site-header__nav a.is-active::after {
   content: '';
   position: absolute;
@@ -302,7 +306,7 @@ html[data-theme='dark'] .site-header {
   right: 0;
   height: 1px;
   background: var(--gradient-accent);
-  opacity: 0.5;
+  opacity: 0.35;
 }
 
 .footer-inner {
@@ -437,4 +441,23 @@ html[data-theme='dark'] .site-header {
   .site-header__brand span:last-child {
     display: none;
   }
+}
+
+/* 暗色模式 Header 社交按钮增强 */
+html[data-theme='dark'] .site-header__socials {
+  border-color: var(--surface-card-border);
+  background: var(--surface-bg-subtle);
+}
+
+html[data-theme='dark'] .site-header__socials a:hover {
+  background: var(--surface-bg-raised);
+}
+
+/* 暗色模式 Footer 增强 */
+html[data-theme='dark'] .site-footer {
+  background: var(--surface-bg-glass);
+}
+
+html[data-theme='dark'] .footer__column a:hover {
+  color: rgba(255, 255, 255, 0.9);
 }

@@ -230,3 +230,19 @@ html[data-theme='dark'] .detail-features li:hover::before {
     gap: var(--space-8);
   }
 }
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .projects-summary {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .detail-sidebar__card {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .detail-sidebar__card:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-hover);
+}

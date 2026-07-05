@@ -79,3 +79,9 @@
   line-height: 1.6;
   border-left: 3px solid var(--color-border);
 }
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .changelog-item__change {
+  background: var(--surface-bg-subtle);
+  border-left-color: rgba(255, 255, 255, 0.1);
+}

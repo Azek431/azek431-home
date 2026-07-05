@@ -181,3 +181,14 @@
     padding: var(--space-5);
   }
 }
+
+/* 暗色模式增强 */
+html[data-theme='dark'] .home-navigation__item {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .home-navigation__item:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-xl);
+}
