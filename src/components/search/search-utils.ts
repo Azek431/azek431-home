@@ -4,19 +4,54 @@ export function normalize(value: string): string {
     .trim();
 }
 
+// 将字符串切分为 token 列表（中文按字符、英文按单词）
+function tokenize(text: string): string[] {
+  const normalized = normalize(text);
+  if (!normalized) return [];
+  // 先按空格/标点拆分，再过滤空串
+  return normalized.split(/[\s　,，.。;；:：!?！？()（）\[\]{}<>\/\\]+/).filter(Boolean);
+}
+
 export function scoreItem(item: Record<string, string | string[]>, query: string): number {
   if (!query) return 1;
 
   const title = normalize(String(item.title || ''));
   const desc = normalize(String(item.desc || ''));
   const href = normalize(String(item.href || ''));
-  const tags = normalize(String(Array.isArray(item.tags) ? item.tags.join(' ') : item.tags || ''));
+  const extra = normalize(String(item.extra || ''));
+  const rawTags = item.tags;
+  const tags = Array.isArray(rawTags)
+    ? rawTags.map(normalize).join(' ')
+    : normalize(String(rawTags || ''));
 
+  const qTokens = tokenize(query);
+  if (qTokens.length === 0) return 0;
+
+  // 精确全匹配（query 和 title 完全相等）
   if (title === query) return 100;
-  if (title.indexOf(query) >= 0) return 80;
-  if (tags.indexOf(query) >= 0) return 62;
-  if (desc.indexOf(query) >= 0) return 42;
-  if (href.indexOf(query) >= 0) return 24;
+
+  // 多 token 查询：所有 token 都在 title 中出现
+  if (qTokens.length > 1) {
+    const titleTokens = tokenize(title);
+    const allHit = qTokens.every((t) => titleTokens.some((tt) => tt.includes(t)));
+    if (allHit) return 90;
+  }
+
+  // 单个 token 在 title 中出现
+  if (qTokens.some((t) => title.includes(t))) return 80;
+
+  // tags 精确 token 匹配（不是 substring）
+  const tagTokens = tokenize(tags);
+  if (tagTokens.some((tt) => qTokens.some((t) => tt.includes(t) || t.includes(tt)))) return 65;
+
+  // extra 字段匹配（长描述、特性、亮点等）
+  if (extra && qTokens.some((t) => extra.includes(t))) return 48;
+
+  // desc 匹配
+  if (qTokens.some((t) => desc.includes(t))) return 42;
+
+  // href 匹配
+  if (qTokens.some((t) => href.includes(t))) return 24;
 
   return 0;
 }
@@ -38,7 +73,8 @@ export function renderResults(
       return categoryMatch && entry.score > 0;
     })
     .sort(function (a, b) {
-      return b.score - a.score;
+      if (b.score !== a.score) return b.score - a.score;
+      return 0; // 同分保持原始顺序
     })
     .slice(0, 40);
 
@@ -61,9 +97,9 @@ export function renderResults(
         item.title +
         '</strong><small>' +
         item.desc +
-        '</small><div>' +
-        tags +
-        '</div></a></li>'
+        '</small>' +
+        (tags ? '<div class="search-result__meta">' + tags + '</div>' : '') +
+        '</a></li>'
       );
     })
     .join('');

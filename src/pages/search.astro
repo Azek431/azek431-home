@@ -14,7 +14,7 @@ const counts = {
   Changelog: searchItems.filter((i) => i.category === 'Changelog').length,
 };
 
-const categories = ['全部', 'Page', 'Project', 'Link', 'Update', 'Changelog'];
+const categories = ['全部', 'Page', 'Project', 'Link', 'Changelog'];
 const serialized = JSON.stringify(searchItems);
 ---
 
@@ -25,7 +25,7 @@ const serialized = JSON.stringify(searchItems);
       <p class="eyebrow">Command Search</p>
       <h1>站内搜索</h1>
       <p>
-        跨 {counts.total} 条内容索引搜索页面、项目、链接和更新记录。输入关键词即可实时筛选，按回车可以打开第一条结果。
+        跨 {counts.total} 条内容索引搜索页面、项目、链接和更新日志。输入关键词即可实时筛选，按回车可以打开第一条结果。
       </p>
     </div>
 
