@@ -103,6 +103,7 @@ const projectPaths = projectDetails.map((project) => `/projects/${project.slug}/
 
       if (event.key === 'Escape') {
         resetPrefix();
+        closeAllOverlays();
         return;
       }
       if (hasCommandModifier(event)) {
