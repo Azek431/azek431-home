@@ -30,10 +30,11 @@
   background-clip: text;
   color: transparent;
   transition: transform var(--duration-slow) var(--ease-out);
+  position: relative;
 }
 
 .not-found:hover h1 {
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 
 /* 404 标题渐变光晕 */
@@ -49,8 +50,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: blur(20px);
-  opacity: 0.4;
+  filter: blur(24px);
+  opacity: 0.3;
   z-index: -1;
   font-size: inherit;
   font-weight: inherit;

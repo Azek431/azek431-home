@@ -106,7 +106,7 @@ const relatedProjects = projectDetails
     <!-- Highlights -->
     {
       highlights.length > 0 && (
-        <div class="detail-sidebar" style="margin-bottom: var(--space-10);">
+        <div class="detail-sidebar section-spacer">
           <div class="detail-sidebar__card">
             <h3>Highlights</h3>
             <ul class="detail-stats">
@@ -152,7 +152,7 @@ const relatedProjects = projectDetails
           <div class="section-heading">
             <p class="eyebrow">Features</p>
             <h2>特性 / 亮点</h2>
-            <span style="font-size: var(--text-sm); color: var(--color-text-muted);">
+            <span class="section-subtitle">
               这些是这个项目当前最值得关注的部分。
             </span>
           </div>
@@ -160,7 +160,7 @@ const relatedProjects = projectDetails
           <div class="detail-features">
             {features.map((feature, featureIndex) => (
               <li>
-                <span style="font-size: var(--text-xs); color: var(--color-text-faint); font-family: ui-monospace, monospace;">
+                <span class="feature-index">
                   {String(featureIndex + 1).padStart(2, '0')}
                 </span>
                 <span>{feature}</span>
@@ -174,11 +174,11 @@ const relatedProjects = projectDetails
     <!-- Related Projects -->
     {
       relatedProjects.length > 0 && (
-        <div style="margin-top: var(--space-10);">
+        <div class="section-spacer">
           <div class="section-heading">
             <p class="eyebrow">Related</p>
             <h2>相关项目</h2>
-            <span style="font-size: var(--text-sm); color: var(--color-text-muted);">
+            <span class="section-subtitle">
               根据分类和标签匹配到的其他项目。
             </span>
           </div>
@@ -186,9 +186,8 @@ const relatedProjects = projectDetails
           <div class="card-grid">
             {relatedProjects.map((item) => (
               <a
-                class="card"
+                class="card card-link"
                 href={`/projects/${item.slug}/`}
-                style="text-decoration: none; color: var(--color-text);"
               >
                 <span class="tag">{item.category}</span>
                 <h3>{item.title}</h3>
@@ -204,24 +203,14 @@ const relatedProjects = projectDetails
     }
 
     <!-- Navigation -->
-    <nav
-      class="project-neighbor"
-      aria-label="项目切换"
-      style="display: flex; gap: var(--space-4); margin-top: var(--space-10); justify-content: space-between; flex-wrap: wrap;"
-    >
-      <a
-        href={`/projects/${prevProject.slug}/`}
-        style="font-size: var(--text-sm); color: var(--color-text-muted);"
-      >
+    <nav class="project-nav" aria-label="项目切换">
+      <a class="project-nav-link" href={`/projects/${prevProject.slug}/`}>
         ← {prevProject.title}
       </a>
-      <a href="/projects/" style="font-size: var(--text-sm); color: var(--color-text-muted);">
+      <a class="project-nav-link" href="/projects/">
         项目列表
       </a>
-      <a
-        href={`/projects/${nextProject.slug}/`}
-        style="font-size: var(--text-sm); color: var(--color-text-muted);"
-      >
+      <a class="project-nav-link" href={`/projects/${nextProject.slug}/`}>
         {nextProject.title} →
       </a>
     </nav>

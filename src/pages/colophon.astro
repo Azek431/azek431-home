@@ -85,7 +85,7 @@ const principles = [
       {
         principles.map((item, index) => (
           <div class="projects-summary__item">
-            <strong style="font-size: var(--text-2xl); color: var(--color-accent);">
+            <strong class="colo-stat-value">
               {String(index + 1).padStart(2, '0')}
             </strong>
             <span>{item}</span>
@@ -97,7 +97,7 @@ const principles = [
     <!-- Stack -->
     {
       stack.map((group) => (
-        <div style="margin-bottom: var(--space-10);">
+        <div class="section-spacer">
           <div class="section-heading">
             <p class="eyebrow">{group.group}</p>
             <h2>{group.group}</h2>
@@ -106,7 +106,7 @@ const principles = [
           <div class="card-grid">
             {group.items.map((item) => (
               <div class="card">
-                <strong style="font-size: var(--text-base);">{item.name}</strong>
+                <strong class="stack-name">{item.name}</strong>
                 <p>{item.detail}</p>
               </div>
             ))}

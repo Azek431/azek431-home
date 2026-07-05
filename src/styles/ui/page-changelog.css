@@ -78,10 +78,25 @@
   color: var(--color-text-muted);
   line-height: 1.6;
   border-left: 3px solid var(--color-border);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.changelog-item__change:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
 }
 
 /* 暗色模式增强 */
 html[data-theme='dark'] .changelog-item__change {
   background: var(--surface-bg-subtle);
   border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='dark'] .changelog-item__change:hover {
+  background: var(--surface-bg-raised);
+  border-left-color: var(--color-accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
