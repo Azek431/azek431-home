@@ -14,15 +14,13 @@ const { items } = Astro.props as Props;
 
 <div class="about-dashboard__card">
   <h3>Focus Areas</h3>
-  <div class="card-grid" style="grid-template-columns: 1fr;">
+  <div class="card-grid card-grid--single">
     {
       items.map((item) => (
-        <div class="card" style="padding: var(--space-4);">
-          <span style="font-size: var(--text-xs); font-family: ui-monospace, monospace; color: var(--color-text-faint);">
-            {item.num}
-          </span>
-          <h3 style="font-size: var(--text-base); margin-top: var(--space-1);">{item.title}</h3>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">{item.desc}</p>
+        <div class="card card--compact">
+          <span class="focus-num">{item.num}</span>
+          <h3 class="focus-title">{item.title}</h3>
+          <p class="focus-desc">{item.desc}</p>
         </div>
       ))
     }

@@ -14,7 +14,7 @@ const { items } = Astro.props;
 <div class="card-grid">
   {
     items.map((item) => (
-      <a class="card" href="/search/" style="text-decoration: none;">
+      <a class="card card-link" href="/search/">
         <h3>{item.title}</h3>
         <span class="tag tag-accent">{item.kind}</span>
       </a>
