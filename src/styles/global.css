@@ -451,6 +451,18 @@ html[data-theme='dark'] .card:hover {
   transform: translateX(100%);
 }
 
+/* 暗色模式卡片光泽 — 更微妙的白色高光 */
+html[data-theme='dark'] .card::after {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.008) 45%,
+    rgba(255, 255, 255, 0.015) 50%,
+    rgba(255, 255, 255, 0.008) 55%,
+    transparent 70%
+  );
+}
+
 .card h3 {
   margin-bottom: var(--space-2);
   font-size: var(--text-xl);
@@ -469,7 +481,7 @@ html[data-theme='dark'] .card:hover {
 
 /* 统一卡片内边距和最小高度 */
 .card[data-card-min-height] {
-  min-height: var(--card-min-height, auto);
+  min-height: var(--card-min-height);
 }
 
 /* ---------- Buttons (refined) ---------- */

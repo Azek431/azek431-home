@@ -14,16 +14,16 @@ const { siteAge, siteStartedAtIso, siteUpdatedDateTime } = Astro.props as Props;
 <div class="section-heading">
   <p class="eyebrow">Live Runtime</p>
   <h2>实时运行中</h2>
-  <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+  <p class="section-subtitle">
     这部分由浏览器实时计算，和 Footer 使用同一个建站时间。
   </p>
 </div>
 
-<div class="card" style="text-align: center;">
+<div class="card card--centered">
   <strong>
     <RuntimeCounter startedAt={siteStartedAtIso} fallback={siteAge.preciseLabel} />
   </strong>
-  <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2);">
+  <p class="section-subtitle" style="margin-top: var(--space-2);">
     最近构建时间：{siteUpdatedDateTime}
   </p>
 </div>
