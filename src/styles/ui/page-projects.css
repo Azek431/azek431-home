@@ -242,6 +242,40 @@ html[data-theme='dark'] .detail-sidebar__card:hover {
   color: var(--color-text);
 }
 
+/* 项目截图预览 */
+.detail-screenshot {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-raised);
+  box-shadow: var(--shadow-lg);
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.detail-screenshot:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-xl);
+}
+
+.detail-screenshot img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.detail-screenshot:hover img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .detail-screenshot {
+    border-radius: var(--radius-lg);
+  }
+}
+
 @media (max-width: 1024px) {
   .detail-grid {
     grid-template-columns: 1fr;

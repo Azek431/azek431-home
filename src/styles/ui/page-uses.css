@@ -1,0 +1,151 @@
+/*
+  Page — Uses
+  装备页：分类标题、工具卡片、底部叙事
+*/
+
+/* Section headings for category descriptions — lighter than page titles */
+.uses-page .section-heading h2 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.uses-page .section-heading .eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-1);
+  display: block;
+}
+
+/* Tighter spacing between category sections */
+.uses-page .category-section {
+  margin-bottom: var(--space-10);
+}
+
+/* Tool cards — subtle elevation, tighter padding */
+.uses-page .card {
+  padding: var(--space-5) var(--space-6);
+  min-height: auto;
+}
+
+.uses-page .card strong {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.uses-page .card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* Footer narrative */
+.uses-narrative {
+  max-width: 680px;
+  margin: var(--space-12) auto;
+  padding: var(--space-8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-raised);
+  text-align: center;
+}
+
+.uses-narrative p {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: var(--space-4);
+}
+
+.uses-narrative .uses-narrative__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Stats bar — tighter */
+.uses-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-raised);
+}
+
+.uses-stats__item {
+  text-align: center;
+  padding: var(--space-3) 0;
+}
+
+.uses-stats__item strong {
+  display: block;
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.uses-stats__item span {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-faint);
+  font-weight: 600;
+}
+
+/* Dark mode */
+html[data-theme='dark'] .uses-narrative {
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+html[data-theme='dark'] .uses-narrative:hover {
+  border-color: var(--surface-card-border-hover);
+  box-shadow: var(--surface-card-shadow-hover);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .uses-page .section-heading h2 {
+    font-size: var(--text-lg);
+  }
+
+  .uses-stats {
+    grid-template-columns: repeat(2, 1fr);
+    padding: var(--space-4);
+  }
+
+  .uses-narrative {
+    margin: var(--space-8) 0;
+    padding: var(--space-6);
+  }
+
+  .uses-narrative .uses-narrative__actions {
+    flex-direction: column;
+  }
+
+  .uses-narrative .uses-narrative__actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .uses-stats {
+    grid-template-columns: 1fr;
+  }
+}
