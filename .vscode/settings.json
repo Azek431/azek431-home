@@ -44,5 +44,9 @@
   "gitlens.currentLine.codeLens.enabled": false,
   "gitlens.statusBar.enabled": false,
   "code-runner.showExecutionMessage": false,
-  "code-runner.saveAllFilesBeforeRun": false
+  "code-runner.saveAllFilesBeforeRun": false,
+
+  // 工作区级别禁用与本 Astro 项目无关的扩展
+  "extensions.ignoreRecommendations": true,
+  "extensions.autoUpdate": false
 }
