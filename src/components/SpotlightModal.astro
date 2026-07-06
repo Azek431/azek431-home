@@ -152,8 +152,7 @@ const serialized = JSON.stringify(searchItems);
       if (!dropdown) return;
 
       if (scored.length === 0) {
-        dropdown.innerHTML =
-          '<div style="padding:var(--space-6);text-align:center;color:var(--color-text-faint);font-size:var(--text-sm);">没有匹配的结果</div>';
+        dropdown.innerHTML = '<div class="search-empty-state">没有匹配的结果</div>';
         visibleLinks = [];
         activeIndex = -1;
         return;

@@ -137,3 +137,34 @@ html[data-theme='dark'] .search-result:hover {
   border-color: var(--surface-card-border-hover);
   background: var(--surface-bg-subtle);
 }
+
+/* 搜索提示文字 */
+.search-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* 空状态卡片 */
+.search-empty-state {
+  text-align: center;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-raised);
+  font-size: var(--text-sm);
+  color: var(--color-text-faint);
+}
+
+/* 空状态按钮组 */
+.search-empty-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+html[data-theme='dark'] .search-empty-state {
+  border-color: var(--surface-card-border);
+  background: var(--surface-bg-raised);
+}

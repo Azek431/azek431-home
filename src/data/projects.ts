@@ -10,6 +10,7 @@ export interface ProjectDetail {
   websiteUrl?: string;
   githubUrl?: string;
   giteeUrl?: string;
+  screenshotUrl?: string;
   features: string[];
   highlights: { label: string; value: string }[];
   lastUpdated: string;
@@ -29,6 +30,7 @@ export const projectDetails: ProjectDetail[] = [
     websiteUrl: 'https://azek431.top',
     githubUrl: 'https://github.com/Azek431/azek431-home',
     giteeUrl: 'https://gitee.com/Azek431/azek431-home',
+    screenshotUrl: '/screenshots/azek431-home.svg',
     features: [
       '完整设计 token（颜色 / 缓动 / 阴影 / 半径）',
       '滚动入场动画 + Header 收缩',

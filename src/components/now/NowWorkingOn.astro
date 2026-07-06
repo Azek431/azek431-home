@@ -17,10 +17,10 @@ const { items } = Astro.props;
   {
     items.map((item) => (
       <div class="now-item">
-      <div class="card-tags-row">
-        <span class="tag">{item.tag}</span>
-        <span class="tag tag-accent">{item.status}</span>
-      </div>
+        <div class="card-tags-row">
+          <span class="tag">{item.tag}</span>
+          <span class="tag tag-accent">{item.status}</span>
+        </div>
         <h3>{item.title}</h3>
         <p>{item.detail}</p>
       </div>

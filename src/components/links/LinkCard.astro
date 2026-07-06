@@ -27,7 +27,7 @@ const isExternal = link.href.startsWith('http');
   <p>{link.description}</p>
   {
     link.tags.length > 0 && (
-      <div style="display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-2);">
+      <div class="tag-row">
         {link.tags.slice(0, 3).map((tag) => (
           <span class="tag">{tag}</span>
         ))}
