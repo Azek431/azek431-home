@@ -62,18 +62,29 @@ if (project.giteeUrl) {
 const sharedTags = (a: ProjectDetail, b: ProjectDetail) =>
   (a.tags || []).filter((tag) => (b.tags || []).includes(tag)).length;
 
+// 改进的相关项目算法：考虑分类、标签共享、状态相似性
 const relatedProjects = projectDetails
   .filter((item) => item.slug !== project.slug)
-  .map((item) => ({
-    project: item,
-    score: (item.category === project.category ? 3 : 0) + sharedTags(item, project),
-  }))
+  .map((item) => {
+    let score = 0;
+    if (item.category === project.category) score += 3;
+    if (item.status === project.status) score += 2;
+    score += sharedTags(item, project);
+    return { project: item, score };
+  })
+  .filter((item) => item.score > 0)
   .sort((a, b) => b.score - a.score)
   .slice(0, 2)
   .map((item) => item.project);
 ---
 
-<BaseLayout title={`${project.title} · Azek431`} description={project.description}>
+<BaseLayout
+  title={`${project.title} · Azek431`}
+  description={project.description}
+  type={project.status === '已上线' ? 'article' : 'website'}
+  publishedTime={project.lastUpdated}
+  modifiedTime={project.lastUpdated}
+>
   <section class="section">
     <!-- Hero -->
     <div class="detail-hero">
@@ -102,6 +113,25 @@ const relatedProjects = projectDetails
         }
       </div>
     </div>
+
+    <!-- Screenshot Preview -->
+    {project.screenshotUrl && (
+      <div style="margin-bottom: var(--space-10);">
+        <div class="section-heading">
+          <p class="eyebrow">Preview</p>
+          <h2>项目预览</h2>
+        </div>
+        <div class="detail-screenshot">
+          <img
+            src={project.screenshotUrl}
+            alt={`${project.title} 截图`}
+            loading="lazy"
+            width={800}
+            height={450}
+          />
+        </div>
+      </div>
+    )}
 
     <!-- Highlights -->
     {
@@ -179,7 +209,7 @@ const relatedProjects = projectDetails
             <p class="eyebrow">Related</p>
             <h2>相关项目</h2>
             <span style="font-size: var(--text-sm); color: var(--color-text-muted);">
-              根据分类和标签匹配到的其他项目。
+              根据分类、状态和标签匹配到的其他项目。
             </span>
           </div>
 
