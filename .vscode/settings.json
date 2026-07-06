@@ -48,7 +48,6 @@
 
   // 工作区级别禁用与本 Astro 项目无关的扩展
   "extensions.ignoreRecommendations": true,
-  "extensions.autoUpdate": false,
   "extensions.disabledExtensions": [
     "akamud.vscode-theme-onedark",
     "antfu.browse-lite",
