@@ -20,13 +20,11 @@ const { kicker, title, value, suffix, desc, metrics } = Astro.props as Props;
 <div class="card">
   <div>
     <p class="eyebrow">{kicker}</p>
-    <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-1);">{title}</h2>
-    <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{desc}</span>
+    <h2 class="stat-title">{title}</h2>
+    <span class="stat-description">{desc}</span>
   </div>
 
-  <strong
-    style="font-size: var(--text-3xl); color: var(--color-accent); display: block; margin: var(--space-4) 0;"
-  >
+  <strong class="stat-value">
     {value}
     {suffix && <small style="font-size: var(--text-sm); font-weight: 400;">{suffix}</small>}
   </strong>

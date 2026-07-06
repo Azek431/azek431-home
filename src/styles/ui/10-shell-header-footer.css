@@ -18,7 +18,7 @@
 
 /* 滚动时增强玻璃效果 */
 .site-header.scrolled {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 html[data-theme='dark'] .site-header.scrolled {
@@ -30,6 +30,11 @@ html[data-theme='dark'] .site-header {
   background: color-mix(in srgb, var(--color-bg) 88%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
+}
+
+html[data-theme='light'] .site-header.scrolled {
+  background: color-mix(in srgb, var(--color-bg) 95%, transparent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .site-header-inner {
@@ -75,12 +80,12 @@ html[data-theme='dark'] .site-header {
   transition:
     transform var(--duration-fast) var(--ease-bounce),
     box-shadow var(--duration-fast) var(--ease-out);
-  box-shadow: 0 2px 8px -1px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 2px 8px -1px rgba(37, 99, 235, 0.25), 0 1px 2px rgba(37, 99, 235, 0.15);
 }
 
 .site-header__brand:hover .site-header__mark {
   transform: scale(1.08) rotate(-5deg);
-  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.35), 0 2px 4px rgba(37, 99, 235, 0.15);
 }
 
 .site-header__nav {
@@ -173,6 +178,9 @@ html[data-theme='dark'] .site-header__nav a.is-active {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg-subtle);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
 }
 
 .site-header__socials a {
@@ -194,6 +202,7 @@ html[data-theme='dark'] .site-header__nav a.is-active {
 .site-header__socials a:hover {
   color: var(--color-text);
   background: var(--color-bg-raised);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Desktop: show hamburger as "更多" text + icon, always visible */

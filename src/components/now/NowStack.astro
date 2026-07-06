@@ -15,8 +15,8 @@ const { items } = Astro.props;
   {
     items.map((item) => (
       <div class="card">
-        <strong style="font-size: var(--text-base);">{item.name}</strong>
-        <span style="font-size: var(--text-sm); color: var(--color-text-muted);">{item.role}</span>
+        <strong class="stack-name">{item.name}</strong>
+        <span class="stack-role">{item.role}</span>
       </div>
     ))
   }
