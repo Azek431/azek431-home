@@ -18,35 +18,19 @@ const {
 } = Astro.props;
 
 const initial = name.charAt(0).toUpperCase();
-
-let open = false;
 ---
 
 <span
   class="author-badge"
   tabindex="0"
   role="button"
-  aria-expanded={open}
+  aria-expanded="false"
   aria-controls="author-card-tooltip"
   aria-label={`维护者 ${name}，按回车或点击查看联系方式`}
-  onclick={() => (open = !open)}
-  onfocus={() => (open = true)}
-  onblur={() => (open = false)}
-  onkeydown={(e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      open = !open;
-    }
-  }}
 >
   {name}
 
-  <span
-    class="author-badge__card"
-    id="author-card-tooltip"
-    role="tooltip"
-    class:list={{ visible: open }}
-  >
+  <span class="author-badge__card" id="author-card-tooltip" role="tooltip">
     <span class="author-badge__avatar" aria-hidden="true">
       {initial}
     </span>
@@ -278,3 +262,25 @@ let open = false;
     }
   }
 </style>
+
+<script>
+  document.querySelectorAll('.author-badge').forEach((b) => {
+    const badge = b as HTMLElement;
+    const card = badge.querySelector('.author-badge__card') as HTMLElement | null;
+    if (!card) return;
+    const setOpen = (v: boolean) => {
+      card.classList.toggle('visible', v);
+      badge.setAttribute('aria-expanded', String(v));
+    };
+    badge.addEventListener('click', () => setOpen(!card.classList.contains('visible')));
+    badge.addEventListener('focus', () => setOpen(true));
+    badge.addEventListener('blur', () => setOpen(false));
+    badge.addEventListener('keydown', ((e: Event) => {
+      const ev = e as KeyboardEvent;
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        setOpen(!card.classList.contains('visible'));
+      }
+    }) as EventListener);
+  });
+</script>

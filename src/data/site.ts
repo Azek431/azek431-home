@@ -200,6 +200,20 @@ export const links = [
 
 export const recentUpdates = [
   {
+    title: '补齐真实项目数据与 Now 页刷新',
+    desc: '新增 AutoJsOpen / sd8e_tomb 项目卡片，Now 页更新为当前真实开发重点（Termux、Compose+Miuix、视频创作）。',
+    date: '2026-10-18',
+    tag: '主站',
+    href: '/changelog/#v19',
+  },
+  {
+    title: 'AI 视频创作工作流落地',
+    desc: '建立 Remotion + Canvas + Playwright 逐帧渲染管线，产出《记忆的谎言》科普短片。',
+    date: '2026-10-17',
+    tag: '内容',
+    href: '/now/',
+  },
+  {
     title: '修复站点时间与入口体验',
     desc: '建站时间改为首个 Git 提交,Links 分组更清晰,移动端菜单不再产生横向溢出。',
     date: '2026-06-05',

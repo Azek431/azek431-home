@@ -15,9 +15,7 @@ const { items } = Astro.props;
 ---
 
 <div class="search-results" aria-live="polite">
-  <p data-search-hint class="search-hint">
-    输入关键词开始搜索，也可以直接点击分类查看索引。
-  </p>
+  <p data-search-hint class="search-hint">输入关键词开始搜索，也可以直接点击分类查看索引。</p>
 
   <ol data-search-results>
     {
@@ -33,11 +31,7 @@ const { items } = Astro.props;
     }
   </ol>
 
-  <div
-    data-search-empty
-    class="search-empty-state"
-    hidden
-  >
+  <div data-search-empty class="search-empty-state" hidden>
     <h2>没有匹配的结果</h2>
     <p>试试换一个关键词，或直接查看项目、链接和更新日志。</p>
     <div class="search-empty-actions">
