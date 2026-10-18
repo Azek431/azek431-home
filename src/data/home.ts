@@ -128,22 +128,22 @@ export const homeNavigationItems: readonly HomeNavigationItem[] = [
 export const homeFocusItems: readonly HomeFocusItem[] = [
   {
     step: 'NOW',
-    title: '首页体验精修',
-    desc: '继续优化真实项目视觉、移动端节奏、内容数据层和动画性能。',
+    title: 'AutoJsOpen 移动端开发',
+    desc: 'Compose + Miuix KMP UI 全栈重构，Rhino JS 引擎，ACE 编辑器字体缩放。',
     status: '进行中',
     tone: 'active',
   },
   {
     step: 'LATEST',
-    title: 'v0.1.0 正式发布',
-    desc: '首个公开版本已经发布，并完成 GitHub / Gitee 发行版自动同步。',
+    title: '主站 v19 真实项目数据补齐',
+    desc: '新增 AutoJsOpen / sd8e_tomb 项目卡片，Now 页面刷新为当前真实开发重点。',
     status: '已完成',
     tone: 'complete',
   },
   {
     step: 'NEXT',
-    title: '内容与案例完善',
-    desc: '继续补充项目截图、案例说明、Blog 内容和更准确的站点数据。',
+    title: 'AI 视频创作工作流',
+    desc: 'Remotion + Canvas + Playwright 逐帧渲染管线，Python 合成配乐，已落地《记忆的谎言》。',
     status: '下一步',
     tone: 'planned',
   },
@@ -151,22 +151,22 @@ export const homeFocusItems: readonly HomeFocusItem[] = [
 
 export const homeRecentUpdates: readonly HomeUpdateItem[] = [
   {
+    title: '补齐真实项目数据 v19',
+    desc: '新增 AutoJsOpen 与 sd8e_tomb 项目卡片，Now 页刷新为当前真实开发重点。',
+    date: '2026-10-18',
+    href: '/changelog/#v19',
+  },
+  {
+    title: 'AI 视频创作落地',
+    desc: '建立 Remotion + Canvas + Playwright 逐帧渲染管线，产出《记忆的谎言》科普短片。',
+    date: '2026-10-17',
+    href: '/now/',
+  },
+  {
     title: '发布 Azek431 Home v0.1.0',
     desc: '完成首个公开发行版本，并建立 GitHub 与 Gitee 的双平台发行同步流程。',
     date: '2026-06-14',
     href: 'https://github.com/Azek431/azek431-home/releases/tag/v0.1.0',
-  },
-  {
-    title: '完成 Navigation System V4',
-    desc: '统一桌面端与移动端导航、全局快捷键、焦点管理和浮层互斥逻辑。',
-    date: '2026-06-12',
-    href: '/changelog/',
-  },
-  {
-    title: '重构首页与 UI System V2',
-    desc: '重新整理首页信息架构、视觉层级、组件职责与分层样式入口。',
-    date: '2026-06-10',
-    href: '/changelog/',
   },
 ];
 
