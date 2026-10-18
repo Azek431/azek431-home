@@ -72,32 +72,6 @@ export const projectDetails: ProjectDetail[] = [
     lastUpdated: '2026-10-12',
   },
   {
-    slug: 'sd8e-tomb',
-    title: 'sd8e_tomb · HyperOS 墓碑模块',
-    description:
-      '面向小米澎湃OS（HyperOS）全系设备的系统级后台管理与功耗优化平台，核心子系统是墓碑冻结（tombstone freeze），基于 KernelSU 实现。',
-    longDescription:
-      '通过 LSPosed / KernelSU 系统级权限，对第三方应用实施墓碑冻结，降低后台资源占用与功耗。支持配置热更新、守护进程热重载、WebUI 管理界面。当前已上线系统包保护功能并验收通过。',
-    status: '已上线',
-    category: 'System Module',
-    tags: ['KernelSU', 'HyperOS', 'Tombstone Freeze', 'Power Management'],
-    accent: '#fcd34d',
-    githubUrl: 'https://github.com/Azek431',
-    features: [
-      '墓碑冻结核心子系统（守护进程 + 双指纹确认热重载）',
-      '系统包保护：高 UID 系统组件白名单，防止误冻结',
-      'tomb.conf 热更新（~2s 生效）+ 守护脚本热重载（~4s）',
-      'WebUI 管理界面（浏览器直接管理，无需重启）',
-      'HyperOS 4 官改 ROM 系统组件更新恢复案例',
-    ],
-    highlights: [
-      { label: '平台', value: 'HyperOS 4 · K90U' },
-      { label: '权限', value: 'KernelSU Root' },
-      { label: '部署', value: 'Magisk / KSU 模块' },
-    ],
-    lastUpdated: '2026-10-02',
-  },
-  {
     slug: 'cysj-data',
     title: 'Azek创游世界资料库',
     description: '项目官网与资料入口，用于展示项目介绍、资料内容、使用说明和后续更新信息。',

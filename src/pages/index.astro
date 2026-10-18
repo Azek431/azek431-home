@@ -7,6 +7,7 @@ import HomeHero from '../components/home/HomeHero.astro';
 import HomeNavigation from '../components/home/HomeNavigation.astro';
 import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeRoadmap from '../components/home/HomeRoadmap.astro';
+import ContactConnect from '../components/contact/ContactConnect.astro';
 
 import {
   featuredProjectPreview,
@@ -61,5 +62,9 @@ const homepageUpdates = homeRecentUpdates.slice(0, 3) as typeof homeRecentUpdate
     <HomeNavigation items={homeNavigationItems} />
 
     <HomeActivityNetwork updates={homepageUpdates} networkLinks={networkLinks} />
+
+    <div style="margin-top: var(--space-12);">
+      <ContactConnect />
+    </div>
   </main>
 </BaseLayout>

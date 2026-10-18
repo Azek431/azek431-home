@@ -21,19 +21,13 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* 极简：header 用实色背景，不做玻璃 blur（默认 --color-bg 实心） */
 html[data-theme='dark'] .site-header.scrolled {
-  background: color-mix(in srgb, var(--color-bg) 92%, transparent);
   border-color: var(--color-border-strong);
-}
-
-html[data-theme='dark'] .site-header {
-  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--shadow-sm);
 }
 
 html[data-theme='light'] .site-header.scrolled {
-  background: color-mix(in srgb, var(--color-bg) 95%, transparent);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 

@@ -4,6 +4,7 @@ import ProfileSummary from '../components/about/ProfileSummary.astro';
 import NowCards from '../components/about/NowCards.astro';
 import SkillBar from '../components/about/SkillBar.astro';
 import FocusAreas from '../components/about/FocusAreas.astro';
+import ContactConnect from '../components/contact/ContactConnect.astro';
 
 const profileItems = [
   { label: '方向', value: 'Web · AI · Open Source' },
@@ -126,6 +127,10 @@ const focusItems = [
 
     <div class="flex-gap" style="margin-top: var(--space-4);">
       <a class="button button-primary" href="/now/">查看 Now 页面</a>
+    </div>
+
+    <div style="margin-top: var(--space-12);">
+      <ContactConnect eyebrow="Get in touch" title="联系我" />
     </div>
   </section>
 

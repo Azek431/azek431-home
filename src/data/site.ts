@@ -9,6 +9,10 @@ export const siteConfig = {
   url: 'https://azek431.top',
   github: 'https://github.com/Azek431',
   gitee: 'https://gitee.com/Azek431',
+  telegram: 'https://t.me/AzekMain',
+  telegramHandle: '@AzekMain',
+  email: 'Azek431@163.com',
+  emailHref: 'mailto:Azek431@163.com',
   keywords: [
     'Azek431',
     '个人主页',
@@ -113,6 +117,20 @@ export const links = [
     tags: ['Gitee', 'Mirror'],
   },
   {
+    name: 'Telegram 频道',
+    description: '@AzekMain · 更新动态、项目发布与开源记录。',
+    href: 'https://t.me/AzekMain',
+    category: 'Main',
+    tags: ['Telegram', 'Community'],
+  },
+  {
+    name: '邮箱联系',
+    description: 'Azek431@163.com · 商务合作、问题反馈与交流。',
+    href: 'mailto:Azek431@163.com',
+    category: 'Main',
+    tags: ['Email', 'Contact'],
+  },
+  {
     name: '当前主站',
     description: 'Azek431 Home 的线上访问入口。',
     href: siteConfig.url,
@@ -201,7 +219,7 @@ export const links = [
 export const recentUpdates = [
   {
     title: '补齐真实项目数据与 Now 页刷新',
-    desc: '新增 AutoJsOpen / sd8e_tomb 项目卡片，Now 页更新为当前真实开发重点（Termux、Compose+Miuix、视频创作）。',
+    desc: '新增 AutoJsOpen 项目卡片，Now 页更新为当前真实开发重点（Termux、Compose+Miuix、视频创作）。',
     date: '2026-10-18',
     tag: '主站',
     href: '/changelog/#v19',

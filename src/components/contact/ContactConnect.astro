@@ -1,0 +1,122 @@
+---
+import { siteConfig } from '../../data/site';
+
+type Props = {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+};
+
+const {
+  eyebrow = 'Connect',
+  title = '联系与关注',
+  lead = '喜欢这里的内容、项目合作或有任何问题，都可以通过下面的入口找到我。',
+} = Astro.props;
+
+const items = [
+  {
+    label: 'Telegram 频道',
+    value: siteConfig.telegramHandle,
+    hint: '更新动态 · 项目发布 ↗',
+    href: siteConfig.telegram,
+    external: true,
+  },
+  {
+    label: '邮箱',
+    value: siteConfig.email,
+    hint: '商务合作 · 问题反馈',
+    href: siteConfig.emailHref,
+    external: false,
+  },
+  {
+    label: 'GitHub',
+    value: 'Azek431',
+    hint: '开源记录 · 代码仓库 ↗',
+    href: siteConfig.github,
+    external: true,
+  },
+  {
+    label: 'Gitee',
+    value: 'Azek431',
+    hint: '国内镜像 · 更快同步 ↗',
+    href: siteConfig.gitee,
+    external: true,
+  },
+];
+---
+
+<section class="connect" aria-label="联系与关注">
+  <div class="section-heading">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    <p class="section-subtitle">{lead}</p>
+  </div>
+
+  <div class="connect-grid">
+    {
+      items.map((item) => (
+        <a
+          class="card connect-card"
+          href={item.href}
+          target={item.external ? '_blank' : undefined}
+          rel={item.external ? 'noopener noreferrer' : undefined}
+        >
+          <span class="connect-card__label">{item.label}</span>
+          <span class="connect-card__value">{item.value}</span>
+          <span class="connect-card__hint">{item.hint}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .connect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: var(--space-4);
+  }
+
+  .connect-card {
+    text-decoration: none;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .connect-card__label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-2);
+  }
+
+  .connect-card__value {
+    display: block;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    word-break: break-all;
+  }
+
+  .connect-card__hint {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+    line-height: 1.5;
+  }
+
+  .connect-card:hover .connect-card__value {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 480px) {
+    .connect-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

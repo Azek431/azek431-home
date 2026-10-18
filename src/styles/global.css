@@ -5,8 +5,10 @@
   专业设计师视角优化：视觉层级、间距节奏、设备适配。
 */
 
-/* ---------- Font import ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* ---------- Font ----------
+   字体由本地 @fontsource-variable 提供（打进构建产物、走本地 woff2），
+   替代 Google Fonts @import，避免国内网络下阻塞首屏白屏。 */
+@import '@fontsource-variable/plus-jakarta-sans';
 
 /* ---------- Reset ---------- */
 *,
@@ -29,6 +31,7 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   font-family:
+    'Plus Jakarta Sans Variable',
     'Plus Jakarta Sans',
     ui-sans-serif,
     system-ui,
@@ -62,10 +65,10 @@ body {
   --color-accent-soft: #eff6ff;
   --color-accent-text: #1d4ed8;
 
-  /* 新增渐变强调色 — 为各页面/项目提供视觉多样性 */
-  --gradient-accent: linear-gradient(135deg, #2563eb, #7c3aed);
-  --gradient-accent-hover: linear-gradient(135deg, #1d4ed8, #6d28d9);
-  --gradient-glow: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.15), transparent 70%);
+  /* 极简：单色 accent + 少量留白，不用满屏渐变 */
+  --gradient-accent: #2563eb;
+  --gradient-accent-hover: #1d4ed8;
+  --gradient-glow: transparent;
 
   /* Typography scale — refined for stronger visual hierarchy */
   --text-xs: clamp(0.6875rem, 0.65rem + 0.15vw, 0.75rem);
@@ -157,10 +160,10 @@ html[data-theme='dark'] {
   --color-accent-soft: rgba(59, 130, 246, 0.12);
   --color-accent-text: #93c5fd;
 
-  /* 暗色模式渐变 */
-  --gradient-accent: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  --gradient-accent-hover: linear-gradient(135deg, #60a5fa, #a78bfa);
-  --gradient-glow: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1), transparent 70%);
+  /* 暗色模式：单色 accent，与浅色保持一致的极简 */
+  --gradient-accent: #3b82f6;
+  --gradient-accent-hover: #60a5fa;
+  --gradient-glow: transparent;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 2px 8px -1px rgba(0, 0, 0, 0.35), 0 1px 3px -1px rgba(0, 0, 0, 0.25);
@@ -229,6 +232,17 @@ p {
   color: var(--color-text-muted);
   line-height: 1.75;
   font-size: var(--text-base);
+}
+
+/* 极简正文行宽约束：宽屏下行长回落到 45–75ch 阅读舒适区，避免一行拉满 */
+p,
+.card p,
+.home-projects__content p,
+.detail-content p,
+.detail-hero p,
+.detail-sidebar__card p,
+.about-narrative p {
+  max-width: 72ch;
 }
 
 a {
@@ -429,39 +443,7 @@ html[data-theme='dark'] .card:hover {
   box-shadow: var(--shadow-lg);
 }
 
-/* 卡片光泽扫过效果 */
-.card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.02) 45%,
-    rgba(255, 255, 255, 0.03) 50%,
-    rgba(255, 255, 255, 0.02) 55%,
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.8s ease;
-  pointer-events: none;
-}
-
-.card:hover::after {
-  transform: translateX(100%);
-}
-
-/* 暗色模式卡片光泽 — 更微妙的白色高光 */
-html[data-theme='dark'] .card::after {
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.008) 45%,
-    rgba(255, 255, 255, 0.015) 50%,
-    rgba(255, 255, 255, 0.008) 55%,
-    transparent 70%
-  );
-}
+/* 极简：移除卡片光泽扫过动画，保留 hover 顶微光（::before）即可 */
 
 .card h3 {
   margin-bottom: var(--space-2);
@@ -511,27 +493,7 @@ html[data-theme='dark'] .card::after {
   overflow: hidden;
 }
 
-/* 光泽扫过效果 */
-.button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.1) 45%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.1) 55%,
-    transparent 60%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-  pointer-events: none;
-}
-
-.button:hover::after {
-  transform: translateX(100%);
-}
+/* 极简：移除按钮光泽扫，保留干净背景 + hover 上浮即可 */
 
 .button:hover {
   transform: translateY(-1px);
@@ -551,46 +513,19 @@ html[data-theme='dark'] .card::after {
   box-shadow: none !important;
 }
 
-.button:disabled::after,
-.button[aria-disabled='true']::after {
-  display: none;
-}
-
 .button-primary {
-  background: var(--gradient-accent);
+  background: var(--color-accent);
   color: #fff;
   border-color: transparent;
 }
 
 .button-primary:hover {
-  background: var(--gradient-accent-hover);
+  background: var(--color-accent-hover);
   border-color: transparent;
   color: #fff;
   box-shadow:
     var(--shadow-lg),
     0 0 0 3px var(--color-accent-soft);
-}
-
-.button-primary::after {
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.2) 45%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0.2) 55%,
-    transparent 60%
-  );
-}
-
-html[data-theme='dark'] .button-primary::after {
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.1) 45%,
-    rgba(255, 255, 255, 0.18) 50%,
-    rgba(255, 255, 255, 0.1) 55%,
-    transparent 60%
-  );
 }
 
 .button-secondary {
@@ -697,6 +632,12 @@ html[data-theme='dark'] .tag-violet {
   color: #059669;
   border-color: #34d399;
   background: #ecfdf5;
+}
+
+html[data-theme='dark'] .tag-green {
+  color: #6ee7b7;
+  border-color: #059669;
+  background: rgba(5, 150, 105, 0.15);
 }
 
 .tag-amber {

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { projectDetails, type ProjectDetail } from '../../data/projects';
+import { siteConfig } from '../../data/site';
 
 type DetailLink = {
   label: string;
@@ -234,6 +235,50 @@ const relatedProjects = projectDetails
         </div>
       )
     }
+
+    <!-- 联系与关注 -->
+    <div style="margin-top: var(--space-10);">
+      <div class="section-heading">
+        <p class="eyebrow">Connect</p>
+        <h2>联系与关注</h2>
+        <span style="font-size: var(--text-sm); color: var(--color-text-muted);">
+          喜欢这个项目或有问题，欢迎通过下面的入口找到我。
+        </span>
+      </div>
+      <div class="card-grid connect-grid">
+        <a
+          class="card connect-card"
+          href={siteConfig.telegram}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="text-decoration: none; color: var(--color-text);"
+        >
+          <span class="connect-card__label">Telegram 频道</span>
+          <span class="connect-card__value">{siteConfig.telegramHandle}</span>
+          <span class="connect-card__hint">更新动态 · 项目发布 ↗</span>
+        </a>
+        <a
+          class="card connect-card"
+          href={siteConfig.emailHref}
+          style="text-decoration: none; color: var(--color-text);"
+        >
+          <span class="connect-card__label">邮箱</span>
+          <span class="connect-card__value">{siteConfig.email}</span>
+          <span class="connect-card__hint">商务合作 · 问题反馈</span>
+        </a>
+        <a
+          class="card connect-card"
+          href={siteConfig.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="text-decoration: none; color: var(--color-text);"
+        >
+          <span class="connect-card__label">GitHub</span>
+          <span class="connect-card__value">Azek431</span>
+          <span class="connect-card__hint">开源记录 · 代码仓库 ↗</span>
+        </a>
+      </div>
+    </div>
 
     <!-- Navigation -->
     <nav

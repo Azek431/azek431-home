@@ -74,26 +74,11 @@
 
 .home-hero h1 {
   margin-bottom: var(--space-6);
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-text);
   transition: opacity var(--duration-normal) var(--ease-out);
 }
 
-html[data-theme='light'] .home-hero h1 {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-html[data-theme='dark'] .home-hero h1 {
-  background: var(--gradient-accent-hover);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* 极简：主标题用纯色，不做渐变文字 clip */
 
 .home-hero__lead {
   font-size: var(--text-lg);
