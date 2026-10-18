@@ -48,7 +48,8 @@ export const projectDetails: ProjectDetail[] = [
   {
     slug: 'autojsopen',
     title: 'AutoJsOpen',
-    description: '面向小米澎湃OS的手机自动化开发平台：Jetpack Compose + Miuix KMP UI，内置 Rhino JS 引擎，目标接近 AutoJsPro / AutoJsX 的代码编辑体验。',
+    description:
+      '面向小米澎湃OS的手机自动化开发平台：Jetpack Compose + Miuix KMP UI，内置 Rhino JS 引擎，目标接近 AutoJsPro / AutoJsX 的代码编辑体验。',
     longDescription:
       '完整复刻 AutoJsPro 的核心功能：双指缩放编辑器、行号对齐、触摸自动化、事件无障碍 API。当前处于 UI 全面重构阶段，采用 Miuix KMP 0.9.4 组件库，正在实现字体缩放和双指手势。',
     status: '开发中',
@@ -73,7 +74,8 @@ export const projectDetails: ProjectDetail[] = [
   {
     slug: 'sd8e-tomb',
     title: 'sd8e_tomb · HyperOS 墓碑模块',
-    description: '面向小米澎湃OS（HyperOS）全系设备的系统级后台管理与功耗优化平台，核心子系统是墓碑冻结（tombstone freeze），基于 KernelSU 实现。',
+    description:
+      '面向小米澎湃OS（HyperOS）全系设备的系统级后台管理与功耗优化平台，核心子系统是墓碑冻结（tombstone freeze），基于 KernelSU 实现。',
     longDescription:
       '通过 LSPosed / KernelSU 系统级权限，对第三方应用实施墓碑冻结，降低后台资源占用与功耗。支持配置热更新、守护进程热重载、WebUI 管理界面。当前已上线系统包保护功能并验收通过。',
     status: '已上线',

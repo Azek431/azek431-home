@@ -5,19 +5,10 @@ interface Props {
   placeholder?: string;
 }
 
-const {
-  email = '',
-  buttonText = '订阅更新',
-  placeholder = 'your@email.com',
-} = Astro.props;
+const { email = '', buttonText = '订阅更新', placeholder = 'your@email.com' } = Astro.props;
 ---
 
-<form
-  class="subscribe-form"
-  action="/subscribe/"
-  method="POST"
-  aria-label="邮件订阅"
->
+<form class="subscribe-form" action="/subscribe/" method="POST" aria-label="邮件订阅">
   <input
     type="email"
     name="email"
@@ -30,9 +21,7 @@ const {
   <button type="submit" class="subscribe-form__button">
     {buttonText}
   </button>
-  <p class="subscribe-form__note">
-    订阅后你会收到主站更新通知和项目发布提醒。
-  </p>
+  <p class="subscribe-form__note">订阅后你会收到主站更新通知和项目发布提醒。</p>
 </form>
 
 <style>

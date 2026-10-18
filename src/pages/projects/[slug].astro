@@ -115,23 +115,25 @@ const relatedProjects = projectDetails
     </div>
 
     <!-- Screenshot Preview -->
-    {project.screenshotUrl && (
-      <div style="margin-bottom: var(--space-10);">
-        <div class="section-heading">
-          <p class="eyebrow">Preview</p>
-          <h2>项目预览</h2>
+    {
+      project.screenshotUrl && (
+        <div style="margin-bottom: var(--space-10);">
+          <div class="section-heading">
+            <p class="eyebrow">Preview</p>
+            <h2>项目预览</h2>
+          </div>
+          <div class="detail-screenshot">
+            <img
+              src={project.screenshotUrl}
+              alt={`${project.title} 截图`}
+              loading="lazy"
+              width={800}
+              height={450}
+            />
+          </div>
         </div>
-        <div class="detail-screenshot">
-          <img
-            src={project.screenshotUrl}
-            alt={`${project.title} 截图`}
-            loading="lazy"
-            width={800}
-            height={450}
-          />
-        </div>
-      </div>
-    )}
+      )
+    }
 
     <!-- Highlights -->
     {

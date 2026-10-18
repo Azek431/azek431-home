@@ -85,9 +85,7 @@ const principles = [
       {
         principles.map((item, index) => (
           <div class="projects-summary__item">
-            <strong class="colo-stat-value">
-              {String(index + 1).padStart(2, '0')}
-            </strong>
+            <strong class="colo-stat-value">{String(index + 1).padStart(2, '0')}</strong>
             <span>{item}</span>
           </div>
         ))
