@@ -9,6 +9,14 @@
 @import './ui/10-shell-header-footer.css';
 @import './ui/20-home.css';
 @import './ui/30-pages.css';
-@import './ui/40-responsiveness.css';
+@import './ui/page-404.css';
+@import './ui/page-about.css';
+@import './ui/page-changelog.css';
+@import './ui/page-colophon.css';
 @import './ui/page-links.css';
+@import './ui/page-now.css';
+@import './ui/page-projects.css';
+@import './ui/page-search.css';
+@import './ui/page-stats.css';
 @import './ui/page-uses.css';
+@import './ui/40-responsiveness.css';
