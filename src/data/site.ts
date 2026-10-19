@@ -219,7 +219,7 @@ export const links = [
 export const recentUpdates = [
   {
     title: '补齐真实项目数据与 Now 页刷新',
-    desc: '新增 AutoJsOpen 项目卡片，Now 页更新为当前真实开发重点（Termux、Compose+Miuix、视频创作）。',
+    desc: 'Now 页更新为当前真实开发重点（Termux、Compose+Miuix、视频创作）。',
     date: '2026-10-18',
     tag: '主站',
     href: '/changelog/#v19',

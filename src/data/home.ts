@@ -127,16 +127,9 @@ export const homeNavigationItems: readonly HomeNavigationItem[] = [
 
 export const homeFocusItems: readonly HomeFocusItem[] = [
   {
-    step: 'NOW',
-    title: 'AutoJsOpen 移动端开发',
-    desc: 'Compose + Miuix KMP UI 全栈重构，Rhino JS 引擎，ACE 编辑器字体缩放。',
-    status: '进行中',
-    tone: 'active',
-  },
-  {
     step: 'LATEST',
     title: '主站 v19 真实项目数据补齐',
-    desc: '新增 AutoJsOpen 项目卡片，Now 页面刷新为当前真实开发重点。',
+    desc: 'Now 页面刷新为当前真实开发重点（Termux 环境、视频创作工作流）。',
     status: '已完成',
     tone: 'complete',
   },
@@ -152,7 +145,7 @@ export const homeFocusItems: readonly HomeFocusItem[] = [
 export const homeRecentUpdates: readonly HomeUpdateItem[] = [
   {
     title: '补齐真实项目数据 v19',
-    desc: '新增 AutoJsOpen 项目卡片，Now 页刷新为当前真实开发重点。',
+    desc: 'Now 页刷新为当前真实开发重点（Termux 环境、视频创作工作流）。',
     date: '2026-10-18',
     href: '/changelog/#v19',
   },

@@ -12,7 +12,6 @@ export const changelog: ChangelogEntry[] = [
     date: '2026-10-18',
     title: '真实项目数据补齐与移动端开发环境更新',
     changes: [
-      '新增 AutoJsOpen 项目（Jetpack Compose + Miuix KMP + Rhino JS，手机自动化平台）',
       'Now 页面更新为当前真实开发重点（Termux 环境、Compose+Miuix 实验、视频创作）',
       '站点数据 lastUpdated 统一刷新至 2026-10-18',
     ],

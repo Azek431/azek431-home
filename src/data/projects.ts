@@ -46,32 +46,6 @@ export const projectDetails: ProjectDetail[] = [
     lastUpdated: '2026-10-18',
   },
   {
-    slug: 'autojsopen',
-    title: 'AutoJsOpen',
-    description:
-      '面向小米澎湃OS的手机自动化开发平台：Jetpack Compose + Miuix KMP UI，内置 Rhino JS 引擎，目标接近 AutoJsPro / AutoJsX 的代码编辑体验。',
-    longDescription:
-      '完整复刻 AutoJsPro 的核心功能：双指缩放编辑器、行号对齐、触摸自动化、事件无障碍 API。当前处于 UI 全面重构阶段，采用 Miuix KMP 0.9.4 组件库，正在实现字体缩放和双指手势。',
-    status: '开发中',
-    category: 'Android App',
-    tags: ['Jetpack Compose', 'Miuix KMP', 'Rhino JS', 'Android Automation'],
-    accent: '#6ee7b7',
-    githubUrl: 'https://github.com/Azek431',
-    features: [
-      'Jetpack Compose + Miuix KMP 0.9.4 UI 全栈',
-      'Rhino 1.7.15 JS 引擎（console / device / files / timers）',
-      'ACE 编辑器集成（字体缩放 12–40px 范围）',
-      '双引擎架构：Rhino 主引擎 + Node.js 辅助引擎',
-      '事件 / 无障碍 / 触摸自动化 API 实现中',
-    ],
-    highlights: [
-      { label: '语言', value: 'Kotlin + JS' },
-      { label: 'UI 框架', value: 'Compose + Miuix' },
-      { label: '当前阶段', value: '字体缩放' },
-    ],
-    lastUpdated: '2026-10-12',
-  },
-  {
     slug: 'cysj-data',
     title: 'Azek创游世界资料库',
     description: '项目官网与资料入口，用于展示项目介绍、资料内容、使用说明和后续更新信息。',
