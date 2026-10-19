@@ -461,10 +461,7 @@ html[data-theme='dark'] .card:hover {
   gap: var(--space-5);
 }
 
-/* 统一卡片内边距和最小高度 */
-.card[data-card-min-height] {
-  min-height: var(--card-min-height);
-}
+/* 卡片内边距统一走上方 .card 基础规则（min-height 由各卡片内容自适应，未再引入死变量） */
 
 /* ---------- Buttons (refined) ---------- */
 .button {

@@ -75,15 +75,15 @@ html[data-theme='light'] .site-header.scrolled {
     transform var(--duration-fast) var(--ease-bounce),
     box-shadow var(--duration-fast) var(--ease-out);
   box-shadow:
-    0 2px 8px -1px rgba(37, 99, 235, 0.25),
-    0 1px 2px rgba(37, 99, 235, 0.15);
+    0 2px 8px -1px color-mix(in srgb, var(--color-accent) 25%, transparent),
+    0 1px 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .site-header__brand:hover .site-header__mark {
   transform: scale(1.08) rotate(-5deg);
   box-shadow:
-    0 4px 12px -2px rgba(37, 99, 235, 0.35),
-    0 2px 4px rgba(37, 99, 235, 0.15);
+    0 4px 12px -2px color-mix(in srgb, var(--color-accent) 35%, transparent),
+    0 2px 4px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .site-header__nav {
@@ -514,4 +514,17 @@ html[data-theme='dark'] .footer__column h4 {
 
 html[data-theme='dark'] .footer__bottom {
   border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* 暗色模式：header 品牌标记投影跟随 accent（浅蓝 #3b82f6），与暗色背景协调 */
+html[data-theme='dark'] .site-header__mark {
+  box-shadow:
+    0 2px 8px -1px rgba(59, 130, 246, 0.35),
+    0 1px 2px rgba(59, 130, 246, 0.25);
+}
+
+html[data-theme='dark'] .site-header__brand:hover .site-header__mark {
+  box-shadow:
+    0 4px 12px -2px rgba(59, 130, 246, 0.45),
+    0 2px 4px rgba(59, 130, 246, 0.3);
 }
